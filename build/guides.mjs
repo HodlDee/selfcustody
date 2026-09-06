@@ -2003,7 +2003,7 @@ const guides = [
     icon: "bi-arrow-counterclockwise",
     updated: "2026-08-17",
     status: "published",
-    related: ["quickstart", "owning-your-bitcoin", "what-not-to-normalize"],
+    related: ["quickstart", "owning-your-bitcoin", "what-not-to-normalize", "seed-to-key"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Writing down twelve or twenty-four words feels like the hard part is over. It is not. Until you have restored from those words and watched the correct wallet reappear, you do not have a backup &mdash; you have a hypothesis, and the test will otherwise be run for you at the worst possible time.</p>
@@ -6517,7 +6517,7 @@ const guides = [
     icon: "bi-shield-lock",
     updated: "2026-08-17",
     status: "published",
-    related: ["recovery-test-drill", "multisig-2of3", "what-not-to-normalize"],
+    related: ["recovery-test-drill", "multisig-2of3", "what-not-to-normalize", "seed-to-key"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Almost everything written about passphrases describes them as an extra password protecting your wallet. That description is wrong in a way that costs people their bitcoin, so it is worth replacing before anything else.</p>
@@ -7860,7 +7860,7 @@ const guides = [
     icon: "bi-diagram-2",
     updated: "2026-08-18",
     status: "published",
-    related: ["recovery-test-drill", "keys-addresses-utxos", "life-of-a-transaction"],
+    related: ["seed-to-key", "recovery-test-drill", "keys-addresses-utxos", "life-of-a-transaction"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Here is a scenario that plays out constantly, and almost never means what the person experiencing it thinks it means. You restore your seed words into a different wallet than the one you set up with. The words are accepted without complaint. The wallet opens. The balance is zero.</p>
@@ -7869,7 +7869,7 @@ const guides = [
 
       <h2><span class="sc-article-num">1</span>One seed, an unlimited tree of keys</h2>
 
-      <p>Your twelve or twenty-four words encode a single large number. From that number, a defined procedure produces a master key, and from the master key an endless branching structure of child keys &mdash; a hierarchical deterministic wallet, universally shortened to HD.</p>
+      <p>Your twelve or twenty-four words encode a single large number. From that number, a defined procedure produces a master key, and from the master key an endless branching structure of child keys &mdash; a hierarchical deterministic wallet, universally shortened to HD. (<a href="seed-to-key.html">What that procedure actually is</a>, step by step, if you want the layer underneath this one.)</p>
 
       <p>Deterministic is the important half. Nothing is random after the seed. Anyone starting from the same words and walking the same route through the tree arrives at exactly the same keys, every time, on any software. That is what makes a backup of twelve words sufficient to restore a wallet holding thousands of addresses.</p>
 
