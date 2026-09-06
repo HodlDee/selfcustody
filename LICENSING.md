@@ -62,6 +62,7 @@ sorting it out of everything else first.
 | `build/render.mjs`, `build/tools/` | Renderer, Entropy Workshop, guards, tests | MIT, except the third-party files listed in the notices |
 | `build/content.mjs` | Site software **and** the prose it contains | MIT for the code, CC BY 4.0 for the prose |
 | `build/guides.mjs` | Module code **and** the 56 guides plus original SVG diagrams it contains | MIT for the code, CC BY 4.0 for the writing and diagrams |
+| `build/glossary.mjs` | Module code **and** the glossary definitions it contains, all written for this site | MIT for the code, CC BY 4.0 for the definitions |
 | `secp256k1-wasm/` | Rust wrapper, toolchain pin and the builder definition — **not** the third-party software the builder image installs | The Unlicense — see [`secp256k1-wasm/LICENSE`](secp256k1-wasm/LICENSE) |
 | `fuzzing/` | Differential test harness, never shipped | MIT |
 | `.github/workflows/` | CI configuration | MIT |

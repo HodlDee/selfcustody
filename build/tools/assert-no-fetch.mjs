@@ -92,8 +92,7 @@ const SCRIPT_ORIGINS = {
     'https://mempool.space': 'blocks, fees and mempool state for the dashboard',
     'https://api.kraken.com': 'spot price for the dashboard',
     'https://api.alternative.me': 'fear and greed index for the dashboard',
-    'https://api.frankfurter.dev': 'USD to CAD, so the price can be shown in local currency',
-    'https://btclexicon.com': 'the glossary term list'
+    'https://api.frankfurter.dev': 'USD to CAD, so the price can be shown in local currency'
   },
   /* Instrumentation for block-demo.html, which is not part of the site proper.
      It wraps fetch to fake a confirmation on demand and never calls out itself;
