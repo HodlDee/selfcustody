@@ -4251,7 +4251,13 @@ const guides = [
 
       <p>Once that has worked end to end, you have a wallet you can actually reason about: the computer proposes, the device disposes, and you have watched both halves happen.</p>
 
-      <p class="mt-4"><a class="sc-text-link" href="quickstart.html">Then test your recovery <i class="bi bi-arrow-right"></i></a></p>`
+      <p class="mt-4"><a class="sc-text-link" href="quickstart.html">Then test your recovery <i class="bi bi-arrow-right"></i></a></p>
+
+      <p class="sc-source-note">
+        Menu paths and the wording of the import dialogs move between releases, and the verification filenames change with every version. Confirm the current steps against
+        ${official("https://sparrowwallet.com/docs/", "Sparrow’s own documentation")}
+        before following any step here that does not match what your screen is showing you.
+      </p>`
   },
   {
     slug: "sparrow-coin-control",
@@ -4654,7 +4660,13 @@ const guides = [
 
       <p>Cove is a Bitcoin-only, open-source phone wallet that works as a hot wallet for spending money or as a coordinator for a hardware signer over QR, NFC, or file. Everything about how much that protects you comes down to whether the signer has a screen you can read the transaction on.</p>
 
-      ${callout("If you take one thing from this page", `Putting the coordinator on your phone is a genuine convenience win and costs you nothing in security &mdash; as long as the device you pair with has its own display and you actually read it. Pair with something screenless and the phone becomes the thing you are trusting, which is the arrangement a hardware wallet exists to avoid.`)}`
+      ${callout("If you take one thing from this page", `Putting the coordinator on your phone is a genuine convenience win and costs you nothing in security &mdash; as long as the device you pair with has its own display and you actually read it. Pair with something screenless and the phone becomes the thing you are trusting, which is the arrangement a hardware wallet exists to avoid.`)}
+
+      <p class="sc-source-note">
+        Cove is a young project and its features are moving quickly, particularly around hardware pairing. Confirm the current behaviour against
+        ${official("https://covebitcoin.com/", "Cove’s own documentation")}
+        before following any step here that does not match what your screen is showing you.
+      </p>`
   },
   {
     slug: "electrum-setup",
@@ -4921,7 +4933,13 @@ const guides = [
 
       <p>Import an extended public key and your phone becomes a window onto cold storage that cannot spend anything. The price is that the phone now carries a permanent, unrevocable view of your finances, so point it at your own node if you can. And do not take receive addresses from it for amounts that matter, because the device that could verify them is exactly the device you left at home.</p>
 
-      ${callout("If you take one thing from this page", `Watch-only protects you from theft, not from being watched. Treat the phone as a read-only dashboard: excellent for answering "did it arrive?", and the wrong tool for answering "where should they send it?"`)}`
+      ${callout("If you take one thing from this page", `Watch-only protects you from theft, not from being watched. Treat the phone as a read-only dashboard: excellent for answering "did it arrive?", and the wrong tool for answering "where should they send it?"`)}
+
+      <p class="sc-source-note">
+        App layout and the import options change between releases. Confirm the current steps against
+        ${official("https://bluewallet.io/", "BlueWallet’s own documentation")}
+        before following any step here that does not match what your screen is showing you.
+      </p>`
   },
   {
     slug: "wasabi-coinjoin-basics",
@@ -5038,7 +5056,13 @@ const guides = [
 
       <p>A CoinJoin makes it impossible to tell which output of a collaborative transaction is yours, forward from that point. It cannot erase your past, hide that you participated, or survive your own careless consolidation afterwards. It costs coordinator fees, mining fees, days of patience, and a permanent obligation to handle those coins deliberately &mdash; and the coordinator it depends on is a single point that has already gone away once.</p>
 
-      ${callout("If you take one thing from this page", `The cryptography is not the weak link and never was. The weak links are the coordinator, which is a legally exposed service run by someone else, and your own handling of the coins afterwards. Only one of those two is under your control, so it is worth being very good at it.`)}`
+      ${callout("If you take one thing from this page", `The cryptography is not the weak link and never was. The weak links are the coordinator, which is a legally exposed service run by someone else, and your own handling of the coins afterwards. Only one of those two is under your control, so it is worth being very good at it.`)}
+
+      <p class="sc-source-note">
+        Coordinator arrangements, fees and the client defaults have all changed materially since the original coordinator shut down, and they may change again. Confirm the current position against
+        ${official("https://docs.wasabiwallet.io/", "Wasabi’s own documentation")}
+        before following any step here that does not match what your screen is showing you.
+      </p>`
   },
   {
     slug: "specter-multisig-coordinator",
@@ -5204,7 +5228,13 @@ const guides = [
 
       <p>Specter is a front end for your own Bitcoin Core node, which means your multisig descriptor &mdash; the most complete description of your finances that exists &mdash; never leaves your machine. The price is running and maintaining a node. Add each device, build the wallet, register the configuration back onto every signer, and store that configuration with every seed backup.</p>
 
-      ${callout("If you take one thing from this page", `Register the wallet configuration on every device, and store a copy with every seed. The first makes your signers able to detect a hostile change address; the second is the difference between three seed backups and an actual recoverable wallet. Neither is optional, and Specter makes both easy enough that skipping them is a choice.`)}`
+      ${callout("If you take one thing from this page", `Register the wallet configuration on every device, and store a copy with every seed. The first makes your signers able to detect a hostile change address; the second is the difference between three seed backups and an actual recoverable wallet. Neither is optional, and Specter makes both easy enough that skipping them is a choice.`)}
+
+      <p class="sc-source-note">
+        Specter tracks Bitcoin Core, so both halves move, and device support changes with each release. Confirm the current setup against
+        ${official("https://docs.specter.solutions/", "Specter’s own documentation")}
+        before following any step here that does not match what your screen is showing you.
+      </p>`
   },
   {
     slug: "own-node-connection",
