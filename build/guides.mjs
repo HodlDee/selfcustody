@@ -1319,7 +1319,7 @@ const guides = [
 
       <p>Two things metal is not. It is not theft protection &mdash; a plate is exactly as readable to whoever finds it as the paper was, and rather more durable in their hands. And it is not an excuse to keep only one copy. Durability and secrecy are separate problems, and location is still the whole of your defence on the second one.</p>
 
-      ${callout("The shortcut that halves the work", `Every word in the BIP39 list is uniquely identified by its first four letters &mdash; no two words share them. A plate recording <strong>ABAN</strong> is exactly as complete as one recording <strong>ABANDON</strong>. Four characters per word roughly halves both the stamping and the number of chances to mis-strike. Words shorter than four letters are written in full, and the shortcut applies to BIP39 wordlists only.`)}
+      ${callout("The shortcut that halves the work", `Every word in the BIP39 list is uniquely identified by its first four letters &mdash; no two words share them. A plate recording <strong>ABAN</strong> is exactly as complete as one recording <strong>ABANDON</strong>. Four characters per word roughly halves both the stamping and the number of chances to mis-strike. The 103 words shorter than four letters are written in full, and the shortcut applies to BIP39 wordlists only.`)}
 
       <p><a class="sc-text-link" href="seed-backup-metal.html">Durable seed backups <i class="bi bi-arrow-right"></i></a></p>
 
@@ -6899,13 +6899,13 @@ const guides = [
 
       <h2><span class="sc-article-num">3</span>You only need the first four letters</h2>
 
-      <p>Every word in the BIP39 list is uniquely identified by its first four letters. No two words share them. <em>Abandon</em> and <em>ability</em> differ by the fourth character; nothing beyond that is doing any work.</p>
+      <p>Every word in the BIP39 list is uniquely identified by its first four letters. No two words share them. <em>About</em> and <em>above</em> are identical until the fourth character, which is why four is the number; nothing beyond it is doing any work.</p>
 
       <p>So a backup recording <code>ABAN</code> is exactly as complete as one recording <code>ABANDON</code>, and stamping four characters per word rather than up to eight roughly halves the labour and the number of chances to make a mistake.</p>
 
       ${checklist([
         "Record four letters per word. Any wallet or wordlist will resolve them unambiguously.",
-        "Words shorter than four letters are written in full &mdash; there are only a handful.",
+        "Words shorter than four letters are written in full. There are 103 of them &mdash; about one word in twenty &mdash; so expect to meet one or two in a 24-word phrase.",
         "Number your words. Order is part of the secret, and a plate of unnumbered words is a puzzle you have set for your future self.",
         "This shortcut applies to BIP39 wordlists. If your wallet uses a different scheme &mdash; Electrum's own seed format, for instance &mdash; write the words in full."
       ])}
