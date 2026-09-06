@@ -3297,7 +3297,7 @@ const guides = [
 
       <h2><span class="sc-article-num">3</span>Verify the image, then flash it</h2>
 
-      <p>This is the step that replaces the tamper-evident bag, and skipping it means running software of unknown origin on a device you are about to show your seed to.</p>
+      <p>This is the step that replaces the tamper-evident bag, and skipping it means running software of unknown origin on a device you are about to show your seed to. The same three-step pattern is explained line by line in <a href="verify-a-download.html">verifying a download</a>.</p>
 
       <p>Download the release image along with its <a href="../glossary.html#term-checksum">checksum</a> file and the signature of that checksum file. Then, on your computer, three commands do the work &mdash; substituting the version you actually downloaded:</p>
 
@@ -4258,7 +4258,7 @@ const guides = [
     updated: "2026-08-17",
     productGuide: true,
     status: "published",
-    related: ["coldcard-setup", "exchange-withdrawal", "sparrow-coin-control"],
+    related: ["coldcard-setup", "exchange-withdrawal", "sparrow-coin-control", "verify-a-download"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">A hardware wallet on its own cannot tell you what you own. It holds keys and signs things; it has no idea what is on the blockchain. Sparrow is the other half &mdash; the part that watches the network, builds transactions, and hands them to your device to be signed.</p>
@@ -4284,7 +4284,7 @@ const guides = [
 
       <h2><span class="sc-article-num">1</span>Verify the download before you run it</h2>
 
-      <p>Wallet software is impersonated relentlessly, and a convincing fake will behave exactly like the real thing right up until it shows you an address that is not yours. The release page publishes a manifest and a signature so you can confirm the file came from the project.</p>
+      <p>Wallet software is impersonated relentlessly, and a convincing fake will behave exactly like the real thing right up until it shows you an address that is not yours. <a href="verify-a-download.html">The commands, and how to read their output</a>, are set out in full separately. The release page publishes a manifest and a signature so you can confirm the file came from the project.</p>
 
       ${checklist([
         "Download only from sparrowwallet.com, typed by hand rather than clicked from a search result.",
@@ -4770,7 +4770,7 @@ const guides = [
     updated: "2026-08-17",
     productGuide: true,
     status: "published",
-    related: ["recovery-test-drill", "sparrow-first-wallet", "what-not-to-normalize"],
+    related: ["recovery-test-drill", "sparrow-first-wallet", "what-not-to-normalize", "verify-a-download"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Electrum can split one wallet across two machines. The online one watches the blockchain, shows your balance, and builds transactions but holds no keys and can spend nothing. The offline one holds the keys, never touches a network, and does nothing but sign.</p>
@@ -4798,7 +4798,7 @@ const guides = [
 
       <h2><span class="sc-article-num">1</span>Verify the download before you run anything</h2>
 
-      <p>Electrum publishes a GPG signature alongside each release. Checking it confirms the file came from the project rather than from whoever bought the search advert above the real site.</p>
+      <p>Electrum publishes a GPG signature alongside each release. Checking it confirms the file came from the project rather than from whoever bought the search advert above the real site. <a href="verify-a-download.html">How to run that check</a>, and why a successful one prints a warning, is a guide of its own.</p>
 
       ${checklist([
         "Type electrum.org into the address bar yourself. Do not arrive from a search result, an email, or a forum link.",
