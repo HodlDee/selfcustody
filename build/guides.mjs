@@ -8017,6 +8017,13 @@ const guides = [
 
       ${callout("This is why the last word is not free", `In a 24-word phrase the final word carries the last three bits of your secret followed by all eight checksum bits. That is why you cannot simply pick a twenty-fourth word you like, and why <a href="dice-entropy.html">rolling your own entropy</a> ends with a device or a worksheet computing that word for you.`)}
 
+      ${figureSlot({
+        shot: "A handwritten seed card face down on a desk beside an open notebook, the notebook showing a column of hand-written eleven-digit binary numbers, one per line, in the same pen.",
+        caption: "Every word on the card is exactly eleven bits. The words are a friendlier way of writing down a number, not a different kind of thing.",
+        ratio: "16 / 9",
+        icon: "bi-diagram-2"
+      })}
+
       <h2><span class="sc-article-num">3</span>The words are not the seed</h2>
 
       <p>Here is the step most people skip, and it is the one that explains passphrases.</p>
