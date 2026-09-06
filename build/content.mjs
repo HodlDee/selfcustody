@@ -976,7 +976,7 @@ const currentYear = new Date().getFullYear();
                     <th scope="row">Personal/private node support</th>
                     <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>Bitcoin Core or Electrum server</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-partial" aria-label="Optional or model-dependent">&#9680;</span><small>Platform-dependent</small></td>
-                    <td><span class="sc-matrix-mark sc-matrix-no" aria-label="Not part of the standard workflow">&#8212;</span></td>
+                    <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>Own Electrum or Esplora node</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>Run your own Electrum server</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>EPS, ElectrumX, or Electrs</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-no" aria-label="Not part of the standard workflow">&#8212;</span></td>
@@ -999,7 +999,7 @@ const currentYear = new Date().getFullYear();
                     <td><span class="sc-matrix-mark sc-matrix-no" aria-label="Not part of the standard workflow">&#8212;</span></td>
                     <td><span class="sc-matrix-mark sc-matrix-no" aria-label="Not part of the standard workflow">&#8212;</span></td>
                     <td><span class="sc-matrix-mark sc-matrix-no" aria-label="Not part of the standard workflow">&#8212;</span></td>
-                    <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>WabiSabi coordinator</small></td>
+                    <td><span class="sc-matrix-mark sc-matrix-partial" aria-label="Optional or model-dependent">&#9680;</span><small>WabiSabi client; no first-party coordinator since 2024</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-no" aria-label="Not part of the standard workflow">&#8212;</span></td>
                   </tr>
 
@@ -1008,7 +1008,7 @@ const currentYear = new Date().getFullYear();
                     <th scope="row">Watch-only mode</th>
                     <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span></td>
                     <td><span class="sc-matrix-mark sc-matrix-partial" aria-label="Optional or model-dependent">&#9680;</span><small>Not fully detailed</small></td>
-                    <td><span class="sc-matrix-mark sc-matrix-no" aria-label="Not part of the standard workflow">&#8212;</span></td>
+                    <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>From xpub or descriptor</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span></td>
                     <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span></td>
                     <td><span class="sc-matrix-mark sc-matrix-partial" aria-label="Optional or model-dependent">&#9680;</span><small>Not fully detailed</small></td>
