@@ -7905,7 +7905,7 @@ const guides = [
 
       <h2><span class="sc-article-num">3</span>The gap limit</h2>
 
-      <p>Even on the correct branch, a wallet does not check infinitely many addresses. It works forward from index zero, and it stops after a run of consecutive empty ones &mdash; conventionally twenty. That run is the gap limit.</p>
+      <p>Even on the correct branch, a wallet does not check infinitely many addresses. It works forward from index zero, and it stops after a run of consecutive empty ones. That run is the gap limit, and BIP44 sets it at twenty: if the software hits twenty unused addresses in a row, it concludes there are no used addresses beyond that point and stops searching. Twenty is the standard rather than a habit, which is why almost every wallet you meet uses the same number &mdash; and why raising it is usually an explicit setting rather than the default.</p>
 
       <p>It exists for a sensible reason: each address has to be checked against the chain, and scanning forever would make restoring impossibly slow. But it creates a specific and genuinely alarming failure.</p>
 
