@@ -534,7 +534,7 @@ const currentYear = new Date().getFullYear();
                   </tr>
                   <tr>
                     <th scope="row">Dedicated key-isolation chip</th>
-                    <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>EAL6+ TROPIC01</small></td>
+                    <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>TROPIC01, auditable; EAL6+ Optiga alongside</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-no" aria-label="Not part of the standard workflow">&#8212;</span><small>Secure MCU; 2-of-3 multisig</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>EAL6+ secure chip</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-partial" aria-label="Optional or model-dependent">&#9680;</span><small>Virtual secure element</small></td>
