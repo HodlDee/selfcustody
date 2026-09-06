@@ -2332,6 +2332,13 @@ const guides = [
 
       <p>All three must pass. Any one of them alone proves very little &mdash; a signature check without the hash check tells you the project signed <em>some</em> list, and a hash check without the signature check tells you your file matches a list that anyone could have written.</p>
 
+      ${figureSlot({
+        shot: "A laptop screen photographed slightly off-axis in a dim room, a terminal showing a completed gpg verification: the Good signature line and the capitalised WARNING about the key not being certified both legible in the same frame.",
+        caption: "Both of these appear on a check that passed. Only the first line is the result; the second is answering a different question.",
+        ratio: "16 / 9",
+        icon: "bi-check2-circle"
+      })}
+
       <h2><span class="sc-article-num">4</span>The warning that means everything worked</h2>
 
       <p>This is the step that stops people, and nothing on the download page prepares them for it. A completely successful verification prints something like this:</p>
