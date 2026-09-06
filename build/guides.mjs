@@ -8612,7 +8612,25 @@ const guides = [
         "<strong>Fee-rate habits.</strong> Always paying the same wallet's default at the same urgency setting is one more consistent signature."
       ])}
 
-      <h2><span class="sc-article-num">5</span>What coin control actually defeats</h2>
+      <h2><span class="sc-article-num">5</span>The one they can send you</h2>
+
+      <p>Everything above is passive. An analyst reads a ledger that already exists and infers what they can. There is one exception, and it is the only item on this page where somebody chooses to act on <em>you</em>: they plant the signal rather than waiting for one.</p>
+
+      <p>A dusting attack is somebody sending you a trivial amount of bitcoin &mdash; a few hundred satoshis, worth less than the fee to spend it &mdash; at an address they have already linked to you or want to link to something else. On its own it reveals nothing, and nothing has happened yet.</p>
+
+      <p>The attack completes when you spend it. If that dust is ever selected as an input alongside your other coins, common-input-ownership does the rest: the strongest heuristic in the field now says the address they dusted and every other input in that transaction share an owner. They supplied one end of the link and let your wallet build the other.</p>
+
+      ${cautions([
+        "Automatic coin selection is what springs it. Most wallets pick inputs to minimise fees or tidy up small change, and a dust output is exactly the sort of thing an algorithm decides to sweep up on your behalf.",
+        "It is cheap enough to do at scale. Dusting thousands of addresses costs very little and needs no knowledge of who any of them belong to &mdash; the analysis happens afterwards, on whoever spends.",
+        "Most small coins are not attacks. Change, faucet payouts, and leftovers from consolidation all look identical. You cannot reliably tell, which is precisely why the defence does not depend on telling."
+      ])}
+
+      <p>The defence is the one <a href="sparrow-coin-control.html">coin control</a> already recommends, and this is why it is recommended: <strong>freeze anything you did not expect, and never let it be selected automatically.</strong> Frozen dust is inert. It sits in the wallet indefinitely, costs nothing, links nothing, and can be left there forever &mdash; a coin you never spend is a coin that never joins anything to anything.</p>
+
+      <p>Note what this does <em>not</em> require. You do not have to identify the attack, work out who sent it, or do anything at the moment it arrives. The habit of never spending coins of unknown origin covers the deliberate case and the innocent case identically, which is the mark of a defence worth having.</p>
+
+      <h2><span class="sc-article-num">6</span>What coin control actually defeats</h2>
 
       <p>Now the practical question: which of these does careful spending address?</p>
 
@@ -8631,7 +8649,7 @@ const guides = [
 
       <p><a href='sparrow-coin-control.html'>Coin control</a> is genuinely the highest-value habit available, and this table is not an argument against it &mdash; it defeats the strongest heuristic in the field. But it is a habit-level defence, and several rows here are immune to habits. That is what the next two sections are for.</p>
 
-      <h2><span class="sc-article-num">6</span>Payjoin: making the strongest assumption false</h2>
+      <h2><span class="sc-article-num">7</span>Payjoin: making the strongest assumption false</h2>
 
       <p>Every defence so far tries to avoid <em>triggering</em> common-input-ownership. Payjoin does something more interesting: it makes the assumption produce a wrong answer.</p>
 
@@ -8650,7 +8668,7 @@ const guides = [
 
       <p>The wider benefit is worth noting. Every payjoin that occurs degrades the reliability of common-input-ownership for <em>everyone</em>, including people who never use it. It is one of the few privacy measures with a positive externality.</p>
 
-      <h2><span class="sc-article-num">7</span>Silent payments: a reusable address that is not reuse</h2>
+      <h2><span class="sc-article-num">8</span>Silent payments: a reusable address that is not reuse</h2>
 
       <p>Address reuse is one of the clearest signals on the list, and there is a long-standing situation that forces it: publishing a donation address, putting one in a profile, or giving a static address to somebody who pays you regularly. You cannot hand out a fresh address every time if the point is to publish one.</p>
 
@@ -8662,7 +8680,7 @@ const guides = [
         "<strong>It solves publication, not everything.</strong> Silent payments fix the static-address problem specifically. They do not affect common-input-ownership, change detection, or fingerprinting."
       ])}
 
-      <h2><span class="sc-article-num">8</span>What none of this fixes</h2>
+      <h2><span class="sc-article-num">9</span>What none of this fixes</h2>
 
       ${cautions([
         "<strong>The past is permanent.</strong> Every link already published stays published. All of this changes your future only.",
@@ -8673,7 +8691,7 @@ const guides = [
 
       <h2>The short version</h2>
 
-      <p>Analysts combine roughly eight inferences, not one: shared inputs, several independent ways of spotting change, the fingerprint your wallet software leaves on every transaction, and correlations of amount and time. Coin control defeats the strongest of them and is worth doing for that reason alone, but several are immune to spending habits. Payjoin attacks the biggest heuristic directly by making it produce false answers, and silent payments remove the need to ever reuse a published address.</p>
+      <p>Analysts combine roughly eight inferences, not one: shared inputs, several independent ways of spotting change, the fingerprint your wallet software leaves on every transaction, and correlations of amount and time. All of them read a ledger that already exists &mdash; the exception is dust somebody sent you deliberately, which does nothing until you spend it and is answered by never spending it. Coin control defeats the strongest of them and is worth doing for that reason alone, but several are immune to spending habits. Payjoin attacks the biggest heuristic directly by making it produce false answers, and silent payments remove the need to ever reuse a published address.</p>
 
       ${callout("If you take one thing from this page", `Privacy on a public ledger is a question of how many weak signals point the same way, not whether you defeated one strong one. That is why habits, wallet choice, and protocol-level tools are complementary rather than alternatives — and why the honest goal is raising the cost of the inference rather than achieving anonymity.`)}`
   },
