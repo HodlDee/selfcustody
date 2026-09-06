@@ -6918,7 +6918,13 @@ const guides = [
 
       <p>If you hold a single wallet, BIP85 solves a problem you do not have. If you hold five and can name each one's backup location from memory, you are already doing the hard version well and may not want to change it. It is the middle case &mdash; several wallets, backups you know are not all up to standard &mdash; where this genuinely helps.</p>
 
-      ${callout("If you take one thing from this page", "BIP85 converts a backup problem into a bookkeeping problem. That is a real improvement, because backups are physical and bookkeeping is not — but only if you actually keep the books. An index you cannot remember is a wallet you cannot reach, and the master seed sitting safely in your safe will not tell you which number it was.")}`
+      ${callout("If you take one thing from this page", "BIP85 converts a backup problem into a bookkeeping problem. That is a real improvement, because backups are physical and bookkeeping is not — but only if you actually keep the books. An index you cannot remember is a wallet you cannot reach, and the master seed sitting safely in your safe will not tell you which number it was.")}
+
+      <p class="sc-source-note">
+        Which wallets and devices implement BIP85 changes as projects ship releases, so the support table above is a snapshot rather than a standing fact. The standard itself is stable and specifies the derivation exactly &mdash;
+        ${official("https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki", "BIP85")}
+        &mdash; but confirm current support against each project’s own documentation before planning a setup around it.
+      </p>`
   },
   {
     slug: "seed-backup-metal",
