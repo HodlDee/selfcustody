@@ -1007,7 +1007,7 @@ const guides = [
     icon: "bi-currency-bitcoin",
     updated: "2026-08-17",
     status: "published",
-    related: ["quickstart", "what-not-to-normalize", "recovery-test-drill"],
+    related: ["quickstart", "what-not-to-normalize", "recovery-test-drill", "how-custody-fails"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">"Be your own bank" is a good slogan and a bad description. It gets the freedom right and leaves out the job description &mdash; because a bank is not just a place that holds money. It is a large organisation performing a dozen unglamorous tasks on your behalf, most of which you have never had to think about.</p>
@@ -1042,7 +1042,7 @@ const guides = [
 
       <p>Deposits at a Canadian bank are protected by CDIC up to defined limits. Crypto assets held on a trading platform are not, whatever the platform's marketing implies. Registration with securities regulators sets rules for how a platform must operate; it is not deposit insurance and does not make you whole if the business fails.</p>
 
-      <p>Canada has its own case study. QuadrigaCX was the country's largest bitcoin exchange until it collapsed in 2019, leaving roughly 76,000 users unable to reach their funds. The Ontario Securities Commission's subsequent investigation concluded the platform had been operating as a fraud. Customers had done nothing wrong &mdash; they had simply left their coins with someone else, which is what everyone does until they decide not to.</p>
+      <p>Canada has its own case study. QuadrigaCX was the country's largest bitcoin exchange until it collapsed in 2019, leaving roughly 76,000 users unable to reach their funds. The Ontario Securities Commission's subsequent investigation concluded the platform had been operating as a fraud. Customers had done nothing wrong &mdash; they had simply left their coins with someone else, which is what everyone does until they decide not to. It is not an isolated case, and the differences between it and the others matter: <a href='how-custody-fails.html'>four platforms, four different mechanisms</a>.</p>
 
       ${pullQuote("Not your keys, not your coins is not a slogan about ideology. It is a description of who bears the loss when a company fails.")}
 
@@ -1525,7 +1525,7 @@ const guides = [
     icon: "bi-shield-exclamation",
     updated: "2026-08-17",
     status: "published",
-    related: ["quickstart", "dice-entropy", "recovery-test-drill"],
+    related: ["quickstart", "dice-entropy", "recovery-test-drill", "how-custody-fails"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Almost nobody loses bitcoin to cryptography. The maths holds. What people lose it to is a shortcut that worked the first fifty times, taken by someone who had every intention of being careful.</p>
@@ -5305,7 +5305,7 @@ const guides = [
     updated: "2026-08-17",
     productGuide: true,
     status: "published",
-    related: ["quickstart", "sparrow-first-wallet", "what-not-to-normalize"],
+    related: ["quickstart", "sparrow-first-wallet", "what-not-to-normalize", "how-custody-fails"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Until you withdraw, you do not own bitcoin. You own an entry in a company's database saying they owe you some. The two behave identically right up until the moment they do not &mdash; and by then the withdrawal is no longer available.</p>
@@ -5450,7 +5450,7 @@ const guides = [
     icon: "bi-shield-lock",
     updated: "2026-08-17",
     status: "published",
-    related: ["exchange-withdrawal", "what-not-to-normalize", "owning-your-bitcoin"],
+    related: ["exchange-withdrawal", "what-not-to-normalize", "owning-your-bitcoin", "how-custody-fails"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">When someone loses bitcoin from an exchange, the story is rarely that the exchange was breached. Far more often the account was simply opened by somebody else, using a password reset, a recycled password, or a phone number that stopped being theirs on a Tuesday afternoon.</p>
@@ -8916,6 +8916,126 @@ const guides = [
       <p>There is no authority. Rules are whatever nodes independently enforce, so change requires persuading people to run different software rather than winning a vote. Soft forks tighten rules and stay compatible; hard forks loosen them and split the network unless everyone moves. The block size war established that hashpower does not decide, and BIP 110 demonstrated the same thing in 2026 in under a day.</p>
 
       ${callout("If you take one thing from this page", "Nobody can change the rules of the bitcoin you hold without your cooperation, because your node enforces them and no block breaking them will ever be accepted by it. That protection is only yours if you are actually running one — otherwise you have delegated it to whoever you are asking.")}`
+  },
+  {
+    slug: "how-custody-fails",
+    category: "concepts",
+    products: [],
+    title: "Four ways a platform loses your bitcoin",
+    summary: "Not your keys, not your coins is the conclusion. These are the cases it was drawn from — four failures with four different mechanisms, none of which announced itself in advance, and one of which was Canadian.",
+    level: "beginner",
+    minutes: 16,
+    effort: "read",
+    goals: ["learn"],
+    tags: ["Mindset", "How it works"],
+    icon: "bi-building-lock",
+    updated: "2026-09-06",
+    status: "published",
+    related: ["owning-your-bitcoin", "exchange-account-security", "exchange-withdrawal"],
+    layout: "article",
+    body: `
+      <p class="sc-guide-intro"><a href="owning-your-bitcoin.html">The responsibilities that transfer</a> makes an argument: leaving bitcoin with a company means your access depends on things you cannot audit. That is easy to nod along to and hard to feel. This page is the evidence &mdash; four collapses, each of which failed in a genuinely different way.</p>
+
+      <p>They are worth reading together rather than separately, because the differences are the point. If they had all failed the same way you could learn one warning sign. They did not, and the only thing every customer had in common was that their bitcoin was an entry in someone else's database.</p>
+
+      ${figureSlot({
+        shot: "A shuttered shopfront photographed straight on in flat daylight, security grille down, a printed notice taped inside the glass too small to read from the street.",
+        caption: "Every one of these looked open for business until the morning it did not.",
+        ratio: "16 / 9",
+        icon: "bi-building-lock"
+      })}
+
+      <h2><span class="sc-article-num">1</span>The slow drain nobody could see</h2>
+
+      <p><strong>Mt. Gox, February 2014.</strong> At its height it handled the large majority of global bitcoin trading. When it stopped, roughly 850,000 bitcoin were unaccounted for.</p>
+
+      <p>The detail that matters is the timeline. The coins did not vanish in one bad week &mdash; the losses accumulated over <em>years</em>, while the exchange continued operating, quoting prices, and showing customers balances that were, by then, fiction. Internal accounting was not good enough to notice, and nothing visible from outside could have told a customer.</p>
+
+      <p>What this one demonstrates: <strong>a balance on a screen is a claim, not an observation.</strong> Your account page renders a number from a company's database. It is not derived from the blockchain, and nothing forces the two to agree.</p>
+
+      <h2><span class="sc-article-num">2</span>The single point of failure who was also a fraud</h2>
+
+      <p><strong>QuadrigaCX, 2019.</strong> Canada's largest bitcoin exchange, and the case closest to home.</p>
+
+      <p>The story as it broke was that the founder had died suddenly and taken the only keys with him, stranding roughly 76,000 users. That version is memorable, tidy, and not what happened. The Ontario Securities Commission investigated and concluded the platform had been operating as a fraud &mdash; customer funds had been traded on other platforms and lost, and the shortfall long predated the death.</p>
+
+      <p>Both readings should worry you, which is why this case earns its place. The generous version is catastrophic key-person risk: one person, no redundancy, no oversight. The accurate version is worse and was invisible in exactly the same way.</p>
+
+      <p>What this one demonstrates: <strong>"registered" is not "audited", and neither is insurance.</strong> Deposits at a Canadian bank are covered by CDIC within limits. Crypto held on a trading platform is not, whatever the marketing implies.</p>
+
+      <h2><span class="sc-article-num">3</span>The yield that made you a creditor</h2>
+
+      <p><strong>Celsius, Voyager, BlockFi &mdash; 2022.</strong> These were not hacked and, in the ordinary sense, they were not hiding anything. They told customers what they were doing.</p>
+
+      <p>The offer was interest on your bitcoin. To pay interest, the platform has to do something with the coins, which means lending them out. That is not custody at all &mdash; it is a loan from you to the company. When their borrowers failed and the companies entered bankruptcy, customers discovered what they had actually been holding: <strong>an unsecured claim against an insolvent business</strong>, queued behind secured creditors.</p>
+
+      <p>Nothing was concealed. The terms said so. But "earn 8% on your bitcoin" and "make an unsecured loan to a company whose balance sheet you have never seen" describe the same arrangement, and only one of them was on the marketing.</p>
+
+      <p>What this one demonstrates: <strong>yield is the tell.</strong> Bitcoin sitting still does not generate a return. If a platform pays you to hold it there, your coins are not sitting still, and you are being paid for taking a risk that has not been named.</p>
+
+      <h2><span class="sc-article-num">4</span>The house money</h2>
+
+      <p><strong>FTX, November 2022.</strong> The largest and the fastest. A well-regarded exchange, backed by serious investors, with a founder on magazine covers, went from apparently solvent to bankrupt in about a week, with a shortfall in the billions.</p>
+
+      <p>Customer deposits had been treated as the company's own money and moved to an affiliated trading firm. There was no hack and no market crash that explains it. The coins customers believed were held for them had been spent.</p>
+
+      <p>What this one demonstrates: <strong>reputation is not a control.</strong> Auditors, investors, regulators in multiple countries and a great many sophisticated customers all looked at FTX and saw a functioning business. Every external signal a careful person could have checked was green.</p>
+
+      <h2><span class="sc-article-num">5</span>What proof of reserves does and does not prove</h2>
+
+      <p>After 2022 many platforms began publishing proof of reserves, and it is worth knowing precisely what that is worth, because it is regularly presented as though it closes this question.</p>
+
+      <p>A proof of reserves demonstrates that the platform controls a certain quantity of bitcoin at a moment in time. That is genuinely something. But solvency is reserves <em>minus liabilities</em>, and the liabilities are the half nobody can see.</p>
+
+      ${cautions([
+        "It is a snapshot. Coins can be borrowed for the audit and returned afterwards, which has happened.",
+        "It rarely proves liabilities. Without a verified total of what customers are owed, showing assets proves nothing about whether they are enough.",
+        "It cannot show encumbrance. Coins genuinely held may already be pledged as collateral elsewhere.",
+        "It says nothing about what happens next. Control today is not a commitment about tomorrow."
+      ])}
+
+      <h2><span class="sc-article-num">6</span>What the four have in common</h2>
+
+      <p>Four different mechanisms &mdash; incompetence, fraud, disclosed-but-misunderstood lending, and outright misappropriation. No single warning sign covers them. But the structure underneath was identical every time.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>Case</th><th>Mechanism</th><th>Visible beforehand?</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Mt. Gox</strong></td><td>Losses accumulating unnoticed over years</td><td>No &mdash; not even internally</td></tr>
+            <tr><td><strong>QuadrigaCX</strong></td><td>Fraud, presented as key-person risk</td><td>No &mdash; it was registered and operating</td></tr>
+            <tr><td><strong>Celsius and others</strong></td><td>Customer coins lent out; customers became creditors</td><td><em>Yes</em> &mdash; it was in the terms</td></tr>
+            <tr><td><strong>FTX</strong></td><td>Deposits spent as company money</td><td>No &mdash; every external signal was positive</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Note the third row, which is the uncomfortable one. That failure <em>was</em> disclosed, in writing, to everyone. It still took people by surprise, because reading a terms-of-service document is not the same as believing it.</p>
+
+      ${pullQuote("In all four, the customer's bitcoin was a number in a company's database and a liability on its balance sheet. What differed was only how they found out.")}
+
+      <h2><span class="sc-article-num">7</span>What this argues for, and what it does not</h2>
+
+      <p>Not that every platform is a fraud. Most are not, most of the time, and this site's <a href="../exchanges.html">comparison of Canadian purchase routes</a> exists because buying bitcoin generally means using one.</p>
+
+      <p>What it argues is narrower and firmer: <strong>a platform is a place to transact, not a place to keep things.</strong> The risk is not that any particular company is dishonest. It is that you cannot tell from outside, that the people who lost money in every case above could not tell either, and that the exposure grows with the balance and the time you leave it there.</p>
+
+      ${checklist([
+        "<strong>Withdraw after buying, not eventually.</strong> The exposure is proportional to the amount and how long it sits there. <a href=\"exchange-withdrawal.html\">Getting it off the platform</a> is the step this whole page is arguing for.",
+        "<strong>Treat a balance page as a claim.</strong> It is a company telling you what it owes you, not evidence of anything on the chain.",
+        "<strong>Be suspicious of yield specifically.</strong> Of everything above, it is the one failure that announces itself in advance and is still routinely misread.",
+        "<strong>Do not read a regulator's registration as protection.</strong> Registration sets rules for how a business must operate. It is not deposit insurance and it did not prevent any of these."
+      ])}
+
+      <h2>The short version</h2>
+
+      <p>Mt. Gox bled coins for years without anyone noticing. Quadriga was a fraud wearing the costume of a tragedy. Celsius and its peers told customers the truth and were misunderstood anyway. FTX simply spent the deposits. Different mechanisms, different warning signs, and one structure in common: the bitcoin belonged to the company and the customer held a promise.</p>
+
+      ${callout("If you take one thing from this page", `Every customer in every case above believed their balance was their bitcoin. The number on the screen was accurate right up until the moment it was not, and there was no way to check from outside. <a href="owning-your-bitcoin.html">Holding your own keys</a> replaces that promise with something you can verify yourself &mdash; which is the entire trade, and the reason it is worth the work.`)}
+
+      <p class="sc-source-note">
+        Figures here are the widely reported ones and are deliberately approximate; bankruptcy claims, recovered amounts and final accounting have moved for several of these cases and in some are still moving. The mechanisms are the durable part and are what this page is for. For the Canadian case, the Ontario Securities Commission's own published investigation is the primary account.
+      </p>`
   },
 ];
 

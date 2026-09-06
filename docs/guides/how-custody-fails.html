@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Not your keys, not your coins is the conclusion. These are the cases it was drawn from — four failures with four different mechanisms, none of which announced itself in advance, and one of which was Canadian.">
+  <title>Four ways a platform loses your bitcoin | SelfCustody.ca</title>
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://selfcustody.ca/guides/how-custody-fails.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_CA">
+  <meta property="og:site_name" content="SelfCustody.ca">
+  <meta property="og:title" content="Four ways a platform loses your bitcoin | SelfCustody.ca">
+  <meta property="og:description" content="Not your keys, not your coins is the conclusion. These are the cases it was drawn from — four failures with four different mechanisms, none of which announced itself in advance, and one of which was Canadian.">
+  <meta property="og:url" content="https://selfcustody.ca/guides/how-custody-fails.html">
+  <meta property="og:image" content="https://selfcustody.ca/assets/img/social-preview.jpg?v=5">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1406">
+  <meta property="og:image:height" content="703">
+  <meta property="og:image:alt" content="SelfCustody.ca beside an open bank vault on a dark brick wall">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://selfcustody.ca/assets/img/social-preview.jpg?v=5">
+  <meta name="twitter:image:alt" content="SelfCustody.ca beside an open bank vault on a dark brick wall">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/self-custody-favicon.svg">
+  <link rel="icon" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css?v=20260829-03" rel="stylesheet">
+  <link href="../assets/css/style.css?v=20260829-03" rel="stylesheet">
+  <link href="../assets/css/site-refresh.css?v=20260829-03" rel="stylesheet">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Four ways a platform loses your bitcoin","description":"Not your keys, not your coins is the conclusion. These are the cases it was drawn from — four failures with four different mechanisms, none of which announced itself in advance, and one of which was Canadian.","url":"https://selfcustody.ca/guides/how-custody-fails.html","datePublished":"2026-09-06","dateModified":"2026-09-06","inLanguage":"en-CA","publisher":{"@type":"Organization","name":"SelfCustody.ca","url":"https://selfcustody.ca/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://selfcustody.ca/guides/how-custody-fails.html"}}</script>
+</head>
+<body class="site-refresh" data-page="guides">
+  <div id="site-header">
+      <a class="sc-skip-link" href="#main-content">Skip to main content</a>
+      <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center">
+          <a class="sc-brand me-auto" href="../index.html" aria-label="Self Custody home">
+            <span class="sc-brand-mark" aria-hidden="true"></span>
+            <span class="sc-brand-name">SELF CUSTODY</span>
+            <span class="sc-brand-domain" aria-hidden="true"><span class="sc-brand-domain-text">.CA</span></span>
+          </a>
+          <nav id="navbar" class="navbar" aria-label="Primary navigation">
+            <ul><li><a class=" " href="../index.html"><span>Home</span></a></li><li class="sc-nav-menu">
+          <button class="sc-nav-menu-toggle active" type="button" aria-expanded="false" aria-haspopup="true">
+            <span>Guides</span><span class="sc-nav-menu-chevron" aria-hidden="true"></span>
+          </button>
+          <ul class="sc-nav-submenu">
+            <li><a href="../guides.html">Start here</a></li>
+            <li><a href="../guides.html#devices">Devices</a></li>
+            <li><a href="../guides.html#software">Software</a></li>
+            <li><a href="../guides.html#exchanges">Exchanges</a></li>
+            <li><a href="../guides.html#advanced">Techniques</a></li>
+            <li><a href="../guides.html#concepts">Concepts</a></li>
+            <li class="sc-nav-tool-item"><a class="sc-nav-tool-link" href="../entropy.html">Entropy Workshop</a></li>
+          </ul>
+        </li><li class="sc-nav-menu">
+          <button class="sc-nav-menu-toggle " type="button" aria-expanded="false" aria-haspopup="true">
+            <span>Compare</span><span class="sc-nav-menu-chevron" aria-hidden="true"></span>
+          </button>
+          <ul class="sc-nav-submenu">
+            <li><a class="" href="../devices.html">Devices</a></li>
+            <li><a class="" href="../software.html">Software</a></li>
+            <li><a class="" href="../exchanges.html">Exchanges</a></li>
+          </ul>
+        </li><li><a class=" " href="../glossary.html"><span>Glossary</span></a></li><li><a class=" " href="../dashboard.html"><span>Dashboard</span></a></li><li><a class=" sc-contact-link" href="../contact.html"><span>Get Help</span></a></li></ul>
+            <i class="bi bi-list mobile-nav-toggle" aria-label="Open navigation" role="button" tabindex="0"></i>
+          </nav>
+        </div>
+      </header></div>
+    <main id="main-content">
+    <section class="sc-guide-head">
+      <div class="container">
+        <nav class="sc-breadcrumb" aria-label="Breadcrumb">
+          <a href="../guides.html">Guides</a>
+          <i class="bi bi-arrow-right" aria-hidden="true"></i>
+          <a href="../guides.html#concepts">Concepts</a>
+        </nav>
+        <span class="sc-eyebrow">How it works</span>
+        <h1>Four ways a platform loses your bitcoin</h1>
+        <p class="sc-lead">Not your keys, not your coins is the conclusion. These are the cases it was drawn from — four failures with four different mechanisms, none of which announced itself in advance, and one of which was Canadian.</p>
+        <div class="sc-guide-meta">
+          <span class="sc-level sc-level-beginner">Beginner</span>
+          <span><i class="bi bi-hourglass-split" aria-hidden="true"></i> About 16 minutes</span>
+          <span>Updated Sep 6, 2026</span>
+        </div>
+        <div class="sc-tags sc-tags-lg"><span class="sc-tag">Mindset</span><span class="sc-tag">How it works</span></div>
+        
+      </div>
+    </section>
+
+    <section class="sc-section sc-guide-body">
+      <div class="container">
+        <div class="sc-article">
+      <p class="sc-guide-intro"><a href="owning-your-bitcoin.html">The responsibilities that transfer</a> makes an argument: leaving bitcoin with a company means your access depends on things you cannot audit. That is easy to nod along to and hard to feel. This page is the evidence &mdash; four collapses, each of which failed in a genuinely different way.</p>
+
+      <p>They are worth reading together rather than separately, because the differences are the point. If they had all failed the same way you could learn one warning sign. They did not, and the only thing every customer had in common was that their bitcoin was an entry in someone else's database.</p>
+
+      
+  <figure class="sc-figure sc-figure-slot">
+    <div class="sc-figure-slot-frame" style="aspect-ratio: 16 / 9">
+      <i class="bi bi-building-lock" aria-hidden="true"></i>
+      <p class="sc-figure-slot-shot">A shuttered shopfront photographed straight on in flat daylight, security grille down, a printed notice taped inside the glass too small to read from the street.</p>
+      <p class="sc-figure-slot-note">Image to come</p>
+    </div>
+    <figcaption>Every one of these looked open for business until the morning it did not.</figcaption>
+  </figure>
+
+      <h2><span class="sc-article-num">1</span>The slow drain nobody could see</h2>
+
+      <p><strong>Mt. Gox, February 2014.</strong> At its height it handled the large majority of global bitcoin trading. When it stopped, roughly 850,000 bitcoin were unaccounted for.</p>
+
+      <p>The detail that matters is the timeline. The coins did not vanish in one bad week &mdash; the losses accumulated over <em>years</em>, while the exchange continued operating, quoting prices, and showing customers balances that were, by then, fiction. Internal accounting was not good enough to notice, and nothing visible from outside could have told a customer.</p>
+
+      <p>What this one demonstrates: <strong>a balance on a screen is a claim, not an observation.</strong> Your account page renders a number from a company's database. It is not derived from the blockchain, and nothing forces the two to agree.</p>
+
+      <h2><span class="sc-article-num">2</span>The single point of failure who was also a fraud</h2>
+
+      <p><strong>QuadrigaCX, 2019.</strong> Canada's largest bitcoin exchange, and the case closest to home.</p>
+
+      <p>The story as it broke was that the founder had died suddenly and taken the only keys with him, stranding roughly 76,000 users. That version is memorable, tidy, and not what happened. The Ontario Securities Commission investigated and concluded the platform had been operating as a fraud &mdash; customer funds had been traded on other platforms and lost, and the shortfall long predated the death.</p>
+
+      <p>Both readings should worry you, which is why this case earns its place. The generous version is catastrophic key-person risk: one person, no redundancy, no oversight. The accurate version is worse and was invisible in exactly the same way.</p>
+
+      <p>What this one demonstrates: <strong>"registered" is not "audited", and neither is insurance.</strong> Deposits at a Canadian bank are covered by CDIC within limits. Crypto held on a trading platform is not, whatever the marketing implies.</p>
+
+      <h2><span class="sc-article-num">3</span>The yield that made you a creditor</h2>
+
+      <p><strong>Celsius, Voyager, BlockFi &mdash; 2022.</strong> These were not hacked and, in the ordinary sense, they were not hiding anything. They told customers what they were doing.</p>
+
+      <p>The offer was interest on your bitcoin. To pay interest, the platform has to do something with the coins, which means lending them out. That is not custody at all &mdash; it is a loan from you to the company. When their borrowers failed and the companies entered bankruptcy, customers discovered what they had actually been holding: <strong>an unsecured claim against an insolvent business</strong>, queued behind secured creditors.</p>
+
+      <p>Nothing was concealed. The terms said so. But "earn 8% on your bitcoin" and "make an unsecured loan to a company whose balance sheet you have never seen" describe the same arrangement, and only one of them was on the marketing.</p>
+
+      <p>What this one demonstrates: <strong>yield is the tell.</strong> Bitcoin sitting still does not generate a return. If a platform pays you to hold it there, your coins are not sitting still, and you are being paid for taking a risk that has not been named.</p>
+
+      <h2><span class="sc-article-num">4</span>The house money</h2>
+
+      <p><strong>FTX, November 2022.</strong> The largest and the fastest. A well-regarded exchange, backed by serious investors, with a founder on magazine covers, went from apparently solvent to bankrupt in about a week, with a shortfall in the billions.</p>
+
+      <p>Customer deposits had been treated as the company's own money and moved to an affiliated trading firm. There was no hack and no market crash that explains it. The coins customers believed were held for them had been spent.</p>
+
+      <p>What this one demonstrates: <strong>reputation is not a control.</strong> Auditors, investors, regulators in multiple countries and a great many sophisticated customers all looked at FTX and saw a functioning business. Every external signal a careful person could have checked was green.</p>
+
+      <h2><span class="sc-article-num">5</span>What proof of reserves does and does not prove</h2>
+
+      <p>After 2022 many platforms began publishing proof of reserves, and it is worth knowing precisely what that is worth, because it is regularly presented as though it closes this question.</p>
+
+      <p>A proof of reserves demonstrates that the platform controls a certain quantity of bitcoin at a moment in time. That is genuinely something. But solvency is reserves <em>minus liabilities</em>, and the liabilities are the half nobody can see.</p>
+
+      <ul class="sc-caution-list"><li>It is a snapshot. Coins can be borrowed for the audit and returned afterwards, which has happened.</li><li>It rarely proves liabilities. Without a verified total of what customers are owed, showing assets proves nothing about whether they are enough.</li><li>It cannot show encumbrance. Coins genuinely held may already be pledged as collateral elsewhere.</li><li>It says nothing about what happens next. Control today is not a commitment about tomorrow.</li></ul>
+
+      <h2><span class="sc-article-num">6</span>What the four have in common</h2>
+
+      <p>Four different mechanisms &mdash; incompetence, fraud, disclosed-but-misunderstood lending, and outright misappropriation. No single warning sign covers them. But the structure underneath was identical every time.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>Case</th><th>Mechanism</th><th>Visible beforehand?</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Mt. Gox</strong></td><td>Losses accumulating unnoticed over years</td><td>No &mdash; not even internally</td></tr>
+            <tr><td><strong>QuadrigaCX</strong></td><td>Fraud, presented as key-person risk</td><td>No &mdash; it was registered and operating</td></tr>
+            <tr><td><strong>Celsius and others</strong></td><td>Customer coins lent out; customers became creditors</td><td><em>Yes</em> &mdash; it was in the terms</td></tr>
+            <tr><td><strong>FTX</strong></td><td>Deposits spent as company money</td><td>No &mdash; every external signal was positive</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Note the third row, which is the uncomfortable one. That failure <em>was</em> disclosed, in writing, to everyone. It still took people by surprise, because reading a terms-of-service document is not the same as believing it.</p>
+
+      <blockquote class="sc-pull-quote"><p>In all four, the customer's bitcoin was a number in a company's database and a liability on its balance sheet. What differed was only how they found out.</p></blockquote>
+
+      <h2><span class="sc-article-num">7</span>What this argues for, and what it does not</h2>
+
+      <p>Not that every platform is a fraud. Most are not, most of the time, and this site's <a href="../exchanges.html">comparison of Canadian purchase routes</a> exists because buying bitcoin generally means using one.</p>
+
+      <p>What it argues is narrower and firmer: <strong>a platform is a place to transact, not a place to keep things.</strong> The risk is not that any particular company is dishonest. It is that you cannot tell from outside, that the people who lost money in every case above could not tell either, and that the exposure grows with the balance and the time you leave it there.</p>
+
+      <ul class="sc-check-list"><li><strong>Withdraw after buying, not eventually.</strong> The exposure is proportional to the amount and how long it sits there. <a href="exchange-withdrawal.html">Getting it off the platform</a> is the step this whole page is arguing for.</li><li><strong>Treat a balance page as a claim.</strong> It is a company telling you what it owes you, not evidence of anything on the chain.</li><li><strong>Be suspicious of yield specifically.</strong> Of everything above, it is the one failure that announces itself in advance and is still routinely misread.</li><li><strong>Do not read a regulator's registration as protection.</strong> Registration sets rules for how a business must operate. It is not deposit insurance and it did not prevent any of these.</li></ul>
+
+      <h2>The short version</h2>
+
+      <p>Mt. Gox bled coins for years without anyone noticing. Quadriga was a fraud wearing the costume of a tragedy. Celsius and its peers told customers the truth and were misunderstood anyway. FTX simply spent the deposits. Different mechanisms, different warning signs, and one structure in common: the bitcoin belonged to the company and the customer held a promise.</p>
+
+      <div class="sc-callout mt-4"><h3>If you take one thing from this page</h3><p>Every customer in every case above believed their balance was their bitcoin. The number on the screen was accurate right up until the moment it was not, and there was no way to check from outside. <a href="owning-your-bitcoin.html">Holding your own keys</a> replaces that promise with something you can verify yourself &mdash; which is the entire trade, and the reason it is worth the work.</p></div>
+
+      <p class="sc-source-note">
+        Figures here are the widely reported ones and are deliberately approximate; bankruptcy claims, recovered amounts and final accounting have moved for several of these cases and in some are still moving. The mechanisms are the durable part and are what this page is for. For the Canadian case, the Ontario Securities Commission's own published investigation is the primary account.
+      </p></div>
+      </div>
+    </section>
+
+    <section class="sc-guide-foot">
+      <div class="container">
+        <div class="sc-guide-next">
+          <div class="sc-guide-next-copy">
+            <span class="sc-eyebrow">Do not guess</span>
+            <h2>Stuck on a step?</h2>
+            <p>If the screen in front of you does not match the guide, stop. Review the related walkthroughs or get a second set of eyes before exposing recovery words or approving a transaction.</p>
+          </div>
+          <div class="sc-hero-actions sc-guide-next-actions">
+            <a class="sc-btn sc-btn-primary" href="../guides.html"><span>All Guides</span></a>
+            <a class="sc-btn sc-btn-ghost sc-guide-help-btn" href="../contact.html"><span>Get Help</span></a>
+          </div>
+          <div class="sc-guide-next-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="sc-section sc-section-muted sc-related-guides">
+      <div class="container">
+        <div class="sc-section-head"><span class="sc-eyebrow">Keep going</span><h2>Related guides</h2></div>
+        <div class="row g-4"><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="owning-your-bitcoin.html">
+            <div class="sc-card-body">
+              <div class="sc-guide-card-top">
+                <div class="sc-icon"><i class="bi bi-currency-bitcoin"></i></div>
+                <span class="sc-level sc-level-beginner">Beginner</span>
+              </div>
+              <h3>With great power comes great responsibility</h3>
+              <p>Self-custody does not just remove the middleman. It removes the work the middleman was doing, and hands you the job. Here is exactly what that job is.</p>
+              <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
+            </div></a></div><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="exchange-account-security.html">
+            <div class="sc-card-body">
+              <div class="sc-guide-card-top">
+                <div class="sc-icon"><i class="bi bi-shield-lock"></i></div>
+                <span class="sc-level sc-level-beginner">Beginner</span>
+              </div>
+              <h3>Lock down the exchange account itself</h3>
+              <p>Most people who lose bitcoin from a platform were not victims of an exchange hack. Their own account was opened by someone else — usually through email or a phone number.</p>
+              <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
+            </div></a></div><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="exchange-withdrawal.html">
+            <div class="sc-card-body">
+              <div class="sc-guide-card-top">
+                <div class="sc-icon"><i class="bi bi-bank"></i></div>
+                <span class="sc-level sc-level-beginner">Beginner</span>
+              </div>
+              <h3>Withdrawing bitcoin from a Canadian exchange</h3>
+              <p>One process that works on every Canadian platform, what changes on the two that send bitcoin straight to your wallet, and the records the CRA expects you to keep.</p>
+              <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
+            </div></a></div></div>
+      </div>
+    </section></main>
+    <div id="site-footer">
+    <footer class="sc-footer">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-5">
+            <h3 class="sc-footer-brand"><img src="../assets/img/self-custody-favicon.svg" alt="" width="34" height="34"><span>SelfCustody.ca</span></h3>
+            <p>Clear, practical guidance to self custody your bitcoin. Learn the basics, test your backups, and keep control of your keys.</p>
+          </div>
+          <div class="col-12 col-lg-4 sc-footer-explore">
+            <h4>Explore</h4>
+            <ul class="sc-footer-links sc-footer-links-grid">
+              <li><a href="../index.html">Home</a></li>
+              <li><a href="../guides.html">Guides</a></li>
+              <li><a href="../devices.html">Devices</a></li>
+              <li><a href="../software.html">Software</a></li>
+              <li><a href="../exchanges.html">Exchanges</a></li>
+              <li><a href="../glossary.html">Glossary</a></li>
+              <li><a href="../dashboard.html">Dashboard</a></li>
+              <li><a href="../contact.html">Get Help</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3">
+            <aside class="sc-footer-warning" aria-label="Important security warning">
+              <div class="sc-footer-warning-heading">
+                <div class="sc-footer-warning-icon" aria-hidden="true"><i class="bi bi-exclamation-triangle-fill"></i></div>
+                <h4>Important!</h4>
+              </div>
+              <p><strong>NEVER</strong> share your seed words, or other sensitive information.</p>
+              <p>This site provides education, <strong class="sc-footer-not">NOT</strong> financial, tax, or legal advice.</p>
+            </aside>
+          </div>
+        </div>
+        <div class="sc-footer-bottom d-flex flex-wrap justify-content-between gap-2">
+          <span>© <span data-year>2026</span> SelfCustody.ca</span>
+          <span><a href="mailto:info@selfcustody.ca">info@selfcustody.ca</a></span>
+        </div>
+      </div>
+    </footer></div>
+  <noscript><div class="container py-4"><p><strong>JavaScript is off, so the menu button will not open.</strong> Every page:</p><ul><li><a href="../index.html">Home</a></li><li><a href="../guides.html">Guides</a></li><li><a href="../devices.html">Devices</a></li><li><a href="../software.html">Software</a></li><li><a href="../exchanges.html">Exchanges</a></li><li><a href="../glossary.html">Glossary</a></li><li><a href="../dashboard.html">Dashboard</a></li><li><a href="../contact.html">Get Help</a></li></ul></div></noscript>
+  <script src="../assets/js/site-refresh.js?v=20260829-03"></script>
+</body>
+</html>
