@@ -135,7 +135,14 @@ const levelLabels = { beginner: "Beginner", intermediate: "Intermediate", advanc
 
 const checklist = items => `<ul class="sc-check-list">${items.map(i => `<li>${i}</li>`).join("")}</ul>`;
 const cautions = items => `<ul class="sc-caution-list">${items.map(i => `<li>${i}</li>`).join("")}</ul>`;
-const callout = (title, body) => `<div class="sc-callout mt-4"><h3>${title}</h3><p>${body}</p></div>`;
+/* `level` exists for the callouts that open a guide, before any <h2>. An <h3>
+   there makes the document outline jump h1 -> h3, implying a subsection that
+   does not exist, and moving those callouts below the first heading would bury
+   an opening warning under a prerequisites list. The stylesheet already treats
+   .sc-callout h2 and h3 identically, so this changes the outline and nothing
+   visual. */
+const callout = (title, body, level = "h3") =>
+  `<div class="sc-callout mt-4"><${level}>${title}</${level}><p>${body}</p></div>`;
 const official = (url, label = "Official documentation") =>
   `<a class="sc-text-link" href="${url}" target="_blank" rel="noopener">${label} <i class="bi bi-arrow-up-right"></i></a>`;
 
@@ -4637,7 +4644,7 @@ const guides = [
 
       <p>Before any of that, though, one warning that matters more than the setup.</p>
 
-      ${callout("Electrum is the most impersonated wallet in bitcoin", "Fake download sites rank in search results, and malicious Electrum servers have historically pushed convincing fake update messages to users inside the app itself. Never take an update prompt that appears in the wallet. Never download from a search result. Type electrum.org yourself, and verify the signature on what you download — step one below is not optional advice.")}
+      ${callout("Electrum is the most impersonated wallet in bitcoin", "Fake download sites rank in search results, and malicious Electrum servers have historically pushed convincing fake update messages to users inside the app itself. Never take an update prompt that appears in the wallet. Never download from a search result. Type electrum.org yourself, and verify the signature on what you download — step one below is not optional advice.", "h2")}
 
       ${figureSlot({
         shot: "Two laptops on a desk, the older one with its wifi card visibly removed or a sticker over the port, a USB stick between them.",
@@ -7340,7 +7347,7 @@ const guides = [
 
       <p>No amount of key length helps here. What follows is an honest account of what does, what merely sounds like it does, and which popular measures can make a dangerous situation last longer.</p>
 
-      ${callout("Before anything else", "If this ever happens to you, your safety is worth more than every coin you own. Bitcoin is replaceable and you are not. Nothing on this page is advice to resist, delay, or refuse someone who is threatening you — the entire purpose of planning in advance is so that you never have to make that choice while frightened.")}
+      ${callout("Before anything else", "If this ever happens to you, your safety is worth more than every coin you own. Bitcoin is replaceable and you are not. Nothing on this page is advice to resist, delay, or refuse someone who is threatening you — the entire purpose of planning in advance is so that you never have to make that choice while frightened.", "h2")}
 
       <h2><span class="sc-article-num">1</span>Be proportionate about this</h2>
 
