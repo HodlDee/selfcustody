@@ -51,6 +51,16 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "address",
+    "title": "Address",
+    "definition": "A string encoding the conditions under which a payment can later be spent. It is derived from a public key or a script, is safe to share, and should be used once. Reading one on a screen a compromised computer controls is the moment most thefts actually happen.",
+    "example": "Addresses beginning 1, 3, bc1q and bc1p all work; they differ in age, cost to spend, and how widely they are accepted.",
+    "categories": [
+      "Wallets",
+      "Technical"
+    ]
+  },
+  {
     "id": "address_reuse",
     "title": "Address reuse",
     "definition": "Receiving more than once to the same address. It costs nothing technically and a great deal in privacy: every payment to that address is publicly linked to every other, permanently, and the link cannot be withdrawn later. Wallets generate a fresh address for each payment for this reason, and the gap limit exists because they do.",
@@ -81,6 +91,35 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "anonymity",
+    "title": "Anonymity",
+    "definition": "Not being identifiable at all — which bitcoin does not provide. The ledger is public and permanent, and identity attaches off-chain through exchanges, deliveries and habits. Pseudonymity is the accurate word: addresses are not names, and the link between them is often recoverable.",
+    "example": "Treating bitcoin as anonymous is the assumption behind most avoidable privacy losses.",
+    "categories": [
+      "Privacy"
+    ]
+  },
+  {
+    "id": "aml",
+    "title": "Anti-money laundering (AML)",
+    "definition": "The framework of obligations requiring financial businesses to monitor and report activity. In practice it is the reason platforms demand identity documents, question withdrawals, and sometimes freeze accounts — and the reason a withdrawal ties your identity to specific coins.",
+    "example": "AML obligations are why a platform may ask where funds came from before releasing them.",
+    "categories": [
+      "Exchanges",
+      "Privacy"
+    ]
+  },
+  {
+    "id": "attack_surface",
+    "title": "Attack surface",
+    "definition": "The total set of places something can be attacked — code, interfaces, network connections, physical access. Reducing it is why bitcoin-only firmware, air gaps and dedicated devices exist. It is a more useful frame than asking whether something is secure, because it asks secure against what.",
+    "example": "A device supporting one asset runs less code than one supporting hundreds, which is a smaller surface regardless of either one's quality.",
+    "categories": [
+      "Security",
+      "Firmware"
+    ]
+  },
+  {
     "id": "attestation",
     "title": "Attestation",
     "definition": "A statement, signed by a build system, that a particular artifact came from a particular source. It binds a file to the repository and workflow that produced it, so a download can be checked against something more specific than a hash served from the same place as the file.",
@@ -96,6 +135,42 @@ const glossaryTerms = [
     "title": "bech32",
     "definition": "The address encoding used by native SegWit, producing lowercase strings beginning bc1q. Its checksum catches typos reliably and it is case-insensitive, which makes it easier to read aloud or transcribe than the older format. bech32m is the revised version used by Taproot.",
     "example": "A mistyped bech32 address is almost always rejected by the sending wallet rather than accepted and sent nowhere.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "bip8",
+    "title": "BIP8",
+    "definition": "A revision of the BIP9 activation pattern that can end in mandatory activation rather than expiry, so a change is not indefinitely blockable by miners declining to signal. Which of the two patterns to use is a governance argument as much as a technical one.",
+    "example": "BIP8 exists because BIP9 let a minority of hash power veto a change that node operators wanted.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "bip9",
+    "title": "BIP9",
+    "definition": "An activation mechanism in which miners signal readiness for a soft fork within a time window, and the change locks in if enough do before it expires. It treats miner signalling as a readiness poll rather than a vote, and its weakness is that a minority of hash power can stall a change indefinitely by simply not signalling.",
+    "example": "SegWit was proposed under BIP9 and stalled, which is what led to the pressure that eventually activated it.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "bip16",
+    "title": "BIP16",
+    "definition": "The proposal that introduced pay-to-script-hash, letting an address commit to a script revealed only when spent. It made multisig and other conditions practical for ordinary users, because the sender no longer needed to know or pay for the recipient's spending conditions.",
+    "example": "Every address beginning with 3 exists because of BIP16.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "bip21",
+    "title": "BIP21",
+    "definition": "The URI scheme behind payment links and QR codes — bitcoin: followed by an address and optional amount and label. It is why scanning a merchant's code fills in the details rather than only the address, and why a wallet can be opened straight from a link.",
+    "example": "A QR code encoding a BIP21 URI can carry the amount as well as the address, removing one place to mistype.",
     "categories": [
       "Technical"
     ]
@@ -144,6 +219,27 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "bip65",
+    "title": "BIP65 (CheckLockTimeVerify)",
+    "definition": "The opcode allowing a script to require that a given absolute time or block height has passed before an output can be spent. It is what makes inheritance paths and time-delayed recovery enforceable by the network rather than by anyone's promise.",
+    "example": "A spending path that only opens in 2030 is enforced by every node, not by the wallet displaying it.",
+    "categories": [
+      "Technical",
+      "Planning"
+    ]
+  },
+  {
+    "id": "bip68",
+    "title": "BIP68 (relative timelocks)",
+    "definition": "Timelocks measured from when an output was confirmed rather than from a fixed date, using the sequence field. It is what allows conditions like \"this key may spend, but only ninety days after the coins arrived\", which is the usual shape of a decaying multisig.",
+    "example": "A recovery key that becomes usable ninety days after funding, rather than on a named date, uses a relative timelock.",
+    "categories": [
+      "Technical",
+      "Planning",
+      "Multisig"
+    ]
+  },
+  {
     "id": "bip84",
     "title": "BIP84",
     "definition": "The derivation scheme for native SegWit addresses, using purpose 84' and producing addresses beginning bc1q. It is the common default in current wallets, which is why restoring an older seed into new software sometimes shows an empty wallet until the path is changed.",
@@ -172,6 +268,83 @@ const glossaryTerms = [
     "categories": [
       "Technical",
       "Recovery"
+    ]
+  },
+  {
+    "id": "bip125",
+    "title": "BIP125 (opt-in RBF)",
+    "definition": "The rule set defining when an unconfirmed transaction may be replaced by one paying a higher fee, and what the replacement must do to be accepted. Opt-in means the original had to signal it; whether it did is usually a wallet default rather than a choice the sender made.",
+    "example": "A wallet that does not signal replaceability leaves fee bumping to the recipient via CPFP instead.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "bip141",
+    "title": "BIP141 (SegWit)",
+    "definition": "The proposal defining segregated witness — moving signature data out of the transaction body, discounting it when measuring size, and fixing transaction malleability in the process. Activated in 2017 as a soft fork after a prolonged dispute.",
+    "example": "The cheaper fees on bc1 addresses trace directly to the discount BIP141 introduced.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "bip148",
+    "title": "BIP148 (UASF)",
+    "definition": "A user-activated soft fork: nodes agreeing to reject blocks that did not signal for SegWit after a set date, regardless of what miners preferred. It established the precedent that node operators, not miners, decide which rules apply — the point the block size war ultimately settled.",
+    "example": "The threat of BIP148 is widely credited with breaking the deadlock over SegWit activation.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "bip174",
+    "title": "BIP174 (PSBT)",
+    "definition": "The proposal defining the partially signed bitcoin transaction format, so that software from different vendors can pass an unsigned transaction between them and collect signatures. It is what makes air-gapped signing and multi-vendor multisig practical rather than bespoke.",
+    "example": "A PSBT built in one wallet can be signed by a device from a different manufacturer entirely.",
+    "categories": [
+      "Technical",
+      "Multisig",
+      "Hardware Wallets"
+    ]
+  },
+  {
+    "id": "bitcoin",
+    "title": "Bitcoin",
+    "definition": "A network of computers that agree, without a central authority, on who is entitled to spend what. Capitalised it usually means the network and the protocol; lowercase, the unit of account. The two are worth distinguishing, because most arguments about one are really about the other.",
+    "example": "You can run Bitcoin the software without owning any bitcoin the asset.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "bitcoin_core",
+    "title": "Bitcoin Core",
+    "definition": "The most widely used full node implementation, and the reference for what the consensus rules actually are. It validates the chain and manages descriptor wallets, but keeps no index of arbitrary addresses — which is why most wallets need an index server alongside it rather than talking to it directly.",
+    "example": "Specter drives Core's own wallets directly, which is why it needs Core and nothing else.",
+    "categories": [
+      "Connectivity",
+      "Technical",
+      "Open Source"
+    ]
+  },
+  {
+    "id": "bip",
+    "title": "Bitcoin Improvement Proposal (BIP)",
+    "definition": "A numbered design document proposing a change or standard. A BIP number is a reference, not an endorsement: most are never adopted, some are withdrawn, and a few describe things now considered mistakes. Being able to cite one is how compatibility questions get settled precisely.",
+    "example": "BIP39 describes recovery phrases and BIP32 the key tree beneath them; both are implemented almost everywhere.",
+    "categories": [
+      "Technical",
+      "Open Source"
+    ]
+  },
+  {
+    "id": "whitepaper",
+    "title": "Bitcoin whitepaper",
+    "definition": "The nine-page 2008 paper describing a peer-to-peer electronic cash system, published under the name Satoshi Nakamoto. It sets out proof of work, the chain of blocks, and the argument that honest majority hash power settles ordering. It does not describe most of what a modern wallet does.",
+    "example": "The whitepaper explains why confirmations matter but says nothing about seed phrases or derivation paths.",
+    "categories": [
+      "Technical"
     ]
   },
   {
@@ -214,6 +387,15 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "block_size",
+    "title": "Block size",
+    "definition": "How much data a block may contain. Since SegWit the limit is expressed in weight units rather than raw bytes, allowing roughly four million weight units, and it is what makes block space a scarce good that fees bid for. It was the subject of bitcoin's defining governance fight between 2015 and 2017.",
+    "example": "The limit is why fees rise during congestion rather than everyone simply being included.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
     "id": "block_subsidy",
     "title": "Block subsidy",
     "definition": "The new bitcoin created in each block and paid to whoever mined it. It halves every 210,000 blocks and will eventually round to nothing, at which point miners are paid by transaction fees alone. It is the entire mechanism by which bitcoin is issued.",
@@ -232,6 +414,27 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "bloom_filter",
+    "title": "Bloom filter",
+    "definition": "The older mechanism by which light wallets asked servers for relevant transactions. It was intended to be vague enough to preserve privacy and was shown not to be — a server could usually recover which addresses a wallet held. Largely superseded by compact block filters.",
+    "example": "Bloom filters are the cautionary example of privacy by obscurity in wallet design.",
+    "categories": [
+      "Privacy",
+      "Connectivity"
+    ]
+  },
+  {
+    "id": "brain_wallet",
+    "title": "Brain wallet",
+    "definition": "A wallet whose key is derived from a phrase someone thought of. It fails reliably: human-chosen phrases are guessable at scale, and automated bots have swept them within minutes of funding for over a decade. Every study that has looked has found the same thing.",
+    "example": "Research checking hundreds of billions of candidate phrases against the chain found brain wallets drained almost immediately after funding.",
+    "categories": [
+      "Threats",
+      "Backups",
+      "Security"
+    ]
+  },
+  {
     "id": "broadcast",
     "title": "Broadcast",
     "definition": "Handing a signed transaction to the network by sending it to a node, which relays it onward. It is not a submission to any authority — nobody accepts or rejects it, and an unbroadcast transaction has changed nothing. Until it is mined, it sits in mempools waiting.",
@@ -239,6 +442,43 @@ const glossaryTerms = [
     "categories": [
       "Technical",
       "Connectivity"
+    ]
+  },
+  {
+    "id": "brute_force",
+    "title": "Brute force",
+    "definition": "Trying every possibility until something works. It is why key sizes are what they are: a 128-bit secret has more possibilities than could be enumerated with any conceivable resources. It is also why a PIN is protected by an attempt counter rather than by its own length.",
+    "example": "Guessing a seed phrase is infeasible; guessing a four-digit PIN is trivial without something counting the attempts.",
+    "categories": [
+      "Security",
+      "Threats"
+    ]
+  },
+  {
+    "id": "byzantine_fault_tolerance",
+    "title": "Byzantine fault tolerance",
+    "definition": "A system's ability to keep working correctly while some participants fail arbitrarily or behave maliciously. Bitcoin achieves it by tying influence to expended work rather than to identity, so an attacker must outspend the network rather than outnumber it.",
+    "example": "The network continues correctly even though some nodes and miners are hostile at any given moment.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "byzantine_generals",
+    "title": "Byzantine generals problem",
+    "definition": "The classic statement of coordinating parties who cannot trust each other or the messages between them, where some may actively lie. Bitcoin's answer is not better messaging but making participation expensive, so that lying costs more than it returns.",
+    "example": "The problem is why counting participants fails as a mechanism — identities are free to create, so votes can be manufactured.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "censorship_resistance",
+    "title": "Censorship resistance",
+    "definition": "The property that a valid transaction cannot be reliably prevented from confirming. Miners may decline to include one, but they cannot stop others including it, and the cost of excluding transactions indefinitely rises with the number of independent participants. It is the same property that makes payments irreversible.",
+    "example": "A transaction ignored by some miners is simply mined by others, usually within a block or two.",
+    "categories": [
+      "Technical"
     ]
   },
   {
@@ -301,6 +541,16 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "coin",
+    "title": "Coin",
+    "definition": "Informal for a UTXO — one discrete, separately spendable chunk of bitcoin. Wallets that offer coin control use the word this way. It does not mean a physical object and does not mean a whole bitcoin.",
+    "example": "A wallet holding 0.4 BTC across three coins can choose which of them to spend.",
+    "categories": [
+      "Technical",
+      "Wallets"
+    ]
+  },
+  {
     "id": "coin_control",
     "title": "Coin control",
     "definition": "Choosing which UTXOs a transaction spends rather than letting the wallet decide. It is the highest-value privacy habit available, because spending coins together publicly asserts they share an owner. It is also how dust of unknown origin is kept out of transactions, by freezing it rather than reasoning about it.",
@@ -314,7 +564,7 @@ const glossaryTerms = [
     "id": "coinbase_transaction",
     "title": "Coinbase transaction",
     "definition": "The first transaction in every block, which creates the subsidy and collects the fees. It has no inputs, because it is where new coins come from. Its output cannot be spent for a hundred blocks, so a reorganisation cannot leave already-spent rewards behind.",
-    "example": "The genesis block's coinbase transaction carries a newspaper headline from January 2009 in its input field.",
+    "example": "The genesis block's coinbase transaction carries that January 2009 front-page quotation in its input field.",
     "categories": [
       "Technical"
     ]
@@ -360,10 +610,30 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "compact_block_filters",
+    "title": "Compact block filters",
+    "definition": "A way for a light wallet to work out whether a block concerns it by downloading a small filter per block rather than telling a server which addresses it owns. It is the privacy-preserving alternative to the older bloom filter approach, which leaked exactly what it was meant to protect.",
+    "example": "A wallet using block filters learns about its own payments without revealing which addresses it is watching.",
+    "categories": [
+      "Privacy",
+      "Connectivity",
+      "Technical"
+    ]
+  },
+  {
     "id": "confirmation",
     "title": "Confirmation",
     "definition": "A block containing your transaction, plus each block built on top of it. Confirmations are depth rather than a status change: nothing about the transaction is altered, but reversing it would require redoing every block since. There is no threshold at which a payment becomes official — how many to wait for is a judgement about the amount at stake.",
     "example": "An exchange might credit a small deposit at one confirmation and a large one at six.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "consensus",
+    "title": "Consensus",
+    "definition": "Agreement across the network about which chain is valid and which transactions happened. It is produced by every node independently applying the same rules and rejecting what fails them, not by voting or by any authority. Miners order transactions; nodes decide whether the result counts.",
+    "example": "A block breaking the supply schedule is rejected by each node on its own, so no amount of hash power makes it valid.",
     "categories": [
       "Technical"
     ]
@@ -419,6 +689,15 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "cypherpunk",
+    "title": "Cypherpunk",
+    "definition": "The movement, active from the late 1980s, arguing that privacy in a digital society requires cryptography rather than legislation, and that people should build the tools themselves. Bitcoin drew directly on its mailing lists, its prior attempts at digital cash, and its instinct that a system should not require trusting its operator.",
+    "example": "The design habit of removing the need to trust an operator, rather than regulating one, comes straight from this tradition.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
     "id": "dead_mans_switch",
     "title": "Dead man's switch",
     "definition": "An automated process that releases information if you stop checking in. Appealing in theory and unreliable in practice: services lapse, shut down, or fire early — and firing early discloses everything while you are alive and well. Worth having as one signal among several rather than as the plan.",
@@ -426,6 +705,35 @@ const glossaryTerms = [
     "categories": [
       "Planning",
       "Risk"
+    ]
+  },
+  {
+    "id": "decentralization",
+    "title": "Decentralisation",
+    "definition": "How widely the ability to change or block things is spread. It is not one property but several — who can mine, who validates, who writes the software, who runs the infrastructure wallets rely on — and they can move in opposite directions. Running your own node is the part an individual actually controls.",
+    "example": "Mining can concentrate while validation stays widely distributed, because they are different kinds of power.",
+    "categories": [
+      "Technical",
+      "Connectivity"
+    ]
+  },
+  {
+    "id": "deep_cold_storage",
+    "title": "Deep cold storage",
+    "definition": "Cold storage made deliberately inconvenient — offline, geographically separated, sometimes requiring several people or a journey. The awkwardness is the feature for savings you do not intend to touch, and it is a liability if it makes verification so tedious that you never check the arrangement still works.",
+    "example": "Keys in a safe deposit box in another city are deep cold storage, and the annual check is the part people skip.",
+    "categories": [
+      "Storage",
+      "Planning"
+    ]
+  },
+  {
+    "id": "deflationary",
+    "title": "Deflationary",
+    "definition": "Applied to bitcoin, meaning the supply stops growing while coins are continually lost, so the effective total falls. Whether that is desirable is a genuine economic argument rather than a settled point, and it is separate from the technical fact of the issuance schedule.",
+    "example": "Lost coins are never reissued, so the spendable supply drifts downward regardless of price.",
+    "categories": [
+      "Technical"
     ]
   },
   {
@@ -455,6 +763,25 @@ const glossaryTerms = [
     "example": "A large drop in mining activity is followed by an adjustment that makes blocks easier to find, restoring the pace.",
     "categories": [
       "Technical"
+    ]
+  },
+  {
+    "id": "digital_gold",
+    "title": "Digital gold",
+    "definition": "A shorthand comparing bitcoin to gold as a scarce asset held for the long term rather than spent. The analogy holds on supply constraint and breaks on almost everything else — bitcoin is transferable over a network, verifiable at home, and confiscatable in completely different ways.",
+    "example": "The comparison is useful for the supply argument and misleading about custody, where the two behave nothing alike.",
+    "categories": [
+      "Risk"
+    ]
+  },
+  {
+    "id": "digital_signature",
+    "title": "Digital signature",
+    "definition": "A value produced with a private key that anyone can check against the matching public key, proving both who authorised something and that it has not been altered since. It is the only operation a bitcoin private key ever performs.",
+    "example": "A signature commits to the exact transaction, so changing the recipient after signing invalidates it.",
+    "categories": [
+      "Technical",
+      "Security"
     ]
   },
   {
@@ -498,6 +825,34 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "ecdsa",
+    "title": "ECDSA",
+    "definition": "The elliptic curve signature scheme bitcoin used from the start and still uses for pre-Taproot outputs. Its notable hazard is the per-signature random value: reusing one across two signatures exposes the private key, which has drained real wallets and is why implementations now derive it deterministically.",
+    "example": "The PlayStation 3's signing key was recovered through exactly this failure in 2010.",
+    "categories": [
+      "Technical",
+      "Security"
+    ]
+  },
+  {
+    "id": "elliptic_curve",
+    "title": "Elliptic curve cryptography",
+    "definition": "The mathematics behind bitcoin's keys. Multiplying a fixed point on a curve by a secret number is easy; recovering the secret from the result is not. That asymmetry is what makes a public key safe to publish while the private key stays secret. Bitcoin uses the curve secp256k1.",
+    "example": "A public key is a point on the curve derived from the private key, and the derivation runs one way only.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "empty_block",
+    "title": "Empty block",
+    "definition": "A block containing only its coinbase transaction. It happens when a miner starts work on a new block before validating the previous one's contents, choosing a few seconds of certain-but-empty work over a delay. Harmless and occasionally alarming to people watching an explorer.",
+    "example": "An empty block found moments after the previous one is normal behaviour, not a sign of anything wrong.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
     "id": "entropy",
     "title": "Entropy",
     "definition": "Genuine unpredictability, measured in bits, and the raw material every wallet is built from. A seed is only as unguessable as the entropy behind it, which is why wallets are generated by a device or a physical process rather than chosen by a person. Human-invented phrases and passwords have been swept at scale for over a decade.",
@@ -505,6 +860,16 @@ const glossaryTerms = [
     "categories": [
       "Technical",
       "Security",
+      "Backups"
+    ]
+  },
+  {
+    "id": "error_correction",
+    "title": "Error correction",
+    "definition": "Encoding data with enough redundancy that damage can be detected and often repaired. Bitcoin uses detection rather than correction in most places — the BIP39 checksum and bech32 addresses catch errors and refuse rather than guessing, which is the safer behaviour when the alternative is silently producing a different wallet.",
+    "example": "A mistyped bech32 address is rejected rather than corrected, because correcting it wrongly would send money to a stranger.",
+    "categories": [
+      "Technical",
       "Backups"
     ]
   },
@@ -519,6 +884,16 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "exchange",
+    "title": "Exchange",
+    "definition": "A business that trades bitcoin for other currencies. Most are custodial, holding coins until you withdraw; a few settle purchases directly to an address you control. The distinction matters more than any feature comparison, because it decides whether you hold bitcoin or a claim.",
+    "example": "Direct-to-wallet purchase leaves nothing to withdraw later, which removes the step people most often postpone.",
+    "categories": [
+      "Exchanges",
+      "Risk"
+    ]
+  },
+  {
     "id": "xpub",
     "title": "Extended public key (xpub)",
     "definition": "A public key plus a chain code, which together allow every address below a point in a wallet's tree to be derived without any ability to spend. It is what makes watch-only wallets possible. It is not secret in the way a seed is, but it reveals every address in that account, past and future, so anyone holding it can see the whole balance and history permanently.",
@@ -527,6 +902,15 @@ const glossaryTerms = [
       "Technical",
       "Wallets",
       "Privacy"
+    ]
+  },
+  {
+    "id": "fee_market",
+    "title": "Fee market",
+    "definition": "The continuous auction for block space. Nobody sets the price; it is whatever other people are currently bidding, and it can change by an order of magnitude within hours. As the block subsidy falls toward nothing, fees become the whole of what pays for security.",
+    "example": "A congested mempool is an auction with more bidders, not a system malfunctioning.",
+    "categories": [
+      "Technical"
     ]
   },
   {
@@ -545,6 +929,16 @@ const glossaryTerms = [
     "example": "Canadian dollars are not redeemable for any commodity; their value rests on their acceptance and on confidence in the issuer.",
     "categories": [
       "Technical"
+    ]
+  },
+  {
+    "id": "finality",
+    "title": "Finality",
+    "definition": "The point at which a payment can be treated as settled. Bitcoin has no moment where this formally occurs — confidence accumulates with depth rather than switching on. Choosing a threshold is a risk judgement about the amount, not a protocol rule.",
+    "example": "Exchanges credit small deposits at one confirmation and large ones at six for exactly this reason.",
+    "categories": [
+      "Technical",
+      "Risk"
     ]
   },
   {
@@ -579,6 +973,15 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "game_theory",
+    "title": "Game theory",
+    "definition": "The study of how participants behave when outcomes depend on each other's choices. Bitcoin's security rests on it as much as on cryptography: attacking the network is possible and unprofitable, because the cost exceeds what the attack returns and succeeding devalues what was captured.",
+    "example": "A miner with enough power to attack generally earns more by mining honestly, which is a design choice rather than an accident.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
     "id": "gap_limit",
     "title": "Gap limit",
     "definition": "How many consecutive unused addresses a wallet checks before concluding there is nothing further. BIP44 sets it at twenty. It exists so restoring does not take forever, and it produces a specific failure: coins received beyond a long run of unused addresses look missing until the limit is raised and the wallet rescans.",
@@ -592,7 +995,7 @@ const glossaryTerms = [
   {
     "id": "genesis_block",
     "title": "Genesis block",
-    "definition": "The first block, mined in January 2009. Its coinbase output is unspendable by a quirk of the original code, and its input carries a newspaper headline about bank bailouts — a timestamp and, most read it, a statement of purpose.",
+    "definition": "The first block, mined in January 2009. Its coinbase output is unspendable by a quirk of the original code, and its input quotes a Times front page on bank rescues — a timestamp and, most read it, a statement of purpose.",
     "example": "Block height counts from the genesis block at zero.",
     "categories": [
       "Technical"
@@ -604,6 +1007,16 @@ const glossaryTerms = [
     "definition": "A monetary arrangement in which a currency is redeemable for a fixed quantity of gold. It constrained issuance by tying it to something that could not be produced at will, and it was abandoned in stages during the twentieth century. It is referenced in bitcoin discussion as the nearest widely-understood precedent for a money with a supply rule.",
     "example": "Under a gold standard a note was a claim on metal; the constraint held only while redemption was honoured.",
     "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "gossip",
+    "title": "Gossip",
+    "definition": "The relaying pattern by which transactions and blocks propagate — each node passing new information to its peers, which pass it to theirs. It spreads data quickly without any coordinator, and it is why broadcasting to a single node is enough.",
+    "example": "A block found anywhere reaches most of the network within seconds through gossip alone.",
+    "categories": [
+      "Connectivity",
       "Technical"
     ]
   },
@@ -645,6 +1058,16 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "hsm",
+    "title": "Hardware security module",
+    "definition": "A dedicated device for holding keys and performing operations with them, used by institutions. A hardware wallet is the consumer version of the same idea, with the same central property: the key is used inside and never handed out.",
+    "example": "Custodians hold keys in HSMs for the same reason individuals use signing devices.",
+    "categories": [
+      "Hardware Wallets",
+      "Security"
+    ]
+  },
+  {
     "id": "hardware_wallet",
     "title": "Hardware wallet",
     "definition": "A dedicated device holding private keys and signing transactions, more accurately called a signing device since it holds no bitcoin. Its value is structural: the keys never reach a general-purpose computer, and it has a screen the computer cannot rewrite, which is where addresses and amounts should be read.",
@@ -652,6 +1075,24 @@ const glossaryTerms = [
     "categories": [
       "Hardware Wallets",
       "Security"
+    ]
+  },
+  {
+    "id": "hash",
+    "title": "Hash",
+    "definition": "The fixed-length output of a hash function, and by extension the operation itself. Bitcoin uses hashes to link blocks, commit to transaction contents, derive addresses and measure mining work. A hash reveals nothing about its input and cannot be reversed, but recomputing it proves the input has not changed.",
+    "example": "Comparing a downloaded file's hash against a published one proves the bytes arrived intact.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "hash_function",
+    "title": "Hash function",
+    "definition": "A function turning any input into a fixed-length output, where the same input always gives the same result, a tiny change gives a completely different one, and working backwards is infeasible. SHA-256 is the one bitcoin leans on hardest.",
+    "example": "Changing one character in a transaction produces an entirely different hash, which is why signatures commit to contents.",
+    "categories": [
+      "Technical"
     ]
   },
   {
@@ -686,6 +1127,15 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "immutability",
+    "title": "Immutability",
+    "definition": "The practical impossibility of changing confirmed history. Nothing forbids rewriting a block; it just requires redoing its proof of work and every block after it, faster than the rest of the network extends the chain. Immutability is therefore a matter of degree, deepening with each confirmation.",
+    "example": "One confirmation is meaningfully reversible; six is not, which is why the number varies with the amount at stake.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
     "id": "index_server",
     "title": "Index server",
     "definition": "Software that sits beside a full node and maintains an address index so wallets can ask what a given address holds — a question Bitcoin Core is not built to answer quickly. electrs, Fulcrum and ElectrumX are the common implementations, and node distributions bundle one, which is much of why they exist.",
@@ -712,6 +1162,48 @@ const glossaryTerms = [
     "categories": [
       "Planning",
       "Recovery"
+    ]
+  },
+  {
+    "id": "initial_block_download",
+    "title": "Initial block download",
+    "definition": "The first synchronisation of a new node, downloading and validating the chain from the beginning. It takes hours to days depending on hardware, and it is the point at which a node checks history for itself rather than accepting a summary. It happens once.",
+    "example": "A freshly installed node is not useful until the initial download completes and it has verified the chain itself.",
+    "categories": [
+      "Connectivity",
+      "Technical"
+    ]
+  },
+  {
+    "id": "irrecoverable_loss",
+    "title": "Irrecoverable loss",
+    "definition": "Bitcoin that still exists on the chain and can never be spent, because the keys are gone. There is no recovery department and no appeal. It is the failure mode self-custody introduces, and the entire reason a backup that has not been restored from does not count.",
+    "example": "Coins in a wallet whose seed was never written down remain visible forever and spendable by nobody.",
+    "categories": [
+      "Risk",
+      "Recovery"
+    ]
+  },
+  {
+    "id": "key_derivation_function",
+    "title": "Key derivation function",
+    "definition": "A deliberately slow function that turns a password or phrase into a key, slowing down anyone guessing. BIP39 uses PBKDF2 with 2,048 rounds to turn a recovery phrase and passphrase into a seed — a low work factor by modern standards, so a passphrase protects you by being unguessable rather than by being expensive to test.",
+    "example": "2,048 rounds is a speed bump; a short memorable passphrase on a compromised seed card is a delay, not a defence.",
+    "categories": [
+      "Technical",
+      "Security",
+      "BIP39"
+    ]
+  },
+  {
+    "id": "key_rotation",
+    "title": "Key rotation",
+    "definition": "Moving funds to a wallet with new keys because the old ones may be compromised — a device left unattended, a backup someone may have seen, a co-signer leaving. Bitcoin has no way to revoke a key, so rotation means spending to a new wallet, which is an on-chain transaction with a fee and a new set of addresses.",
+    "example": "After a device is lost, rotating is the only way to make its key irrelevant, because it cannot be cancelled.",
+    "categories": [
+      "Security",
+      "Recovery",
+      "Planning"
     ]
   },
   {
@@ -749,6 +1241,25 @@ const glossaryTerms = [
     "example": "Spending an afternoon rehearsing a recovery you may never use is a low time preference act.",
     "categories": [
       "Planning"
+    ]
+  },
+  {
+    "id": "mainnet",
+    "title": "Mainnet",
+    "definition": "The real bitcoin network, as distinct from testnet, signet or a private regtest. The word usually appears when something can run on more than one, and getting the two confused is precisely the risk that keeps testnet settings behind a warning on signing devices.",
+    "example": "A wallet must be on mainnet for its addresses to receive bitcoin of any value.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "mast",
+    "title": "MAST",
+    "definition": "Merkelized alternative script trees — committing to several possible spending conditions in a tree so that using one reveals only that branch. Taproot builds on the idea, which is why a Taproot output can carry an unused emergency path that never becomes public.",
+    "example": "A wallet with a rarely used recovery condition publishes nothing about it while the ordinary path is used.",
+    "categories": [
+      "Technical",
+      "Privacy"
     ]
   },
   {
@@ -793,6 +1304,16 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "metadata",
+    "title": "Metadata",
+    "definition": "Information about a transaction rather than in it — timing, amounts, which server answered a query, which addresses were looked up together. It is frequently more revealing than the contents, and it is the category that pointing a wallet at your own node addresses.",
+    "example": "A public server does not need to break anything to learn which addresses belong to one wallet; it is told.",
+    "categories": [
+      "Privacy",
+      "Connectivity"
+    ]
+  },
+  {
     "id": "microsd_backup",
     "title": "MicroSD backup",
     "definition": "A backup file or wallet record stored on a removable MicroSD card. Hardware wallets may use MicroSD cards to move PSBTs, export wallet data, install firmware, or save an encrypted device backup without connecting the signer directly to an online computer. What the card contains—and whether it is encrypted—depends on the device and workflow.",
@@ -834,6 +1355,25 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "money_supply",
+    "title": "Money supply",
+    "definition": "The total quantity of a money in existence. For fiat currencies it is a policy variable adjusted by an issuer; for bitcoin it is a schedule fixed in the rules and enforced by every node. That difference — who decides — is the substance of most comparisons between the two.",
+    "example": "Bitcoin's supply is knowable years in advance because nobody has the authority to change it.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "mt_gox",
+    "title": "Mt. Gox",
+    "definition": "The exchange that handled most global bitcoin trading until it collapsed in 2014 with roughly 850,000 bitcoin unaccounted for. The losses accumulated over years while the business operated normally and showed customers balances that had become fiction — which is the reason a platform balance is a claim rather than an observation.",
+    "example": "Nothing visible from outside would have told a customer, which is the durable lesson rather than the amount.",
+    "categories": [
+      "Exchanges",
+      "Risk"
+    ]
+  },
+  {
     "id": "multisig",
     "title": "Multisig",
     "definition": "A wallet whose spending conditions require signatures from more than one key — commonly two of three. Losing one key or having one stolen changes nothing, which removes the single point of failure an ordinary wallet has. It adds a dependency in exchange: rebuilding the wallet needs its configuration as well as its keys, and no seed phrase contains that.",
@@ -842,6 +1382,24 @@ const glossaryTerms = [
       "Multisig",
       "Security",
       "Wallets"
+    ]
+  },
+  {
+    "id": "nakamoto_consensus",
+    "title": "Nakamoto consensus",
+    "definition": "The specific arrangement bitcoin uses: proof of work makes producing blocks expensive, and nodes follow the valid chain with the most accumulated work. It settles ordering among participants who cannot identify or trust each other, which is the problem earlier digital cash designs could not solve without an operator.",
+    "example": "Competing chains resolve because extending the shorter one costs more work than it earns.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "network_effect",
+    "title": "Network effect",
+    "definition": "The property that something becomes more useful as more people use it. It is cited both as bitcoin's main defence against alternatives and as a reason to be sceptical of arguments that a technically superior design would displace it. Descriptive rather than a guarantee.",
+    "example": "Liquidity, tooling and merchant support all improve with adoption, and all of them are switching costs.",
+    "categories": [
+      "Risk"
     ]
   },
   {
@@ -858,7 +1416,7 @@ const glossaryTerms = [
   {
     "id": "node",
     "title": "Node",
-    "definition": "Software that connects to the bitcoin network. A full node downloads every block and validates it against the consensus rules itself; a light client asks someone else and believes the answer. Which one your wallet talks to determines whether your balance is verified or reported.",
+    "definition": "Software that takes part in the bitcoin network. A full node downloads every block and validates it against the consensus rules itself; a light client asks someone else and believes the answer. Which one your wallet talks to determines whether your balance is verified or reported.",
     "example": "Running a node changes nothing until the wallet is actually configured to use it rather than a public server.",
     "categories": [
       "Connectivity",
@@ -886,6 +1444,25 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "off_chain",
+    "title": "Off-chain",
+    "definition": "Value moved without writing to the blockchain — inside an exchange's database, or across a payment channel. It can be faster and cheaper, and it reintroduces a counterparty or a set of assumptions the chain otherwise removes. Backup and recovery work differently, and often not at all the same way.",
+    "example": "A transfer between two accounts at the same exchange never touches the chain and is entirely that company's record.",
+    "categories": [
+      "Technical",
+      "Risk"
+    ]
+  },
+  {
+    "id": "on_chain",
+    "title": "On-chain",
+    "definition": "Recorded in the blockchain itself, as opposed to arrangements settled elsewhere. On-chain transactions are the ones that cost a fee, wait for confirmations, and are permanently public. Everything this site teaches is on-chain custody.",
+    "example": "A recovery that moves funds to a new wallet is an on-chain transaction, with a fee and new addresses.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
     "id": "open_source",
     "title": "Open source",
     "definition": "Source code published under a licence that permits anyone to read, modify and redistribute it. It makes a design auditable rather than audited — publication is not review, and a backdoor introduced by a trusted maintainer sits in public code that compiles reproducibly. Meaningful, and not on its own a guarantee.",
@@ -894,6 +1471,15 @@ const glossaryTerms = [
       "Open Source",
       "Firmware",
       "Security"
+    ]
+  },
+  {
+    "id": "otc",
+    "title": "Over the counter (OTC)",
+    "definition": "Trading directly with a counterparty or desk rather than on an order book, usually for larger amounts and to avoid moving the price. It changes who you are exposed to rather than removing exposure, and settlement terms vary considerably.",
+    "example": "An OTC desk quotes a single all-in price for the whole amount rather than filling it across an order book.",
+    "categories": [
+      "Exchanges"
     ]
   },
   {
@@ -943,6 +1529,17 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "paper_wallet",
+    "title": "Paper wallet",
+    "definition": "A single private key printed on paper, usually with its address. An older pattern now generally discouraged: there is no way to spend part of the balance without exposing the key, the software that generated it may not have been trustworthy, and it fits none of the tooling built since. Sweep one rather than importing it.",
+    "example": "Spending from a paper wallet means moving the whole balance, because using the key at all exposes it.",
+    "categories": [
+      "Backups",
+      "Storage",
+      "Risk"
+    ]
+  },
+  {
     "id": "passphrase",
     "title": "Passphrase",
     "definition": "An optional secret combined with a wallet backup to derive a different wallet. Under BIP39, every passphrase—including an empty or incorrect one—produces a valid wallet, so there is no error message that can identify the right one. The same recovery words and exact passphrase are both required to restore the intended wallet.",
@@ -961,6 +1558,16 @@ const glossaryTerms = [
     "example": "A PayJoin also breaks amount analysis, because the visible payment amount is not the amount that changed hands.",
     "categories": [
       "Privacy"
+    ]
+  },
+  {
+    "id": "peer_to_peer",
+    "title": "Peer-to-peer",
+    "definition": "A network where participants connect directly to one another rather than through a central server. Every node relays blocks and transactions to its peers, so there is no address to shut down and no operator whose permission is required to join.",
+    "example": "A transaction broadcast to one node reaches the whole network by being relayed peer to peer.",
+    "categories": [
+      "Connectivity",
+      "Technical"
     ]
   },
   {
@@ -993,6 +1600,16 @@ const glossaryTerms = [
       "Technical",
       "Wallets",
       "Security"
+    ]
+  },
+  {
+    "id": "proof_of_keys",
+    "title": "Proof of keys",
+    "definition": "The practice of withdrawing from platforms to verify they can actually deliver, popularised as an annual exercise. The point is less the withdrawal than what it demonstrates: a balance you have never moved is a claim you have never tested.",
+    "example": "Withdrawing once, deliberately, is the only way to learn whether a platform's withdrawal process actually works for you.",
+    "categories": [
+      "Exchanges",
+      "Risk"
     ]
   },
   {
@@ -1036,6 +1653,15 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "pseudonymity",
+    "title": "Pseudonymity",
+    "definition": "Acting under a persistent identifier that is not your name. It is what bitcoin actually offers: addresses stand in for you, and they hold up only until something connects one to your identity — at which point everything linked to it connects too, retroactively and permanently.",
+    "example": "One KYC withdrawal can retroactively identify a cluster of addresses that were pseudonymous until then.",
+    "categories": [
+      "Privacy"
+    ]
+  },
+  {
     "id": "public_key",
     "title": "Public key",
     "definition": "A number derived from a private key that can verify its signatures without being able to produce them. The derivation runs one way only: a public key reveals nothing usable about the private key behind it. Addresses are built from public keys, which is why sharing an address is safe and sharing a private key is not.",
@@ -1043,6 +1669,45 @@ const glossaryTerms = [
     "categories": [
       "Technical",
       "Wallets"
+    ]
+  },
+  {
+    "id": "qr_code",
+    "title": "QR code",
+    "definition": "A machine-readable square used to move data optically — addresses, payment links, unsigned and signed transactions. It is one of the two transports that genuinely preserve an air gap, since nothing physical or electrical crosses. Larger transactions become animated sequences of several frames.",
+    "example": "An air-gapped signer reads a PSBT from the screen and displays the signed result back as a code.",
+    "categories": [
+      "Hardware Wallets",
+      "Connectivity"
+    ]
+  },
+  {
+    "id": "quantitative_easing",
+    "title": "Quantitative easing",
+    "definition": "A central bank creating money to buy financial assets, expanding the money supply to stimulate an economy. It is frequently cited in bitcoin discussion as the concrete example of discretionary issuance, which is the thing a fixed schedule is a response to.",
+    "example": "The genesis block's newspaper headline about bank bailouts is usually read as a comment on exactly this.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "quantum_computing",
+    "title": "Quantum computing",
+    "definition": "A computing model that would, at sufficient scale, break the elliptic curve mathematics behind bitcoin signatures. No such machine exists, and the timeline is genuinely uncertain. The practical near-term implication is unremarkable: avoid reusing addresses, since an unspent output whose public key has never been revealed is harder to attack.",
+    "example": "An address that has received but never spent has not published its public key, which is a meaningful difference under this threat.",
+    "categories": [
+      "Technical",
+      "Threats"
+    ]
+  },
+  {
+    "id": "quorum",
+    "title": "Quorum",
+    "definition": "How many keys of how many must sign — the m and n of an m-of-n multisig. Raising the threshold protects against theft and increases the ways to lock yourself out; lowering it does the reverse. 2-of-3 is common because it survives losing one key and losing one key to someone else.",
+    "example": "A 3-of-5 tolerates two losses, at the cost of coordinating three signatures for every spend.",
+    "categories": [
+      "Multisig",
+      "Planning"
     ]
   },
   {
@@ -1077,6 +1742,16 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "regulation",
+    "title": "Regulation",
+    "definition": "The rules governing businesses that handle bitcoin — registration, identity checks, reporting. It governs intermediaries rather than the protocol, and it is not consumer protection: a registered platform can still fail, and registration is not deposit insurance.",
+    "example": "Registration sets rules for how a business must operate; it did not prevent any of the major platform collapses.",
+    "categories": [
+      "Exchanges",
+      "Risk"
+    ]
+  },
+  {
     "id": "reorg",
     "title": "Reorganisation",
     "definition": "When nodes switch to a different chain of blocks because it carries more work, discarding one or more blocks they had accepted. Short reorgs of a block happen occasionally and harmlessly. Deep ones do not occur naturally, which is why waiting for confirmations is meaningful.",
@@ -1107,6 +1782,15 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "reserve_currency",
+    "title": "Reserve currency",
+    "definition": "A currency held in quantity by other countries for trade and reserves. The status brings advantages to the issuer and is historically not permanent — previous holders lost it. Arguments about bitcoin's long-term role usually turn on whether that pattern continues.",
+    "example": "Reserve status is a position in a system rather than a property of a currency, which is why it has changed hands before.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
     "id": "satoshi",
     "title": "Satoshi",
     "definition": "The smallest unit bitcoin is divisible into: one hundred millionth of a bitcoin. Amounts are stored and transmitted in satoshis, and fee rates are quoted in them. Nobody needs to own a whole bitcoin, which is worth saying because unit bias leads people to think otherwise.",
@@ -1116,12 +1800,41 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "satoshi_nakamoto",
+    "title": "Satoshi Nakamoto",
+    "definition": "The name attached to bitcoin's original design and first implementation. The identity behind it is unknown, and the person or people stopped participating in 2011. The absence matters practically rather than romantically: there is nobody with authority to change the rules or answer questions about intent.",
+    "example": "Disputes about protocol changes are settled by node operators, because there is no author to appeal to.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "scalability",
+    "title": "Scalability",
+    "definition": "How a system copes with more use. Bitcoin's base layer deliberately limits throughput so that validating it stays cheap enough for individuals to do at home — the constraint is a choice, trading transaction volume for the ability of ordinary people to verify rather than trust.",
+    "example": "Larger blocks would allow more transactions and make running a node more expensive, which is the whole of the argument.",
+    "categories": [
+      "Technical",
+      "Connectivity"
+    ]
+  },
+  {
     "id": "scarcity",
     "title": "Scarcity",
     "definition": "Limited supply that cannot be increased in response to demand. Most things called scarce are merely costly to produce, so a high enough price eventually calls forth more. Bitcoin's supply does not respond to price at all: a tenfold rise in value produces no additional issuance, because the schedule is enforced rather than chosen.",
     "example": "Higher gold prices eventually fund more mining and more gold; higher bitcoin prices fund more mining and the same issuance.",
     "categories": [
       "Technical"
+    ]
+  },
+  {
+    "id": "schnorr",
+    "title": "Schnorr signatures",
+    "definition": "The signature scheme introduced with Taproot. Signatures are a fixed size, and several can be combined into one that verifies as a single signature — so a multisig spend can look identical to an ordinary one, which is cheaper and more private than publishing every key involved.",
+    "example": "A cooperatively spent Taproot multisig is indistinguishable on-chain from a single-key payment.",
+    "categories": [
+      "Technical",
+      "Privacy"
     ]
   },
   {
@@ -1157,6 +1870,17 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "seedqr",
+    "title": "SeedQR",
+    "definition": "A recovery phrase encoded as a QR code so a camera-based signer can read it in rather than having you enter words by hand. It removes transcription errors at the cost of making the backup machine-readable — anyone who photographs it has the wallet, with no need to read anything.",
+    "example": "A SeedQR is faster to restore from and much faster for someone else to capture in passing.",
+    "categories": [
+      "Backups",
+      "Hardware Wallets",
+      "Risk"
+    ]
+  },
+  {
     "id": "segwit",
     "title": "SegWit",
     "definition": "A 2017 upgrade that moved signature data to a separate part of the transaction and discounted it when measuring size. That made transactions cheaper to spend, fixed transaction malleability, and created room for later upgrades. It was activated as a soft fork, so nothing was forced on anyone.",
@@ -1176,6 +1900,15 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "sequence_number",
+    "title": "Sequence number",
+    "definition": "A per-input field originally intended for transaction replacement, now carrying two meanings: signalling that a transaction may be replaced by fee, and enforcing relative timelocks. Its value is one of the details that identifies which wallet built a transaction.",
+    "example": "A wallet setting sequence to signal replaceability is what makes fee bumping possible later.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
     "id": "shamir_backup",
     "title": "Shamir backup",
     "definition": "A threshold backup method, commonly implemented for wallets as SLIP39, that divides a master secret into multiple unique recovery shares. A chosen minimum number of shares can reconstruct the wallet; fewer than that threshold do not reveal the master secret. SLIP39 shares are not ordinary BIP39 recovery words and require compatible recovery software or hardware.",
@@ -1188,6 +1921,17 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "side_channel",
+    "title": "Side channel",
+    "definition": "Learning a secret from a system's incidental behaviour — timing, power draw, electromagnetic emissions — rather than from its output. Secure elements are built to resist these, and their absence is why keys have been extracted from general-purpose chips by manipulating supply voltage.",
+    "example": "Voltage glitching a microcontroller during boot is a side channel attack, and it recovered seeds from devices with no secure element.",
+    "categories": [
+      "Threats",
+      "Hardware Wallets",
+      "Security"
+    ]
+  },
+  {
     "id": "signature",
     "title": "Signature",
     "definition": "Proof that the holder of a private key authorised a specific transaction, verifiable by anyone holding the matching public key. It commits to the transaction's contents, so altering any detail invalidates it. Producing one is the only thing a private key is ever used for.",
@@ -1195,6 +1939,15 @@ const glossaryTerms = [
     "categories": [
       "Technical",
       "Security"
+    ]
+  },
+  {
+    "id": "signet",
+    "title": "Signet",
+    "definition": "A test network whose blocks are signed by a known party, so it behaves predictably instead of suffering the erratic mining that makes testnet unreliable. It is the better option for rehearsing a workflow end to end, and it carries the same warning: never on the device holding real keys.",
+    "example": "Signet produces steady blocks, which makes practising a full send-and-confirm cycle realistic.",
+    "categories": [
+      "Technical"
     ]
   },
   {
@@ -1356,6 +2109,15 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "testnet",
+    "title": "Testnet",
+    "definition": "A parallel network with coins of no value, used for testing. It uses different address formats and a different coin type in derivation paths, so a testnet wallet is genuinely a separate wallet. Signing devices generally bury the setting deliberately, because a transaction believed to be testnet can spend real coins if the device is actually on mainnet.",
+    "example": "Testnet addresses start with different characters, which is the visible sign you are not on the real network.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
     "id": "threat_model",
     "title": "Threat model",
     "definition": "A structured assessment of what you are protecting, who or what could harm it, how likely those events are, and which safeguards address them. A useful Bitcoin threat model includes digital theft, physical loss, coercion, fire or flood, user error, privacy leakage, and the people who may need to recover the wallet.",
@@ -1394,6 +2156,34 @@ const glossaryTerms = [
     "example": "Paying someone from a single large coin produces two outputs: theirs, and the change returning to an address of your own.",
     "categories": [
       "Technical"
+    ]
+  },
+  {
+    "id": "transaction_fee",
+    "title": "Transaction fee",
+    "definition": "The difference between a transaction's inputs and its outputs, claimed by whoever mines it. It is not a field anyone sets directly, which is why a device that cannot see input values cannot tell you the true cost — and why a dishonest coordinator could otherwise show a small fee while burning a large one.",
+    "example": "Getting the fee wrong by leaving out an output has cost people substantial amounts, since the surplus goes to the miner.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "malleability",
+    "title": "Transaction malleability",
+    "definition": "The old ability to alter a transaction's identifier without invalidating it, by changing the signature encoding. It broke anything that referenced an unconfirmed transaction by id, and fixing it was one of SegWit's main motivations — separating signature data means the identifier no longer depends on it.",
+    "example": "Malleability is why Lightning was impractical before SegWit fixed it.",
+    "categories": [
+      "Technical"
+    ]
+  },
+  {
+    "id": "trustless",
+    "title": "Trustless",
+    "definition": "Not requiring trust in a specific counterparty, because claims can be checked instead. Overstated as a word: you still trust the software, the mathematics and your own hardware. It means the set of people who must behave well is small and inspectable, rather than empty.",
+    "example": "Running a node replaces trusting someone's answer with checking the rules yourself, which is what the word actually buys.",
+    "categories": [
+      "Technical",
+      "Connectivity"
     ]
   },
   {
@@ -1437,12 +2227,51 @@ const glossaryTerms = [
     ]
   },
   {
+    "id": "utxo_set",
+    "title": "UTXO set",
+    "definition": "Every unspent output in existence — the complete record of what can currently be spent. Nodes keep it in memory to validate transactions quickly, so its size is one of the real costs of running one. Every transaction consumes entries from it and creates new ones.",
+    "example": "Consolidating many small coins into one shrinks the UTXO set slightly, which is a small public good as well as a private saving.",
+    "categories": [
+      "Technical",
+      "Connectivity"
+    ]
+  },
+  {
+    "id": "vanity_address",
+    "title": "Vanity address",
+    "definition": "An address brute-forced to begin with chosen characters. Harmless if you generate it yourself and dangerous if someone else does, since whoever produced it may have kept the key. It also encourages address reuse, because the point of a memorable address is publishing it.",
+    "example": "A vanity address supplied by a third party is a key of unknown provenance, whatever it spells.",
+    "categories": [
+      "Privacy",
+      "Risk"
+    ]
+  },
+  {
+    "id": "verification",
+    "title": "Verification",
+    "definition": "Checking a claim yourself rather than accepting it. It is the habit the whole practice rests on: verify the address on the device, verify the download signature, verify the backup by restoring it, verify the node is actually being used. Each replaces a belief with a fact.",
+    "example": "The difference between having a backup and having a tested backup is one afternoon of verification.",
+    "categories": [
+      "Security",
+      "Recovery"
+    ]
+  },
+  {
     "id": "virtual_byte",
     "title": "Virtual byte (vByte)",
     "definition": "The unit transaction size is measured in for fee purposes. SegWit data is discounted, so a transaction's virtual size is smaller than its raw byte count — which is the mechanism by which SegWit and Taproot addresses cost less to spend from than legacy ones.",
     "example": "Fee estimates are quoted in sats per vByte, so the same fee rate costs less on a native SegWit input than a legacy one.",
     "categories": [
       "Technical"
+    ]
+  },
+  {
+    "id": "wallet",
+    "title": "Wallet",
+    "definition": "Software or a device that manages keys and builds transactions. It holds no bitcoin — nothing is stored in it — and the word covers arrangements as different as a phone app with keys on it and a watch-only program that cannot spend. Asking what a wallet holds is more useful than asking which wallet is best.",
+    "example": "A hardware wallet and the desktop software driving it are two halves of one wallet, and only one of them can sign.",
+    "categories": [
+      "Wallets"
     ]
   },
   {
