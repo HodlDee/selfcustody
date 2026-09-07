@@ -17,9 +17,9 @@
   <link rel="icon" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css?v=20260829-03" rel="stylesheet">
-  <link href="assets/css/style.css?v=20260829-03" rel="stylesheet">
-  <link href="assets/css/site-refresh.css?v=20260829-03" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css?v=20260906-01" rel="stylesheet">
+  <link href="assets/css/style.css?v=20260906-01" rel="stylesheet">
+  <link href="assets/css/site-refresh.css?v=20260906-01" rel="stylesheet">
 </head>
 <body class="site-refresh" data-page="glossary">
   <div id="site-header">
@@ -86,16 +86,1442 @@
               <button class="sc-glossary-clear" type="button" data-glossary-clear hidden>Clear</button>
             </div>
             <div class="sc-glossary-meta">
-              <p class="sc-glossary-count" data-glossary-count aria-live="polite">Loading the lexicon…</p>
+              <p class="sc-glossary-count" data-glossary-count aria-live="polite">238 of 238 terms</p>
               <div class="sc-glossary-letters" data-glossary-letters aria-label="Filter glossary by first letter"></div>
             </div>
           </div>
 
-          <div class="sc-glossary-status" data-glossary-status role="status">
-            <span class="sc-glossary-loader" aria-hidden="true"></span>
-            <p>Loading more than 500 Bitcoin terms…</p>
+          <div class="sc-glossary-status" data-glossary-status role="status" hidden></div>
+          <div class="sc-glossary-grid" data-glossary-results>
+            <article class="sc-glossary-card" id="term-21_million">
+              <div class="sc-glossary-card-head"><h2>21 million</h2></div>
+              <p class="sc-glossary-definition">The approximate total number of bitcoin that will ever exist — slightly under, because the subsidy is halved using integer arithmetic and rounds away small amounts, and because coins with lost keys are permanently unspendable. The figure is a consequence of the halving schedule rather than a parameter set independently.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The final fraction of the supply is issued so slowly that the last coins are not expected until well into the next century.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-fifty_one_percent_attack">
+              <div class="sc-glossary-card-head"><h2>51% attack</h2></div>
+              <p class="sc-glossary-definition">Controlling enough mining power to outpace the rest of the network and rewrite recent history. It would allow reversing recent transactions, and it would not allow creating coins, changing the supply, or spending anyone else's — those are enforced by nodes rather than by miners.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The attack's realistic effect is undoing a recent payment, which is why large amounts wait for more confirmations.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Threats</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-account_path">
+              <div class="sc-glossary-card-head"><h2>Account path</h2></div>
+              <p class="sc-glossary-definition">The first three steps of a derivation path — m/84'/0'/0' — naming the script type, the coin, and which account. Everything a wallet shows you hangs below it: receiving addresses on one branch, change on another. It is the level an extended public key is normally exported from, so a wallet can watch a whole account without being handed anything that spends.</p>
+              <p class="sc-glossary-example"><span>Example: </span>One seed can hold several accounts — m/84'/0'/0' and m/84'/0'/1' share recovery words but behave as separate wallets with separate balances.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Wallets</li><li>Recovery</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-address">
+              <div class="sc-glossary-card-head"><h2>Address</h2></div>
+              <p class="sc-glossary-definition">A string encoding the conditions under which a payment can later be spent. It is derived from a public key or a script, is safe to share, and should be used once. Reading one on a screen a compromised computer controls is the moment most thefts actually happen.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Addresses beginning 1, 3, bc1q and bc1p all work; they differ in age, cost to spend, and how widely they are accepted.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Wallets</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-address_reuse">
+              <div class="sc-glossary-card-head"><h2>Address reuse</h2></div>
+              <p class="sc-glossary-definition">Receiving more than once to the same address. It costs nothing technically and a great deal in privacy: every payment to that address is publicly linked to every other, permanently, and the link cannot be withdrawn later. Wallets generate a fresh address for each payment for this reason, and the gap limit exists because they do.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Publishing one donation address links every contribution to it, which is the problem silent payments were designed to remove.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-address_substitution">
+              <div class="sc-glossary-card-head"><h2>Address substitution</h2></div>
+              <p class="sc-glossary-definition">Malware that watches for something address-shaped and replaces it with the attacker's own. It breaks no cryptography and needs no privilege beyond reading your clipboard. The defence is not vigilance on the computer but reading the address on the signing device, which the malware cannot reach.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The computer and the browser both show the attacker's address; only the device shows yours.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Threats</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-air_gap">
+              <div class="sc-glossary-card-head"><h2>Air gap</h2></div>
+              <p class="sc-glossary-definition">An arrangement where the device holding keys has no electrical or radio connection to a networked machine, and data crosses by microSD card or QR code instead. It removes an attack surface rather than every attack surface: a transaction can still be signed for the wrong address if it is approved without reading the device screen.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Carrying a PSBT to a signer on a microSD card preserves the air gap; plugging the same signer into the computer by USB does not.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Security</li><li>Hardware Wallets</li><li>Connectivity</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-anonymity">
+              <div class="sc-glossary-card-head"><h2>Anonymity</h2></div>
+              <p class="sc-glossary-definition">Not being identifiable at all — which bitcoin does not provide. The ledger is public and permanent, and identity attaches off-chain through exchanges, deliveries and habits. Pseudonymity is the accurate word: addresses are not names, and the link between them is often recoverable.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Treating bitcoin as anonymous is the assumption behind most avoidable privacy losses.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-aml">
+              <div class="sc-glossary-card-head"><h2>Anti-money laundering (AML)</h2></div>
+              <p class="sc-glossary-definition">The framework of obligations requiring financial businesses to monitor and report activity. In practice it is the reason platforms demand identity documents, question withdrawals, and sometimes freeze accounts — and the reason a withdrawal ties your identity to specific coins.</p>
+              <p class="sc-glossary-example"><span>Example: </span>AML obligations are why a platform may ask where funds came from before releasing them.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Exchanges</li><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-attack_surface">
+              <div class="sc-glossary-card-head"><h2>Attack surface</h2></div>
+              <p class="sc-glossary-definition">The total set of places something can be attacked — code, interfaces, network connections, physical access. Reducing it is why bitcoin-only firmware, air gaps and dedicated devices exist. It is a more useful frame than asking whether something is secure, because it asks secure against what.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A device supporting one asset runs less code than one supporting hundreds, which is a smaller surface regardless of either one's quality.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Security</li><li>Firmware</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-attestation">
+              <div class="sc-glossary-card-head"><h2>Attestation</h2></div>
+              <p class="sc-glossary-definition">A statement, signed by a build system, that a particular artifact came from a particular source. It binds a file to the repository and workflow that produced it, so a download can be checked against something more specific than a hash served from the same place as the file.</p>
+              <p class="sc-glossary-example"><span>Example: </span>An attestation records the repository as it stood when signed, so a copy downloaded before a rename verifies under the old name.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Security</li><li>Firmware</li><li>Open Source</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bech32">
+              <div class="sc-glossary-card-head"><h2>bech32</h2></div>
+              <p class="sc-glossary-definition">The address encoding used by native SegWit, producing lowercase strings beginning bc1q. Its checksum catches typos reliably and it is case-insensitive, which makes it easier to read aloud or transcribe than the older format. bech32m is the revised version used by Taproot.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A mistyped bech32 address is almost always rejected by the sending wallet rather than accepted and sent nowhere.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip8">
+              <div class="sc-glossary-card-head"><h2>BIP8</h2></div>
+              <p class="sc-glossary-definition">A revision of the BIP9 activation pattern that can end in mandatory activation rather than expiry, so a change is not indefinitely blockable by miners declining to signal. Which of the two patterns to use is a governance argument as much as a technical one.</p>
+              <p class="sc-glossary-example"><span>Example: </span>BIP8 exists because BIP9 let a minority of hash power veto a change that node operators wanted.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip9">
+              <div class="sc-glossary-card-head"><h2>BIP9</h2></div>
+              <p class="sc-glossary-definition">An activation mechanism in which miners signal readiness for a soft fork within a time window, and the change locks in if enough do before it expires. It treats miner signalling as a readiness poll rather than a vote, and its weakness is that a minority of hash power can stall a change indefinitely by simply not signalling.</p>
+              <p class="sc-glossary-example"><span>Example: </span>SegWit was proposed under BIP9 and stalled, which is what led to the pressure that eventually activated it.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip16">
+              <div class="sc-glossary-card-head"><h2>BIP16</h2></div>
+              <p class="sc-glossary-definition">The proposal that introduced pay-to-script-hash, letting an address commit to a script revealed only when spent. It made multisig and other conditions practical for ordinary users, because the sender no longer needed to know or pay for the recipient's spending conditions.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Every address beginning with 3 exists because of BIP16.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip21">
+              <div class="sc-glossary-card-head"><h2>BIP21</h2></div>
+              <p class="sc-glossary-definition">The URI scheme behind payment links and QR codes — bitcoin: followed by an address and optional amount and label. It is why scanning a merchant's code fills in the details rather than only the address, and why a wallet can be opened straight from a link.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A QR code encoding a BIP21 URI can carry the amount as well as the address, removing one place to mistype.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip32">
+              <div class="sc-glossary-card-head"><h2>BIP32</h2></div>
+              <p class="sc-glossary-definition">The standard defining hierarchical deterministic wallets: how a seed becomes a master key and chain code, how child keys are derived from parents, and the difference between hardened and ordinary derivation. Everything about paths, xpubs and watch-only wallets rests on it.</p>
+              <p class="sc-glossary-example"><span>Example: </span>BIP32 is why one backup can restore a wallet holding thousands of addresses across several accounts.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Recovery</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip39">
+              <div class="sc-glossary-card-head"><h2>BIP39</h2></div>
+              <p class="sc-glossary-definition">The standard behind recovery phrases: a fixed list of 2,048 words, a rule for turning random bits into a sequence of them, a checksum that catches most transcription errors, and a key-stretching step that turns the words plus an optional passphrase into a wallet seed. Widely implemented, which is what lets one phrase restore across different software — though the derivation path still has to match.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A twelve-word BIP39 phrase encodes 128 bits of entropy plus a four-bit checksum, which is why thirteen words is not a valid phrase.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>BIP39</li><li>Backups</li><li>Recovery</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip44">
+              <div class="sc-glossary-card-head"><h2>BIP44</h2></div>
+              <p class="sc-glossary-definition">The standard that gave derivation paths their shape — purpose, coin type, account, change, index — and set the address gap limit at twenty. Its own purpose number, 44', now means legacy addresses specifically, while the structure it introduced is used by every later scheme.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A wallet defaulting to m/44'/0'/0' derives legacy addresses beginning with 1.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Recovery</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip48">
+              <div class="sc-glossary-card-head"><h2>BIP48</h2></div>
+              <p class="sc-glossary-definition">The derivation scheme for multisig wallets, which adds a script-type level to the path so that the same seed can participate in wallets of different kinds. Multisig needs it because the address depends on every co-signer's key, not only your own.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A 2-of-3 native SegWit multisig typically derives its keys from m/48'/0'/0'/2'.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Multisig</li><li>Technical</li><li>Recovery</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip65">
+              <div class="sc-glossary-card-head"><h2>BIP65 (CheckLockTimeVerify)</h2></div>
+              <p class="sc-glossary-definition">The opcode allowing a script to require that a given absolute time or block height has passed before an output can be spent. It is what makes inheritance paths and time-delayed recovery enforceable by the network rather than by anyone's promise.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A spending path that only opens in 2030 is enforced by every node, not by the wallet displaying it.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Planning</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip68">
+              <div class="sc-glossary-card-head"><h2>BIP68 (relative timelocks)</h2></div>
+              <p class="sc-glossary-definition">Timelocks measured from when an output was confirmed rather than from a fixed date, using the sequence field. It is what allows conditions like &quot;this key may spend, but only ninety days after the coins arrived&quot;, which is the usual shape of a decaying multisig.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A recovery key that becomes usable ninety days after funding, rather than on a named date, uses a relative timelock.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Planning</li><li>Multisig</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip84">
+              <div class="sc-glossary-card-head"><h2>BIP84</h2></div>
+              <p class="sc-glossary-definition">The derivation scheme for native SegWit addresses, using purpose 84' and producing addresses beginning bc1q. It is the common default in current wallets, which is why restoring an older seed into new software sometimes shows an empty wallet until the path is changed.</p>
+              <p class="sc-glossary-example"><span>Example: </span>m/84'/0'/0' is the account path most wallets create by default today.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Recovery</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip85">
+              <div class="sc-glossary-card-head"><h2>BIP85</h2></div>
+              <p class="sc-glossary-definition">A scheme for deriving fresh, independent seed phrases from one master seed and an index number. The children are ordinary wallets that reveal nothing about the master or about each other, so one backup can stand behind several wallets — provided the index and word count are recorded, because nothing in a child seed identifies them.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Index 0 at twelve words produces one wallet; index 1 produces an unrelated one, both recoverable from the same master.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Backups</li><li>Recovery</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip86">
+              <div class="sc-glossary-card-head"><h2>BIP86</h2></div>
+              <p class="sc-glossary-definition">The derivation scheme for single-key Taproot addresses, using purpose 86' and producing addresses beginning bc1p. Support is widespread but not universal, and a wallet that cannot derive this path will not find coins held on it.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A Taproot wallet at m/86'/0'/0' produces bc1p addresses that some older software cannot send to.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Recovery</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip125">
+              <div class="sc-glossary-card-head"><h2>BIP125 (opt-in RBF)</h2></div>
+              <p class="sc-glossary-definition">The rule set defining when an unconfirmed transaction may be replaced by one paying a higher fee, and what the replacement must do to be accepted. Opt-in means the original had to signal it; whether it did is usually a wallet default rather than a choice the sender made.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A wallet that does not signal replaceability leaves fee bumping to the recipient via CPFP instead.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip141">
+              <div class="sc-glossary-card-head"><h2>BIP141 (SegWit)</h2></div>
+              <p class="sc-glossary-definition">The proposal defining segregated witness — moving signature data out of the transaction body, discounting it when measuring size, and fixing transaction malleability in the process. Activated in 2017 as a soft fork after a prolonged dispute.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The cheaper fees on bc1 addresses trace directly to the discount BIP141 introduced.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip148">
+              <div class="sc-glossary-card-head"><h2>BIP148 (UASF)</h2></div>
+              <p class="sc-glossary-definition">A user-activated soft fork: nodes agreeing to reject blocks that did not signal for SegWit after a set date, regardless of what miners preferred. It established the precedent that node operators, not miners, decide which rules apply — the point the block size war ultimately settled.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The threat of BIP148 is widely credited with breaking the deadlock over SegWit activation.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip174">
+              <div class="sc-glossary-card-head"><h2>BIP174 (PSBT)</h2></div>
+              <p class="sc-glossary-definition">The proposal defining the partially signed bitcoin transaction format, so that software from different vendors can pass an unsigned transaction between them and collect signatures. It is what makes air-gapped signing and multi-vendor multisig practical rather than bespoke.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A PSBT built in one wallet can be signed by a device from a different manufacturer entirely.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Multisig</li><li>Hardware Wallets</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bitcoin">
+              <div class="sc-glossary-card-head"><h2>Bitcoin</h2></div>
+              <p class="sc-glossary-definition">A network of computers that agree, without a central authority, on who is entitled to spend what. Capitalised it usually means the network and the protocol; lowercase, the unit of account. The two are worth distinguishing, because most arguments about one are really about the other.</p>
+              <p class="sc-glossary-example"><span>Example: </span>You can run Bitcoin the software without owning any bitcoin the asset.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bitcoin_core">
+              <div class="sc-glossary-card-head"><h2>Bitcoin Core</h2></div>
+              <p class="sc-glossary-definition">The most widely used full node implementation, and the reference for what the consensus rules actually are. It validates the chain and manages descriptor wallets, but keeps no index of arbitrary addresses — which is why most wallets need an index server alongside it rather than talking to it directly.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Specter drives Core's own wallets directly, which is why it needs Core and nothing else.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Connectivity</li><li>Technical</li><li>Open Source</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bip">
+              <div class="sc-glossary-card-head"><h2>Bitcoin Improvement Proposal (BIP)</h2></div>
+              <p class="sc-glossary-definition">A numbered design document proposing a change or standard. A BIP number is a reference, not an endorsement: most are never adopted, some are withdrawn, and a few describe things now considered mistakes. Being able to cite one is how compatibility questions get settled precisely.</p>
+              <p class="sc-glossary-example"><span>Example: </span>BIP39 describes recovery phrases and BIP32 the key tree beneath them; both are implemented almost everywhere.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Open Source</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-whitepaper">
+              <div class="sc-glossary-card-head"><h2>Bitcoin whitepaper</h2></div>
+              <p class="sc-glossary-definition">The nine-page 2008 paper describing a peer-to-peer electronic cash system, published under the name Satoshi Nakamoto. It sets out proof of work, the chain of blocks, and the argument that honest majority hash power settles ordering. It does not describe most of what a modern wallet does.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The whitepaper explains why confirmations matter but says nothing about seed phrases or derivation paths.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bitcoin_only">
+              <div class="sc-glossary-card-head"><h2>Bitcoin-only</h2></div>
+              <p class="sc-glossary-definition">Hardware or software that supports bitcoin and nothing else. The argument is narrow and practical: less code means a smaller attack surface and fewer features whose failure modes you have to understand. Several manufacturers ship a bitcoin-only firmware edition alongside a multi-asset one, and on some devices the switch is permanent.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Choosing the bitcoin-only firmware at setup removes support for every other asset, which is the point rather than a limitation.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Firmware</li><li>Hardware Wallets</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-block">
+              <div class="sc-glossary-card-head"><h2>Block</h2></div>
+              <p class="sc-glossary-definition">A batch of transactions accepted together, linked to the one before it. Blocks arrive roughly every ten minutes on average, which is not a schedule — gaps of forty minutes are ordinary. Space in one is finite, which is what fees bid for.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A transaction is confirmed once when the block containing it is mined, and gains a confirmation with each block after.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-block_explorer">
+              <div class="sc-glossary-card-head"><h2>Block explorer</h2></div>
+              <p class="sc-glossary-definition">A website that indexes the blockchain so transactions and addresses can be looked up. Useful for confirming a payment exists, and worth using carefully: searching for your own address tells the operator that whoever holds it visited from your connection, which is exactly the link a wallet pointed at your own node avoids creating.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Pasting a receive address into an explorer to check a payment arrived also reveals that address, and your interest in it, to whoever runs the site.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li><li>Connectivity</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-block_height">
+              <div class="sc-glossary-card-head"><h2>Block height</h2></div>
+              <p class="sc-glossary-definition">How many blocks precede a given one, counting from the genesis block at zero. It is the chain's clock: halvings, difficulty adjustments and timelocks are all expressed in heights rather than dates, because heights are unambiguous and dates are not.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A timelock set to a future height opens when the chain reaches it, whenever that happens to be.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-block_size">
+              <div class="sc-glossary-card-head"><h2>Block size</h2></div>
+              <p class="sc-glossary-definition">How much data a block may contain. Since SegWit the limit is expressed in weight units rather than raw bytes, allowing roughly four million weight units, and it is what makes block space a scarce good that fees bid for. It was the subject of bitcoin's defining governance fight between 2015 and 2017.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The limit is why fees rise during congestion rather than everyone simply being included.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-block_subsidy">
+              <div class="sc-glossary-card-head"><h2>Block subsidy</h2></div>
+              <p class="sc-glossary-definition">The new bitcoin created in each block and paid to whoever mined it. It halves every 210,000 blocks and will eventually round to nothing, at which point miners are paid by transaction fees alone. It is the entire mechanism by which bitcoin is issued.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The subsidy and the fees of the included transactions together make up the block reward.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-blockchain">
+              <div class="sc-glossary-card-head"><h2>Blockchain</h2></div>
+              <p class="sc-glossary-definition">The ordered chain of blocks recording every transaction. It tracks amounts and spending conditions rather than people or balances, and it is public — which is the source of both its verifiability and its privacy problems. Nothing in it can be edited; history is only extended.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A wallet's balance is not stored in the chain; it is computed by finding the unspent outputs its keys can claim.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-bloom_filter">
+              <div class="sc-glossary-card-head"><h2>Bloom filter</h2></div>
+              <p class="sc-glossary-definition">The older mechanism by which light wallets asked servers for relevant transactions. It was intended to be vague enough to preserve privacy and was shown not to be — a server could usually recover which addresses a wallet held. Largely superseded by compact block filters.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Bloom filters are the cautionary example of privacy by obscurity in wallet design.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li><li>Connectivity</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-brain_wallet">
+              <div class="sc-glossary-card-head"><h2>Brain wallet</h2></div>
+              <p class="sc-glossary-definition">A wallet whose key is derived from a phrase someone thought of. It fails reliably: human-chosen phrases are guessable at scale, and automated bots have swept them within minutes of funding for over a decade. Every study that has looked has found the same thing.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Research checking hundreds of billions of candidate phrases against the chain found brain wallets drained almost immediately after funding.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Threats</li><li>Backups</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-broadcast">
+              <div class="sc-glossary-card-head"><h2>Broadcast</h2></div>
+              <p class="sc-glossary-definition">Handing a signed transaction to the network by sending it to a node, which relays it onward. It is not a submission to any authority — nobody accepts or rejects it, and an unbroadcast transaction has changed nothing. Until it is mined, it sits in mempools waiting.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A transaction signed on an air-gapped device does nothing until the coordinator broadcasts it.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Connectivity</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-brute_force">
+              <div class="sc-glossary-card-head"><h2>Brute force</h2></div>
+              <p class="sc-glossary-definition">Trying every possibility until something works. It is why key sizes are what they are: a 128-bit secret has more possibilities than could be enumerated with any conceivable resources. It is also why a PIN is protected by an attempt counter rather than by its own length.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Guessing a seed phrase is infeasible; guessing a four-digit PIN is trivial without something counting the attempts.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Security</li><li>Threats</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-byzantine_fault_tolerance">
+              <div class="sc-glossary-card-head"><h2>Byzantine fault tolerance</h2></div>
+              <p class="sc-glossary-definition">A system's ability to keep working correctly while some participants fail arbitrarily or behave maliciously. Bitcoin achieves it by tying influence to expended work rather than to identity, so an attacker must outspend the network rather than outnumber it.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The network continues correctly even though some nodes and miners are hostile at any given moment.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-byzantine_generals">
+              <div class="sc-glossary-card-head"><h2>Byzantine generals problem</h2></div>
+              <p class="sc-glossary-definition">The classic statement of coordinating parties who cannot trust each other or the messages between them, where some may actively lie. Bitcoin's answer is not better messaging but making participation expensive, so that lying costs more than it returns.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The problem is why counting participants fails as a mechanism — identities are free to create, so votes can be manufactured.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-censorship_resistance">
+              <div class="sc-glossary-card-head"><h2>Censorship resistance</h2></div>
+              <p class="sc-glossary-definition">The property that a valid transaction cannot be reliably prevented from confirming. Miners may decline to include one, but they cannot stop others including it, and the cost of excluding transactions indefinitely rises with the number of independent participants. It is the same property that makes payments irreversible.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A transaction ignored by some miners is simply mined by others, usually within a block or two.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-chain_analysis">
+              <div class="sc-glossary-card-head"><h2>Chain analysis</h2></div>
+              <p class="sc-glossary-definition">Applying assumptions at scale to the public ledger to work out who controls what. Nobody is watching you specifically; a set of individually unremarkable inferences is applied to everyone. It works by combining weak signals rather than breaking anything, which is why the goal is raising the cost of the inference rather than achieving anonymity.</p>
+              <p class="sc-glossary-example"><span>Example: </span>An analyst combines shared inputs, change detection and timing to link addresses that were never obviously connected.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li><li>Threats</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-chain_code">
+              <div class="sc-glossary-card-head"><h2>Chain code</h2></div>
+              <p class="sc-glossary-definition">Thirty-two bytes of additional entropy carried alongside a key, mixed into every child derivation. It is what makes a key extended: with the chain code, a whole branch can be derived from one string; without it, knowing a key tells you nothing about its siblings.</p>
+              <p class="sc-glossary-example"><span>Example: </span>An xpub is a public key and a chain code together, which is exactly what a watch-only wallet needs to derive future addresses.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-change_address">
+              <div class="sc-glossary-card-head"><h2>Change address</h2></div>
+              <p class="sc-glossary-definition">An address in your own wallet that receives the remainder when a coin is spent. Coins are spent whole, so paying part of one sends the rest back to you. Change is the output nobody checks, and verifying it belongs to your wallet is what stops a compromised computer redirecting the remainder.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Paying 0.01 from a 0.5 coin produces the payment and a 0.49 change output, which should be confirmed on the signing device as your own.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Privacy</li><li>Wallets</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-change_detection">
+              <div class="sc-glossary-card-head"><h2>Change detection</h2></div>
+              <p class="sc-glossary-definition">Working out which output of a transaction returned to the sender. Roundness is the obvious signal — payments are round, change is the remainder — but script type, address reuse, unnecessary inputs and output ordering all give it away too. Identifying change is what turns isolated transactions into a traceable chain.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Paying 0.05 from a 0.31 coin leaves an awkward remainder that is obviously the change.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-checksum">
+              <div class="sc-glossary-card-head"><h2>Checksum</h2></div>
+              <p class="sc-glossary-definition">A short value calculated from a larger piece of data specifically to catch errors in it. Bitcoin uses checksums in several unrelated places: the final word of a BIP39 recovery phrase encodes a checksum of the words before it, so most (not all) transcription mistakes produce an invalid phrase rather than a silently different wallet; bech32 addresses carry a checksum strong enough to catch typos reliably; and software releases are distributed with a checksum file so a download can be verified against what the developers actually published.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Before flashing a signer's firmware, a user checks the published SHA256 checksum against the file they downloaded to confirm nothing was altered in transit.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Backups</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-child_pays_for_parent">
+              <div class="sc-glossary-card-head"><h2>Child pays for parent (CPFP)</h2></div>
+              <p class="sc-glossary-definition">Speeding up a stuck transaction by spending one of its outputs in a new transaction with a high fee. Miners assess the pair together, so the child's fee effectively pays for the parent. It is the option available to the recipient, who cannot replace a transaction they did not send.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Waiting on a slow incoming payment, you can spend its output to yourself at a high fee rate to pull both into a block.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-coin">
+              <div class="sc-glossary-card-head"><h2>Coin</h2></div>
+              <p class="sc-glossary-definition">Informal for a UTXO — one discrete, separately spendable chunk of bitcoin. Wallets that offer coin control use the word this way. It does not mean a physical object and does not mean a whole bitcoin.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A wallet holding 0.4 BTC across three coins can choose which of them to spend.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Wallets</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-coin_control">
+              <div class="sc-glossary-card-head"><h2>Coin control</h2></div>
+              <p class="sc-glossary-definition">Choosing which UTXOs a transaction spends rather than letting the wallet decide. It is the highest-value privacy habit available, because spending coins together publicly asserts they share an owner. It is also how dust of unknown origin is kept out of transactions, by freezing it rather than reasoning about it.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Paying from a single coin close to the payment amount avoids linking unrelated coins and avoids an obvious change output.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li><li>Wallets</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-coinbase_transaction">
+              <div class="sc-glossary-card-head"><h2>Coinbase transaction</h2></div>
+              <p class="sc-glossary-definition">The first transaction in every block, which creates the subsidy and collects the fees. It has no inputs, because it is where new coins come from. Its output cannot be spent for a hundred blocks, so a reorganisation cannot leave already-spent rewards behind.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The genesis block's coinbase transaction carries that January 2009 front-page quotation in its input field.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-coinjoin">
+              <div class="sc-glossary-card-head"><h2>CoinJoin</h2></div>
+              <p class="sc-glossary-definition">A collaborative transaction in which many people contribute inputs and receive equal-sized outputs, so that which output belongs to whom is not visible on-chain. It breaks the link between coins and their history rather than hiding amounts, and it cannot undo links already published.</p>
+              <p class="sc-glossary-example"><span>Example: </span>After a CoinJoin, an observer sees many indistinguishable outputs of the same size rather than one traceable payment.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-cold_storage">
+              <div class="sc-glossary-card-head"><h2>Cold storage</h2></div>
+              <p class="sc-glossary-definition">Keeping the keys that authorise spending on something that has never been connected to the internet, and signing transactions without connecting it. The phrase describes where the keys are, not what product is used. It reduces exposure to malware and remote theft, and does nothing about losing the backup or being coerced.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A signing device kept in a drawer, paired with watch-only software on a laptop, is cold storage; the same device left plugged into a computer is not.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Storage</li><li>Security</li><li>Hardware Wallets</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-collaborative_custody">
+              <div class="sc-glossary-card-head"><h2>Collaborative custody</h2></div>
+              <p class="sc-glossary-definition">A multisig arrangement where a company holds one key and you hold the others, so it can help you recover without being able to spend. It buys a recovery process and an inheritance path in exchange for a fee, an identifiable relationship, and a dependency on the company still existing.</p>
+              <p class="sc-glossary-example"><span>Example: </span>In a 2-of-3 where you hold two keys, the company's participation is optional for spending and useful for recovery.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Multisig</li><li>Planning</li><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-common_input_ownership">
+              <div class="sc-glossary-card-head"><h2>Common-input-ownership</h2></div>
+              <p class="sc-glossary-definition">The assumption that if a transaction spends several coins, one entity controlled all of them. It is the strongest heuristic in chain analysis and correct the overwhelming majority of the time. Coin control exists mostly to avoid triggering it, and PayJoin exists to make it produce wrong answers.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Spending two coins together publicly asserts they share an owner, permanently and without any way to withdraw the claim.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-compact_block_filters">
+              <div class="sc-glossary-card-head"><h2>Compact block filters</h2></div>
+              <p class="sc-glossary-definition">A way for a light wallet to work out whether a block concerns it by downloading a small filter per block rather than telling a server which addresses it owns. It is the privacy-preserving alternative to the older bloom filter approach, which leaked exactly what it was meant to protect.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A wallet using block filters learns about its own payments without revealing which addresses it is watching.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li><li>Connectivity</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-confirmation">
+              <div class="sc-glossary-card-head"><h2>Confirmation</h2></div>
+              <p class="sc-glossary-definition">A block containing your transaction, plus each block built on top of it. Confirmations are depth rather than a status change: nothing about the transaction is altered, but reversing it would require redoing every block since. There is no threshold at which a payment becomes official — how many to wait for is a judgement about the amount at stake.</p>
+              <p class="sc-glossary-example"><span>Example: </span>An exchange might credit a small deposit at one confirmation and a large one at six.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-consensus">
+              <div class="sc-glossary-card-head"><h2>Consensus</h2></div>
+              <p class="sc-glossary-definition">Agreement across the network about which chain is valid and which transactions happened. It is produced by every node independently applying the same rules and rejecting what fails them, not by voting or by any authority. Miners order transactions; nodes decide whether the result counts.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A block breaking the supply schedule is rejected by each node on its own, so no amount of hash power makes it valid.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-consensus_rules">
+              <div class="sc-glossary-card-head"><h2>Consensus rules</h2></div>
+              <p class="sc-glossary-definition">The conditions every node checks before accepting a block — the supply schedule, signature validity, transaction format, and the rest. They are enforced independently by everyone running a node, which is why no single party can change them and why running one is what makes the rule yours rather than someone's promise.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A block creating more bitcoin than the schedule allows is rejected by each node on its own, not by a vote.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Connectivity</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-consolidation">
+              <div class="sc-glossary-card-head"><h2>Consolidation</h2></div>
+              <p class="sc-glossary-definition">Deliberately combining many small UTXOs into one, usually while fees are low, so a later payment does not need many inputs. It saves money and costs privacy: the combining transaction asserts that every input shared an owner, permanently and in public.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Consolidating a year of small purchases into one coin links them all, which may or may not matter depending on where they came from.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li><li>Wallets</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-coordinator">
+              <div class="sc-glossary-card-head"><h2>Coordinator</h2></div>
+              <p class="sc-glossary-definition">The software that watches the blockchain, tracks balances and builds transactions for one or more signing devices to sign. It holds public keys only and cannot spend. In multisig it also holds the wallet configuration, which is the part no seed phrase contains and the part people forget to back up.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Sparrow acting as coordinator builds a PSBT, each device signs it in turn, and the coordinator broadcasts the result.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Wallets</li><li>Multisig</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-counterparty_risk">
+              <div class="sc-glossary-card-head"><h2>Counterparty risk</h2></div>
+              <p class="sc-glossary-definition">The risk that whoever owes you something fails to deliver — through insolvency, fraud, freezing your account, or simply ceasing to operate in your jurisdiction. It is the category of risk self-custody removes, and the reason &quot;not your keys, not your coins&quot; is a description rather than a slogan.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Every platform failure of the last decade was counterparty risk arriving, however differently each one looked from outside.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Risk</li><li>Exchanges</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-custodial">
+              <div class="sc-glossary-card-head"><h2>Custodial</h2></div>
+              <p class="sc-glossary-definition">An arrangement where a company holds the keys and you hold a claim. The balance shown is what the company says it owes you, not an observation of the chain. It can be convenient, and it makes their solvency, access policies and continued existence part of your risk.</p>
+              <p class="sc-glossary-example"><span>Example: </span>An exchange balance is custodial until it is withdrawn to an address you control.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Exchanges</li><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-cypherpunk">
+              <div class="sc-glossary-card-head"><h2>Cypherpunk</h2></div>
+              <p class="sc-glossary-definition">The movement, active from the late 1980s, arguing that privacy in a digital society requires cryptography rather than legislation, and that people should build the tools themselves. Bitcoin drew directly on its mailing lists, its prior attempts at digital cash, and its instinct that a system should not require trusting its operator.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The design habit of removing the need to trust an operator, rather than regulating one, comes straight from this tradition.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-dead_mans_switch">
+              <div class="sc-glossary-card-head"><h2>Dead man's switch</h2></div>
+              <p class="sc-glossary-definition">An automated process that releases information if you stop checking in. Appealing in theory and unreliable in practice: services lapse, shut down, or fire early — and firing early discloses everything while you are alive and well. Worth having as one signal among several rather than as the plan.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A switch that triggers during a long holiday hands over your instructions at the worst possible moment.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Planning</li><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-decentralization">
+              <div class="sc-glossary-card-head"><h2>Decentralisation</h2></div>
+              <p class="sc-glossary-definition">How widely the ability to change or block things is spread. It is not one property but several — who can mine, who validates, who writes the software, who runs the infrastructure wallets rely on — and they can move in opposite directions. Running your own node is the part an individual actually controls.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Mining can concentrate while validation stays widely distributed, because they are different kinds of power.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Connectivity</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-deep_cold_storage">
+              <div class="sc-glossary-card-head"><h2>Deep cold storage</h2></div>
+              <p class="sc-glossary-definition">Cold storage made deliberately inconvenient — offline, geographically separated, sometimes requiring several people or a journey. The awkwardness is the feature for savings you do not intend to touch, and it is a liability if it makes verification so tedious that you never check the arrangement still works.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Keys in a safe deposit box in another city are deep cold storage, and the annual check is the part people skip.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Storage</li><li>Planning</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-deflationary">
+              <div class="sc-glossary-card-head"><h2>Deflationary</h2></div>
+              <p class="sc-glossary-definition">Applied to bitcoin, meaning the supply stops growing while coins are continually lost, so the effective total falls. Whether that is desirable is a genuine economic argument rather than a settled point, and it is separate from the technical fact of the issuance schedule.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Lost coins are never reissued, so the spendable supply drifts downward regardless of price.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-derivation_path">
+              <div class="sc-glossary-card-head"><h2>Derivation path</h2></div>
+              <p class="sc-glossary-definition">The route from a wallet's master key down to one particular key, written as numbers separated by slashes — m/84'/0'/0'/0/0. Each step picks a child key, so one seed produces completely different addresses depending on the path taken. A wallet restored on the wrong path looks empty even though the recovery words were right.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Native SegWit wallets normally use m/84'/0'/0', so software expecting m/44'/0'/0' derives none of the same addresses from the same words.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Wallets</li><li>Recovery</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-difficulty">
+              <div class="sc-glossary-card-head"><h2>Difficulty</h2></div>
+              <p class="sc-glossary-definition">How hard the network currently requires a valid block to be to find. It is recalculated every 2,016 blocks so that blocks keep arriving about every ten minutes regardless of how much mining power has joined or left.</p>
+              <p class="sc-glossary-example"><span>Example: </span>More miners means blocks arrive faster, until the next adjustment raises difficulty and restores the pace.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-difficulty_adjustment">
+              <div class="sc-glossary-card-head"><h2>Difficulty adjustment</h2></div>
+              <p class="sc-glossary-definition">The recalibration, every 2,016 blocks, of how hard it is to mine one — raising the target if blocks came too fast and lowering it if they came too slowly. It is what keeps the ten-minute average steady regardless of how much mining hardware joins or leaves, and what makes the issuance schedule hold to something close to its intended pace.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A large drop in mining activity is followed by an adjustment that makes blocks easier to find, restoring the pace.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-digital_gold">
+              <div class="sc-glossary-card-head"><h2>Digital gold</h2></div>
+              <p class="sc-glossary-definition">A shorthand comparing bitcoin to gold as a scarce asset held for the long term rather than spent. The analogy holds on supply constraint and breaks on almost everything else — bitcoin is transferable over a network, verifiable at home, and confiscatable in completely different ways.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The comparison is useful for the supply argument and misleading about custody, where the two behave nothing alike.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-digital_signature">
+              <div class="sc-glossary-card-head"><h2>Digital signature</h2></div>
+              <p class="sc-glossary-definition">A value produced with a private key that anyone can check against the matching public key, proving both who authorised something and that it has not been altered since. It is the only operation a bitcoin private key ever performs.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A signature commits to the exact transaction, so changing the recipient after signing invalidates it.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-dollar_cost_averaging">
+              <div class="sc-glossary-card-head"><h2>Dollar cost averaging</h2></div>
+              <p class="sc-glossary-definition">Buying a fixed amount at regular intervals rather than choosing moments. It removes timing decisions, which is most of its value. In self-custody terms it produces many small UTXOs, so it interacts with coin control and consolidation more than people expect.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A year of weekly buys leaves fifty-two separate coins, each of which may cost more to spend than it did to receive.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Planning</li><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-double_spend">
+              <div class="sc-glossary-card-head"><h2>Double spend</h2></div>
+              <p class="sc-glossary-definition">Attempting to spend the same coin twice. Preventing it without a trusted referee is the problem bitcoin exists to solve: the chain establishes an order everyone can agree on, so only the first spend of a coin is valid. This is why confirmations matter and why a payment is not final on broadcast.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Accepting a zero-confirmation payment means trusting that no conflicting transaction is mined first.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-duress_pin">
+              <div class="sc-glossary-card-head"><h2>Duress PIN</h2></div>
+              <p class="sc-glossary-definition">A second PIN that opens a decoy wallet, so something can be surrendered under coercion. It depends on the attacker believing you and stopping, which makes it a delay rather than a shield — and anyone informed enough to target you knows the feature exists.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A decoy holding a token amount is transparently a decoy; one holding enough to be believed is enough to hurt to lose.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Threats</li><li>Hardware Wallets</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-dust">
+              <div class="sc-glossary-card-head"><h2>Dust</h2></div>
+              <p class="sc-glossary-definition">A UTXO so small that spending it would cost more in fees than it is worth, leaving it economically stranded. Most dust is innocent — change, faucet payouts, leftovers. Some is deliberate: a dusting attack sends a trivial amount hoping you will later spend it alongside your other coins and link them. Freezing anything of unknown origin covers both cases.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A few hundred satoshis arriving unexpectedly is best frozen rather than swept up by automatic coin selection.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li><li>Threats</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-ecdsa">
+              <div class="sc-glossary-card-head"><h2>ECDSA</h2></div>
+              <p class="sc-glossary-definition">The elliptic curve signature scheme bitcoin used from the start and still uses for pre-Taproot outputs. Its notable hazard is the per-signature random value: reusing one across two signatures exposes the private key, which has drained real wallets and is why implementations now derive it deterministically.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The PlayStation 3's signing key was recovered through exactly this failure in 2010.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-elliptic_curve">
+              <div class="sc-glossary-card-head"><h2>Elliptic curve cryptography</h2></div>
+              <p class="sc-glossary-definition">The mathematics behind bitcoin's keys. Multiplying a fixed point on a curve by a secret number is easy; recovering the secret from the result is not. That asymmetry is what makes a public key safe to publish while the private key stays secret. Bitcoin uses the curve secp256k1.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A public key is a point on the curve derived from the private key, and the derivation runs one way only.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-empty_block">
+              <div class="sc-glossary-card-head"><h2>Empty block</h2></div>
+              <p class="sc-glossary-definition">A block containing only its coinbase transaction. It happens when a miner starts work on a new block before validating the previous one's contents, choosing a few seconds of certain-but-empty work over a delay. Harmless and occasionally alarming to people watching an explorer.</p>
+              <p class="sc-glossary-example"><span>Example: </span>An empty block found moments after the previous one is normal behaviour, not a sign of anything wrong.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-entropy">
+              <div class="sc-glossary-card-head"><h2>Entropy</h2></div>
+              <p class="sc-glossary-definition">Genuine unpredictability, measured in bits, and the raw material every wallet is built from. A seed is only as unguessable as the entropy behind it, which is why wallets are generated by a device or a physical process rather than chosen by a person. Human-invented phrases and passwords have been swept at scale for over a decade.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Rolling dice produces entropy that can be checked and reasoned about, rather than trusting a device's internal generator alone.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Security</li><li>Backups</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-error_correction">
+              <div class="sc-glossary-card-head"><h2>Error correction</h2></div>
+              <p class="sc-glossary-definition">Encoding data with enough redundancy that damage can be detected and often repaired. Bitcoin uses detection rather than correction in most places — the BIP39 checksum and bech32 addresses catch errors and refuse rather than guessing, which is the safer behaviour when the alternative is silently producing a different wallet.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A mistyped bech32 address is rejected rather than corrected, because correcting it wrongly would send money to a stranger.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Backups</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-evil_maid">
+              <div class="sc-glossary-card-head"><h2>Evil maid attack</h2></div>
+              <p class="sc-glossary-definition">Tampering with a device left unattended — a hotel room, an office, a house someone else has access to — and returning it looking untouched. It is the reason physical possession of your hardware matters, and the reason a device you have lost sight of should be treated as suspect rather than merely inconvenient.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A signing device left in a hotel safe for a week should be verified or replaced rather than assumed intact.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Threats</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-exchange">
+              <div class="sc-glossary-card-head"><h2>Exchange</h2></div>
+              <p class="sc-glossary-definition">A business that trades bitcoin for other currencies. Most are custodial, holding coins until you withdraw; a few settle purchases directly to an address you control. The distinction matters more than any feature comparison, because it decides whether you hold bitcoin or a claim.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Direct-to-wallet purchase leaves nothing to withdraw later, which removes the step people most often postpone.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Exchanges</li><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-xpub">
+              <div class="sc-glossary-card-head"><h2>Extended public key (xpub)</h2></div>
+              <p class="sc-glossary-definition">A public key plus a chain code, which together allow every address below a point in a wallet's tree to be derived without any ability to spend. It is what makes watch-only wallets possible. It is not secret in the way a seed is, but it reveals every address in that account, past and future, so anyone holding it can see the whole balance and history permanently.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Importing an xpub into desktop software lets it track a hardware wallet's balance while the keys stay on the device.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Wallets</li><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-fee_market">
+              <div class="sc-glossary-card-head"><h2>Fee market</h2></div>
+              <p class="sc-glossary-definition">The continuous auction for block space. Nobody sets the price; it is whatever other people are currently bidding, and it can change by an order of magnitude within hours. As the block subsidy falls toward nothing, fees become the whole of what pays for security.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A congested mempool is an auction with more bidders, not a system malfunctioning.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-fee_rate">
+              <div class="sc-glossary-card-head"><h2>Fee rate</h2></div>
+              <p class="sc-glossary-definition">What a transaction pays per unit of the space it occupies, quoted in satoshis per virtual byte. Miners select by rate rather than by total fee, so a small transaction paying a high rate confirms ahead of a large one paying more in absolute terms. It is the number that decides how long you wait.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A transaction with many inputs is physically larger, so matching someone else's fee rate costs it more in total.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-fiat">
+              <div class="sc-glossary-card-head"><h2>Fiat currency</h2></div>
+              <p class="sc-glossary-definition">Money that is money because an authority declares it so, rather than because it is redeemable for something else. Every major national currency works this way. The arrangement is not inherently dishonest — it allows a supply that responds to circumstance — but it places the decision about how much exists with an issuer rather than with a fixed rule.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Canadian dollars are not redeemable for any commodity; their value rests on their acceptance and on confidence in the issuer.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-finality">
+              <div class="sc-glossary-card-head"><h2>Finality</h2></div>
+              <p class="sc-glossary-definition">The point at which a payment can be treated as settled. Bitcoin has no moment where this formally occurs — confidence accumulates with depth rather than switching on. Choosing a threshold is a risk judgement about the amount, not a protocol rule.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Exchanges credit small deposits at one confirmation and large ones at six for exactly this reason.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-firmware">
+              <div class="sc-glossary-card-head"><h2>Firmware</h2></div>
+              <p class="sc-glossary-definition">The software running on a signing device. It decides what the screen shows and what the device will sign, so its provenance matters as much as the hardware's. Verifying a release signature before flashing defeats a substituted download; it does not tell you the vendor should be trusted.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Checking a firmware signature against a key you have used for years is meaningfully stronger than against one fetched minutes ago.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Firmware</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-full_node">
+              <div class="sc-glossary-card-head"><h2>Full node</h2></div>
+              <p class="sc-glossary-definition">Software that downloads every block and checks it against the consensus rules itself, rather than trusting anyone's summary. Running one is what lets a wallet answer questions from rules you enforce instead of a stranger's server. Installing one is not the same as using one — most wallets also need an index server alongside it before they can query addresses.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A node that validates the chain in a cupboard changes nothing about privacy until the wallet is actually configured to talk to it.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Connectivity</li><li>Privacy</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-fungibility">
+              <div class="sc-glossary-card-head"><h2>Fungibility</h2></div>
+              <p class="sc-glossary-definition">The property of units being interchangeable, so that one is as acceptable as any other. Bitcoin is fungible at the protocol level — no rule treats one coin differently — and imperfectly fungible in practice, because the ledger is public and history can be traced. A coin whose past a service dislikes may be refused even though the network makes no distinction.</p>
+              <p class="sc-glossary-example"><span>Example: </span>An exchange declining a deposit because of where the coins previously sat is a failure of fungibility in practice, not in the protocol.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-game_theory">
+              <div class="sc-glossary-card-head"><h2>Game theory</h2></div>
+              <p class="sc-glossary-definition">The study of how participants behave when outcomes depend on each other's choices. Bitcoin's security rests on it as much as on cryptography: attacking the network is possible and unprofitable, because the cost exceeds what the attack returns and succeeding devalues what was captured.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A miner with enough power to attack generally earns more by mining honestly, which is a design choice rather than an accident.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-gap_limit">
+              <div class="sc-glossary-card-head"><h2>Gap limit</h2></div>
+              <p class="sc-glossary-definition">How many consecutive unused addresses a wallet checks before concluding there is nothing further. BIP44 sets it at twenty. It exists so restoring does not take forever, and it produces a specific failure: coins received beyond a long run of unused addresses look missing until the limit is raised and the wallet rescans.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Generating dozens of addresses without using them can push a later payment past the default gap, so a restore shows a zero balance.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Recovery</li><li>Wallets</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-genesis_block">
+              <div class="sc-glossary-card-head"><h2>Genesis block</h2></div>
+              <p class="sc-glossary-definition">The first block, mined in January 2009. Its coinbase output is unspendable by a quirk of the original code, and its input quotes a Times front page on bank rescues — a timestamp and, most read it, a statement of purpose.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Block height counts from the genesis block at zero.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-gold_standard">
+              <div class="sc-glossary-card-head"><h2>Gold standard</h2></div>
+              <p class="sc-glossary-definition">A monetary arrangement in which a currency is redeemable for a fixed quantity of gold. It constrained issuance by tying it to something that could not be produced at will, and it was abandoned in stages during the twentieth century. It is referenced in bitcoin discussion as the nearest widely-understood precedent for a money with a supply rule.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Under a gold standard a note was a claim on metal; the constraint held only while redemption was honoured.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-gossip">
+              <div class="sc-glossary-card-head"><h2>Gossip</h2></div>
+              <p class="sc-glossary-definition">The relaying pattern by which transactions and blocks propagate — each node passing new information to its peers, which pass it to theirs. It spreads data quickly without any coordinator, and it is why broadcasting to a single node is enough.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A block found anywhere reaches most of the network within seconds through gossip alone.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Connectivity</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-halving">
+              <div class="sc-glossary-card-head"><h2>Halving</h2></div>
+              <p class="sc-glossary-definition">The scheduled reduction of the block subsidy by half, every 210,000 blocks or roughly four years. It is the mechanism that produces bitcoin's issuance curve and, eventually, its cap: each halving reduces new supply until the subsidy rounds to nothing. Nothing is decided at the time — the schedule was fixed at the start and every node enforces it.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The subsidy fell from 6.25 to 3.125 bitcoin in 2024, the fourth such reduction.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-hard_cap">
+              <div class="sc-glossary-card-head"><h2>Hard cap</h2></div>
+              <p class="sc-glossary-definition">The limit of just under 21 million bitcoin that will ever exist. It is not a policy anyone announces or could raise by agreement; it falls out of the halving schedule, and it holds because every node independently rejects a block that creates more than the rules allow. Changing it would require the people enforcing the rule to choose to stop.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A miner producing a block with an oversized subsidy has that block rejected by the network rather than debated.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-hard_fork">
+              <div class="sc-glossary-card-head"><h2>Hard fork</h2></div>
+              <p class="sc-glossary-definition">A rule change that loosens what is valid, so blocks made under the new rules are rejected by nodes running the old software. It splits the network unless everyone upgrades, which is why it is avoided for ordinary upgrades and why proposals that need one face a much higher bar.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Raising the supply cap would require a hard fork, and nodes enforcing the old rule would simply reject the blocks.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-hardened_derivation">
+              <div class="sc-glossary-card-head"><h2>Hardened derivation</h2></div>
+              <p class="sc-glossary-definition">A derivation step, written with an apostrophe as 84', that can only be performed with the private key. It exists to contain a specific leak: an extended public key plus any ordinary child private key beneath it reconstructs the parent private key. Hardening the account level makes an exported xpub safe to share.</p>
+              <p class="sc-glossary-example"><span>Example: </span>In m/84'/0'/0'/0/0 the first three steps are hardened and the last two are not, which is what lets a watch-only wallet derive addresses but never walk upwards.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-hsm">
+              <div class="sc-glossary-card-head"><h2>Hardware security module</h2></div>
+              <p class="sc-glossary-definition">A dedicated device for holding keys and performing operations with them, used by institutions. A hardware wallet is the consumer version of the same idea, with the same central property: the key is used inside and never handed out.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Custodians hold keys in HSMs for the same reason individuals use signing devices.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Hardware Wallets</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-hardware_wallet">
+              <div class="sc-glossary-card-head"><h2>Hardware wallet</h2></div>
+              <p class="sc-glossary-definition">A dedicated device holding private keys and signing transactions, more accurately called a signing device since it holds no bitcoin. Its value is structural: the keys never reach a general-purpose computer, and it has a screen the computer cannot rewrite, which is where addresses and amounts should be read.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The point of the device is not that it is unhackable, but that verifying an address on its own screen defeats malware on the machine driving it.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Hardware Wallets</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-hash">
+              <div class="sc-glossary-card-head"><h2>Hash</h2></div>
+              <p class="sc-glossary-definition">The fixed-length output of a hash function, and by extension the operation itself. Bitcoin uses hashes to link blocks, commit to transaction contents, derive addresses and measure mining work. A hash reveals nothing about its input and cannot be reversed, but recomputing it proves the input has not changed.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Comparing a downloaded file's hash against a published one proves the bytes arrived intact.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-hash_function">
+              <div class="sc-glossary-card-head"><h2>Hash function</h2></div>
+              <p class="sc-glossary-definition">A function turning any input into a fixed-length output, where the same input always gives the same result, a tiny change gives a completely different one, and working backwards is infeasible. SHA-256 is the one bitcoin leans on hardest.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Changing one character in a transaction produces an entirely different hash, which is why signatures commit to contents.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-hash_rate">
+              <div class="sc-glossary-card-head"><h2>Hash rate</h2></div>
+              <p class="sc-glossary-definition">How much computation the network is applying to mining, and therefore how expensive rewriting recent history would be. It moves with hardware, energy prices and the bitcoin price, and the difficulty adjustment absorbs those changes so block timing stays roughly steady.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A sharp fall in hash rate slows blocks until the next difficulty adjustment brings the pace back.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-hd_wallet">
+              <div class="sc-glossary-card-head"><h2>HD wallet</h2></div>
+              <p class="sc-glossary-definition">A hierarchical deterministic wallet: one seed, from which an unlimited tree of keys is derived by a fixed procedure. Deterministic is the useful half — nothing is random after the seed, so the same words rebuild the same keys anywhere. Hierarchical is why a single backup covers thousands of addresses.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Because the wallet is HD, generating a fresh receiving address for every payment costs nothing and needs no new backup.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Wallets</li><li>Recovery</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-hot_wallet">
+              <div class="sc-glossary-card-head"><h2>Hot wallet</h2></div>
+              <p class="sc-glossary-definition">A wallet whose spending keys live on an internet-connected device, usually a phone or laptop. Convenience is the point, and the trade is that anything compromising the device can reach the keys. The usual advice is not to avoid one but to bound it: keep an amount you would be annoyed rather than devastated to lose.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A phone wallet used for everyday spending is a hot wallet, which is why the savings sit on separate hardware.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Wallets</li><li>Storage</li><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-immutability">
+              <div class="sc-glossary-card-head"><h2>Immutability</h2></div>
+              <p class="sc-glossary-definition">The practical impossibility of changing confirmed history. Nothing forbids rewriting a block; it just requires redoing its proof of work and every block after it, faster than the rest of the network extends the chain. Immutability is therefore a matter of degree, deepening with each confirmation.</p>
+              <p class="sc-glossary-example"><span>Example: </span>One confirmation is meaningfully reversible; six is not, which is why the number varies with the amount at stake.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-index_server">
+              <div class="sc-glossary-card-head"><h2>Index server</h2></div>
+              <p class="sc-glossary-definition">Software that sits beside a full node and maintains an address index so wallets can ask what a given address holds — a question Bitcoin Core is not built to answer quickly. electrs, Fulcrum and ElectrumX are the common implementations, and node distributions bundle one, which is much of why they exist.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Pointing a wallet at your own node usually means pointing it at the index server running alongside it.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Connectivity</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-inflation">
+              <div class="sc-glossary-card-head"><h2>Inflation</h2></div>
+              <p class="sc-glossary-definition">A general rise in prices, equivalently a fall in what a unit of money buys. The word is used for two different things — an expansion of the money supply, and the price rises that may follow — and arguments frequently turn on which is meant. In bitcoin the supply side of that is fixed and public, which is what the term is usually invoking here.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Bitcoin's issuance rate is often called its inflation rate, and it falls at every halving regardless of demand.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-inheritance_plan">
+              <div class="sc-glossary-card-head"><h2>Inheritance plan</h2></div>
+              <p class="sc-glossary-definition">An arrangement letting someone reach your bitcoin after you die without letting anyone reach it before. The two requirements pull against each other, which is most of what makes the subject hard. The commonest total loss is not theft but an heir who cannot execute a technically perfect plan.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Testing the plan with the person who will have to follow it is the only thing that turns a document you hope works into one you know does.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Planning</li><li>Recovery</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-initial_block_download">
+              <div class="sc-glossary-card-head"><h2>Initial block download</h2></div>
+              <p class="sc-glossary-definition">The first synchronisation of a new node, downloading and validating the chain from the beginning. It takes hours to days depending on hardware, and it is the point at which a node checks history for itself rather than accepting a summary. It happens once.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A freshly installed node is not useful until the initial download completes and it has verified the chain itself.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Connectivity</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-irrecoverable_loss">
+              <div class="sc-glossary-card-head"><h2>Irrecoverable loss</h2></div>
+              <p class="sc-glossary-definition">Bitcoin that still exists on the chain and can never be spent, because the keys are gone. There is no recovery department and no appeal. It is the failure mode self-custody introduces, and the entire reason a backup that has not been restored from does not count.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Coins in a wallet whose seed was never written down remain visible forever and spendable by nobody.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Risk</li><li>Recovery</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-key_derivation_function">
+              <div class="sc-glossary-card-head"><h2>Key derivation function</h2></div>
+              <p class="sc-glossary-definition">A deliberately slow function that turns a password or phrase into a key, slowing down anyone guessing. BIP39 uses PBKDF2 with 2,048 rounds to turn a recovery phrase and passphrase into a seed — a low work factor by modern standards, so a passphrase protects you by being unguessable rather than by being expensive to test.</p>
+              <p class="sc-glossary-example"><span>Example: </span>2,048 rounds is a speed bump; a short memorable passphrase on a compromised seed card is a delay, not a defence.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Security</li><li>BIP39</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-key_rotation">
+              <div class="sc-glossary-card-head"><h2>Key rotation</h2></div>
+              <p class="sc-glossary-definition">Moving funds to a wallet with new keys because the old ones may be compromised — a device left unattended, a backup someone may have seen, a co-signer leaving. Bitcoin has no way to revoke a key, so rotation means spending to a new wallet, which is an on-chain transaction with a fee and a new set of addresses.</p>
+              <p class="sc-glossary-example"><span>Example: </span>After a device is lost, rotating is the only way to make its key irrelevant, because it cannot be cancelled.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Security</li><li>Recovery</li><li>Planning</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-kyc">
+              <div class="sc-glossary-card-head"><h2>KYC</h2></div>
+              <p class="sc-glossary-definition">Know your customer — the identity checks a regulated platform performs before letting you trade. It ties your legal identity to the specific coins you withdraw, and no on-chain technique reaches backwards through that link. It is the reason privacy work is about the future rather than the past.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Coins withdrawn from a verified account are associated with your identity in that platform's records regardless of what you do next.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li><li>Exchanges</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-legal_tender">
+              <div class="sc-glossary-card-head"><h2>Legal tender</h2></div>
+              <p class="sc-glossary-definition">A legal status meaning a currency must be accepted in settlement of a debt within a jurisdiction. It is narrower than it sounds: it governs the discharge of debts rather than compelling anyone to accept a payment, and it says nothing about whether a currency holds value. A money can be legal tender and be losing purchasing power quickly.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Legal tender status obliges a creditor to accept the currency for a debt; it does not oblige a shop to price in it.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-locktime">
+              <div class="sc-glossary-card-head"><h2>Locktime</h2></div>
+              <p class="sc-glossary-definition">A field stating the earliest block height or time at which a transaction may be included. Set to zero it means immediately. Wallets sometimes set it to the current height to discourage fee sniping, and that choice is one of the details that identifies which software built a transaction.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A transaction with a future locktime is valid but unminable until the chain reaches it.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-low_time_preference">
+              <div class="sc-glossary-card-head"><h2>Low time preference</h2></div>
+              <p class="sc-glossary-definition">A disposition to weigh future outcomes heavily against immediate ones — saving rather than spending, building rather than extracting. The term is borrowed from economics into bitcoin discussion, where it is used both descriptively and as encouragement. Its practical form in self-custody is unglamorous: testing a backup before it is needed rather than after.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Spending an afternoon rehearsing a recovery you may never use is a low time preference act.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Planning</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-mainnet">
+              <div class="sc-glossary-card-head"><h2>Mainnet</h2></div>
+              <p class="sc-glossary-definition">The real bitcoin network, as distinct from testnet, signet or a private regtest. The word usually appears when something can run on more than one, and getting the two confused is precisely the risk that keeps testnet settings behind a warning on signing devices.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A wallet must be on mainnet for its addresses to receive bitcoin of any value.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-mast">
+              <div class="sc-glossary-card-head"><h2>MAST</h2></div>
+              <p class="sc-glossary-definition">Merkelized alternative script trees — committing to several possible spending conditions in a tree so that using one reveals only that branch. Taproot builds on the idea, which is why a Taproot output can carry an unused emergency path that never becomes public.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A wallet with a rarely used recovery condition publishes nothing about it while the ordinary path is used.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-master_fingerprint">
+              <div class="sc-glossary-card-head"><h2>Master fingerprint</h2></div>
+              <p class="sc-glossary-definition">Eight hexadecimal characters identifying which wallet a device is holding, taken from a hash of the wallet's master public key. It reveals nothing that could spend, and appears in descriptors and partly signed transactions to record which key signed or still has to. Because it comes from the seed, adding a BIP39 passphrase changes it — which is how you confirm a passphrase was entered the way you meant.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A multisig coordinator lists each cosigner by master fingerprint, so a 2-of-3 shows three eight-character identifiers rather than three extended public keys.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Wallets</li><li>Multisig</li><li>Recovery</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-master_key">
+              <div class="sc-glossary-card-head"><h2>Master key</h2></div>
+              <p class="sc-glossary-definition">The key at the root of a wallet's tree, derived from the seed and the ancestor of every other key in it. Everything below it can be recomputed from it, which is why it is never exported directly and why an extended public key is taken from an account below it instead.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A device reports a master key fingerprint so software can confirm it is talking to the wallet it thinks it is.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Wallets</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-mempool">
+              <div class="sc-glossary-card-head"><h2>Mempool</h2></div>
+              <p class="sc-glossary-definition">The set of valid transactions a node has heard about and is holding until one is mined. There is no single mempool — each node keeps its own, and they differ. A transaction sitting there is not stuck in any official sense; it is simply bidding below the going rate for block space, and it can be replaced or bumped rather than waited out.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Checking the mempool during a busy period shows whether a pending payment is underpriced or merely recent.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Connectivity</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-merkle_tree">
+              <div class="sc-glossary-card-head"><h2>Merkle tree</h2></div>
+              <p class="sc-glossary-definition">A structure that hashes transactions in pairs, repeatedly, until one hash summarises them all. It lets a block commit to its contents compactly, and lets a light client be shown that one transaction is in a block without downloading the whole thing.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A block header carries a single Merkle root standing in for every transaction the block contains.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-metadata">
+              <div class="sc-glossary-card-head"><h2>Metadata</h2></div>
+              <p class="sc-glossary-definition">Information about a transaction rather than in it — timing, amounts, which server answered a query, which addresses were looked up together. It is frequently more revealing than the contents, and it is the category that pointing a wallet at your own node addresses.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A public server does not need to break anything to learn which addresses belong to one wallet; it is told.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li><li>Connectivity</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-microsd_backup">
+              <div class="sc-glossary-card-head"><h2>MicroSD backup</h2></div>
+              <p class="sc-glossary-definition">A backup file or wallet record stored on a removable MicroSD card. Hardware wallets may use MicroSD cards to move PSBTs, export wallet data, install firmware, or save an encrypted device backup without connecting the signer directly to an online computer. What the card contains—and whether it is encrypted—depends on the device and workflow.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A COLDCARD can save an encrypted backup containing its seed and settings to a MicroSD card; the backup file and its separate password are both required for recovery.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Hardware Wallets</li><li>Backups</li><li>Recovery</li><li>Storage</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-mining">
+              <div class="sc-glossary-card-head"><h2>Mining</h2></div>
+              <p class="sc-glossary-definition">Repeatedly hashing a candidate block until the result falls below a target, which is expensive by design. The expense is the point: it makes rewriting history costly rather than merely disallowed, and it decides the order of transactions without anyone being in charge.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A miner that finds a valid block collects the subsidy and the fees of the transactions it included.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-miniscript">
+              <div class="sc-glossary-card-head"><h2>Miniscript</h2></div>
+              <p class="sc-glossary-definition">A structured way of writing spending conditions that software can analyse — checking what a policy allows, what it costs to satisfy, and whether it can be signed — rather than treating the script as an opaque blob. It is what makes complex arrangements like decaying multisig practical to build and audit.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A policy allowing three keys now, or two keys after a year, is expressible and checkable in Miniscript.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Multisig</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-mobile_wallet">
+              <div class="sc-glossary-card-head"><h2>Mobile wallet</h2></div>
+              <p class="sc-glossary-definition">A bitcoin wallet running as a phone app. Most hold their own keys and are therefore hot wallets, though some operate purely as watch-only companions to a hardware signer, and some are custodial. Which of the three a given app is matters more than any feature it advertises, and is not always obvious from its marketing.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The same phone can run a small hot wallet for spending and a separate watch-only wallet that tracks cold storage without being able to spend from it.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Wallets</li><li>Storage</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-money_supply">
+              <div class="sc-glossary-card-head"><h2>Money supply</h2></div>
+              <p class="sc-glossary-definition">The total quantity of a money in existence. For fiat currencies it is a policy variable adjusted by an issuer; for bitcoin it is a schedule fixed in the rules and enforced by every node. That difference — who decides — is the substance of most comparisons between the two.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Bitcoin's supply is knowable years in advance because nobody has the authority to change it.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-mt_gox">
+              <div class="sc-glossary-card-head"><h2>Mt. Gox</h2></div>
+              <p class="sc-glossary-definition">The exchange that handled most global bitcoin trading until it collapsed in 2014 with roughly 850,000 bitcoin unaccounted for. The losses accumulated over years while the business operated normally and showed customers balances that had become fiction — which is the reason a platform balance is a claim rather than an observation.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Nothing visible from outside would have told a customer, which is the durable lesson rather than the amount.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Exchanges</li><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-multisig">
+              <div class="sc-glossary-card-head"><h2>Multisig</h2></div>
+              <p class="sc-glossary-definition">A wallet whose spending conditions require signatures from more than one key — commonly two of three. Losing one key or having one stolen changes nothing, which removes the single point of failure an ordinary wallet has. It adds a dependency in exchange: rebuilding the wallet needs its configuration as well as its keys, and no seed phrase contains that.</p>
+              <p class="sc-glossary-example"><span>Example: </span>In a 2-of-3 held across three locations, a burglary at one of them yields a key that cannot move anything on its own.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Multisig</li><li>Security</li><li>Wallets</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-nakamoto_consensus">
+              <div class="sc-glossary-card-head"><h2>Nakamoto consensus</h2></div>
+              <p class="sc-glossary-definition">The specific arrangement bitcoin uses: proof of work makes producing blocks expensive, and nodes follow the valid chain with the most accumulated work. It settles ordering among participants who cannot identify or trust each other, which is the problem earlier digital cash designs could not solve without an operator.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Competing chains resolve because extending the shorter one costs more work than it earns.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-network_effect">
+              <div class="sc-glossary-card-head"><h2>Network effect</h2></div>
+              <p class="sc-glossary-definition">The property that something becomes more useful as more people use it. It is cited both as bitcoin's main defence against alternatives and as a reason to be sceptical of arguments that a technically superior design would displace it. Descriptive rather than a guarantee.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Liquidity, tooling and merchant support all improve with adoption, and all of them are switching costs.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-nfc">
+              <div class="sc-glossary-card-head"><h2>NFC</h2></div>
+              <p class="sc-glossary-definition">Near Field Communication: a very short-range wireless technology that exchanges data when compatible devices are brought within a few centimetres of each other. Bitcoin devices and keycards may use NFC to transfer wallet data or approve actions, but NFC is still a communication channel and should not automatically be treated as an air gap.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A user taps an NFC keycard against a phone to authorize a wallet operation without plugging in a cable.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Hardware Wallets</li><li>Connectivity</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-node">
+              <div class="sc-glossary-card-head"><h2>Node</h2></div>
+              <p class="sc-glossary-definition">Software that takes part in the bitcoin network. A full node downloads every block and validates it against the consensus rules itself; a light client asks someone else and believes the answer. Which one your wallet talks to determines whether your balance is verified or reported.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Running a node changes nothing until the wallet is actually configured to use it rather than a public server.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Connectivity</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-nonce">
+              <div class="sc-glossary-card-head"><h2>Nonce</h2></div>
+              <p class="sc-glossary-definition">A number used once. Two unrelated things carry the name: the random value in an ECDSA signature, which must never repeat because reusing it across two signatures exposes the private key; and the field miners increment while searching for a valid block. Only the first is a security concern for a wallet.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Signature nonce reuse has drained real wallets, which is why the value is derived deterministically in modern implementations.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-not_your_keys">
+              <div class="sc-glossary-card-head"><h2>Not your keys, not your coins</h2></div>
+              <p class="sc-glossary-definition">The observation that bitcoin held by someone else is their asset and your claim. It is not an ideological slogan but a description of who bears the loss when a company fails — and of who can freeze, delay or lose your access while it operates normally.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Every customer of a failed platform believed their balance was their bitcoin, and the screen was accurate until it was not.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Risk</li><li>Storage</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-off_chain">
+              <div class="sc-glossary-card-head"><h2>Off-chain</h2></div>
+              <p class="sc-glossary-definition">Value moved without writing to the blockchain — inside an exchange's database, or across a payment channel. It can be faster and cheaper, and it reintroduces a counterparty or a set of assumptions the chain otherwise removes. Backup and recovery work differently, and often not at all the same way.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A transfer between two accounts at the same exchange never touches the chain and is entirely that company's record.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-on_chain">
+              <div class="sc-glossary-card-head"><h2>On-chain</h2></div>
+              <p class="sc-glossary-definition">Recorded in the blockchain itself, as opposed to arrangements settled elsewhere. On-chain transactions are the ones that cost a fee, wait for confirmations, and are permanently public. Everything this site teaches is on-chain custody.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A recovery that moves funds to a new wallet is an on-chain transaction, with a fee and new addresses.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-open_source">
+              <div class="sc-glossary-card-head"><h2>Open source</h2></div>
+              <p class="sc-glossary-definition">Source code published under a licence that permits anyone to read, modify and redistribute it. It makes a design auditable rather than audited — publication is not review, and a backdoor introduced by a trusted maintainer sits in public code that compiles reproducibly. Meaningful, and not on its own a guarantee.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A device with open firmware can have its published source compiled and compared against the binary that shipped, which closed firmware cannot.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Open Source</li><li>Firmware</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-otc">
+              <div class="sc-glossary-card-head"><h2>Over the counter (OTC)</h2></div>
+              <p class="sc-glossary-definition">Trading directly with a counterparty or desk rather than on an order book, usually for larger amounts and to avoid moving the price. It changes who you are exposed to rather than removing exposure, and settlement terms vary considerably.</p>
+              <p class="sc-glossary-example"><span>Example: </span>An OTC desk quotes a single all-in price for the whole amount rather than filling it across an order book.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Exchanges</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-p2pkh">
+              <div class="sc-glossary-card-head"><h2>P2PKH</h2></div>
+              <p class="sc-glossary-definition">Pay to public key hash — the original address format, beginning with 1. Universally accepted and the most expensive to spend from, because it carries no SegWit discount. Still perfectly valid; coins sitting on these addresses are not at risk, only slightly costlier to move.</p>
+              <p class="sc-glossary-example"><span>Example: </span>An address starting with 1 is legacy, derived at m/44'/0'/0' in most wallets.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-p2sh">
+              <div class="sc-glossary-card-head"><h2>P2SH</h2></div>
+              <p class="sc-glossary-definition">Pay to script hash — an address beginning with 3 that commits to a script rather than a key, revealed only when spent. It made complex conditions practical and was later used to wrap SegWit for compatibility, so a 3-address may be a multisig, a wrapped SegWit wallet, or something else entirely.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Wrapped SegWit wallets produce 3-addresses that older software accepts while still getting part of the SegWit discount.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-p2tr">
+              <div class="sc-glossary-card-head"><h2>P2TR</h2></div>
+              <p class="sc-glossary-definition">Taproot outputs, addressed in bech32m and beginning bc1p. Cheapest to spend from for simple cases, and able to hide complex spending conditions so that an ordinary-looking spend reveals nothing about the alternatives that existed. Support is broad but still short of universal.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A bc1p address can conceal a multisig or timelocked fallback that is never used and never published.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-p2wpkh">
+              <div class="sc-glossary-card-head"><h2>P2WPKH</h2></div>
+              <p class="sc-glossary-definition">Native SegWit single-key outputs, addressed in bech32 and beginning bc1q. Cheaper to spend from than legacy or wrapped forms, and the common default in current wallets. Acceptance is near-universal now, though a small number of services still lag.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A bc1q address derived at m/84'/0'/0' is the default for most wallets created today.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-p2wsh">
+              <div class="sc-glossary-card-head"><h2>P2WSH</h2></div>
+              <p class="sc-glossary-definition">Native SegWit outputs that commit to a script rather than a single key, beginning bc1q but longer than the single-key form. It is the usual shape of a modern multisig wallet.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A 2-of-3 native SegWit multisig pays to P2WSH addresses derived from all three co-signers' keys.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Multisig</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-paper_wallet">
+              <div class="sc-glossary-card-head"><h2>Paper wallet</h2></div>
+              <p class="sc-glossary-definition">A single private key printed on paper, usually with its address. An older pattern now generally discouraged: there is no way to spend part of the balance without exposing the key, the software that generated it may not have been trustworthy, and it fits none of the tooling built since. Sweep one rather than importing it.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Spending from a paper wallet means moving the whole balance, because using the key at all exposes it.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Backups</li><li>Storage</li><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-passphrase">
+              <div class="sc-glossary-card-head"><h2>Passphrase</h2></div>
+              <p class="sc-glossary-definition">An optional secret combined with a wallet backup to derive a different wallet. Under BIP39, every passphrase—including an empty or incorrect one—produces a valid wallet, so there is no error message that can identify the right one. The same recovery words and exact passphrase are both required to restore the intended wallet.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Restoring the correct recovery words with a misspelled passphrase opens a different, usually empty wallet rather than reporting a mistake.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Wallets</li><li>Security</li><li>Recovery</li><li>BIP39</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-payjoin">
+              <div class="sc-glossary-card-head"><h2>PayJoin</h2></div>
+              <p class="sc-glossary-definition">A payment in which the recipient also contributes an input, so the finished transaction spends coins belonging to two different people. Anyone applying common-input-ownership to it concludes one entity owned both and is simply wrong. It looks like an ordinary transaction, and every one that happens degrades the heuristic for everybody.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A PayJoin also breaks amount analysis, because the visible payment amount is not the amount that changed hands.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-peer_to_peer">
+              <div class="sc-glossary-card-head"><h2>Peer-to-peer</h2></div>
+              <p class="sc-glossary-definition">A network where participants connect directly to one another rather than through a central server. Every node relays blocks and transactions to its peers, so there is no address to shut down and no operator whose permission is required to join.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A transaction broadcast to one node reaches the whole network by being relayed peer to peer.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Connectivity</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-phishing">
+              <div class="sc-glossary-card-head"><h2>Phishing</h2></div>
+              <p class="sc-glossary-definition">A social-engineering attack that impersonates a trusted person, company, website, or app to trick someone into revealing secrets or approving a harmful action. In Bitcoin, phishing commonly targets exchange credentials, recovery words, passphrases, wallet downloads, addresses, and transaction approvals.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A fake support message sends a user to a look-alike website that asks for recovery words to ‘verify’ a wallet.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Security</li><li>Threats</li><li>Exchanges</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-pin">
+              <div class="sc-glossary-card-head"><h2>PIN</h2></div>
+              <p class="sc-glossary-definition">The code protecting a signing device from someone holding it. Its strength does not come from length — four digits is ten thousand guesses — but from something counting the wrong attempts and eventually acting. Where that counter lives is what a secure element is for.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A device that wipes itself after a set number of wrong PINs is behaving correctly; a counter that could be reset would be worthless.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Hardware Wallets</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-private_key">
+              <div class="sc-glossary-card-head"><h2>Private key</h2></div>
+              <p class="sc-glossary-definition">The number that authorises spending. It is not a password and is never sent anywhere — a wallet proves it holds the key by producing a signature, and the key itself stays put. Anyone who learns it can spend the coins it controls, immediately and irreversibly, from anywhere.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A hardware wallet exists so the private key never touches an internet-connected computer, even while that computer builds the transaction.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Wallets</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-proof_of_keys">
+              <div class="sc-glossary-card-head"><h2>Proof of keys</h2></div>
+              <p class="sc-glossary-definition">The practice of withdrawing from platforms to verify they can actually deliver, popularised as an annual exercise. The point is less the withdrawal than what it demonstrates: a balance you have never moved is a claim you have never tested.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Withdrawing once, deliberately, is the only way to learn whether a platform's withdrawal process actually works for you.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Exchanges</li><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-proof_of_reserves">
+              <div class="sc-glossary-card-head"><h2>Proof of reserves</h2></div>
+              <p class="sc-glossary-definition">A demonstration that a platform controls a quantity of bitcoin at a moment in time. Genuinely something, and not solvency: solvency is reserves minus liabilities, and the liabilities are the half nobody can see. It is a snapshot, it rarely proves what customers are owed, and it cannot show whether the coins are already pledged elsewhere.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Coins can be borrowed for an audit and returned afterwards, which has happened.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Exchanges</li><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-proof_of_work">
+              <div class="sc-glossary-card-head"><h2>Proof of work</h2></div>
+              <p class="sc-glossary-definition">Evidence that a large amount of computation was spent producing something, cheap for anyone to verify and expensive to fake. It is how bitcoin settles which history is real without a vote: rewriting a block means redoing its work and every block after it, faster than the rest of the network extends the chain.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Six confirmations means an attacker would have to redo six blocks of work while competing with everyone else.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-pruned_node">
+              <div class="sc-glossary-card-head"><h2>Pruned node</h2></div>
+              <p class="sc-glossary-definition">A full node that validates every block and then discards old block data to save disk. It enforces the same rules and is a genuine full node, but it cannot serve historical blocks — which matters if you later need to rescan for a wallet with years of history.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Pruning keeps a node under a few hundred gigabytes, at the cost of being unable to rescan old blocks for an imported wallet.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Connectivity</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-psbt">
+              <div class="sc-glossary-card-head"><h2>PSBT</h2></div>
+              <p class="sc-glossary-definition">A partially signed bitcoin transaction — the file format an unsigned transaction travels in between the software that built it and the device that signs it. It carries the proposed transaction plus everything an offline signer needs to check the work independently, including the value of every input, so the device can compute the fee itself rather than believing a number the computer supplied.</p>
+              <p class="sc-glossary-example"><span>Example: </span>An air-gapped signer reads a PSBT from a microSD card, displays the amount and fee it calculated, and writes the signed version back to the card.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Hardware Wallets</li><li>Multisig</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-pseudonymity">
+              <div class="sc-glossary-card-head"><h2>Pseudonymity</h2></div>
+              <p class="sc-glossary-definition">Acting under a persistent identifier that is not your name. It is what bitcoin actually offers: addresses stand in for you, and they hold up only until something connects one to your identity — at which point everything linked to it connects too, retroactively and permanently.</p>
+              <p class="sc-glossary-example"><span>Example: </span>One KYC withdrawal can retroactively identify a cluster of addresses that were pseudonymous until then.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-public_key">
+              <div class="sc-glossary-card-head"><h2>Public key</h2></div>
+              <p class="sc-glossary-definition">A number derived from a private key that can verify its signatures without being able to produce them. The derivation runs one way only: a public key reveals nothing usable about the private key behind it. Addresses are built from public keys, which is why sharing an address is safe and sharing a private key is not.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A watch-only wallet holds public keys, so it can recognise incoming payments and build transactions but cannot sign one.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Wallets</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-qr_code">
+              <div class="sc-glossary-card-head"><h2>QR code</h2></div>
+              <p class="sc-glossary-definition">A machine-readable square used to move data optically — addresses, payment links, unsigned and signed transactions. It is one of the two transports that genuinely preserve an air gap, since nothing physical or electrical crosses. Larger transactions become animated sequences of several frames.</p>
+              <p class="sc-glossary-example"><span>Example: </span>An air-gapped signer reads a PSBT from the screen and displays the signed result back as a code.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Hardware Wallets</li><li>Connectivity</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-quantitative_easing">
+              <div class="sc-glossary-card-head"><h2>Quantitative easing</h2></div>
+              <p class="sc-glossary-definition">A central bank creating money to buy financial assets, expanding the money supply to stimulate an economy. It is frequently cited in bitcoin discussion as the concrete example of discretionary issuance, which is the thing a fixed schedule is a response to.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The genesis block's newspaper headline about bank bailouts is usually read as a comment on exactly this.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-quantum_computing">
+              <div class="sc-glossary-card-head"><h2>Quantum computing</h2></div>
+              <p class="sc-glossary-definition">A computing model that would, at sufficient scale, break the elliptic curve mathematics behind bitcoin signatures. No such machine exists, and the timeline is genuinely uncertain. The practical near-term implication is unremarkable: avoid reusing addresses, since an unspent output whose public key has never been revealed is harder to attack.</p>
+              <p class="sc-glossary-example"><span>Example: </span>An address that has received but never spent has not published its public key, which is a meaningful difference under this threat.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Threats</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-quorum">
+              <div class="sc-glossary-card-head"><h2>Quorum</h2></div>
+              <p class="sc-glossary-definition">How many keys of how many must sign — the m and n of an m-of-n multisig. Raising the threshold protects against theft and increases the ways to lock yourself out; lowering it does the reverse. 2-of-3 is common because it survives losing one key and losing one key to someone else.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A 3-of-5 tolerates two losses, at the cost of coordinating three signatures for every spend.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Multisig</li><li>Planning</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-receive_address">
+              <div class="sc-glossary-card-head"><h2>Receive address</h2></div>
+              <p class="sc-glossary-definition">A string encoding the conditions under which a payment can later be spent. Wallets generate a fresh one for each payment, because reusing one publicly links every payment to it. The only trustworthy place to read one is the screen of the device holding the keys.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Verifying a receive address on the hardware wallet rather than the computer is what defeats malware that swaps addresses in the clipboard.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Wallets</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-seed_phrase">
+              <div class="sc-glossary-card-head"><h2>Recovery phrase</h2></div>
+              <p class="sc-glossary-definition">The twelve or twenty-four words that encode a wallet's master secret. They are the wallet, not a password to it — anyone holding them holds the coins, and no company can reset or reissue them. Order matters, the wordlist matters, and a phrase written down wrongly is a wallet that no longer exists.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Restoring a phrase into different software rebuilds the same wallet, provided the derivation path and any passphrase match.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Backups</li><li>Recovery</li><li>BIP39</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-recovery_test">
+              <div class="sc-glossary-card-head"><h2>Recovery test</h2></div>
+              <p class="sc-glossary-definition">Deliberately restoring a wallet from its backup, before the wallet holds anything you would miss, to prove the backup works. Everything else about a backup is an assumption until this has been done once. It is the step that most reliably separates people who have custody from people who have a wallet.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A backup that has never been restored is a guess, however carefully it was written.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Recovery</li><li>Backups</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-regulation">
+              <div class="sc-glossary-card-head"><h2>Regulation</h2></div>
+              <p class="sc-glossary-definition">The rules governing businesses that handle bitcoin — registration, identity checks, reporting. It governs intermediaries rather than the protocol, and it is not consumer protection: a registered platform can still fail, and registration is not deposit insurance.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Registration sets rules for how a business must operate; it did not prevent any of the major platform collapses.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Exchanges</li><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-reorg">
+              <div class="sc-glossary-card-head"><h2>Reorganisation</h2></div>
+              <p class="sc-glossary-definition">When nodes switch to a different chain of blocks because it carries more work, discarding one or more blocks they had accepted. Short reorgs of a block happen occasionally and harmlessly. Deep ones do not occur naturally, which is why waiting for confirmations is meaningful.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A transaction confirmed once can be undone by a one-block reorg; one confirmed six times effectively cannot.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-replace_by_fee">
+              <div class="sc-glossary-card-head"><h2>Replace-by-fee (RBF)</h2></div>
+              <p class="sc-glossary-definition">Replacing an unconfirmed transaction with a version paying a higher fee. It is the normal way to unstick a payment you sent, and it requires that the original signalled it was replaceable — a per-wallet default more than a per-user decision. The replacement must pay the same recipient the same amount to be useful.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A payment stuck at a low fee rate can be bumped by broadcasting a replacement paying more, which miners prefer.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-reproducible_firmware">
+              <div class="sc-glossary-card-head"><h2>Reproducible firmware</h2></div>
+              <p class="sc-glossary-definition">Firmware whose published source code and documented build process can be independently rebuilt to produce the same binary distributed by the vendor. Matching builds provide evidence that the released firmware corresponds to the reviewed source, but they do not prove that the source itself is bug-free or safe.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Independent builders compile a hardware wallet's tagged source release and compare the resulting firmware hash with the vendor's download.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Hardware Wallets</li><li>Open Source</li><li>Security</li><li>Firmware</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-reserve_currency">
+              <div class="sc-glossary-card-head"><h2>Reserve currency</h2></div>
+              <p class="sc-glossary-definition">A currency held in quantity by other countries for trade and reserves. The status brings advantages to the issuer and is historically not permanent — previous holders lost it. Arguments about bitcoin's long-term role usually turn on whether that pattern continues.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Reserve status is a position in a system rather than a property of a currency, which is why it has changed hands before.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-satoshi">
+              <div class="sc-glossary-card-head"><h2>Satoshi</h2></div>
+              <p class="sc-glossary-definition">The smallest unit bitcoin is divisible into: one hundred millionth of a bitcoin. Amounts are stored and transmitted in satoshis, and fee rates are quoted in them. Nobody needs to own a whole bitcoin, which is worth saying because unit bias leads people to think otherwise.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A fee rate of 12 sats per vByte on a 140-vByte transaction costs 1,680 satoshis.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-satoshi_nakamoto">
+              <div class="sc-glossary-card-head"><h2>Satoshi Nakamoto</h2></div>
+              <p class="sc-glossary-definition">The name attached to bitcoin's original design and first implementation. The identity behind it is unknown, and the person or people stopped participating in 2011. The absence matters practically rather than romantically: there is nobody with authority to change the rules or answer questions about intent.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Disputes about protocol changes are settled by node operators, because there is no author to appeal to.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-scalability">
+              <div class="sc-glossary-card-head"><h2>Scalability</h2></div>
+              <p class="sc-glossary-definition">How a system copes with more use. Bitcoin's base layer deliberately limits throughput so that validating it stays cheap enough for individuals to do at home — the constraint is a choice, trading transaction volume for the ability of ordinary people to verify rather than trust.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Larger blocks would allow more transactions and make running a node more expensive, which is the whole of the argument.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Connectivity</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-scarcity">
+              <div class="sc-glossary-card-head"><h2>Scarcity</h2></div>
+              <p class="sc-glossary-definition">Limited supply that cannot be increased in response to demand. Most things called scarce are merely costly to produce, so a high enough price eventually calls forth more. Bitcoin's supply does not respond to price at all: a tenfold rise in value produces no additional issuance, because the schedule is enforced rather than chosen.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Higher gold prices eventually fund more mining and more gold; higher bitcoin prices fund more mining and the same issuance.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-schnorr">
+              <div class="sc-glossary-card-head"><h2>Schnorr signatures</h2></div>
+              <p class="sc-glossary-definition">The signature scheme introduced with Taproot. Signatures are a fixed size, and several can be combined into one that verifies as a single signature — so a multisig spend can look identical to an ordinary one, which is cheaper and more private than publishing every key involved.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A cooperatively spent Taproot multisig is indistinguishable on-chain from a single-key payment.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-script">
+              <div class="sc-glossary-card-head"><h2>Script</h2></div>
+              <p class="sc-glossary-definition">The small stack-based language that expresses the conditions under which an output can be spent. Most outputs use one of a handful of standard patterns, so &quot;who holds this key&quot; is the usual condition — but the language allows others, including thresholds and time delays, which is what multisig and timelocked spending paths are built from.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A 2-of-3 multisig output is a script saying any two of these three keys may spend this.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Multisig</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-script_type">
+              <div class="sc-glossary-card-head"><h2>Script type</h2></div>
+              <p class="sc-glossary-definition">Which standard spending pattern an address commits to — legacy, wrapped SegWit, native SegWit or Taproot. It determines what the address looks like, what it costs to spend from, and which derivation path a wallet uses. Restoring a seed under the wrong script type produces a valid, empty wallet.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The same seed produces completely different addresses depending on whether the wallet is set to legacy or native SegWit.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Recovery</li><li>Wallets</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-secure_element">
+              <div class="sc-glossary-card-head"><h2>Secure element</h2></div>
+              <p class="sc-glossary-definition">A tamper-resistant chip designed to store sensitive data and perform security-critical operations in an isolated environment. In a hardware wallet it may protect secrets, enforce PIN rules, or assist with signing, but its presence alone does not prove the entire device or firmware is secure.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A hardware wallet stores key material in a secure element while its main processor handles the display and user interface.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Hardware Wallets</li><li>Security</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-seedqr">
+              <div class="sc-glossary-card-head"><h2>SeedQR</h2></div>
+              <p class="sc-glossary-definition">A recovery phrase encoded as a QR code so a camera-based signer can read it in rather than having you enter words by hand. It removes transcription errors at the cost of making the backup machine-readable — anyone who photographs it has the wallet, with no need to read anything.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A SeedQR is faster to restore from and much faster for someone else to capture in passing.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Backups</li><li>Hardware Wallets</li><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-segwit">
+              <div class="sc-glossary-card-head"><h2>SegWit</h2></div>
+              <p class="sc-glossary-definition">A 2017 upgrade that moved signature data to a separate part of the transaction and discounted it when measuring size. That made transactions cheaper to spend, fixed transaction malleability, and created room for later upgrades. It was activated as a soft fork, so nothing was forced on anyone.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Spending from a SegWit address costs less than spending the same value from a legacy one, because the signature data is discounted.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-self_custody">
+              <div class="sc-glossary-card-head"><h2>Self-custody</h2></div>
+              <p class="sc-glossary-definition">Holding the keys to your own bitcoin, so no company's solvency, policy or continued existence sits between you and it. It removes counterparty risk and transfers a specific set of jobs — backups, verification, recovery, inheritance — that an institution had been doing quietly on your behalf.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Self-custody means there is no password reset, which is both the cost and the entire point.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Storage</li><li>Planning</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-sequence_number">
+              <div class="sc-glossary-card-head"><h2>Sequence number</h2></div>
+              <p class="sc-glossary-definition">A per-input field originally intended for transaction replacement, now carrying two meanings: signalling that a transaction may be replaced by fee, and enforcing relative timelocks. Its value is one of the details that identifies which wallet built a transaction.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A wallet setting sequence to signal replaceability is what makes fee bumping possible later.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-shamir_backup">
+              <div class="sc-glossary-card-head"><h2>Shamir backup</h2></div>
+              <p class="sc-glossary-definition">A threshold backup method, commonly implemented for wallets as SLIP39, that divides a master secret into multiple unique recovery shares. A chosen minimum number of shares can reconstruct the wallet; fewer than that threshold do not reveal the master secret. SLIP39 shares are not ordinary BIP39 recovery words and require compatible recovery software or hardware.</p>
+              <p class="sc-glossary-example"><span>Example: </span>With a 2-of-3 Shamir backup, any two of the three shares can recover the wallet, while one share alone is insufficient.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Backups</li><li>Recovery</li><li>Security</li><li>SLIP39</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-side_channel">
+              <div class="sc-glossary-card-head"><h2>Side channel</h2></div>
+              <p class="sc-glossary-definition">Learning a secret from a system's incidental behaviour — timing, power draw, electromagnetic emissions — rather than from its output. Secure elements are built to resist these, and their absence is why keys have been extracted from general-purpose chips by manipulating supply voltage.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Voltage glitching a microcontroller during boot is a side channel attack, and it recovered seeds from devices with no secure element.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Threats</li><li>Hardware Wallets</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-signature">
+              <div class="sc-glossary-card-head"><h2>Signature</h2></div>
+              <p class="sc-glossary-definition">Proof that the holder of a private key authorised a specific transaction, verifiable by anyone holding the matching public key. It commits to the transaction's contents, so altering any detail invalidates it. Producing one is the only thing a private key is ever used for.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A signing device adds its signature to a PSBT and hands it back; the key itself never leaves.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-signet">
+              <div class="sc-glossary-card-head"><h2>Signet</h2></div>
+              <p class="sc-glossary-definition">A test network whose blocks are signed by a known party, so it behaves predictably instead of suffering the erratic mining that makes testnet unreliable. It is the better option for rehearsing a workflow end to end, and it carries the same warning: never on the device holding real keys.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Signet produces steady blocks, which makes practising a full send-and-confirm cycle realistic.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-signing_device">
+              <div class="sc-glossary-card-head"><h2>Signing device</h2></div>
+              <p class="sc-glossary-definition">A dedicated device that holds private keys and signs transactions, commonly called a hardware wallet. The name is more accurate: it does not hold bitcoin and usually cannot see the blockchain. Its value is that the keys never reach a general-purpose computer, and that it has a screen the computer cannot rewrite.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The computer proposes a transaction and the signing device disposes, displaying the details on its own screen before approving.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Hardware Wallets</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-silent_payments">
+              <div class="sc-glossary-card-head"><h2>Silent payments</h2></div>
+              <p class="sc-glossary-definition">A scheme letting one published address produce a unique, unlinkable on-chain output for every sender. It solves the specific problem of needing a static address — a donation page, a profile — without the address reuse that would otherwise create. The cost is that the recipient's wallet must scan blocks to find its payments.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A single published silent payment address receives many payments that nothing on the chain connects to each other.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-sim_swap">
+              <div class="sc-glossary-card-head"><h2>SIM swap</h2></div>
+              <p class="sc-glossary-definition">An account-takeover attack in which a criminal causes a mobile carrier to move a victim's phone number to a SIM or device the criminal controls. Calls and text messages—including SMS login codes—can then be intercepted, which is why SMS should not be the strongest protection on an exchange account.</p>
+              <p class="sc-glossary-example"><span>Example: </span>An attacker takes over a phone number, resets an exchange password, and receives the exchange's SMS verification code.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Security</li><li>Threats</li><li>Exchanges</li><li>2FA</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-slip132">
+              <div class="sc-glossary-card-head"><h2>SLIP-132</h2></div>
+              <p class="sc-glossary-definition">A registry of alternative version bytes that make an extended key's prefix announce its intended address type — ypub for wrapped SegWit, zpub for native SegWit, and capitalised forms for multisig. The key material is identical; only four bytes of packaging differ. Descriptors were designed to make the convention unnecessary.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Software rejecting a zpub usually wants the same key expressed as an xpub with an explicit derivation path.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Wallets</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-social_engineering">
+              <div class="sc-glossary-card-head"><h2>Social engineering</h2></div>
+              <p class="sc-glossary-definition">Attacking the person rather than the system — fake support staff, urgent messages, convincing impersonation. It is by a wide margin the most common way people lose bitcoin. The single reliable defence is a rule rather than judgement: nobody legitimate ever needs your recovery words, and nobody who contacts you first should be trusted.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A message claiming your device needs its phrase re-entered for a firmware issue is the whole attack.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Threats</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-soft_fork">
+              <div class="sc-glossary-card-head"><h2>Soft fork</h2></div>
+              <p class="sc-glossary-definition">A rule change that tightens what is valid, so blocks made under the new rules are still accepted by nodes running the old software. It is the backwards-compatible way to upgrade and how SegWit and Taproot were activated. Nobody is forced to upgrade on any particular day.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A node that never upgraded still follows the chain after a soft fork, simply without enforcing the new rule.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-sound_money">
+              <div class="sc-glossary-card-head"><h2>Sound money</h2></div>
+              <p class="sc-glossary-definition">Money whose supply cannot be expanded at the discretion of whoever issues it. The term comes from the argument that monies fail in a repeating pattern — they work until someone discovers how to make more cheaply, at which point holders lose value they had no part in deciding. What counts as sound is a claim about who controls issuance, not about price stability.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Glass beads worked as money until industrial production made them cheap to manufacture, which is the failure the term describes.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-spv">
+              <div class="sc-glossary-card-head"><h2>SPV</h2></div>
+              <p class="sc-glossary-definition">Simplified payment verification: checking that a transaction appears in a block with sufficient work behind it, without validating the whole chain. It is how most light wallets work. The trade is that you verify inclusion rather than validity, and you generally reveal your addresses to whoever answers.</p>
+              <p class="sc-glossary-example"><span>Example: </span>An SPV wallet learns that a payment was mined without checking whether the rules were followed throughout.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Connectivity</li><li>Technical</li><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-orphan_block">
+              <div class="sc-glossary-card-head"><h2>Stale block</h2></div>
+              <p class="sc-glossary-definition">A valid block that lost the race — two miners found one at nearly the same moment and the network converged on the other. The transactions in it are not lost; they return to mempools and are mined again. Often called an orphan block.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A brief fork resolves within a block or two, leaving one of the competing blocks stale.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-store_of_value">
+              <div class="sc-glossary-card-head"><h2>Store of value</h2></div>
+              <p class="sc-glossary-definition">One of the jobs money does: holding purchasing power across time so that work done now can be spent later. It is a claim about durability rather than about price going up, and it is the function most sensitive to issuance — anything whose supply can be expanded cheaply tends to fail at it eventually, whatever else it does well.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A currency can work perfectly well for daily payments while failing as a store of value over a decade.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-supply_chain_attack">
+              <div class="sc-glossary-card-head"><h2>Supply chain attack</h2></div>
+              <p class="sc-glossary-definition">Compromise introduced somewhere between manufacture and use — an intercepted parcel, a counterfeit unit, or a maintainer who spent years earning the right to publish releases. The three are different problems with different answers, and only multisig across vendors survives the case where the vendor is the problem.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The most costly version is not sophisticated: a device shipped with a pre-filled recovery sheet that is really the attacker's wallet.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Threats</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-sweep">
+              <div class="sc-glossary-card-head"><h2>Sweep</h2></div>
+              <p class="sc-glossary-definition">Moving the entire balance controlled by a key into a different wallet, rather than importing the key and continuing to use it. Sweeping is the safe response to a key whose secrecy is uncertain, because it ends that key's relevance instead of relying on it.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A paper wallet or gift card should be swept into a wallet you generated, not imported and reused.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Recovery</li><li>Security</li><li>Wallets</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-taint">
+              <div class="sc-glossary-card-head"><h2>Taint</h2></div>
+              <p class="sc-glossary-definition">The idea that a coin's history makes it more or less acceptable. The protocol makes no such distinction — every satoshi is identical to the rules — but services sometimes act on history anyway, which makes bitcoin imperfectly fungible in practice while remaining perfectly fungible in principle.</p>
+              <p class="sc-glossary-example"><span>Example: </span>An exchange freezing a deposit because of where the coins previously sat is acting on taint, not on any protocol rule.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-tamper_evidence">
+              <div class="sc-glossary-card-head"><h2>Tamper evidence</h2></div>
+              <p class="sc-glossary-definition">Packaging meant to show whether a device was opened before it reached you. Worth something and much less than its theatre suggests, since seals are manufactured goods an attacker who can source a device can usually source too. The defence that actually works is procedural: never accept a secret the device did not make while you watched.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A device arriving with recovery words already filled in is compromised regardless of how intact the packaging looks.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Threats</li><li>Hardware Wallets</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-taproot">
+              <div class="sc-glossary-card-head"><h2>Taproot</h2></div>
+              <p class="sc-glossary-definition">A 2021 upgrade introducing Schnorr signatures and a way to commit to several spending conditions while publishing only the one used. A multisig spent cooperatively can look identical to an ordinary single-key spend, which is a privacy improvement as well as a cost one.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Taproot lets a wallet keep an emergency recovery path that never appears on-chain unless it is actually needed.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-test_transaction">
+              <div class="sc-glossary-card-head"><h2>Test transaction</h2></div>
+              <p class="sc-glossary-definition">Sending a small amount along exactly the route you intend to use before committing the rest. It proves the address, the wallet, the device and your understanding of all three, at a cost of a few dollars and one confirmation. It is the cheapest point in the process at which being wrong is survivable.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The test is not a ritual for the nervous; it is the only step where a mistake costs five dollars instead of the balance.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Security</li><li>Planning</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-testnet">
+              <div class="sc-glossary-card-head"><h2>Testnet</h2></div>
+              <p class="sc-glossary-definition">A parallel network with coins of no value, used for testing. It uses different address formats and a different coin type in derivation paths, so a testnet wallet is genuinely a separate wallet. Signing devices generally bury the setting deliberately, because a transaction believed to be testnet can spend real coins if the device is actually on mainnet.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Testnet addresses start with different characters, which is the visible sign you are not on the real network.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-threat_model">
+              <div class="sc-glossary-card-head"><h2>Threat model</h2></div>
+              <p class="sc-glossary-definition">A structured assessment of what you are protecting, who or what could harm it, how likely those events are, and which safeguards address them. A useful Bitcoin threat model includes digital theft, physical loss, coercion, fire or flood, user error, privacy leakage, and the people who may need to recover the wallet.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Someone living alone may prioritize recoverability and inheritance differently from a public figure who faces targeted physical threats.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Security</li><li>Planning</li><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-timelock">
+              <div class="sc-glossary-card-head"><h2>Timelock</h2></div>
+              <p class="sc-glossary-definition">A spending condition that cannot be satisfied before a stated block height or elapsed time, enforced by every node rather than by any wallet's promise. It is the mechanism behind inheritance paths that open after a delay, and behind arrangements that make immediate transfer genuinely impossible.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Coins locked until a future height cannot be moved by anyone, including under coercion, until the chain reaches it.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Planning</li><li>Threats</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-tor">
+              <div class="sc-glossary-card-head"><h2>Tor</h2></div>
+              <p class="sc-glossary-definition">A network that routes traffic through several relays so the destination does not learn your address. Wallets use it to reach a node without exposing a home connection, and node software can publish an index server as a hidden service so a phone can reach it from anywhere without opening anything to the internet.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Connecting a phone wallet to a home node over Tor avoids both port forwarding and revealing where the queries come from.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li><li>Connectivity</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-transaction">
+              <div class="sc-glossary-card-head"><h2>Transaction</h2></div>
+              <p class="sc-glossary-definition">A signed instruction that consumes existing UTXOs and creates new ones. It does not move an object; it retires some spending conditions and writes new ones. The fee is not a field in it — it is whatever the inputs exceed the outputs by, which is why a device that cannot see input values cannot tell you what a transaction really costs.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Paying someone from a single large coin produces two outputs: theirs, and the change returning to an address of your own.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-transaction_fee">
+              <div class="sc-glossary-card-head"><h2>Transaction fee</h2></div>
+              <p class="sc-glossary-definition">The difference between a transaction's inputs and its outputs, claimed by whoever mines it. It is not a field anyone sets directly, which is why a device that cannot see input values cannot tell you the true cost — and why a dishonest coordinator could otherwise show a small fee while burning a large one.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Getting the fee wrong by leaving out an output has cost people substantial amounts, since the surplus goes to the miner.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-malleability">
+              <div class="sc-glossary-card-head"><h2>Transaction malleability</h2></div>
+              <p class="sc-glossary-definition">The old ability to alter a transaction's identifier without invalidating it, by changing the signature encoding. It broke anything that referenced an unconfirmed transaction by id, and fixing it was one of SegWit's main motivations — separating signature data means the identifier no longer depends on it.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Malleability is why Lightning was impractical before SegWit fixed it.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-trustless">
+              <div class="sc-glossary-card-head"><h2>Trustless</h2></div>
+              <p class="sc-glossary-definition">Not requiring trust in a specific counterparty, because claims can be checked instead. Overstated as a word: you still trust the software, the mathematics and your own hardware. It means the set of people who must behave well is small and inspectable, rather than empty.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Running a node replaces trusting someone's answer with checking the rules yourself, which is what the word actually buys.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Connectivity</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-two_factor_authentication_2fa">
+              <div class="sc-glossary-card-head"><h2>Two-factor authentication (2FA)</h2></div>
+              <p class="sc-glossary-definition">Requiring a second proof of identity beyond a password, typically a code from an app or a hardware security key. It protects accounts, not bitcoin you hold yourself — there is no account to log in to in self-custody. Not all second factors are equal: codes sent by SMS can be redirected by a SIM swap and are the weakest option commonly offered.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Moving an exchange account from SMS codes to an authenticator app removes the SIM swap route entirely.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>2FA</li><li>Exchanges</li><li>Security</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-unconfirmed">
+              <div class="sc-glossary-card-head"><h2>Unconfirmed</h2></div>
+              <p class="sc-glossary-definition">Broadcast but not yet included in a block. The money has left your available balance because the inputs are committed, but nothing is settled and nothing is lost. An unconfirmed transaction is usually underpriced rather than stuck, and can be replaced or bumped.</p>
+              <p class="sc-glossary-example"><span>Example: </span>An unconfirmed payment showing on an explorer after several hours is bidding below the current fee rate.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-unit_bias">
+              <div class="sc-glossary-card-head"><h2>Unit bias</h2></div>
+              <p class="sc-glossary-definition">Judging value by the number of units rather than what they are worth, and concluding that something priced in whole numbers is cheap. It leads people to think a whole bitcoin is the meaningful quantity. Bitcoin divides into a hundred million satoshis, and owning a fraction is the normal case.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Buying twenty dollars of bitcoin is a perfectly ordinary transaction and not a consolation prize.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-utxo">
+              <div class="sc-glossary-card-head"><h2>UTXO</h2></div>
+              <p class="sc-glossary-definition">An unspent transaction output — one discrete chunk of bitcoin, of a particular size, spendable by whoever satisfies the conditions attached to it. A wallet's balance is not a number held anywhere; it is the sum of the UTXOs it can spend. Chunks are spent whole, so paying part of one produces change, and choosing which chunks to spend together is what coin control means.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A wallet showing 0.4 BTC might hold one UTXO of 0.35 and two of 0.025, which is why a small payment can require moving the largest of them.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Wallets</li><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-utxo_set">
+              <div class="sc-glossary-card-head"><h2>UTXO set</h2></div>
+              <p class="sc-glossary-definition">Every unspent output in existence — the complete record of what can currently be spent. Nodes keep it in memory to validate transactions quickly, so its size is one of the real costs of running one. Every transaction consumes entries from it and creates new ones.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Consolidating many small coins into one shrinks the UTXO set slightly, which is a small public good as well as a private saving.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Connectivity</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-vanity_address">
+              <div class="sc-glossary-card-head"><h2>Vanity address</h2></div>
+              <p class="sc-glossary-definition">An address brute-forced to begin with chosen characters. Harmless if you generate it yourself and dangerous if someone else does, since whoever produced it may have kept the key. It also encourages address reuse, because the point of a memorable address is publishing it.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A vanity address supplied by a third party is a key of unknown provenance, whatever it spells.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-verification">
+              <div class="sc-glossary-card-head"><h2>Verification</h2></div>
+              <p class="sc-glossary-definition">Checking a claim yourself rather than accepting it. It is the habit the whole practice rests on: verify the address on the device, verify the download signature, verify the backup by restoring it, verify the node is actually being used. Each replaces a belief with a fact.</p>
+              <p class="sc-glossary-example"><span>Example: </span>The difference between having a backup and having a tested backup is one afternoon of verification.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Security</li><li>Recovery</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-virtual_byte">
+              <div class="sc-glossary-card-head"><h2>Virtual byte (vByte)</h2></div>
+              <p class="sc-glossary-definition">The unit transaction size is measured in for fee purposes. SegWit data is discounted, so a transaction's virtual size is smaller than its raw byte count — which is the mechanism by which SegWit and Taproot addresses cost less to spend from than legacy ones.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Fee estimates are quoted in sats per vByte, so the same fee rate costs less on a native SegWit input than a legacy one.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-wallet">
+              <div class="sc-glossary-card-head"><h2>Wallet</h2></div>
+              <p class="sc-glossary-definition">Software or a device that manages keys and builds transactions. It holds no bitcoin — nothing is stored in it — and the word covers arrangements as different as a phone app with keys on it and a watch-only program that cannot spend. Asking what a wallet holds is more useful than asking which wallet is best.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A hardware wallet and the desktop software driving it are two halves of one wallet, and only one of them can sign.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Wallets</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-descriptor">
+              <div class="sc-glossary-card-head"><h2>Wallet descriptor</h2></div>
+              <p class="sc-glossary-definition">A structured description of a Bitcoin wallet's public keys, derivation paths, script type, and spending policy. Also called an output descriptor, it lets compatible software reconstruct addresses and coordinate or watch the wallet without containing the private keys required to spend.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A multisig backup includes the wallet descriptor so compatible software can rebuild the same 2-of-3 policy and derive the same addresses.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Wallets</li><li>Recovery</li><li>Multisig</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-wallet_fingerprinting">
+              <div class="sc-glossary-card-head"><h2>Wallet fingerprinting</h2></div>
+              <p class="sc-glossary-definition">Identifying which software built a transaction from the choices it makes — locktime, version number, input ordering, RBF signalling, where change is placed. The pattern is consistent per wallet and leaks without any user action. No amount of careful coin selection affects it.</p>
+              <p class="sc-glossary-example"><span>Example: </span>If the same fingerprint appears on the spending side and on one output, that output is probably the sender's change.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Privacy</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-watch_only_wallet">
+              <div class="sc-glossary-card-head"><h2>Watch-only wallet</h2></div>
+              <p class="sc-glossary-definition">A wallet that tracks addresses, balances, and transactions without holding the private keys needed to spend. It can receive funds and usually construct unsigned transactions, but signing must happen in a separate wallet or hardware device. Importing an XPUB or descriptor can create a watch-only wallet while also exposing wallet history to the software or server used.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Sparrow on an online computer watches the wallet and prepares a PSBT; an offline hardware wallet reviews and signs it.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Wallets</li><li>Security</li><li>Privacy</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-withdrawal">
+              <div class="sc-glossary-card-head"><h2>Withdrawal</h2></div>
+              <p class="sc-glossary-definition">Moving bitcoin off a platform to an address you control. Until it happens, the balance shown is a claim against a company rather than coins you hold, and the platform's solvency and access policies are part of your risk. The step that makes it safe is verifying the destination address on your own device before sending the full amount.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Sending a small test amount first, confirming it arrives, and only then withdrawing the balance is the routine that catches a wrong address cheaply.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Exchanges</li><li>Risk</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-witness">
+              <div class="sc-glossary-card-head"><h2>Witness</h2></div>
+              <p class="sc-glossary-definition">The signature data separated out by SegWit. Keeping it apart from the rest of the transaction is what allowed the size discount and what removed transaction malleability, since altering a signature no longer changes the transaction's identifier.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A transaction's virtual size counts witness data at a quarter weight, which is where the SegWit saving comes from.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-wordlist">
+              <div class="sc-glossary-card-head"><h2>Wordlist</h2></div>
+              <p class="sc-glossary-definition">The fixed list of 2,048 words a recovery phrase draws from. Each word stands for exactly eleven bits, no two share their first four letters, and the list is language-specific — the same phrase written in a different language's wordlist produces an entirely unrelated wallet. Record which language was used.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Because prefixes are unique, stamping the first four letters of each word onto metal is a complete backup.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>BIP39</li><li>Backups</li><li>Recovery</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-wrench_attack">
+              <div class="sc-glossary-card-head"><h2>Wrench attack</h2></div>
+              <p class="sc-glossary-definition">An attack that bypasses cryptography entirely by coercing the owner into handing over their keys or moving funds. Also called the $5 wrench attack, after a well-known comic observing that an adversary is far more likely to threaten a person than to break their encryption. Because no key length or signing policy applies, the defences are different in kind: discretion about holdings, arrangements that make immediate transfer genuinely impossible, and keeping a small amount available to surrender.</p>
+              <p class="sc-glossary-example"><span>Example: </span>A holder is confronted at home and forced to unlock a wallet; a mandatory login countdown means the funds cannot be moved that evening by anyone, including them.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Security</li><li>Risk</li><li>Planning</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-xprv">
+              <div class="sc-glossary-card-head"><h2>xprv</h2></div>
+              <p class="sc-glossary-definition">An extended private key: a private key packaged with the chain code needed to derive every key beneath it. Whoever holds one can spend everything in that part of the wallet, so it should never be exported, photographed, or typed into software. Its public counterpart, the xpub, derives the same addresses but cannot spend from them.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Software that offers to export an xprv is offering the whole wallet — including every address it has not generated yet.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Wallets</li><li>Security</li><li>Technical</li></ul>
+            </article>
+            <article class="sc-glossary-card" id="term-zpub">
+              <div class="sc-glossary-card-head"><h2>zpub</h2></div>
+              <p class="sc-glossary-definition">An extended public key serialised with SLIP-132 version bytes indicating native SegWit. It is the same key as the equivalent xpub, wearing a prefix that tells the receiving wallet which address type to derive. Converting between the two moves no coins and changes no keys.</p>
+              <p class="sc-glossary-example"><span>Example: </span>Importing a zpub into software that only accepts xpubs requires converting the prefix, not re-deriving the wallet.</p>
+              <ul class="sc-glossary-categories" aria-label="Categories"><li>Technical</li><li>Wallets</li></ul>
+            </article>
           </div>
-          <div class="sc-glossary-grid" data-glossary-results hidden></div>
 
           <div class="sc-glossary-empty" data-glossary-empty hidden>
             <span class="sc-eyebrow">No exact match</span>
@@ -106,7 +1532,7 @@
           <noscript><div class="container py-4"><p><strong>JavaScript is off, so the menu button will not open.</strong> Every page:</p><ul><li><a href="index.html">Home</a></li><li><a href="guides.html">Guides</a></li><li><a href="devices.html">Devices</a></li><li><a href="software.html">Software</a></li><li><a href="exchanges.html">Exchanges</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="dashboard.html">Dashboard</a></li><li><a href="contact.html">Get Help</a></li></ul></div></noscript>
 
           <footer class="sc-glossary-source">
-            <p><strong>Reference.</strong> The core term catalogue is provided by the public <a href="https://btclexicon.com/api/v2/terms" target="_blank" rel="noopener noreferrer">BTC Lexicon API</a>, as featured by <a href="https://timechainstats.com/" target="_blank" rel="noopener noreferrer">TimechainStats.com</a>. Additional entries are researched and written by SelfCustody.ca from primary specifications, official documentation, and public security guidance.</p>
+            <p><strong>Reference.</strong> Every definition here is written by SelfCustody.ca from primary specifications, official documentation, and public security guidance, and is published under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> along with the rest of this site's writing &mdash; reuse it, with credit. The glossary is deliberately narrow: it defines the terms these guides actually use, rather than cataloguing the whole vocabulary.</p>
           </footer>
         </div>
       </section></main>
@@ -149,6 +1575,6 @@
       </div>
     </footer></div>
   <noscript><div class="container py-4"><p><strong>JavaScript is off, so the menu button will not open.</strong> Every page:</p><ul><li><a href="index.html">Home</a></li><li><a href="guides.html">Guides</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="devices.html">Devices</a></li><li><a href="software.html">Software</a></li><li><a href="exchanges.html">Exchanges</a></li><li><a href="dashboard.html">Dashboard</a></li><li><a href="contact.html">Get Help</a></li></ul></div></noscript>
-  <script src="assets/js/site-refresh.js?v=20260829-03"></script>
+  <script src="assets/js/site-refresh.js?v=20260906-01"></script>
 </body>
 </html>
