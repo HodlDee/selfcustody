@@ -23,7 +23,7 @@ const glossaryTerms = [
   {
     "id": "21_million",
     "title": "21 million",
-    "definition": "The approximate total number of bitcoin that will ever be issued — slightly under, because the subsidy is halved using integer arithmetic and rounds away small amounts, and because some blocks have claimed less than they were owed. Coins with lost keys are a separate matter: they were issued and are counted, they simply cannot be moved, so the spendable supply is smaller still and nobody knows by how much. The figure is a consequence of the halving schedule rather than a parameter set independently.",
+    "definition": "The approximate total number of bitcoin that will ever be issued. It is slightly under, because the subsidy is halved using integer arithmetic and rounds away small amounts, and because some blocks have claimed less than they were owed. Coins with lost keys are a separate matter: they were issued and are counted, they simply cannot be moved, so the spendable supply is smaller still and nobody knows by how much. The figure is a consequence of the halving schedule rather than a parameter set independently.",
     "example": "The final fraction of the supply is issued so slowly that the last coins are not expected until well into the next century.",
     "categories": [
       "Technical"
@@ -72,7 +72,7 @@ const glossaryTerms = [
   {
     "id": "address_substitution",
     "title": "Address substitution",
-    "definition": "Malware that watches for something address-shaped and replaces it with the attacker's own. It breaks no cryptography and needs no privilege beyond reading your clipboard. The defence differs by direction. Receiving: derive the address on the signing device and read it there, since malware cannot change what the device computes. Sending: the device shows the destination it was handed, so if the substitution happened before the transaction was built it will display the attacker's address faithfully — the check is against the recipient's address as confirmed through a channel the malware does not control.",
+    "definition": "Malware that watches for something address-shaped and replaces it with the attacker's own. It breaks no cryptography and needs no privilege beyond reading your clipboard. The defence differs by direction. Receiving: derive the address on the signing device and read it there, since malware cannot change what the device computes. Sending: the device shows the destination it was handed, so if the substitution happened before the transaction was built it will display the attacker's address faithfully. There the check is against the recipient's address as confirmed through a channel the malware does not control.",
     "example": "Receiving, the computer shows the attacker's address and the device shows yours. Sending, both show the same address, and only comparing it against the payee's own confirmed details reveals it is not theirs.",
     "categories": [
       "Threats",
@@ -581,8 +581,8 @@ const glossaryTerms = [
   {
     "id": "cold_storage",
     "title": "Cold storage",
-    "definition": "Keeping the keys that authorise spending on something that has never been connected to the internet, and signing transactions without connecting it. The phrase describes where the keys are, not what product is used. It reduces exposure to malware and remote theft, and does nothing about losing the backup or being coerced.",
-    "example": "A signing device kept in a drawer, paired with watch-only software on a laptop, is cold storage. Plugging that device into a computer to sign does not hand over the keys — they stay isolated on it — but a key generated or typed on the computer itself was never cold to begin with.",
+    "definition": "Keeping the keys that authorise spending on a device that holds them in isolation, so they are never present on an internet-connected computer. The phrase describes where the keys live, not what product is used and not whether a cable is involved: a hardware wallet signing over USB keeps its keys isolated, while an air-gapped setup goes further and never connects at all. Both reduce exposure to malware and remote theft, and neither does anything about losing the backup or being coerced.",
+    "example": "A signing device kept in a drawer, paired with watch-only software on a laptop, is cold storage. Plugging that device into a computer to sign does not hand over the keys, which stay isolated on it. A key generated or typed on the computer itself was never cold to begin with.",
     "categories": [
       "Storage",
       "Security",
@@ -1693,7 +1693,7 @@ const glossaryTerms = [
   {
     "id": "quantum_computing",
     "title": "Quantum computing",
-    "definition": "A computing model that would, at sufficient scale, break the elliptic curve mathematics behind bitcoin signatures. No such machine exists, and the timeline is genuinely uncertain. The usual near-term advice is to avoid reusing addresses, on the grounds that an output whose public key has never been revealed is harder to attack — which holds for the address types that commit to a hash of the key, and not for Taproot, where the output itself is a public key and is on the chain from the moment it is paid.",
+    "definition": "A computing model that would, at sufficient scale, break the elliptic curve mathematics behind bitcoin signatures. No such machine exists, and the timeline is genuinely uncertain. The usual near-term advice is to avoid reusing addresses, on the grounds that an output whose public key has never been revealed is harder to attack. That holds for the address types that commit to a hash of the key. It does not hold for Taproot, where the output itself is a public key and is on the chain from the moment it is paid.",
     "example": "A never-spent P2WPKH output has published only a hash; a never-spent Taproot output has published a key, so the two are not in the same position under this threat.",
     "categories": [
       "Technical",
@@ -2341,7 +2341,7 @@ const glossaryTerms = [
     "id": "wrench_attack",
     "title": "Wrench attack",
     "definition": "An attack that bypasses cryptography entirely by coercing the owner into handing over their keys or moving funds. Also called the $5 wrench attack, after a well-known comic observing that an adversary is far more likely to threaten a person than to break their encryption. Because no key length or signing policy applies, the defences are different in kind: discretion about holdings, arrangements that make immediate transfer genuinely impossible, and keeping a small amount available to surrender.",
-    "example": "A holder is confronted at home and forced to unlock a wallet. A device login delay buys minutes rather than safety, since a backup can be restored on another signer — only a spending policy enforced by the coins themselves, such as a timelock, makes \"not tonight\" true rather than inconvenient.",
+    "example": "A holder is confronted at home and forced to unlock a wallet. A device login delay buys minutes rather than safety, since a backup can be restored on another signer. Only a spending policy enforced by the coins themselves, such as a timelock, makes \"not tonight\" true rather than inconvenient.",
     "categories": [
       "Security",
       "Risk",
@@ -2362,7 +2362,7 @@ const glossaryTerms = [
   {
     "id": "zero_knowledge_proof",
     "title": "Zero-knowledge proof",
-    "definition": "A proof that a statement is true which reveals nothing beyond its truth — not the values behind it, and not how the prover knows. Bitcoin's base layer does not use them, and encountering the phrase in a bitcoin context usually means one of three things: an exchange proving reserves without publishing every address, a sidechain or rollup proving its own state, or a project whose privacy claims deserve reading closely. The mathematics is real and long-established; whether a given product needs it is a separate question.",
+    "definition": "A proof that a statement is true which reveals nothing beyond its truth: not the values behind it, and not how the prover knows. Bitcoin's base layer does not use them, and encountering the phrase in a bitcoin context usually means one of three things: an exchange proving reserves without publishing every address, a sidechain or rollup proving its own state, or a project whose privacy claims deserve reading closely. The mathematics is real and long-established; whether a given product needs it is a separate question.",
     "example": "A proof-of-reserves scheme can show that customer balances are covered without disclosing which addresses hold them or what any one customer holds.",
     "categories": [
       "Technical",

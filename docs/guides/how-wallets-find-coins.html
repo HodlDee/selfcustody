@@ -154,7 +154,9 @@
 
       <p>That says: native SegWit, this key, this path, this branch, all indexes. There is nothing left for the receiving wallet to assume. Descriptors also handle multisig and more complex conditions, which plain paths cannot describe at all.</p>
 
-      <p>The practical advice follows directly: <strong>when your wallet offers to export a descriptor, save it with your backup.</strong> It is not secret in the way your seed is &mdash; it contains public keys only &mdash; but it is the difference between a restore that works immediately and one that starts with guesswork.</p>
+      <p>The practical advice follows directly: <strong>when your wallet offers to export a descriptor, save it with your backup.</strong> It is the difference between a restore that works immediately and one that starts with guesswork.</p>
+
+      <ul class="sc-caution-list"><li><strong>Check which kind you exported before deciding how to store it.</strong> A <em>public</em> descriptor carries extended public keys. It rebuilds every address and restores visibility, cannot spend, and is the one this section is about. It is not secret the way your seed is, though it does reveal your balance and history to anyone who reads it.</li><li><strong>A descriptor can also carry extended private keys</strong>, which the specification permits and several wallets will export on request. That file <em>can</em> spend. It is seed-equivalent material and belongs wherever your seed backup lives, not in a notes app beside the wallet configuration.</li><li><strong>A public descriptor is not a substitute for your seed backup.</strong> It tells software where to look; it cannot sign. Keep both, and know which one you are holding. The two look similar enough that people have kept the wrong one.</li></ul>
 
       <h2><span class="sc-article-num">6</span>What to do when a restore comes back empty</h2>
 

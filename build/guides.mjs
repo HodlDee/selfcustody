@@ -6472,7 +6472,7 @@ const guides = [
 
       <p>Note the fourth row. It is the only failure in that comparison which multisig <em>introduces</em>, and it is entirely preventable.</p>
 
-      ${callout("Store the configuration with every seed backup", "A multisig wallet configuration like this one holds extended <em>public</em> keys, so it cannot be used to steal from you — worth saying plainly, because a descriptor is not public by definition and one exported with private keys is spending material. This one is not. It does reveal your balance and history to anyone who reads it, so it is not something to publish. But losing it is catastrophic while leaking it is merely a privacy problem, so availability wins: put a copy with each of the three backups, not in one clever place.")}
+      ${callout("Store the configuration with every seed backup", "A multisig wallet configuration like this one holds extended <em>public</em> keys, so it cannot be used to steal from you. That is worth saying plainly, because a descriptor is not public by definition, and one exported with private keys is spending material. This one is not. It does reveal your balance and history to anyone who reads it, so it is not something to publish. But losing it is catastrophic while leaking it is merely a privacy problem, so availability wins: put a copy with each of the three backups, not in one clever place.")}
 
       <h2>Choosing the three keys</h2>
 
@@ -8208,7 +8208,13 @@ const guides = [
 
       <p>That says: native SegWit, this key, this path, this branch, all indexes. There is nothing left for the receiving wallet to assume. Descriptors also handle multisig and more complex conditions, which plain paths cannot describe at all.</p>
 
-      <p>The practical advice follows directly: <strong>when your wallet offers to export a descriptor, save it with your backup.</strong> It is not secret in the way your seed is &mdash; it contains public keys only &mdash; but it is the difference between a restore that works immediately and one that starts with guesswork.</p>
+      <p>The practical advice follows directly: <strong>when your wallet offers to export a descriptor, save it with your backup.</strong> It is the difference between a restore that works immediately and one that starts with guesswork.</p>
+
+      ${cautions([
+        "<strong>Check which kind you exported before deciding how to store it.</strong> A <em>public</em> descriptor carries extended public keys. It rebuilds every address and restores visibility, cannot spend, and is the one this section is about. It is not secret the way your seed is, though it does reveal your balance and history to anyone who reads it.",
+        "<strong>A descriptor can also carry extended private keys</strong>, which the specification permits and several wallets will export on request. That file <em>can</em> spend. It is seed-equivalent material and belongs wherever your seed backup lives, not in a notes app beside the wallet configuration.",
+        "<strong>A public descriptor is not a substitute for your seed backup.</strong> It tells software where to look; it cannot sign. Keep both, and know which one you are holding. The two look similar enough that people have kept the wrong one."
+      ])}
 
       <h2><span class="sc-article-num">6</span>What to do when a restore comes back empty</h2>
 
