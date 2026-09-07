@@ -9317,8 +9317,8 @@ body[data-page="dashboard"] .sc-dash-hero + .sc-section + .sc-section {
   flex-direction: column;
 }
 
-.sc-chip-group h4,
-.sc-chip-group h5 {
+.sc-chip-group h3,
+.sc-chip-group h4 {
   margin: 0 0 10px;
   color: var(--sc-muted);
   font-size: 0.78rem;

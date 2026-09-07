@@ -9863,9 +9863,9 @@ const renderGuideFinder = () => {
     const chips = guideProducts.filter(p => p.category === cat)
       .map(p => chip("product", p.key, p.label, "", p.image)).join("");
     const collab = cat === "software"
-      ? `<div class="sc-chip-divider" aria-hidden="true"></div><div class="sc-chip-subgroup"><h5>Collaborative custody</h5><div class="sc-chips">${collabChips}</div></div>`
+      ? `<div class="sc-chip-divider" aria-hidden="true"></div><div class="sc-chip-subgroup"><h4>Collaborative custody</h4><div class="sc-chips">${collabChips}</div></div>`
       : "";
-    return `<div class="sc-chip-group"><h4>${label}</h4><div class="sc-chips">${chips}</div>${collab}</div>`;
+    return `<div class="sc-chip-group"><h3>${label}</h3><div class="sc-chips">${chips}</div>${collab}</div>`;
   }).join("");
 
   return `
