@@ -9744,7 +9744,9 @@ const guides = [
 
       <p>Bitcoin Core 0.8 moved from Berkeley DB to LevelDB and lost an accidental limit the old database had imposed. A block arrived that 0.8 nodes accepted and older nodes rejected, and the network ran as two chains for roughly six hours until miners downgraded.</p>
 
-      <p>Nobody lost coins, but "it has run continuously since 2009" is not quite true, and a page about checking claims should not repeat one it has not checked.</p>
+      <p>It was not free. BIP 50, the project's own write-up, records <strong>at least one large double spend</strong> during the split &mdash; by someone testing whether it was possible rather than robbing anyone &mdash; and notes that the two pool operators who downgraded first to restore the older chain did so "despite the fact that this caused them to sacrifice significant amounts of money". Nobody has documented customers left permanently out of pocket, and this page is not going to invent any. But money moved that should not have, and mining revenue was thrown away on purpose to end it.</p>
+
+      <p>Which is why "it has run continuously since 2009" is not quite true, and a page about checking claims should not repeat one it has not checked.</p>
 
       ${callout("What the incidents actually demonstrate", `Both are evidence about question eight rather than exceptions to it. Each failure was found, published, fixed in the open, and resolved by independent operators choosing to run corrected software &mdash; with no company to appeal to and nobody able to impose an outcome. Whether that reassures you is your call to make; the point is that it is a matter of record rather than a matter of opinion.`)}
 
@@ -9778,7 +9780,7 @@ const guides = [
       ${callout("If you take one thing from this page", `The questions are more useful than any verdict they produce, because the next thing marketed at you will not be on any list written today. Learn to ask who the system depends on, and you can evaluate something nobody has warned you about yet.`)}
 
       <p class="sc-source-note">
-        The 2010 value overflow is catalogued as CVE-2010-5139; the March 2013 split is documented in BIP 50 and in the alert Bitcoin published at the time. Supply, issuance and validation behaviour are checkable against a node you run, which is the standard this page asks of itself.
+        The 2010 value overflow is catalogued as CVE-2010-5139; the March 2013 split, the double spend during it and the pools' sacrificed revenue are all recorded in BIP 50, alongside the alert Bitcoin published at the time. Supply, issuance and validation behaviour are checkable against a node you run, which is the standard this page asks of itself.
       </p>`
   },
 ];
