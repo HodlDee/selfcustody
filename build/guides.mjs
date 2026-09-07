@@ -2610,7 +2610,7 @@ const guides = [
     icon: "bi-shield-lock",
     updated: "2026-08-18",
     status: "published",
-    related: ["coldcard-setup", "duress-and-coercion", "passphrase-setup", "recovery-test-drill"],
+    related: ["coldcard-setup", "duress-and-coercion", "passphrase-setup", "recovery-test-drill", "inside-the-device"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Once a COLDCARD is set up and holding coins, the settings menu offers a second layer: alternate PINs that open decoy wallets, wipe the seed, stall an attacker for days, or destroy the device outright. It is the most interesting menu on the device and the one most likely to lose you money.</p>
@@ -2892,7 +2892,7 @@ const guides = [
     updated: "2026-08-17",
     productGuide: true,
     status: "published",
-    related: ["recovery-test-drill", "sparrow-first-wallet", "multisig-2of3"],
+    related: ["recovery-test-drill", "sparrow-first-wallet", "multisig-2of3", "inside-the-device"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Jade is open source down to the hardware, inexpensive, and capable of fully air-gapped signing over QR codes. It is one of the easiest recommendations on this site. It also does one thing so differently from every other device here that setting it up without understanding it first is how people end up surprised later.</p>
@@ -2928,7 +2928,7 @@ const guides = [
 
       <p>Jade has no dedicated secure element chip. Instead it uses what Blockstream calls a virtual secure element: your seed is stored encrypted on the device, and the key needed to decrypt it is not held entirely on the device either. Part of it lives on a server &mdash; Blockstream's, by default.</p>
 
-      <p>When you enter your PIN, the device talks to that server to complete the unlock. The server is what enforces the limit on wrong attempts, doing the job a secure element chip does elsewhere.</p>
+      <p>When you enter your PIN, the device talks to that server to complete the unlock. The server is what enforces the limit on wrong attempts, doing the job a secure element chip does elsewhere &mdash; and <a href='inside-the-device.html'>that job is the whole point of the chip</a>.</p>
 
       <p>Two things follow, and neither is hidden or sinister &mdash; but both are yours to plan around:</p>
 
@@ -3150,7 +3150,7 @@ const guides = [
     updated: "2026-08-17",
     productGuide: true,
     status: "published",
-    related: ["recovery-test-drill", "sparrow-first-wallet", "multisig-2of3"],
+    related: ["recovery-test-drill", "sparrow-first-wallet", "multisig-2of3", "inside-the-device"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Trezor's setup has one unusual property worth understanding before you start: the device arrives with <em>no firmware installed at all</em>. Plug it in and it will tell you so, then install firmware and check the manufacturer's signature before it runs.</p>
@@ -3269,7 +3269,7 @@ const guides = [
         "<strong>A passphrase you cannot reproduce.</strong> Nothing in the device can help you here. This remains the most likely way to lose a correctly set-up wallet.",
         "<strong>Approving a bad transaction.</strong> If you confirm a payment to an attacker's address on the device screen, everything worked exactly as designed. Verification is your job, and it happens before you press confirm.",
         "<strong>A backup stored badly.</strong> The device cannot know that your recovery card is in the same drawer as the Trezor.",
-        "<strong>Sophisticated physical attacks.</strong> Secure elements raise the cost of extracting a key from a device someone is holding, considerably. They do not make it impossible, which is a reason to treat physical loss as urgent rather than merely annoying."
+        "<strong>Sophisticated physical attacks.</strong> Secure elements raise the cost of extracting a key from a device someone is holding, considerably. They do not make it impossible, which is a reason to treat physical loss as urgent rather than merely annoying. <a href='inside-the-device.html'>What the chip is actually doing</a>, and what happened to the models that had none, is set out separately."
       ])}
 
       ${callout("Before you fund it properly", `Run the full drill in <a href="recovery-test-drill.html">test your recovery</a>. A wallet you have never restored is the one part of this setup that has not actually been checked &mdash; and it is the part everything else depends on.`)}
@@ -7733,7 +7733,7 @@ const guides = [
     icon: "bi-box-seam",
     updated: "2026-08-27",
     status: "published",
-    related: ["choosing-your-first-setup", "multisig-2of3", "duress-and-coercion"],
+    related: ["choosing-your-first-setup", "multisig-2of3", "duress-and-coercion", "inside-the-device"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">At some point in every self-custody setup there is a thing you did not make and cannot inspect. A chip whose contents you take on faith. Firmware you did not compile. A parcel that spent four days out of your sight. You can push that boundary back a long way, and this guide is about how far &mdash; but the honest starting point is that it never reaches zero.</p>
@@ -7801,7 +7801,7 @@ const guides = [
       <h2><span class="sc-article-num">7</span>Trade-offs you are choosing whether you notice or not</h2>
 
       <ul>
-        <li><strong>Secure element or open silicon.</strong> A secure element resists someone who has your device on a bench, which is a real and common threat. It has also, historically, been a chip you cannot audit &mdash; the design is behind an NDA and you are trusting a certification rather than reading anything. That is no longer quite the binary it was: Tropic Square's TROPIC01, shipping in the Trezor Safe 7 alongside a conventional certified element, publishes its design and datasheet for independent review. One example is not a trend, and the rest of the market still works the old way, but the trade is worth re-checking rather than assumed.</li>
+        <li><strong>Secure element or open silicon.</strong> A secure element resists someone who has your device on a bench, which is a real and common threat. It has also, historically, been a chip you cannot audit &mdash; the design is behind an NDA and you are trusting a certification rather than reading anything. That is no longer quite the binary it was: Tropic Square's TROPIC01, shipping in the Trezor Safe 7 alongside a conventional certified element, publishes its design and datasheet for independent review. One example is not a trend, and the rest of the market still works the old way, but the trade is worth re-checking rather than assumed. <a href='inside-the-device.html'>What that resistance is made of</a> is worth understanding before weighing it.</li>
         <li><strong>Closed or open firmware.</strong> Open firmware can be read and, at its best, reproduced. Closed firmware cannot, and you are trusting a process you can only see the outputs of. Neither answers the malicious-maintainer case on its own.</li>
         <li><strong>Standards or convenience.</strong> A device that stores a standard BIP39 phrase on a standard derivation path can be recovered on completely different hardware years from now. Anything proprietary makes the vendor&rsquo;s continued existence part of your backup plan.</li>
         <li><strong>How much the vendor knows about you.</strong> Customer databases leak; one hardware wallet company&rsquo;s did, and its customers received phishing and physical threats for years afterwards. Where a device is bought, and under what name, is part of this decision.</li>
@@ -9510,6 +9510,145 @@ const guides = [
 
       <p class="sc-source-note">
         Figures here are the widely reported ones and are deliberately approximate; bankruptcy claims, recovered amounts and final accounting have moved for several of these cases and in some are still moving. The mechanisms are the durable part and are what this page is for. For the Canadian case, the Ontario Securities Commission's own published investigation is the primary account.
+      </p>`
+  },
+  {
+    slug: "inside-the-device",
+    category: "concepts",
+    products: [],
+    title: "What is actually protecting your seed",
+    summary: "Every device guide on this site says the PIN protects the device rather than the seed. This is the part underneath that sentence — what a secure element is, what happened to the devices that did not have one, and the two things that actually survive someone holding your hardware.",
+    level: "intermediate",
+    minutes: 20,
+    goals: ["learn", "harden"],
+    tags: ["Hardware", "How it works"],
+    icon: "bi-cpu",
+    updated: "2026-09-06",
+    status: "published",
+    related: ["supply-chain-and-vendor-risk", "passphrase-setup", "duress-and-coercion"],
+    layout: "article",
+    body: `
+      <p class="sc-guide-intro">The phrase "secure element" appears in eight guides on this site. It justifies why a COLDCARD wipes itself after thirteen wrong PINs, why <a href="jade-setup.html">Jade is built differently</a>, why <a href="seedsigner-setup.html">SeedSigner deliberately stores nothing</a>, and why Ledger's closed firmware is a live argument. It is doing an enormous amount of work in those sentences, and none of them says what it is.</p>
+
+      <p>This page is that missing definition, and the honest account of what it buys. The short version, if you read nothing else: a secure element raises the price of stealing your seed from someone holding your device. It does not set that price to infinity, and the two things that genuinely do are not chips at all.</p>
+
+      <h2><span class="sc-article-num">1</span>Where the seed actually sits</h2>
+
+      <p>When your device is switched off, your seed is somewhere on it, in storage that survives losing power. That is the entire problem in one sentence. A backup you wrote on paper is protected by being in your house; a seed inside a device is protected only by whatever that device does to protect it.</p>
+
+      <p>There are broadly three answers on the market, and every device on this site takes one of them.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>Approach</th><th>Where the secret rests</th><th>Devices here</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Secure element</strong></td><td>Inside a chip built to resist being read</td><td>COLDCARD, Trezor Safe, BitBox02, Passport, Ledger, TAPSIGNER</td></tr>
+            <tr><td><strong>Nothing stored</strong></td><td>Nowhere. The seed is entered per session and lost on power-off</td><td>SeedSigner, Krux</td></tr>
+            <tr><td><strong>Virtual secure element</strong></td><td>Encrypted on the device, with part of the key held off it</td><td>Jade</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Those are three different answers to the same question, not three quality tiers, and the rest of this page is about what each one actually costs.</p>
+
+      ${figureSlot({
+        shot: "A hardware wallet's bare circuit board on a workbench, lifted out of its case, shot close and slightly overhead with hard side light. The small secure element in sharp focus, the larger microcontroller behind it falling out of focus.",
+        caption: "The small chip is the one counting your failed attempts. That counter, and where it lives, is most of what you are buying.",
+        ratio: "16 / 9",
+        icon: "bi-cpu"
+      })}
+
+      <h2><span class="sc-article-num">2</span>What a secure element actually is</h2>
+
+      <p>A secure element is a separate chip whose job is to hold secrets and refuse to give them up, including to someone with the chip in their hand and a laboratory around it. It is not simply "encrypted storage". Three properties make it different from ordinary memory:</p>
+
+      ${checklist([
+        "<strong>It resists physical reading.</strong> Shielding, sensors that detect the device being opened or run outside normal voltage and temperature, and layouts designed so that grinding the chip down destroys what you were trying to read. Historically this has come with a catch &mdash; the design is behind an NDA, so you are trusting a certification rather than reading anything. That is beginning to change.",
+        "<strong>Secrets do not leave it.</strong> The chip performs operations internally and returns results. The key is used inside and never handed to the main processor, so reading the rest of the device does not reveal it.",
+        "<strong>It counts your failures itself.</strong> This is the property that matters most, and the one most people miss."
+      ])}
+
+      <p>The reason a four-digit PIN can be reasonable protection is not that four digits are hard to guess. Ten thousand combinations is nothing. It is reasonable only because something is counting the wrong ones and will act before an attacker gets through them.</p>
+
+      <p>The whole security of a PIN therefore rests on <em>where that counter lives</em>. A counter kept in ordinary storage is a number an attacker can find and reset. A counter enforced inside a secure element is one they have to defeat the chip to reach. That is the actual product being sold.</p>
+
+      ${callout("Which is why the wipe is a feature", `A COLDCARD destroying its own contents after thirteen wrong attempts sounds alarming until you see it from this angle. The counter is worth nothing unless it eventually does something irreversible &mdash; and a device that merely slows down is a device an attacker waits out.`)}
+
+      <h2><span class="sc-article-num">3</span>What happened to the devices without one</h2>
+
+      <p>This is not theoretical, and the best-documented case involves a widely-owned device.</p>
+
+      <p>Trezor's earlier models, the One and the Model T, had no secure element. The seed lived encrypted in the flash of a general-purpose microcontroller, and the attempt counter lived there too. In 2020 Kraken Security Labs showed that this could be defeated with roughly fifteen minutes of physical access: desolder the microcontroller, and interfere with its supply voltage at a precisely timed moment during boot &mdash; a technique called voltage glitching &mdash; to get the encrypted seed out without knowing the PIN.</p>
+
+      <p>The original work needed skill and several hundred dollars of equipment. Kraken's own estimate was that a purpose-built consumer version of the tool could be produced for around seventy-five dollars.</p>
+
+      <p>Two things about that are worth sitting with.</p>
+
+      ${checklist([
+        "<strong>The PIN was not broken.</strong> Nobody guessed it. The attack went around it, because the thing enforcing it was ordinary memory on a chip that was never built to resist this.",
+        "<strong>The fix was already available to users.</strong> Trezor's response noted that the attack does not work against a wallet using a BIP39 passphrase &mdash; because the passphrase is not stored on the device at all, so there is nothing on the chip to extract."
+      ])}
+
+      <p>The later Trezor Safe line added a secure element, which is precisely the gap this closed. But the lesson generalises past one manufacturer: <strong>a device's resistance to someone holding it is a property of its hardware, and it is not something firmware can add later.</strong></p>
+
+      <h2><span class="sc-article-num">4</span>The stateless answer</h2>
+
+      <p>SeedSigner and Krux answer the question by refusing it. They store no seed at all. You enter your words at the start of a session, the device holds them in volatile memory while it signs, and cutting the power erases them completely.</p>
+
+      <p>A device with nothing on it cannot have anything extracted from it. That is a genuinely strong property, and it is why a SeedSigner can be left in a drawer, or disassembled, with no more concern than any other Raspberry Pi.</p>
+
+      <p>It moves the problem rather than removing it. The seed still exists &mdash; on whatever you wrote it on, and in your hands every time you type it in. A stateless device converts "protect the hardware" into "protect the backup, and protect every session", which is a fair trade for some people and a worse one for others. It is the reason those guides spend so long on where you are standing when you enter the words.</p>
+
+      <h2><span class="sc-article-num">5</span>What an attacker with your device can actually do</h2>
+
+      <p>The honest version, since every device guide gestures at this and none of them states it plainly.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>They have</th><th>Realistic outcome</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Device with a secure element, PIN unknown</strong></td><td>Expensive and uncertain. Their practical route is to make you tell them the PIN.</td></tr>
+            <tr><td><strong>Device without one, PIN unknown</strong></td><td>Demonstrated to be feasible with modest equipment and a short window.</td></tr>
+            <tr><td><strong>Device plus your PIN</strong></td><td>Everything. The chip is doing what it was told by someone who authenticated.</td></tr>
+            <tr><td><strong>Stateless device, powered off</strong></td><td>Nothing. There is nothing on it.</td></tr>
+            <tr><td><strong>Your written backup</strong></td><td>Everything, unless a passphrase exists. The device was never the protection.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Read the last row twice. Most of this page is about hardware, and the most common way seeds are actually taken is that somebody found the paper. Chips are a defence against a threat that is real but comparatively rare; the backup is the one nearly everybody actually faces.</p>
+
+      <h2><span class="sc-article-num">6</span>The two things that survive physical possession</h2>
+
+      <p>Everything above is about raising a price. These two change the shape of the problem, because neither can be extracted from hardware someone is holding.</p>
+
+      <h3>A passphrase</h3>
+
+      <p>A BIP39 passphrase is never stored on the device. It is mixed into the key derivation itself &mdash; the words and the passphrase together produce the seed &mdash; which means there is nothing on the chip for a physical attack to recover. This is exactly why Trezor's answer to the glitching attack was to point at the passphrase feature. It is also why the wallet-compatibility trackers mark devices as physically unsafe with a full secret <em>specifically when no passphrase or multisig is in use</em> &mdash; that qualifier is the whole finding.</p>
+
+      <p>The cost is real and it is covered properly in <a href="passphrase-setup.html">the passphrase guide</a>: it is a second irreplaceable secret, and forgetting it loses the wallet as thoroughly as losing the words.</p>
+
+      <h3>Multisig</h3>
+
+      <p>A key extracted from one device in a 2-of-3 is a key that cannot spend anything. The attacker needs a second one, held elsewhere, running different firmware. That is a structural answer rather than a procedural one, and it is the same reasoning <a href="supply-chain-and-vendor-risk.html">that makes multi-vendor multisig the only defence against a dishonest manufacturer</a>.</p>
+
+      <h2><span class="sc-article-num">7</span>What to actually take from this</h2>
+
+      ${checklist([
+        "<strong>Treat a lost or stolen device as urgent, not annoying.</strong> A secure element buys you time to move funds. It does not make the device safe to write off.",
+        "<strong>Match the chip to the threat you actually have.</strong> If your realistic concern is fire, flood and your own filing, secure elements are close to irrelevant and your backup is everything.",
+        "<strong>Add a passphrase before you conclude your hardware is the weak point.</strong> It costs nothing, it is the documented answer to physical extraction, and it is a decision you make once.",
+        "<strong>Do not let the chip choice decide the product.</strong> A closed secure element and a fully open device with no secure element are two coherent positions, and the manufacturers taking each one are explicit about it. A third has recently appeared &mdash; an auditable secure element, published rather than certified-and-sealed &mdash; which is worth watching without yet being a reason to replace anything."
+      ])}
+
+      <h2>The short version</h2>
+
+      <p>A secure element is a chip built to hold secrets and count failed attempts somewhere an attacker cannot simply reset. Devices that lacked one have had their seeds pulled out with a soldering iron and a well-timed voltage drop. Devices that store nothing cannot be read at all, and move the problem to your backup and your hands. But every one of those is a price, not a wall &mdash; and the two things that actually survive somebody holding your hardware are a passphrase that was never on it and a second key that is somewhere else.</p>
+
+      ${callout("If you take one thing from this page", `The PIN is not what is protecting your bitcoin, and neither, ultimately, is the chip. They buy time against a physical attacker. A passphrase and multisig are the only things on this page that keep working after someone already has your device in their hands.`)}
+
+      <p class="sc-source-note">
+        The extraction technique described here is documented public research from 2020 against hardware that has since been superseded, and it is included because it is the clearest illustration of what the attempt counter is for &mdash; not as a live claim about any current product. Chip choices, firmware and model lineups change; confirm what your own device uses against the manufacturer's documentation, and treat this page as the reasoning rather than the specification.
       </p>`
   },
 ];

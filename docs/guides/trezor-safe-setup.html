@@ -180,7 +180,7 @@
 
       <p>Trezor's design is open source, which means its security properties are examined publicly rather than asserted. That is a real advantage, and it also means the limits are documented rather than hidden.</p>
 
-      <ul class="sc-check-list"><li><strong>A passphrase you cannot reproduce.</strong> Nothing in the device can help you here. This remains the most likely way to lose a correctly set-up wallet.</li><li><strong>Approving a bad transaction.</strong> If you confirm a payment to an attacker's address on the device screen, everything worked exactly as designed. Verification is your job, and it happens before you press confirm.</li><li><strong>A backup stored badly.</strong> The device cannot know that your recovery card is in the same drawer as the Trezor.</li><li><strong>Sophisticated physical attacks.</strong> Secure elements raise the cost of extracting a key from a device someone is holding, considerably. They do not make it impossible, which is a reason to treat physical loss as urgent rather than merely annoying.</li></ul>
+      <ul class="sc-check-list"><li><strong>A passphrase you cannot reproduce.</strong> Nothing in the device can help you here. This remains the most likely way to lose a correctly set-up wallet.</li><li><strong>Approving a bad transaction.</strong> If you confirm a payment to an attacker's address on the device screen, everything worked exactly as designed. Verification is your job, and it happens before you press confirm.</li><li><strong>A backup stored badly.</strong> The device cannot know that your recovery card is in the same drawer as the Trezor.</li><li><strong>Sophisticated physical attacks.</strong> Secure elements raise the cost of extracting a key from a device someone is holding, considerably. They do not make it impossible, which is a reason to treat physical loss as urgent rather than merely annoying. <a href='inside-the-device.html'>What the chip is actually doing</a>, and what happened to the models that had none, is set out separately.</li></ul>
 
       <div class="sc-callout mt-4"><h3>Before you fund it properly</h3><p>Run the full drill in <a href="recovery-test-drill.html">test your recovery</a>. A wallet you have never restored is the one part of this setup that has not actually been checked &mdash; and it is the part everything else depends on.</p></div>
 
@@ -241,6 +241,15 @@
               </div>
               <h3>Build a 2-of-3 multisig</h3>
               <p>Three keys, any two can spend. The real work is not the setup — it is the wallet configuration everybody forgets to back up, and the rehearsal that proves the whole thing works.</p>
+              <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
+            </div></a></div><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="inside-the-device.html">
+            <div class="sc-card-body">
+              <div class="sc-guide-card-top">
+                <div class="sc-icon"><i class="bi bi-cpu"></i></div>
+                <span class="sc-level sc-level-intermediate">Intermediate</span>
+              </div>
+              <h3>What is actually protecting your seed</h3>
+              <p>Every device guide on this site says the PIN protects the device rather than the seed. This is the part underneath that sentence — what a secure element is, what happened to the devices that did not have one, and the two things that actually survive someone holding your hardware.</p>
               <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
             </div></a></div></div>
       </div>
