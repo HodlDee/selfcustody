@@ -6472,7 +6472,7 @@ const guides = [
 
       <p>Note the fourth row. It is the only failure in that comparison which multisig <em>introduces</em>, and it is entirely preventable.</p>
 
-      ${callout("Store the configuration with every seed backup", "The descriptor contains public keys, not private ones — it cannot be used to steal from you. It does reveal your balance and history to anyone who reads it, so it is not something to publish. But losing it is catastrophic while leaking it is merely a privacy problem, so availability wins: put a copy with each of the three backups, not in one clever place.")}
+      ${callout("Store the configuration with every seed backup", "A multisig wallet configuration like this one holds extended <em>public</em> keys, so it cannot be used to steal from you — worth saying plainly, because a descriptor is not public by definition and one exported with private keys is spending material. This one is not. It does reveal your balance and history to anyone who reads it, so it is not something to publish. But losing it is catastrophic while leaking it is merely a privacy problem, so availability wins: put a copy with each of the three backups, not in one clever place.")}
 
       <h2>Choosing the three keys</h2>
 

@@ -3380,9 +3380,10 @@
   }
 
   /**
-   * Searchable Bitcoin glossary. The public API is the source of record, so a
-   * catalogue update does not require rebuilding this site. All remote values
-   * are inserted with textContent rather than interpreted as markup.
+   * Searchable Bitcoin glossary. The terms are rendered into the page at build
+   * time from build/glossary.mjs and read back out of the DOM here, so this
+   * file is the search behaviour and not the source of record. Nothing is
+   * fetched: the page is complete before this runs.
    */
   const glossary = document.querySelector("[data-glossary]");
 

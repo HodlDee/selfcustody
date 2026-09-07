@@ -1773,7 +1773,7 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
 
   pages.glossary = {
     title: "Glossary | SelfCustody.ca",
-    description: "Search more than 500 Bitcoin, mining, wallet, privacy, market, and self-custody terms.",
+    description: "Search the Bitcoin, wallet, privacy and self-custody vocabulary these guides actually use, defined in plain language.",
     content: `
       ${hero(
         "Bitcoin reference",
