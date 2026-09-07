@@ -76,6 +76,16 @@ jobs:
       # Also runs, in order: the icon-subset check, the fetch guard, the glyph
       # guard, the licence-notice guard and the Workshop guard. Any of them
       # failing exits non-zero.
+      # The ?v= asset query is derived by hashing four CSS/JS files. It used to
+      # hash raw working-tree bytes, so a CRLF clone of the same commit stamped
+      # a different version on all 72 pages -- against the very next step,
+      # whose job is to fail when generated output does not match its source.
+      # An LF machine builds clean either way, so only a check like this finds
+      # it. .gitattributes now pins those files; this proves the hash does not
+      # depend on that having worked.
+      - name: The asset version ignores line endings
+        run: node build/tools/asset-version-test.mjs
+
       - name: Build and guards
         run: node build/render.mjs
 
