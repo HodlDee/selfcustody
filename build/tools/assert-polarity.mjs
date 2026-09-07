@@ -45,6 +45,26 @@
    looser was measured against the library as it stands and produced dozens of
    candidates, none of them real.
 
+   ------------------------------------------------------------- limits ----
+
+   This finds a subset, and the subset is worth stating rather than leaving for
+   someone to discover when it misses something.
+
+     - A claim has to sit within SPAN characters of the product name. A long
+       clause between them is not seen.
+     - A denial anywhere in that window suppresses the match, so "not only a
+       USB device -- it also signs air-gapped" reads as a denial and is missed.
+       Erring this way is deliberate: the library states limitations far more
+       often than capabilities, and a guard that flagged every one of those
+       would be turned off within a week.
+     - Fourteen of the dashes sit on rows with no phrasing distinctive enough
+       to match on, and are not checked at all.
+     - Only dashes are checked. A wrong "yes" or a wrong "partial" is invisible
+       to this.
+
+   Hence the wording of the success line: no unacknowledged candidates among
+   the checked pairs. Not "the site is consistent", which this cannot establish.
+
    ------------------------------------------------------- acknowledgements ----
 
    Matching prose is a heuristic and always will be, so every candidate is
@@ -59,9 +79,23 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { join, basename } from 'node:path';
 
-/* The pages carrying a feature matrix. Each is also read for its own detail
-   prose, which is the other half of every product description on this site. */
-const MATRIX_PAGES = ['docs/devices.html', 'docs/software.html', 'docs/exchanges.html'];
+/* The pages carrying a feature matrix, and the shape each one must still have.
+
+   The counts are here because of the failure mode this guard is least allowed
+   to have, which review found it had: it got *quieter* as it saw less. Deleting
+   a matrix row removed four dashes from the check and reported success. So did
+   renaming the class that marks a cell. Only losing an entire table was noticed,
+   and that is the one accident nobody has.
+
+   So the shape is asserted rather than discovered. If a row, a column or a
+   whole matrix goes, this fails and says which -- and a deliberate change to
+   the tables means updating a number here, which is a line in a diff a reviewer
+   can see rather than a silent reduction in what is being checked. */
+const MATRIX_PAGES = [
+  { file: 'docs/devices.html',   matrices: 1, columns: 9, rows: 13 },
+  { file: 'docs/software.html',  matrices: 1, columns: 7, rows: 13 },
+  { file: 'docs/exchanges.html', matrices: 1, columns: 6, rows: 9 }
+];
 
 /* Column headings name a model or a range; prose names the brand. Each pattern
    has to match the way a guide would actually refer to the product, which is
@@ -184,30 +218,57 @@ const digest = s => createHash('sha256').update(s.toLowerCase().replace(/[^a-z0-
 /* Every dash in every matrix, as {page, feature, product}. */
 function readMatrices(root, structural) {
   const cells = [];
-  for (const page of MATRIX_PAGES) {
-    const path = join(root, page);
+  for (const { file, matrices, columns: expectColumns, rows: expectRows } of MATRIX_PAGES) {
+    const page = basename(file);
+    const path = join(root, file);
     if (!existsSync(path)) {
-      structural.push(`${page} carries a feature matrix and is not there to read`);
+      structural.push(`${file} carries a feature matrix and is not there to read`);
       continue;
     }
     const html = readFileSync(path, 'utf8');
     const tables = html.match(/<table[^>]*sc-feature-matrix[^>]*>[\s\S]*?<\/table>/g) || [];
-    if (!tables.length) {
-      structural.push(`${page} no longer contains a feature matrix, so nothing on it can be checked`);
+    if (tables.length !== matrices) {
+      structural.push(`${page} should carry ${matrices} feature matrix/matrices and has ${tables.length}`);
       continue;
     }
     for (const table of tables) {
       const columns = [...table.matchAll(/<th scope="col">([\s\S]*?)<\/th>/g)]
         .map(m => stripTags(m[1])).slice(1);
+      if (columns.length !== expectColumns) {
+        structural.push(`${page}: the matrix should compare ${expectColumns} products and compares ${columns.length}` +
+          ` (${columns.join(', ') || 'none readable'})`);
+      }
+
+      let rows = 0;
       for (const row of table.match(/<tr>[\s\S]*?<\/tr>/g) || []) {
         const head = row.match(/<th scope="row">([\s\S]*?)<\/th>/);
         if (!head) continue;
+        rows++;
         const feature = stripTags(head[1]);
-        const marks = [...row.matchAll(/<td>([\s\S]*?)<\/td>/g)]
-          .map(m => (m[1].match(/sc-matrix-(yes|partial|no)/) || [])[1]);
-        columns.forEach((product, i) => {
-          if (marks[i] === 'no') cells.push({ page: basename(page), feature, product });
+        const bodyCells = [...row.matchAll(/<td>([\s\S]*?)<\/td>/g)].map(m => m[1]);
+
+        if (bodyCells.length !== columns.length) {
+          structural.push(`${page}: row "${feature}" has ${bodyCells.length} cells against ${columns.length} product columns`);
+        }
+
+        bodyCells.forEach((cell, i) => {
+          /* Anchored on the closing quote or a space, so a renamed class is an
+             unrecognised mark rather than a lucky prefix match. Review renamed
+             sc-matrix-no to sc-matrix-none and the old pattern went on matching
+             it, which is the sort of accident that only holds until it does
+             not. */
+          const mark = (cell.match(/sc-matrix-(yes|partial|no)(?=["\s])/) || [])[1];
+          if (!mark) {
+            structural.push(`${page}: row "${feature}", column ${i + 1}` +
+              `${columns[i] ? ` (${columns[i]})` : ''} carries no recognisable mark`);
+            return;
+          }
+          if (mark === 'no' && columns[i]) cells.push({ page, feature, product: columns[i] });
         });
+      }
+
+      if (rows !== expectRows) {
+        structural.push(`${page}: the matrix should have ${expectRows} feature rows and has ${rows}`);
       }
     }
   }
@@ -238,12 +299,12 @@ function readProse(root) {
       push(`guides/${file}`, body);
     }
   }
-  for (const page of MATRIX_PAGES) {
-    const path = join(root, page);
+  for (const { file } of MATRIX_PAGES) {
+    const path = join(root, file);
     if (!existsSync(path)) continue;
     const html = readFileSync(path, 'utf8');
     for (const detail of html.match(/<article[^>]*class="[^"]*sc-detail[^"]*"[\s\S]*?<\/article>/g) || []) {
-      push(basename(page), detail);
+      push(basename(file), detail);
     }
   }
   return units;
@@ -345,7 +406,13 @@ export function assertPolarity() {
     process.exit(1);
   }
 
-  console.log(`polarity check: ${checked} of ${dashes} dashes checked against ${sentences} sentences of product prose, no contradictions`);
+  /* Deliberately not "no contradictions". This checks predicated claims about
+     dashed capabilities inside a 70-character window, which is a subset of the
+     things a page can assert -- see the limits above. Reporting semantic
+     consistency of the whole site would be a claim the guard cannot support,
+     and the point of the guard is not making claims like that. */
+  console.log(`polarity check: ${checked} of ${dashes} dashes against ${sentences} sentences of product prose` +
+    `, no unacknowledged candidates among the checked pairs`);
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) assertPolarity();

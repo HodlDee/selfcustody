@@ -126,18 +126,87 @@ console.log('polarity guard');
     r.stale.length >= 1, `${r.stale.length} stale`);
 }
 
-/* The failure mode a guard is least allowed to have. If the matrices stop
-   being findable, every dash disappears and the check passes on nothing --
-   so losing the evidence has to be an abort rather than a clean run. */
+/* Two clauses of opposite polarity in one sentence. The library writes like
+   this constantly, and getting it wrong in either direction is expensive: miss
+   the claim and the guard is decorative, flag the denial and it is noise. */
+{
+  const r = fixture(plant('The COLDCARD has no camera, and the Blockstream Jade Plus supports NFC.'));
+  ok('a claim in the second clause is found despite a denial in the first',
+    r.conflicts.some(c => c.product === 'Blockstream Jade Plus' && c.feature === 'NFC'),
+    r.conflicts.map(c => `${c.product}/${c.feature}`).join(', '));
+}
+{
+  const r = fixture(plant('The Ledger Flex connects over USB and has no air-gapped signing path.'));
+  ok('a denial in the second clause is not read as a claim',
+    r.conflicts.length === 0, r.conflicts.map(c => c.sentence).join(' | '));
+}
+
+/* A known miss, asserted as a miss.
+
+   "not only X" is an affirmation wearing a negation, and the denial list reads
+   the "not". Erring this way is the deliberate choice -- the library states
+   limitations far more often than capabilities -- but an undocumented gap
+   becomes a false sense of coverage, so it is pinned here. If someone later
+   teaches the matcher this construction, this case fails and tells them the
+   guard got better rather than leaving them wondering what broke. */
+{
+  const r = fixture(plant('The Ledger Flex is not only a USB device — it also supports air-gapped signing.'));
+  ok('"not only" is a known miss, and still a miss',
+    r.conflicts.length === 0,
+    'if this now fails, the matcher improved: update the limits comment in assert-polarity.mjs');
+}
+
+/* Partial loss of the evidence, which is the failure this guard was found to
+   have. Losing a whole table was noticed; losing a row, a column or the class
+   that marks a cell was not, and each one silently shrank what was checked
+   while the build reported success. */
 {
   const r = fixture(({ rewrite }) =>
     rewrite('software.html', /sc-feature-matrix/g, 'sc-feature-grid'));
   ok('a page that loses its matrix is a structural failure, not a pass',
     r.structural.length >= 1, JSON.stringify(r.structural));
 }
+{
+  const r = fixture(({ rewrite }) => rewrite('devices.html',
+    /<tr>\s*<th scope="row">Camera-based QR signing<\/th>[\s\S]*?<\/tr>/, ''));
+  ok('deleting one feature row is a structural failure',
+    r.structural.some(s => /feature rows/.test(s)), JSON.stringify(r.structural));
+}
+{
+  const r = fixture(({ rewrite }) => rewrite('devices.html',
+    /<th scope="col">Krux<\/th>/, ''));
+  ok('deleting one product column is a structural failure',
+    r.structural.some(s => /products/.test(s)), JSON.stringify(r.structural));
+}
+{
+  const r = fixture(({ rewrite }) => rewrite('devices.html',
+    /sc-matrix-no(?=["\s])/g, 'sc-matrix-absent'));
+  ok('a mark the guard cannot recognise is a structural failure, not zero dashes',
+    r.structural.some(s => /no recognisable mark/.test(s)),
+    `${r.dashes} dashes, ${r.structural.length} structural`);
+}
+{
+  /* The renamed-class case above went unnoticed by the first implementation
+     for an accidental reason: its pattern matched "no" as a prefix of "none".
+     Anchoring fixed that, and this pins the anchoring. */
+  const r = fixture(({ rewrite }) => rewrite('devices.html',
+    /sc-matrix-no(?=["\s])/g, 'sc-matrix-none'));
+  ok('a mark renamed to something starting with the old name is caught too',
+    r.structural.some(s => /no recognisable mark/.test(s)),
+    `${r.dashes} dashes, ${r.structural.length} structural`);
+}
+
+/* Coverage counts are part of the report, so a change that quietly reduces
+   them is visible. */
+{
+  const r = checkPolarity('.');
+  ok('the report carries explicit coverage counts',
+    r.dashes === 87 && r.checked === 73,
+    `${r.checked} of ${r.dashes} -- if the matrices changed on purpose, update MATRIX_PAGES and this case`);
+}
 
 if (failures) {
   console.error(`\n  ABORT: ${failures} polarity guard case(s) failed`);
   process.exit(1);
 }
-console.log('polarity guard: 11 cases pass -- planted claims found, denials and list sentences ignored, missing evidence fatal');
+console.log('polarity guard: 19 cases pass -- planted claims found, denials ignored, partial loss of the matrices fatal');
