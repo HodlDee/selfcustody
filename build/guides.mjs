@@ -2303,6 +2303,7 @@ const guides = [
     summary: "Every setup guide says to check the signature and then moves on. This is the part they skip: the three files, the three commands, and the alarming warning that appears when everything has in fact gone right.",
     level: "intermediate",
     minutes: 20,
+    effort: "task",
     goals: ["setup", "harden", "learn"],
     tags: ["Fundamentals", "Verification"],
     icon: "bi-check2-circle",
