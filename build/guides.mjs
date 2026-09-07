@@ -2421,22 +2421,23 @@ const guides = [
 
       <h3>Build provenance, which is a different thing</h3>
 
-      <p>A checksum on its own says nothing about where a file came from. A <em>signed build attestation</em> does: it is a signature over the file's digest, recording which repository and which workflow run produced those exact bytes. Verifying one is a claim about origin, not just integrity, and that is the gap between the two paragraphs above and this one.</p>
+      <p>A checksum on its own says nothing about where a file came from &mdash; only whether your copy matches the digest you were handed. A <em>signed build attestation</em> is different in kind: it is a signature over the file's digest, recording which repository, which workflow and which source ref produced those exact bytes, and it is verified against a signer identity rather than against a number on the same page. That is the gap between the two paragraphs above and this one.</p>
 
       <p><a href="../entropy.html">This site's own offline Workshop file</a> has both. The SHA-256 sits beside it, and the repository's workflow also mints a keyless attestation over the downloadable bytes whenever they change. If you have GitHub's CLI:</p>
 
       ${checklist([
-        "<code>gh attestation verify entropy-offline.html -R HodlDee/selfcustody</code>",
-        "If that reports no matching attestation, try <code>-R DeesNeez/selfcustody</code>. The repository was renamed, and an attestation records the name as it stood when it was signed &mdash; so a copy downloaded before the rename verifies under the old one. <strong>Neither is a sign of tampering.</strong>",
-        "A pass tells you these bytes were produced by that workflow in that repository. That is the whole of what it tells you."
+        "<strong>The short form</strong> checks that some attestation from that repository covers these bytes: <code>gh attestation verify entropy-offline.html -R HodlDee/selfcustody</code>",
+        "<strong>The form worth using</strong> also pins <em>which</em> workflow and <em>which</em> branch signed it:<br><code>gh attestation verify entropy-offline.html -R HodlDee/selfcustody --signer-workflow HodlDee/selfcustody/.github/workflows/build.yml --source-ref refs/heads/main</code>",
+        "If either reports no matching attestation, try <code>-R DeesNeez/selfcustody</code>. The repository was renamed, and an attestation records the name as it stood when it was signed &mdash; so a copy downloaded before the rename verifies under the old one. <strong>Neither is a sign of tampering.</strong>"
       ])}
 
       ${cautions([
-        "<strong>Provenance is not safety.</strong> It establishes that the file came from the build you think it did. It says nothing about whether that build is any good, whether the source it was built from is trustworthy, or whether the repository itself was compromised. The same is true of a matching hash and a good signature &mdash; all three answer \"is this what the publisher published\", and none answers \"should I trust the publisher\".",
-        "<strong>The trust boundary is the repository and workflow named in the command.</strong> Verifying against the wrong repository name proves nothing about the right one, which is why both names are given above rather than one."
+        "<strong>The two commands do not prove the same thing, which is why both are here.</strong> A repository name on its own does not say which workflow produced the file. Any workflow in that repository able to mint an attestation would satisfy it, so a compromised or newly added one would pass. <code>--signer-workflow</code> and <code>--source-ref</code> pin the answer to the build this project actually publishes from, and are the difference between \"something in that repository\" and \"that build, on main\".",
+        "<strong>Keep the three checks separate in your head.</strong> A matching hash establishes that your copy agrees with the digest you were given &mdash; and if that digest came from the same server as the file, it establishes nothing else, which is the whole point of the section above. A signature or an attestation additionally ties those bytes to a signer you can name. <strong>None of the three says the software is any good</strong>, that the source it was built from is trustworthy, or that the repository was not compromised before the build ran.",
+        "<strong>An attestation covers bytes, not versions.</strong> It says these exact bytes came from that build. It does not say they are the current release, or that a later one does not fix something."
       ])}
 
-      <p><a href="bring-your-own-entropy.html">The Workshop guide</a> makes the same points about its own file, and <code>SECURITY.md</code> in the repository carries the full procedure. A project talking honestly about its own checksums is the standard to hold others to.</p>
+      <p><a href="bring-your-own-entropy.html">The Workshop guide</a> makes the same points about its own file, and <a href="https://github.com/HodlDee/selfcustody/blob/main/SECURITY.md" target="_blank" rel="noopener">this project's SECURITY.md</a> carries the full procedure. A project talking honestly about its own checksums is the standard to hold others to.</p>
 
       <h2><span class="sc-article-num">8</span>Windows without a terminal</h2>
 
