@@ -99,6 +99,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://selfcustody.ca/guides/verify-a-download.html</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://selfcustody.ca/guides/coldcard-setup.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>monthly</changefreq>
@@ -335,6 +341,12 @@
   <url>
     <loc>https://selfcustody.ca/guides/how-wallets-find-coins.html</loc>
     <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://selfcustody.ca/guides/seed-to-key.html</loc>
+    <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

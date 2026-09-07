@@ -126,6 +126,31 @@ const guideProducts = [
 
 const levelLabels = { beginner: "Beginner", intermediate: "Intermediate", advanced: "Advanced" };
 
+/* `minutes` has always meant two different things: how long a setup guide takes
+   to carry out, and how long an explainer takes to read. Rendered as a bare
+   "About 45 minutes" a reader cannot tell which they are being promised --
+   krux-setup's hour at a workbench looked identical to what-is-money's hour of
+   reading, and that one reads in about eight minutes.
+
+   This is not derivable. A "Before you start" block is the best available
+   signal and it misses genuine tasks -- own-node-connection has no prerequisite
+   list and is forty minutes of configuration. Implied reading rate is no help
+   either, because these estimates are deliberately unhurried: the explainers sit
+   around 60-90 words a minute, so any threshold that catches own-node-connection
+   also catches what-is-money. The two signals disagree on exactly half the
+   library.
+
+   So `effort: "task"` is set on the guide when the prerequisite block is absent
+   but the guide still describes something to go and do. Everything else falls
+   back to the block, which keeps new setup guides right by default. */
+const isTaskGuide = guide =>
+  guide.effort === "task" ||
+  (guide.effort !== "read" && /sc-guide-prereq/.test(guide.body || ""));
+const minutesLong = guide =>
+  `About ${guide.minutes} minutes ${isTaskGuide(guide) ? "to complete" : "to read"}`;
+const minutesShort = guide =>
+  `${guide.minutes} min ${isTaskGuide(guide) ? "hands-on" : "read"}`;
+
 /* ---- body helpers -------------------------------------------------------
    Guide bodies are written as prose: plain <h2> and <p>, with these for the
    parts that repeat. Every guide uses layout: "article" -- the numbered
@@ -135,7 +160,14 @@ const levelLabels = { beginner: "Beginner", intermediate: "Intermediate", advanc
 
 const checklist = items => `<ul class="sc-check-list">${items.map(i => `<li>${i}</li>`).join("")}</ul>`;
 const cautions = items => `<ul class="sc-caution-list">${items.map(i => `<li>${i}</li>`).join("")}</ul>`;
-const callout = (title, body) => `<div class="sc-callout mt-4"><h3>${title}</h3><p>${body}</p></div>`;
+/* `level` exists for the callouts that open a guide, before any <h2>. An <h3>
+   there makes the document outline jump h1 -> h3, implying a subsection that
+   does not exist, and moving those callouts below the first heading would bury
+   an opening warning under a prerequisites list. The stylesheet already treats
+   .sc-callout h2 and h3 identically, so this changes the outline and nothing
+   visual. */
+const callout = (title, body, level = "h3") =>
+  `<div class="sc-callout mt-4"><${level}>${title}</${level}><p>${body}</p></div>`;
 const official = (url, label = "Official documentation") =>
   `<a class="sc-text-link" href="${url}" target="_blank" rel="noopener">${label} <i class="bi bi-arrow-up-right"></i></a>`;
 
@@ -1319,7 +1351,7 @@ const guides = [
 
       <p>Two things metal is not. It is not theft protection &mdash; a plate is exactly as readable to whoever finds it as the paper was, and rather more durable in their hands. And it is not an excuse to keep only one copy. Durability and secrecy are separate problems, and location is still the whole of your defence on the second one.</p>
 
-      ${callout("The shortcut that halves the work", `Every word in the BIP39 list is uniquely identified by its first four letters &mdash; no two words share them. A plate recording <strong>ABAN</strong> is exactly as complete as one recording <strong>ABANDON</strong>. Four characters per word roughly halves both the stamping and the number of chances to mis-strike. Words shorter than four letters are written in full, and the shortcut applies to BIP39 wordlists only.`)}
+      ${callout("The shortcut that halves the work", `Every word in the BIP39 list is uniquely identified by its first four letters &mdash; no two words share them. A plate recording <strong>ABAN</strong> is exactly as complete as one recording <strong>ABANDON</strong>. Four characters per word roughly halves both the stamping and the number of chances to mis-strike. The 103 words shorter than four letters are written in full, and the shortcut applies to BIP39 wordlists only.`)}
 
       <p><a class="sc-text-link" href="seed-backup-metal.html">Durable seed backups <i class="bi bi-arrow-right"></i></a></p>
 
@@ -2003,7 +2035,7 @@ const guides = [
     icon: "bi-arrow-counterclockwise",
     updated: "2026-08-17",
     status: "published",
-    related: ["quickstart", "owning-your-bitcoin", "what-not-to-normalize"],
+    related: ["quickstart", "owning-your-bitcoin", "what-not-to-normalize", "seed-to-key"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Writing down twelve or twenty-four words feels like the hard part is over. It is not. Until you have restored from those words and watched the correct wallet reappear, you do not have a backup &mdash; you have a hypothesis, and the test will otherwise be run for you at the worst possible time.</p>
@@ -2100,10 +2132,12 @@ const guides = [
       ${checklist([
         "<strong>Address type.</strong> Restoring as Legacy when the original was Native SegWit produces a completely different-looking set of addresses from the same correct words. This is the most common cause by a distance.",
         "<strong>A missing passphrase.</strong> Without it you get the wallet that exists at the words alone, which is a real, valid, empty wallet. It looks exactly like a failure.",
-        "<strong>Word order.</strong> Two transposed words give a completely different wallet, and the <a href='../glossary.html#term-checksum'>checksum</a> will often still accept it.",
-        "<strong>A misread word.</strong> Handwriting confusions and near-identical BIP39 words are common. Check each word against the official wordlist.",
+        "<strong>Word order.</strong> Two transposed words give a completely different wallet &mdash; but the <a href='../glossary.html#term-checksum'>checksum</a> usually refuses them outright, roughly fifteen times out of sixteen for twelve words and 255 out of 256 for twenty-four.",
+        "<strong>A misread word.</strong> Handwriting confusions and near-identical BIP39 words are common, and the checksum rejects most of these too. Check each word against the official wordlist.",
         "<strong>Derivation path.</strong> Some wallets default to different paths. If the software lets you specify one, match the original."
       ])}
+
+      <p>Those last two are worth weighing correctly, because the folklore runs the other way. The checksum is a real error detector: change any word and the check bits at the end have to match by coincidence, which happens about one time in sixteen for a twelve-word phrase and one in 256 for twenty-four. So <strong>if your wallet accepted the phrase, a transcription mistake is one of the less likely explanations on this list</strong> &mdash; and the causes above it, which no checksum can see, are the more likely ones.</p>
 
       <p>If you work through all of that and it still does not match, treat the backup as unreliable. The correct response is not to keep trying &mdash; it is to generate a brand-new wallet on a device you trust, back that one up carefully, test it, and then move the funds across while you still can. You have caught the problem at the only moment when it is fixable.</p>
 
@@ -2261,6 +2295,155 @@ const guides = [
       ${callout("If you take one thing from this page", `The test is not a ritual for the nervous &mdash; it is the only point in the process where being wrong is cheap. Spend the fee, wait the ten minutes, and let a mistake cost five dollars instead of the balance.`)}`
   },
 
+  {
+    slug: "verify-a-download",
+    category: "fundamentals",
+    products: [],
+    title: "Verify a download before you run it",
+    summary: "Every setup guide says to check the signature and then moves on. This is the part they skip: the three files, the three commands, and the alarming warning that appears when everything has in fact gone right.",
+    level: "intermediate",
+    minutes: 20,
+    goals: ["setup", "harden", "learn"],
+    tags: ["Fundamentals", "Verification"],
+    icon: "bi-check2-circle",
+    updated: "2026-09-06",
+    status: "published",
+    related: ["supply-chain-and-vendor-risk", "what-not-to-normalize", "choosing-your-first-setup"],
+    layout: "article",
+    body: `
+      <p class="sc-guide-intro">Wallet software is the one thing in self-custody you install from the internet before you have any way to tell whether it is genuine. <a href="supply-chain-and-vendor-risk.html">Supply chain and vendor risk</a> covers what verification proves and where the chain runs out. This page is the missing half: how to actually do it, and how to read the output, which is where most people quietly give up.</p>
+
+      <p>It takes about ten minutes the first time and under a minute afterwards. Do it once per download, on every machine that will run the software.</p>
+
+      <h2><span class="sc-article-num">1</span>What this defends against, precisely</h2>
+
+      <p>Being specific here matters, because verification is often sold as a general-purpose safety ritual and it is not one.</p>
+
+      ${checklist([
+        "<strong>A substituted download.</strong> A hostile mirror, a compromised CDN, a corrupted transfer, a file altered in flight.",
+        "<strong>The wrong site entirely.</strong> Fake wallet sites buy search ads and rank above the real project. A file from an impostor site will not verify against the real project's key.",
+        "<strong>A tampered update.</strong> Particularly worth it for wallets that have historically had fake update prompts pushed at users from inside the application."
+      ])}
+
+      ${cautions([
+        "It does not tell you the software is safe. It tells you the project published it.",
+        "It does not defeat a dishonest maintainer. Someone entitled to sign releases can sign a bad one, and it will verify perfectly.",
+        "It does not help if you got the key from the same page as a fake download. That is the loop this page's last section is about."
+      ])}
+
+      <h2><span class="sc-article-num">2</span>Why there are three files, not two</h2>
+
+      <p>Almost every serious Bitcoin project publishes the same three things, and the shape only makes sense once you see what each one is for.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>File</th><th>Looks like</th><th>What it is for</th></tr></thead>
+          <tbody>
+            <tr><td><strong>The release</strong></td><td><code>Sparrow-2.5.4.msi</code></td><td>The thing you actually want to run.</td></tr>
+            <tr><td><strong>A checksum manifest</strong></td><td><code>manifest.txt</code>, <code>SHA256SUMS</code></td><td>A list of filenames and their SHA-256 hashes.</td></tr>
+            <tr><td><strong>A signature over the manifest</strong></td><td><code>manifest.txt.asc</code>, <code>SHA256SUMS.asc</code></td><td>Proof the manifest came from the project.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The indirection is the clever part. Signing every installer separately would be tedious, so the project signs one small text file listing the hashes of all of them. Verify the signature on that list, then check your download against the list, and you have transitively verified your download. Two links in a chain.</p>
+
+      <p>This is also why a checksum published on its own proves much less. A hash tells you the file arrived intact. Only a signature tells you who published the hash.</p>
+
+      <h2><span class="sc-article-num">3</span>The three commands</h2>
+
+      <p>You need GnuPG. On macOS it comes with GPG Suite or <code>brew install gnupg</code>; on Linux it is <code>gpg</code> in every package manager; on Windows it ships with Gpg4win.</p>
+
+      <p>The pattern is always the same three steps, whatever the project. Sparrow's own published instructions look like this &mdash; substitute the version you actually downloaded, and use whatever filenames your vendor publishes.</p>
+
+      ${checklist([
+        "<strong>Import the signing key.</strong> <code>curl https://keybase.io/craigraw/pgp_keys.asc | gpg --import</code>",
+        "<strong>Verify the manifest's signature.</strong> <code>gpg --verify sparrow-2.5.4-manifest.txt.asc</code>",
+        "<strong>Check your file against the manifest.</strong> <code>shasum -a 256 --ignore-missing --check sparrow-2.5.4-manifest.txt</code> on macOS, or <code>sha256sum --ignore-missing --check sparrow-2.5.4-manifest.txt</code> on Linux."
+      ])}
+
+      <p>Step three should print your filename followed by <code>OK</code>. The <code>--ignore-missing</code> flag matters: the manifest lists every platform's build, and without it the command complains loudly about the dozen files you did not download.</p>
+
+      <p>All three must pass. Any one of them alone proves very little &mdash; a signature check without the hash check tells you the project signed <em>some</em> list, and a hash check without the signature check tells you your file matches a list that anyone could have written.</p>
+
+      ${figureSlot({
+        shot: "A laptop screen photographed slightly off-axis in a dim room, a terminal showing a completed gpg verification: the Good signature line and the capitalised WARNING about the key not being certified both legible in the same frame.",
+        caption: "Both of these appear on a check that passed. Only the first line is the result; the second is answering a different question.",
+        ratio: "16 / 9",
+        icon: "bi-check2-circle"
+      })}
+
+      <h2><span class="sc-article-num">4</span>The warning that means everything worked</h2>
+
+      <p>This is the step that stops people, and nothing on the download page prepares them for it. A completely successful verification prints something like this:</p>
+
+      ${checklist([
+        "<code>gpg: Good signature from &quot;Craig Raw &lt;craig@sparrowwallet.com&gt;&quot; [unknown]</code>",
+        "<code>gpg: WARNING: This key is not certified with a trusted signature!</code>",
+        "<code>gpg: There is no indication that the signature belongs to the owner.</code>",
+        "<code>Primary key fingerprint: D4D0 D320 2FC0 6849 A257 B38D E946 1833 4C67 4B40</code>"
+      ])}
+
+      <p>Read in order, that looks like a pass followed by a failure. It is not. <strong>The first line is the verification result and it says the signature is valid.</strong> The warning underneath is answering a completely different question.</p>
+
+      <p>GnuPG maintains a web of trust &mdash; a record of whose keys you have personally vouched for. You have not vouched for this key, because you imported it thirty seconds ago from a URL. So GnuPG tells you, correctly, that it has no independent basis for believing the key belongs to the person named in it. That warning will appear every time until you explicitly sign the key locally, and essentially nobody does.</p>
+
+      ${callout("What to actually look for", `<strong>Good signature</strong> is the pass. <strong>BAD signature</strong> is the failure, and it is unambiguous when it happens &mdash; it does not hide in a warning. If you see BAD, delete the download and start again from a freshly typed address; do not retry the same file.`)}
+
+      <h2><span class="sc-article-num">5</span>The fingerprint is the part you actually verify</h2>
+
+      <p>Given the warning above, the honest question is what the signature check is worth at all. The answer is that it is worth exactly as much as your confidence in the fingerprint &mdash; and that is a thing you can work on.</p>
+
+      <p>The fingerprint on the last line is the key's identity. Confirming it is the whole of the trust decision, and the useful moves are these:</p>
+
+      ${checklist([
+        "<strong>Compare it against a second, independent source.</strong> The project's GitHub, its documentation, a release announcement, an archived copy of the page. A fake site can serve you a fake key; serving you a fake key that also matches four other places is a much larger job.",
+        "<strong>Fetch it over a different network.</strong> A phone on mobile data rather than the same wifi is a cheap and surprisingly effective check.",
+        "<strong>Prefer a key you have used before.</strong> A fingerprint you verified two years ago and have checked against every release since is far stronger evidence than one you fetched five minutes ago. Keep your keyring rather than re-importing each time.",
+        "<strong>Write the fingerprint down.</strong> Once, in your notes, next to the project name. Then future releases are a comparison rather than a fresh act of faith."
+      ])}
+
+      <h2><span class="sc-article-num">6</span>One signer, or many</h2>
+
+      <p>Sparrow is signed by one person. Bitcoin Core is not, and the difference is worth understanding because it is a genuinely stronger model.</p>
+
+      <p>Bitcoin Core's <code>SHA256SUMS.asc</code> carries signatures from a number of independent developers, each of whom built the release themselves from source and got the same bytes. Verifying it produces a run of separate results rather than one, and the project's guidance is to import keys from several people you find trustworthy rather than relying on any single one.</p>
+
+      <p>What that buys is a defence the single-signer model cannot offer: one compromised developer machine, or one coerced maintainer, does not silently produce a valid release. It also demonstrates the reproducibility claim rather than asserting it &mdash; independent people compiling the same source and arriving at identical binaries is the evidence.</p>
+
+      <p>So a single <code>Good signature</code> line on a multi-signer project is a partial result. Check that enough of the signers are keys you meant to trust.</p>
+
+      <h2><span class="sc-article-num">7</span>When there is only a checksum</h2>
+
+      <p>Some things are published with a hash and no signature at all &mdash; including <a href="../entropy.html">this site's own offline Workshop file</a>, whose SHA-256 sits beside it.</p>
+
+      <p>Be exact about what that can do. It catches a truncated download, a proxy that rewrote something, a failing USB stick. It cannot catch an adversary, because the checksum is served from the same place as the file it describes, and anyone able to replace one can replace the other. Same-origin checksums catch accidents, not attackers.</p>
+
+      <p>Where it matters, get a second copy of the expected hash from somewhere the same server does not control &mdash; a repository's commit history, a build log, a mirror &mdash; and compare. <a href="bring-your-own-entropy.html">The Workshop guide</a> makes the same point about its own file, which is the correct way for a project to talk about its own checksums.</p>
+
+      <h2><span class="sc-article-num">8</span>Windows without a terminal</h2>
+
+      <p>Windows has no <code>sha256sum</code>, and its built-in tool prints the hash rather than checking it for you:</p>
+
+      ${checklist([
+        "<code>CertUtil -hashfile Sparrow-2.5.4.msi SHA256</code> prints the file's hash.",
+        "Open the manifest in Notepad, find the line for your filename, and compare the two strings.",
+        "<strong>Compare the whole string, not the ends.</strong> Checking the first and last few characters is the one shortcut that an attacker can actually plan around."
+      ])}
+
+      <p>For the signature step, Gpg4win installs the same <code>gpg --verify</code> command, and Kleopatra offers it through a window if you would rather not use a terminal at all.</p>
+
+      <h2>The short version</h2>
+
+      <p>Download three files, not one. Verify the signature on the checksum list, then check your file against the list, and require both to pass. Expect the not-certified warning and do not read it as a failure &mdash; <code>Good signature</code> is the result, <code>BAD signature</code> is the failure. Then spend your attention where it actually counts, which is deciding that the fingerprint belongs to the project, and keeping that key so every later release is a comparison instead of a leap.</p>
+
+      ${callout("If you take one thing from this page", `Verification answers one narrow question &mdash; did this file come from the same key as the last one &mdash; and answers it very well. It cannot tell you the project deserves your trust. Keep the two questions separate, and <a href="supply-chain-and-vendor-risk.html">read what a signature cannot prove</a> before deciding how much weight to put on a green line in a terminal.`)}
+
+      <p class="sc-source-note">
+        Commands and filenames follow the projects' own published instructions and change between releases; substitute the version you downloaded and prefer the vendor's current page over this one. The multi-signer description reflects Bitcoin Core's documented release process, where checksums are signed by a number of independent builders.
+      </p>`
+  },
+
   /* ------------------------------------------------------------------ devices */
   {
     slug: "coldcard-setup",
@@ -2401,7 +2584,13 @@ const guides = [
 
       <p>If the fingerprints do not match, stop and work out why before going further. It means the software is watching a different wallet from the one the device will sign for, and every address it shows you would be wrong.</p>
 
-      <p class="mt-4"><a class="sc-text-link" href="sparrow-first-wallet.html">Next: pair it with Sparrow <i class="bi bi-arrow-right"></i></a></p>`
+      <p class="mt-4"><a class="sc-text-link" href="sparrow-first-wallet.html">Next: pair it with Sparrow <i class="bi bi-arrow-right"></i></a></p>
+
+      <p class="sc-source-note">
+        Menu wording, firmware versions and the differences between models change between releases, and the Q and Mk5 do not always agree. Confirm the current setup flow against
+        ${official("https://coldcard.com/docs/", "COLDCARD’s own documentation")}
+        before following any step here that does not match what your device is showing you.
+      </p>`
   },
   /* The planned standalone Mk5 setup guide was folded into coldcard-setup
      above: same codebase, same sequence, and two near-identical pages would
@@ -2415,6 +2604,7 @@ const guides = [
     summary: "Trick PINs, duress wallets, the brick-me PIN, and the login countdown. What each one actually does, and the honest accounting of which of them can cost you your own coins.",
     level: "advanced",
     minutes: 30,
+    effort: "task",
     goals: ["harden"],
     tags: ["Duress", "PIN policy"],
     icon: "bi-shield-lock",
@@ -2554,7 +2744,13 @@ const guides = [
 
       <p>Trick PINs are alternate PINs that deceive, delay, wipe, or destroy instead of logging you in. The duress wallet is derived from your own seed and runs one way, so a decoy is recoverable by you and useless to them. Wipes and bricks are only survivable because of your written backup, which means none of this is safe to enable until that backup has been tested.</p>
 
-      ${callout("If you take one thing from this page", `These features do not add security to your wallet &mdash; they add ways for your device to refuse. What actually keeps the coins is the plate in the drawer. Turn on the least you need, write down what you turned on, and never let a clever configuration substitute for a backup you have proven works.`)}`
+      ${callout("If you take one thing from this page", `These features do not add security to your wallet &mdash; they add ways for your device to refuse. What actually keeps the coins is the plate in the drawer. Turn on the least you need, write down what you turned on, and never let a clever configuration substitute for a backup you have proven works.`)}
+
+      <p class="sc-source-note">
+        These features change more often than the basic setup does, and several of them can destroy a wallet by design. Confirm exactly what each one does on your firmware version against
+        ${official("https://coldcard.com/docs/", "COLDCARD’s own documentation")}
+        before following any step here that does not match what your device is showing you.
+      </p>`
   },
   {
     slug: "passport-setup",
@@ -3155,7 +3351,7 @@ const guides = [
 
       <h2><span class="sc-article-num">3</span>Verify the image, then flash it</h2>
 
-      <p>This is the step that replaces the tamper-evident bag, and skipping it means running software of unknown origin on a device you are about to show your seed to.</p>
+      <p>This is the step that replaces the tamper-evident bag, and skipping it means running software of unknown origin on a device you are about to show your seed to. The same three-step pattern is explained line by line in <a href="verify-a-download.html">verifying a download</a>.</p>
 
       <p>Download the release image along with its <a href="../glossary.html#term-checksum">checksum</a> file and the signature of that checksum file. Then, on your computer, three commands do the work &mdash; substituting the version you actually downloaded:</p>
 
@@ -3246,7 +3442,13 @@ const guides = [
 
       <p>Buy the right screen, assemble three parts, and verify the image signature before flashing it &mdash; that check is the only supply-chain protection a DIY device has. Then treat the device as disposable and the words as everything, because the SeedSigner is designed to hold nothing at all when it is switched off.</p>
 
-      ${callout("If you take one thing from this page", `The security here does not live in the hardware, and it was never meant to. It lives in a verified image, a written backup you have tested, and the discipline of reading each transaction on the device's own screen. Get those three right and the fifty-dollar signer is not a compromise.`)}`
+      ${callout("If you take one thing from this page", `The security here does not live in the hardware, and it was never meant to. It lives in a verified image, a written backup you have tested, and the discipline of reading each transaction on the device's own screen. Get those three right and the fifty-dollar signer is not a compromise.`)}
+
+      <p class="sc-source-note">
+        Release numbers, supported hardware and the verification commands all move between versions. Confirm the current release and its checksums against
+        ${official("https://seedsigner.com/", "the SeedSigner project’s own documentation")}
+        before following any step here that does not match what your device is showing you.
+      </p>`
   },
   {
     slug: "krux-setup",
@@ -3417,7 +3619,13 @@ const guides = [
 
       <p>Krux is firmware, so the device is your choice and the verification is your job. Flash a verified official release, generate a seed from dice or a photograph, write the words down on something physical, and treat the encrypted-storage feature as the convenience its authors say it is.</p>
 
-      ${callout("If you take one thing from this page", `The stored mnemonic is not your backup. Krux says so itself, in its own documentation, and it is the single most likely misunderstanding to cost somebody their coins on this device. The words on paper or metal are the wallet. Everything on the device is a copy that happens to be convenient.`)}`
+      ${callout("If you take one thing from this page", `The stored mnemonic is not your backup. Krux says so itself, in its own documentation, and it is the single most likely misunderstanding to cost somebody their coins on this device. The words on paper or metal are the wallet. Everything on the device is a copy that happens to be convenient.`)}
+
+      <p class="sc-source-note">
+        Krux is firmware you flash yourself onto hardware the project does not make, so both halves move independently. Confirm the current release, supported devices and flashing steps against
+        ${official("https://selfcustody.github.io/krux/", "the Krux documentation")}
+        before following any step here that does not match what your device is showing you.
+      </p>`
   },
   {
     slug: "ledger-setup",
@@ -3730,7 +3938,13 @@ const guides = [
 
       <p>It is the wrong answer for somebody whose priority is privacy from all counterparties, or who wants a wallet that can be restored into any software decades from now with nobody's help. Those people want a recovery phrase and the burden that comes with it.</p>
 
-      ${callout("If you take one thing from this page", `Block cannot move your coins, and that is arithmetic rather than trust &mdash; two of three keys are yours. What you are actually buying is a recovery service, priced in a seven-day delay and a company knowing your wallet exists. Generate the Emergency Exit Kit on day one, and the dependency stays a convenience rather than a trap.`)}`
+      ${callout("If you take one thing from this page", `Block cannot move your coins, and that is arithmetic rather than trust &mdash; two of three keys are yours. What you are actually buying is a recovery service, priced in a seven-day delay and a company knowing your wallet exists. Generate the Emergency Exit Kit on day one, and the dependency stays a convenience rather than a trap.`)}
+
+      <p class="sc-source-note">
+        Recovery timings, the Emergency Exit Kit and the trusted-contact features are the parts of this product most likely to change, and they are the parts this page rests on. Confirm the current behaviour against
+        ${official("https://bitkey.world/", "Bitkey’s own documentation")}
+        before following any step here that does not match what your device is showing you.
+      </p>`
   },
   {
     slug: "tapsigner-setup",
@@ -3831,7 +4045,13 @@ const guides = [
 
       <p>A TAPSIGNER is a key in a card that signs by tap and never reveals itself. It has no screen, so your phone is what you are trusting about each payment. Its backup is an encrypted file whose decryption key is printed on the card &mdash; copy that number down before the card leaves your desk, and never store the copy beside the file.</p>
 
-      ${callout("If you take one thing from this page", `Copy the decryption key off the back of the card today. Everything else here can be fixed later; that number cannot be recovered once the card is gone, and without it the backup file is a permanently locked box.`)}`
+      ${callout("If you take one thing from this page", `Copy the decryption key off the back of the card today. Everything else here can be fixed later; that number cannot be recovered once the card is gone, and without it the backup file is a permanently locked box.`)}
+
+      <p class="sc-source-note">
+        App support and the backup format matter more here than the card itself, and both change. Confirm the current process against
+        ${official("https://tapsigner.com/", "Coinkite’s own documentation")}
+        before following any step here that does not match what your device is showing you.
+      </p>`
   },
   {
     slug: "satscard-setup",
@@ -3841,6 +4061,7 @@ const guides = [
     summary: "Ten slots, one sealed at a time, and bitcoin that travels with the physical card. How to load one, what to check before accepting one, and why unsealing is a door that only opens once.",
     level: "beginner",
     minutes: 15,
+    effort: "task",
     goals: ["setup", "learn"],
     tags: ["NFC", "Card"],
     icon: "bi-credit-card-2-front",
@@ -3938,7 +4159,13 @@ const guides = [
 
       <p>Ten slots, one sealed at a time, funded like any address. Handing over the card hands over the coins with no transaction at all. Unsealing releases the key permanently, so sweep the whole balance immediately and never touch that address again. Treat the card as cash, in amounts you would carry as cash.</p>
 
-      ${callout("If you take one thing from this page", `A sealed SATSCARD is a banknote with no serial number and no bank behind it. That is exactly what makes it useful for a physical handoff, and exactly why it should never hold more than you would be willing to lose in a coat pocket.`)}`
+      ${callout("If you take one thing from this page", `A sealed SATSCARD is a banknote with no serial number and no bank behind it. That is exactly what makes it useful for a physical handoff, and exactly why it should never hold more than you would be willing to lose in a coat pocket.`)}
+
+      <p class="sc-source-note">
+        Slot behaviour and compatible apps change, and unsealing a slot cannot be undone. Confirm the current process against
+        ${official("https://satscard.com/", "Coinkite’s own documentation")}
+        before following any step here that does not match what your device is showing you.
+      </p>`
   },
   {
     slug: "air-gapped-psbt-workflow",
@@ -3948,6 +4175,7 @@ const guides = [
     summary: "How an unsigned transaction reaches an offline signer and a signature comes back, by microSD, QR, or NFC. What the file actually contains, why your device can be lied to, and the one output people never think to check.",
     level: "intermediate",
     minutes: 25,
+    effort: "task",
     goals: ["harden", "learn", "multisig"],
     tags: ["PSBT", "Air-gapped"],
     icon: "bi-arrow-repeat",
@@ -4116,7 +4344,7 @@ const guides = [
     updated: "2026-08-17",
     productGuide: true,
     status: "published",
-    related: ["coldcard-setup", "exchange-withdrawal", "sparrow-coin-control"],
+    related: ["coldcard-setup", "exchange-withdrawal", "sparrow-coin-control", "verify-a-download"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">A hardware wallet on its own cannot tell you what you own. It holds keys and signs things; it has no idea what is on the blockchain. Sparrow is the other half &mdash; the part that watches the network, builds transactions, and hands them to your device to be signed.</p>
@@ -4142,7 +4370,7 @@ const guides = [
 
       <h2><span class="sc-article-num">1</span>Verify the download before you run it</h2>
 
-      <p>Wallet software is impersonated relentlessly, and a convincing fake will behave exactly like the real thing right up until it shows you an address that is not yours. The release page publishes a manifest and a signature so you can confirm the file came from the project.</p>
+      <p>Wallet software is impersonated relentlessly, and a convincing fake will behave exactly like the real thing right up until it shows you an address that is not yours. <a href="verify-a-download.html">The commands, and how to read their output</a>, are set out in full separately. The release page publishes a manifest and a signature so you can confirm the file came from the project.</p>
 
       ${checklist([
         "Download only from sparrowwallet.com, typed by hand rather than clicked from a search result.",
@@ -4209,7 +4437,13 @@ const guides = [
 
       <p>Once that has worked end to end, you have a wallet you can actually reason about: the computer proposes, the device disposes, and you have watched both halves happen.</p>
 
-      <p class="mt-4"><a class="sc-text-link" href="quickstart.html">Then test your recovery <i class="bi bi-arrow-right"></i></a></p>`
+      <p class="mt-4"><a class="sc-text-link" href="quickstart.html">Then test your recovery <i class="bi bi-arrow-right"></i></a></p>
+
+      <p class="sc-source-note">
+        Menu paths and the wording of the import dialogs move between releases, and the verification filenames change with every version. Confirm the current steps against
+        ${official("https://sparrowwallet.com/docs/", "Sparrow’s own documentation")}
+        before following any step here that does not match what your screen is showing you.
+      </p>`
   },
   {
     slug: "sparrow-coin-control",
@@ -4612,7 +4846,13 @@ const guides = [
 
       <p>Cove is a Bitcoin-only, open-source phone wallet that works as a hot wallet for spending money or as a coordinator for a hardware signer over QR, NFC, or file. Everything about how much that protects you comes down to whether the signer has a screen you can read the transaction on.</p>
 
-      ${callout("If you take one thing from this page", `Putting the coordinator on your phone is a genuine convenience win and costs you nothing in security &mdash; as long as the device you pair with has its own display and you actually read it. Pair with something screenless and the phone becomes the thing you are trusting, which is the arrangement a hardware wallet exists to avoid.`)}`
+      ${callout("If you take one thing from this page", `Putting the coordinator on your phone is a genuine convenience win and costs you nothing in security &mdash; as long as the device you pair with has its own display and you actually read it. Pair with something screenless and the phone becomes the thing you are trusting, which is the arrangement a hardware wallet exists to avoid.`)}
+
+      <p class="sc-source-note">
+        Cove is a young project and its features are moving quickly, particularly around hardware pairing. Confirm the current behaviour against
+        ${official("https://covebitcoin.com/", "Cove’s own documentation")}
+        before following any step here that does not match what your screen is showing you.
+      </p>`
   },
   {
     slug: "electrum-setup",
@@ -4628,7 +4868,7 @@ const guides = [
     updated: "2026-08-17",
     productGuide: true,
     status: "published",
-    related: ["recovery-test-drill", "sparrow-first-wallet", "what-not-to-normalize"],
+    related: ["recovery-test-drill", "sparrow-first-wallet", "what-not-to-normalize", "verify-a-download"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Electrum can split one wallet across two machines. The online one watches the blockchain, shows your balance, and builds transactions but holds no keys and can spend nothing. The offline one holds the keys, never touches a network, and does nothing but sign.</p>
@@ -4637,7 +4877,7 @@ const guides = [
 
       <p>Before any of that, though, one warning that matters more than the setup.</p>
 
-      ${callout("Electrum is the most impersonated wallet in bitcoin", "Fake download sites rank in search results, and malicious Electrum servers have historically pushed convincing fake update messages to users inside the app itself. Never take an update prompt that appears in the wallet. Never download from a search result. Type electrum.org yourself, and verify the signature on what you download — step one below is not optional advice.")}
+      ${callout("Electrum is the most impersonated wallet in bitcoin", "Fake download sites rank in search results, and malicious Electrum servers have historically pushed convincing fake update messages to users inside the app itself. Never take an update prompt that appears in the wallet. Never download from a search result. Type electrum.org yourself, and verify the signature on what you download — step one below is not optional advice.", "h2")}
 
       ${figureSlot({
         shot: "Two laptops on a desk, the older one with its wifi card visibly removed or a sticker over the port, a USB stick between them.",
@@ -4656,7 +4896,7 @@ const guides = [
 
       <h2><span class="sc-article-num">1</span>Verify the download before you run anything</h2>
 
-      <p>Electrum publishes a GPG signature alongside each release. Checking it confirms the file came from the project rather than from whoever bought the search advert above the real site.</p>
+      <p>Electrum publishes a GPG signature alongside each release. Checking it confirms the file came from the project rather than from whoever bought the search advert above the real site. <a href="verify-a-download.html">How to run that check</a>, and why a successful one prints a warning, is a guide of its own.</p>
 
       ${checklist([
         "Type electrum.org into the address bar yourself. Do not arrive from a search result, an email, or a forum link.",
@@ -4879,7 +5119,13 @@ const guides = [
 
       <p>Import an extended public key and your phone becomes a window onto cold storage that cannot spend anything. The price is that the phone now carries a permanent, unrevocable view of your finances, so point it at your own node if you can. And do not take receive addresses from it for amounts that matter, because the device that could verify them is exactly the device you left at home.</p>
 
-      ${callout("If you take one thing from this page", `Watch-only protects you from theft, not from being watched. Treat the phone as a read-only dashboard: excellent for answering "did it arrive?", and the wrong tool for answering "where should they send it?"`)}`
+      ${callout("If you take one thing from this page", `Watch-only protects you from theft, not from being watched. Treat the phone as a read-only dashboard: excellent for answering "did it arrive?", and the wrong tool for answering "where should they send it?"`)}
+
+      <p class="sc-source-note">
+        App layout and the import options change between releases. Confirm the current steps against
+        ${official("https://bluewallet.io/", "BlueWallet’s own documentation")}
+        before following any step here that does not match what your screen is showing you.
+      </p>`
   },
   {
     slug: "wasabi-coinjoin-basics",
@@ -4996,7 +5242,13 @@ const guides = [
 
       <p>A CoinJoin makes it impossible to tell which output of a collaborative transaction is yours, forward from that point. It cannot erase your past, hide that you participated, or survive your own careless consolidation afterwards. It costs coordinator fees, mining fees, days of patience, and a permanent obligation to handle those coins deliberately &mdash; and the coordinator it depends on is a single point that has already gone away once.</p>
 
-      ${callout("If you take one thing from this page", `The cryptography is not the weak link and never was. The weak links are the coordinator, which is a legally exposed service run by someone else, and your own handling of the coins afterwards. Only one of those two is under your control, so it is worth being very good at it.`)}`
+      ${callout("If you take one thing from this page", `The cryptography is not the weak link and never was. The weak links are the coordinator, which is a legally exposed service run by someone else, and your own handling of the coins afterwards. Only one of those two is under your control, so it is worth being very good at it.`)}
+
+      <p class="sc-source-note">
+        Coordinator arrangements, fees and the client defaults have all changed materially since the original coordinator shut down, and they may change again. Confirm the current position against
+        ${official("https://docs.wasabiwallet.io/", "Wasabi’s own documentation")}
+        before following any step here that does not match what your screen is showing you.
+      </p>`
   },
   {
     slug: "specter-multisig-coordinator",
@@ -5162,7 +5414,13 @@ const guides = [
 
       <p>Specter is a front end for your own Bitcoin Core node, which means your multisig descriptor &mdash; the most complete description of your finances that exists &mdash; never leaves your machine. The price is running and maintaining a node. Add each device, build the wallet, register the configuration back onto every signer, and store that configuration with every seed backup.</p>
 
-      ${callout("If you take one thing from this page", `Register the wallet configuration on every device, and store a copy with every seed. The first makes your signers able to detect a hostile change address; the second is the difference between three seed backups and an actual recoverable wallet. Neither is optional, and Specter makes both easy enough that skipping them is a choice.`)}`
+      ${callout("If you take one thing from this page", `Register the wallet configuration on every device, and store a copy with every seed. The first makes your signers able to detect a hostile change address; the second is the difference between three seed backups and an actual recoverable wallet. Neither is optional, and Specter makes both easy enough that skipping them is a choice.`)}
+
+      <p class="sc-source-note">
+        Specter tracks Bitcoin Core, so both halves move, and device support changes with each release. Confirm the current setup against
+        ${official("https://docs.specter.solutions/", "Specter’s own documentation")}
+        before following any step here that does not match what your screen is showing you.
+      </p>`
   },
   {
     slug: "own-node-connection",
@@ -5172,6 +5430,7 @@ const guides = [
     summary: "Running a node and using it are two different achievements. The index layer nobody mentions, connecting each wallet to it, reaching it from outside your house, and proving your wallet is not quietly still using somebody else's server.",
     level: "advanced",
     minutes: 40,
+    effort: "task",
     goals: ["harden", "privacy"],
     tags: ["Node", "Privacy"],
     icon: "bi-cpu",
@@ -5445,6 +5704,7 @@ const guides = [
     summary: "Most people who lose bitcoin from a platform were not victims of an exchange hack. Their own account was opened by someone else — usually through email or a phone number.",
     level: "beginner",
     minutes: 20,
+    effort: "task",
     goals: ["harden"],
     tags: ["2FA", "Account security", "SIM swap"],
     icon: "bi-shield-lock",
@@ -5762,6 +6022,7 @@ const guides = [
     summary: "One octal die and two hex dice throw exactly eleven bits \u2014 one recovery word, with nothing hashed and nothing to trust. The method, the arithmetic, and the one detail that quietly ruins it.",
     level: "intermediate",
     minutes: 14,
+    effort: "task",
     goals: ["setup", "harden", "learn"],
     tags: ["Entropy", "Dice", "Seed generation"],
     icon: "bi-dice-3",
@@ -6199,7 +6460,7 @@ const guides = [
 
       <p>Without it, you can hold all three seeds in your hand and still be unable to find your own coins, because you cannot derive the addresses they live at. The funds are visible on the blockchain and unreachable.</p>
 
-      <div class="sc-survival-grid" role="table" aria-label="What single-signature and multisig setups survive">
+      <div class="sc-survival-grid is-multisig" role="table" aria-label="What single-signature and multisig setups survive">
         <div class="sc-survival-head" role="row"><span role="columnheader">What happens</span><span role="columnheader">Single-signature</span><span role="columnheader">2-of-3 multisig</span></div>
         <div class="sc-survival-row" role="row"><strong role="rowheader">One backup burns</strong><span class="is-fail" role="cell">Funds lost</span><span class="is-pass" role="cell">Survives</span></div>
         <div class="sc-survival-row" role="row"><strong role="rowheader">One key is stolen</strong><span class="is-fail" role="cell">Funds stolen</span><span class="is-pass" role="cell">Survives</span></div>
@@ -6512,12 +6773,13 @@ const guides = [
     summary: "A passphrase is not a password on your wallet. It is a switch that selects a different wallet entirely — which is why a single wrong character shows you an empty balance and no error message.",
     level: "advanced",
     minutes: 30,
+    effort: "task",
     goals: ["harden", "recover"],
     tags: ["Passphrase", "Recovery", "Threat model"],
     icon: "bi-shield-lock",
     updated: "2026-08-17",
     status: "published",
-    related: ["recovery-test-drill", "multisig-2of3", "what-not-to-normalize"],
+    related: ["recovery-test-drill", "multisig-2of3", "what-not-to-normalize", "seed-to-key"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Almost everything written about passphrases describes them as an extra password protecting your wallet. That description is wrong in a way that costs people their bitcoin, so it is worth replacing before anything else.</p>
@@ -6637,6 +6899,7 @@ const guides = [
     summary: "One seed can generate an unlimited supply of ordinary, independent wallets on demand — so you protect one backup instead of six. The catch is a bookkeeping obligation nobody warns you about, and a master seed that is now worth six times as much to a thief.",
     level: "advanced",
     minutes: 28,
+    effort: "task",
     goals: ["harden", "learn", "recover"],
     tags: ["Seed derivation", "Backups", "Threat model"],
     icon: "bi-diagram-3",
@@ -6846,7 +7109,13 @@ const guides = [
 
       <p>If you hold a single wallet, BIP85 solves a problem you do not have. If you hold five and can name each one's backup location from memory, you are already doing the hard version well and may not want to change it. It is the middle case &mdash; several wallets, backups you know are not all up to standard &mdash; where this genuinely helps.</p>
 
-      ${callout("If you take one thing from this page", "BIP85 converts a backup problem into a bookkeeping problem. That is a real improvement, because backups are physical and bookkeeping is not — but only if you actually keep the books. An index you cannot remember is a wallet you cannot reach, and the master seed sitting safely in your safe will not tell you which number it was.")}`
+      ${callout("If you take one thing from this page", "BIP85 converts a backup problem into a bookkeeping problem. That is a real improvement, because backups are physical and bookkeeping is not — but only if you actually keep the books. An index you cannot remember is a wallet you cannot reach, and the master seed sitting safely in your safe will not tell you which number it was.")}
+
+      <p class="sc-source-note">
+        Which wallets and devices implement BIP85 changes as projects ship releases, so the support table above is a snapshot rather than a standing fact. The standard itself is stable and specifies the derivation exactly &mdash;
+        ${official("https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki", "BIP85")}
+        &mdash; but confirm current support against each project’s own documentation before planning a setup around it.
+      </p>`
   },
   {
     slug: "seed-backup-metal",
@@ -6856,6 +7125,7 @@ const guides = [
     summary: "Paper survives everything except the events your backup exists for. What metal actually buys you, the four-letter shortcut that halves the work, and the mistakes that quietly ruin a plate.",
     level: "intermediate",
     minutes: 25,
+    effort: "task",
     goals: ["harden", "recover"],
     tags: ["Backups", "Metal", "Storage"],
     icon: "bi-box-seam",
@@ -6899,13 +7169,13 @@ const guides = [
 
       <h2><span class="sc-article-num">3</span>You only need the first four letters</h2>
 
-      <p>Every word in the BIP39 list is uniquely identified by its first four letters. No two words share them. <em>Abandon</em> and <em>ability</em> differ by the fourth character; nothing beyond that is doing any work.</p>
+      <p>Every word in the BIP39 list is uniquely identified by its first four letters. No two words share them. <em>About</em> and <em>above</em> are identical until the fourth character, which is why four is the number; nothing beyond it is doing any work.</p>
 
       <p>So a backup recording <code>ABAN</code> is exactly as complete as one recording <code>ABANDON</code>, and stamping four characters per word rather than up to eight roughly halves the labour and the number of chances to make a mistake.</p>
 
       ${checklist([
         "Record four letters per word. Any wallet or wordlist will resolve them unambiguously.",
-        "Words shorter than four letters are written in full &mdash; there are only a handful.",
+        "Words shorter than four letters are written in full. There are 103 of them &mdash; about one word in twenty &mdash; so expect to meet one or two in a 24-word phrase.",
         "Number your words. Order is part of the secret, and a plate of unnumbered words is a puzzle you have set for your future self.",
         "This shortcut applies to BIP39 wordlists. If your wallet uses a different scheme &mdash; Electrum's own seed format, for instance &mdash; write the words in full."
       ])}
@@ -6998,6 +7268,7 @@ const guides = [
     summary: "Instructions someone can follow while grieving, that are not enough to steal with while you are alive. Why your will is the wrong place for any of it, and the failure that loses more coins than any other.",
     level: "advanced",
     minutes: 45,
+    effort: "task",
     goals: ["harden", "inherit", "multisig"],
     tags: ["Inheritance", "Estate"],
     icon: "bi-people",
@@ -7340,7 +7611,7 @@ const guides = [
 
       <p>No amount of key length helps here. What follows is an honest account of what does, what merely sounds like it does, and which popular measures can make a dangerous situation last longer.</p>
 
-      ${callout("Before anything else", "If this ever happens to you, your safety is worth more than every coin you own. Bitcoin is replaceable and you are not. Nothing on this page is advice to resist, delay, or refuse someone who is threatening you — the entire purpose of planning in advance is so that you never have to make that choice while frightened.")}
+      ${callout("Before anything else", "If this ever happens to you, your safety is worth more than every coin you own. Bitcoin is replaceable and you are not. Nothing on this page is advice to resist, delay, or refuse someone who is threatening you — the entire purpose of planning in advance is so that you never have to make that choice while frightened.", "h2")}
 
       <h2><span class="sc-article-num">1</span>Be proportionate about this</h2>
 
@@ -7530,7 +7801,7 @@ const guides = [
       <h2><span class="sc-article-num">7</span>Trade-offs you are choosing whether you notice or not</h2>
 
       <ul>
-        <li><strong>Secure element or open silicon.</strong> A secure element resists someone who has your device on a bench, which is a real and common threat. It is also, by construction, a chip you cannot audit. Fully open designs invert both halves of that.</li>
+        <li><strong>Secure element or open silicon.</strong> A secure element resists someone who has your device on a bench, which is a real and common threat. It has also, historically, been a chip you cannot audit &mdash; the design is behind an NDA and you are trusting a certification rather than reading anything. That is no longer quite the binary it was: Tropic Square's TROPIC01, shipping in the Trezor Safe 7 alongside a conventional certified element, publishes its design and datasheet for independent review. One example is not a trend, and the rest of the market still works the old way, but the trade is worth re-checking rather than assumed.</li>
         <li><strong>Closed or open firmware.</strong> Open firmware can be read and, at its best, reproduced. Closed firmware cannot, and you are trusting a process you can only see the outputs of. Neither answers the malicious-maintainer case on its own.</li>
         <li><strong>Standards or convenience.</strong> A device that stores a standard BIP39 phrase on a standard derivation path can be recovered on completely different hardware years from now. Anything proprietary makes the vendor&rsquo;s continued existence part of your backup plan.</li>
         <li><strong>How much the vendor knows about you.</strong> Customer databases leak; one hardware wallet company&rsquo;s did, and its customers received phishing and physical threats for years afterwards. Where a device is bought, and under what name, is part of this decision.</li>
@@ -7860,7 +8131,7 @@ const guides = [
     icon: "bi-diagram-2",
     updated: "2026-08-18",
     status: "published",
-    related: ["recovery-test-drill", "keys-addresses-utxos", "life-of-a-transaction"],
+    related: ["seed-to-key", "recovery-test-drill", "keys-addresses-utxos", "life-of-a-transaction"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Here is a scenario that plays out constantly, and almost never means what the person experiencing it thinks it means. You restore your seed words into a different wallet than the one you set up with. The words are accepted without complaint. The wallet opens. The balance is zero.</p>
@@ -7869,7 +8140,7 @@ const guides = [
 
       <h2><span class="sc-article-num">1</span>One seed, an unlimited tree of keys</h2>
 
-      <p>Your twelve or twenty-four words encode a single large number. From that number, a defined procedure produces a master key, and from the master key an endless branching structure of child keys &mdash; a hierarchical deterministic wallet, universally shortened to HD.</p>
+      <p>Your twelve or twenty-four words encode a single large number. From that number, a defined procedure produces a master key, and from the master key an endless branching structure of child keys &mdash; a hierarchical deterministic wallet, universally shortened to HD. (<a href="seed-to-key.html">What that procedure actually is</a>, step by step, if you want the layer underneath this one.)</p>
 
       <p>Deterministic is the important half. Nothing is random after the seed. Anyone starting from the same words and walking the same route through the tree arrives at exactly the same keys, every time, on any software. That is what makes a backup of twelve words sufficient to restore a wallet holding thousands of addresses.</p>
 
@@ -7905,7 +8176,7 @@ const guides = [
 
       <h2><span class="sc-article-num">3</span>The gap limit</h2>
 
-      <p>Even on the correct branch, a wallet does not check infinitely many addresses. It works forward from index zero, and it stops after a run of consecutive empty ones &mdash; conventionally twenty. That run is the gap limit.</p>
+      <p>Even on the correct branch, a wallet does not check infinitely many addresses. It works forward from index zero, and it stops after a run of consecutive empty ones. That run is the gap limit, and BIP44 sets it at twenty: if the software hits twenty unused addresses in a row, it concludes there are no used addresses beyond that point and stops searching. Twenty is the standard rather than a habit, which is why almost every wallet you meet uses the same number &mdash; and why raising it is usually an explicit setting rather than the default.</p>
 
       <p>It exists for a sensible reason: each address has to be checked against the chain, and scanning forever would make restoring impossibly slow. But it creates a specific and genuinely alarming failure.</p>
 
@@ -7959,6 +8230,192 @@ const guides = [
       <p>Seed words are the root of a deterministic tree, not a wallet. Finding your coins takes the words <em>plus</em> the route: address type, account, and enough patience to scan past the gap. Record the derivation path or, better, the descriptor alongside your backup, and a future restore becomes a two-minute job instead of an afternoon of dread.</p>
 
       ${callout("If you take one thing from this page", "An empty balance after a restore is far more often a wrong branch than a lost coin. Nothing on the chain has changed — the chain does not know or care which wallet you are using. Check the derivation path before you panic, and write it down now so you never have to.")}`
+  },
+  {
+    slug: "seed-to-key",
+    category: "concepts",
+    products: [],
+    title: "From words to keys",
+    summary: "How a wallet turns twelve words into a private key — the checksum, the 2,048 rounds of hashing, and the apostrophe in the derivation path that quietly decides whether an xpub can betray you.",
+    level: "intermediate",
+    minutes: 22,
+    goals: ["learn", "recover"],
+    tags: ["Fundamentals", "How it works"],
+    icon: "bi-diagram-2",
+    updated: "2026-09-06",
+    status: "published",
+    related: ["how-wallets-find-coins", "recovery-test-drill", "passphrase-setup"],
+    layout: "article",
+    body: `
+      <p class="sc-guide-intro"><a href="how-wallets-find-coins.html">How a wallet finds your coins</a> starts from a sentence worth stopping at: your words encode a number, and "a defined procedure produces a master key". This page is that procedure. It is four transformations, each of which explains a behaviour you have probably already met and found arbitrary.</p>
+
+      <p>None of this is required to use a wallet safely. It is required to <em>diagnose</em> one &mdash; because every silent failure in self-custody happens at one of these four steps, and knowing which one narrows an afternoon of guessing to a single question.</p>
+
+      <h2><span class="sc-article-num">1</span>The words are a number in a costume</h2>
+
+      <p>The BIP39 wordlist holds exactly 2,048 words. That number is not aesthetic. 2,048 is 2<sup>11</sup>, so each word stands for precisely eleven bits, and a phrase is nothing more than those bits laid end to end.</p>
+
+      <p>Twelve words is therefore 132 bits. But a 12-word wallet is described everywhere as 128-bit security, and the gap is the point of this section: <strong>128 bits are your secret, and the last 4 are a checksum computed from them.</strong></p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>Words</th><th>Secret (entropy)</th><th>Checksum</th><th>Total bits</th></tr></thead>
+          <tbody>
+            <tr><td><strong>12</strong></td><td>128 bits</td><td>4 bits</td><td>132 = 12 &times; 11</td></tr>
+            <tr><td><strong>15</strong></td><td>160 bits</td><td>5 bits</td><td>165</td></tr>
+            <tr><td><strong>18</strong></td><td>192 bits</td><td>6 bits</td><td>198</td></tr>
+            <tr><td><strong>21</strong></td><td>224 bits</td><td>7 bits</td><td>231</td></tr>
+            <tr><td><strong>24</strong></td><td>256 bits</td><td>8 bits</td><td>264</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The checksum is the first bits of the SHA-256 hash of your entropy &mdash; one checksum bit for every 32 bits of secret. That is the whole rule, and it is why the counts above are the only legal phrase lengths. Thirteen words is not a longer phrase; it is not a phrase.</p>
+
+      <h2><span class="sc-article-num">2</span>What the checksum actually catches</h2>
+
+      <p>The checksum is a genuine error detector, and it is worth knowing its strength precisely, because the folklore around it points people at the wrong suspect when a restore goes wrong.</p>
+
+      <p>Change anything about your phrase &mdash; a misread word, two words swapped &mdash; and the entropy bits change. The checksum recomputed from those new bits then has to coincidentally match the checksum bits already sitting at the end. For a 12-word phrase there are 4 such bits, so the odds of an accidental match are 1 in 16. For 24 words there are 8, so 1 in 256.</p>
+
+      ${checklist([
+        "<strong>A 12-word phrase catches a scrambled or misread word about 94% of the time.</strong> Roughly one error in sixteen slips through as a valid but different wallet.",
+        "<strong>A 24-word phrase catches it about 99.6% of the time.</strong> One in 256 slips through.",
+        "<strong>It cannot catch anything at all once the phrase is valid.</strong> A checksum says the words are internally consistent. It says nothing about whether they are <em>your</em> words."
+      ])}
+
+      <p>The practical inversion matters more than the arithmetic. If your wallet <em>accepted</em> the phrase and showed you an empty balance, a transcription error is one of the least likely explanations available &mdash; it had a 94% chance of being rejected outright and was not. The likely causes are the ones no checksum can see, and they are the subjects of the next two sections.</p>
+
+      ${callout("This is why the last word is not free", `In a 24-word phrase the final word carries the last three bits of your secret followed by all eight checksum bits. That is why you cannot simply pick a twenty-fourth word you like, and why <a href="dice-entropy.html">rolling your own entropy</a> ends with a device or a worksheet computing that word for you.`)}
+
+      ${figureSlot({
+        shot: "A handwritten seed card face down on a desk beside an open notebook, the notebook showing a column of hand-written eleven-digit binary numbers, one per line, in the same pen.",
+        caption: "Every word on the card is exactly eleven bits. The words are a friendlier way of writing down a number, not a different kind of thing.",
+        ratio: "16 / 9",
+        icon: "bi-diagram-2"
+      })}
+
+      <h2><span class="sc-article-num">3</span>The words are not the seed</h2>
+
+      <p>Here is the step most people skip, and it is the one that explains passphrases.</p>
+
+      <p>Your phrase is not fed to the wallet directly. It is put through PBKDF2 &mdash; a deliberately slow key-stretching function &mdash; running <strong>2,048 rounds of HMAC-SHA512</strong>, and what comes out is a 512-bit seed. The phrase is the password. And the salt, the other input, is the literal string <code>mnemonic</code> with your passphrase appended to it.</p>
+
+      <p>Three consequences fall straight out of that construction, and each is a thing people discover the hard way.</p>
+
+      <h3>A passphrase cannot be wrong</h3>
+
+      <p>Because the passphrase is part of the salt rather than something checked against a stored value, there is nothing to compare it to. Every passphrase produces a valid 512-bit seed, and therefore a real, working, completely different wallet. BIP39 says so directly: every passphrase generates a valid seed, but only the correct one makes the desired wallet available.</p>
+
+      <p>This is the mechanism behind the symptom. A mistyped passphrase cannot produce an error message, because from the software's point of view nothing went wrong &mdash; you asked for a different wallet and it built one, correctly, and it is empty. A trailing space, a capital letter, a different Unicode dash: each is a separate wallet, silently.</p>
+
+      <h3>The wordlist is part of the input</h3>
+
+      <p>PBKDF2 hashes the text of the phrase, not the numbers behind it. So the same twelve concepts written in the English and Japanese wordlists produce entirely unrelated seeds. The specification is blunt about it: translating a mnemonic to a different wordlist necessarily creates a completely different seed. Record the language along with the words.</p>
+
+      <h3>2,048 rounds is a speed bump, not armour</h3>
+
+      <p>Worth saying plainly, because passphrase advice often implies otherwise. 2,048 iterations is a very low work factor by modern standards &mdash; password hashing schemes designed for the job use orders of magnitude more. If someone holds your recovery words and is guessing at the passphrase, that stretching buys you very little.</p>
+
+      <p>A passphrase protects you because it is <em>long and unguessable</em>, not because the derivation is expensive. Treat a short memorable passphrase on top of a compromised seed card as a delay, not a defence &mdash; which is the argument <a href="passphrase-setup.html">the passphrase guide</a> makes from the practical side.</p>
+
+      <h2><span class="sc-article-num">4</span>The seed becomes the root of the tree</h2>
+
+      <p>The 512-bit seed is hashed once more, and this is where the tree in <a href="how-wallets-find-coins.html">the previous guide</a> actually begins. The seed is run through HMAC-SHA512 keyed with the fixed string <code>Bitcoin seed</code>, and the 64 bytes that come out are cut in half:</p>
+
+      ${checklist([
+        "<strong>The left 32 bytes become the master private key.</strong> This is the number everything else descends from.",
+        "<strong>The right 32 bytes become the master chain code.</strong> Extra entropy mixed into every child derivation, so that knowing a key is not enough to derive its siblings."
+      ])}
+
+      <p>A key plus its chain code is what an <em>extended</em> key means &mdash; the "x" in xprv and xpub. That pairing is what makes a whole branch derivable from one string, and it is what the next section is about.</p>
+
+      <h2><span class="sc-article-num">5</span>The apostrophe, and why it is a security control</h2>
+
+      <p>You have seen a path written <code>m/84'/0'/0'/0/0</code>. Three of those numbers carry an apostrophe and two do not, and the difference is not decorative &mdash; it is the most consequential detail on this page.</p>
+
+      <p>Each extended key can produce two kinds of child. Normal children use indexes 0 through 2<sup>31</sup>&minus;1. Hardened children use the range above that, and the apostrophe (sometimes written <code>h</code>) is shorthand for "add 2<sup>31</sup>". The two are derived by different procedures, and only one of them can be performed with a public key.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th></th><th>Normal (<code>0</code>)</th><th>Hardened (<code>0'</code>)</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Derives from</strong></td><td>The parent public key</td><td>The parent private key only</td></tr>
+            <tr><td><strong>An xpub can walk it</strong></td><td>Yes</td><td>No</td></tr>
+            <tr><td><strong>Enables watch-only</strong></td><td>Yes</td><td>No</td></tr>
+            <tr><td><strong>Contains the leak below</strong></td><td>No</td><td>Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The leak is the reason hardened derivation exists, and BIP32 flags it as a weakness that is not immediately obvious. Stated plainly:</p>
+
+      ${pullQuote("Anyone holding an extended public key <em>and</em> a single normal child private key descending from it can compute the parent private key — and from there every key in that branch.")}
+
+      <p>Read that as an operational rule rather than a curiosity. An xpub is not secret, and it gets handed out: to a watch-only phone, a coordinator, a block explorer. A private key for one address is a much smaller thing, and people are correspondingly casual with them &mdash; sweeping a single address into another wallet, exporting one key for a payment processor, pasting one into a tool. On their own, each is survivable. <strong>Together, in the same branch, they reconstruct the branch.</strong></p>
+
+      <h3>Which is why the path is shaped the way it is</h3>
+
+      <p>Look again at <code>m/84'/0'/0'/0/0</code> with that in mind, and the design stops looking arbitrary:</p>
+
+      ${checklist([
+        "<strong>Purpose, coin and account are hardened</strong> &mdash; <code>84'/0'/0'</code>. The account is the boundary you are allowed to export. Hardening it means an account xpub reveals that account and can never be walked upward into your master key or sideways into your other accounts.",
+        "<strong>Change and index are not</strong> &mdash; <code>/0/0</code>. They deliberately stay normal, because that is precisely what lets a watch-only wallet hold only an xpub and still generate every future receiving address without ever seeing a private key."
+      ])}
+
+      <p>The tree is drawn so that the cut line is the account. Everything above it is sealed; everything below it is publicly derivable on purpose. That single decision is what makes air-gapped signing and watch-only wallets possible at all.</p>
+
+      <h3>What it costs you in practice</h3>
+
+      <p>One habit follows from the leak, and it is cheap: <strong>do not export individual private keys out of an HD wallet whose xpub is anywhere else.</strong> If you need to move one address's coins somewhere, spend them in a transaction rather than exporting the key. Sweeping a single key from a wallet you have shared the xpub of is the exact shape of the attack.</p>
+
+      <h2><span class="sc-article-num">6</span>Same key, different hats: xpub, ypub, zpub</h2>
+
+      <p>Restore a wallet and you may be handed a string starting <code>zpub</code> where you expected <code>xpub</code>, or asked which one you have. This causes a great deal of confusion for something that is, underneath, cosmetic.</p>
+
+      <p>An extended key is serialised with four leading version bytes. SLIP-132 registered alternative values for those bytes so that the human-readable prefix would announce the intended address type &mdash; <code>xpub</code> for legacy, <code>ypub</code> for wrapped SegWit, <code>zpub</code> for native SegWit, with capitalised <code>Ypub</code> and <code>Zpub</code> for the multisig equivalents.</p>
+
+      ${cautions([
+        "The key material is identical. A <code>zpub</code> and an <code>xpub</code> for the same node differ only in four bytes of packaging; converting between them changes no keys and moves no coins.",
+        "It is a registry, not a Bitcoin standard. SLIP-132 exists because a bare <code>xpub</code> could not say which address type was meant, and it describes itself as an interim measure pending descriptors.",
+        "Plenty of software only speaks <code>xpub</code>. Bitcoin Core among them. Being told your <code>zpub</code> is invalid usually means the receiving software wants the same key in <code>xpub</code> clothing plus an explicit derivation path."
+      ])}
+
+      <p>This is the problem output descriptors were designed to end. A descriptor states the script type, the key and the path in one unambiguous string, so nothing has to be inferred from a prefix &mdash; which is why <a href="how-wallets-find-coins.html">the previous guide</a> tells you to save the descriptor rather than the path.</p>
+
+      <h2><span class="sc-article-num">7</span>Where each failure actually lives</h2>
+
+      <p>The point of walking the four transformations is that a symptom now tells you which one broke.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>Symptom</th><th>Step that produced it</th><th>Recoverable?</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Wallet rejects the phrase</strong></td><td>Step 2 &mdash; the checksum</td><td>Yes. A word is wrong; the check did its job.</td></tr>
+            <tr><td><strong>Accepted, zero balance, path confirmed</strong></td><td>Step 3 &mdash; passphrase</td><td><strong>Only if you recall it.</strong> Nothing can test it for you.</td></tr>
+            <tr><td><strong>Accepted, zero balance, no passphrase set</strong></td><td>Step 5 &mdash; wrong branch</td><td>Yes. Change the derivation path.</td></tr>
+            <tr><td><strong>Some coins visible, others missing</strong></td><td>The gap limit</td><td>Yes. Raise it and rescan.</td></tr>
+            <tr><td><strong>Software rejects your extended key</strong></td><td>Step 6 &mdash; SLIP-132 prefix</td><td>Yes. Convert the prefix; no keys change.</td></tr>
+            <tr><td><strong>Phrase was written in another language</strong></td><td>Step 3 &mdash; wordlist</td><td>Yes. Select the original wordlist.</td></tr>
+          </tbody>
+        </table>
+      </div>
+        <div class="sc-survival-row" role="row"><strong role="rowheader">Phrase written in another language</strong><span role="cell">3, wordlist</span><span class="is-pass" role="cell">Yes &mdash; select the language</span></div>
+      </div>
+
+      <p>Only one row in that table is genuinely unrecoverable, and it is the passphrase. Everything else is a matter of telling the software where to look. That asymmetry is the argument for treating a passphrase as a second irreplaceable secret rather than a convenience.</p>
+
+      <h2>The short version</h2>
+
+      <p>Words carry eleven bits each, with the tail end spent on a checksum that catches most transcription errors and no wrong-wallet errors at all. Those words plus a passphrase are stretched into a 512-bit seed, which is hashed into a master key and chain code. The apostrophes in the path mark where the tree is sealed, so that an account can be published as an xpub without publishing everything above it &mdash; and the segments without apostrophes are what let a watch-only wallet work.</p>
+
+      <p>Everything downstream is bookkeeping on top of those four steps.</p>
+
+      ${callout("If you take one thing from this page", `A checksum proves your words are internally consistent, not that they are yours. The failures that actually strand people &mdash; a passphrase off by one character, a branch nobody wrote down &mdash; all happen after the checksum has already said yes. That is why <a href="recovery-test-drill.html">restoring once, deliberately</a> is the only check that covers them.`)}
+
+      <p class="sc-source-note">
+        The mechanics here are drawn from the specifications rather than from any wallet's behaviour: BIP39 for the checksum and the PBKDF2 construction, BIP32 for master key generation and hardened derivation, and SLIP-132 for the version-byte prefixes. Where a wallet appears to disagree with this page, the wallet is what your coins obey.
+      </p>`
   },
   {
     slug: "address-types",
@@ -9129,7 +9586,7 @@ const productGuideLinks = key => {
   const hits = published.filter(g => g.productGuide && g.products.includes(key));
   if (!hits.length) return "";
   const items = hits.map(g => {
-    const detail = `${g.title} — ${levelLabels[g.level]} · ${g.minutes} min`;
+    const detail = `${g.title} — ${levelLabels[g.level]} · ${minutesShort(g)}`;
     return `<a class="sc-text-link" href="guides/${g.slug}.html" title="${detail}" aria-label="${detail}">Guide <i class="bi bi-arrow-right" aria-hidden="true"></i></a>`;
   }).join("");
 
@@ -9170,11 +9627,12 @@ const guideCard = guide => {
   const cardTitle = guide.category === "devices"
     ? guide.title.replace(/:\s*first-time setup$/i, "")
     : guide.title;
-  /* Just the reading time. The review date used to sit here too, which forced
-     "Read guide" onto a line of its own underneath and made every card taller
-     for a per-guide fact the guide's own header already carries -- the hub
-     states the range once per section instead. */
-  const meta = `<span><i class="bi bi-hourglass-split" aria-hidden="true"></i> ${guide.minutes} min</span>`;
+  /* How long it takes, and which kind of "long" that is -- see minutesShort.
+     The review date used to sit here too, which forced "Read guide" onto a line
+     of its own underneath and made every card taller for a per-guide fact the
+     guide's own header already carries -- the hub states the range once per
+     section instead. */
+  const meta = `<span><i class="bi bi-hourglass-split" aria-hidden="true"></i> ${minutesShort(guide)}</span>`;
   const cardProduct = ["devices", "software"].includes(guide.category)
     ? guide.products.map(key => productByKey.get(key)).find(product => product?.image)
     : null;
@@ -9459,7 +9917,7 @@ const renderGuideBody = guide => {
         <p class="sc-lead">${guide.summary}</p>
         <div class="sc-guide-meta">
           <span class="sc-level sc-level-${guide.level}">${levelLabels[guide.level]}</span>
-          <span><i class="bi bi-hourglass-split" aria-hidden="true"></i> About ${guide.minutes} minutes</span>
+          <span><i class="bi bi-hourglass-split" aria-hidden="true"></i> ${minutesLong(guide)}</span>
           <span>Updated ${formatUpdated(guide.updated)}</span>
         </div>
         <div class="sc-tags sc-tags-lg">${guide.tags.map(t => renderGlossaryTag(t, "../")).join("")}</div>
