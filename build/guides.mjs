@@ -2465,13 +2465,15 @@ const guides = [
 
       <p>This page is about the road rather than the destination: where it is reasonable to start, what each step actually buys, why it takes longer than people expect, and how to tell you are ready to move rather than guessing.</p>
 
-      <h2><span class="sc-article-num">1</span>Having some exposure beats waiting to be ready</h2>
+      <h2><span class="sc-article-num">1</span>Wherever you are is a place to start from</h2>
 
-      <p>If you bought a spot ETF, or your first purchase is sitting on an exchange, you have not failed at anything. You made a decision with the understanding you had, which is the only kind of decision anyone makes.</p>
+      <p>If you bought a spot ETF, or your first purchase is sitting on an exchange, you have not failed at anything. You made a decision with the understanding you had, which is the only kind of decision anyone makes. This page is the road out of that position for anyone who wants one.</p>
 
-      <p>The genuinely common failure is different and quieter: <strong>reading about custody for eight months, buying nothing, and calling that caution.</strong> A person with coins on an exchange and a plan to move them is further along than a person with a perfect mental model and no bitcoin.</p>
+      <p>It is also worth saying plainly what this page is not doing. <strong>Whether to own bitcoin at all is not a question this site answers for you</strong> &mdash; deciding it is not for you, or that now is not the time, is a complete and respectable answer, and nothing here is an argument that you are behind. What follows is about custody: how to move between arrangements without hurting yourself, for people who have coins or have decided to get some.</p>
 
-      ${pullQuote("Having exposure is not the mistake. Staying where you started, by default, for years, because nobody told you the next step was allowed to be small — that is the mistake.")}
+      ${pullQuote("Staying where you started, by default, for years, because nobody told you the next step was allowed to be small — that is the thing this page exists to prevent.")}
+
+      <p>There is a good first step that involves buying nothing at all. <strong>Set up a wallet with no money in it and practise on it.</strong> Generate a backup, restore from it, send a few thousand satoshis to yourself and watch them arrive. It costs almost nothing, every mistake is free, and it answers the question people are usually stuck on &mdash; whether they can actually do this &mdash; without asking them to decide anything about money first.</p>
 
       <p>This site is unambiguous that platform balances carry risks you cannot inspect, and <a href="how-custody-fails.html">four ways a platform loses your bitcoin</a> is the evidence. Both things are true at once. The right response to that risk is a route out, not shame about being on it.</p>
 
@@ -2537,7 +2539,7 @@ const guides = [
 
       <h2>The short version</h2>
 
-      <p>Start where you are. An ETF is price exposure rather than bitcoin, and an exchange balance is a claim rather than a coin, but neither is a moral failure &mdash; and both are better than eight months of research and no position. Move one rung at a time, keep the amount small enough that mistakes stay cheap, and treat boredom as the signal to move rather than confidence. Test your recovery before anything else, and stop at a hardware wallet unless you have a specific reason not to.</p>
+      <p>Start where you are. An ETF is price exposure rather than bitcoin, and an exchange balance is a claim rather than a coin, but neither is a moral failure. Move one rung at a time, keep the amount small enough that mistakes stay cheap, and treat boredom as the signal to move rather than confidence. Test your recovery before anything else, and stop at a hardware wallet unless you have a specific reason not to.</p>
 
       ${callout("If you take one thing from this page", `You do not have to arrive anywhere by a particular date, and nobody is marking this. The only rung that genuinely matters is the one where you stop holding a claim and start holding a key &mdash; everything after that is refinement, and it can take as long as it takes.`)}`
   },
