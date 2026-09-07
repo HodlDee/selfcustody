@@ -81,7 +81,7 @@
         <p class="sc-lead">Your seed words are not a wallet. They are the root of a tree, and finding your money means knowing which branch to walk down — which is why the same words can restore perfectly and still show a balance of zero.</p>
         <div class="sc-guide-meta">
           <span class="sc-level sc-level-intermediate">Intermediate</span>
-          <span><i class="bi bi-hourglass-split" aria-hidden="true"></i> About 16 minutes</span>
+          <span><i class="bi bi-hourglass-split" aria-hidden="true"></i> About 16 minutes to read</span>
           <span>Updated Aug 18, 2026</span>
         </div>
         <div class="sc-tags sc-tags-lg"><span class="sc-tag">Derivation</span><span class="sc-tag">Recovery</span><span class="sc-tag">How it works</span></div>
@@ -98,7 +98,7 @@
 
       <h2><span class="sc-article-num">1</span>One seed, an unlimited tree of keys</h2>
 
-      <p>Your twelve or twenty-four words encode a single large number. From that number, a defined procedure produces a master key, and from the master key an endless branching structure of child keys &mdash; a hierarchical deterministic wallet, universally shortened to HD.</p>
+      <p>Your twelve or twenty-four words encode a single large number. From that number, a defined procedure produces a master key, and from the master key an endless branching structure of child keys &mdash; a hierarchical deterministic wallet, universally shortened to HD. (<a href="seed-to-key.html">What that procedure actually is</a>, step by step, if you want the layer underneath this one.)</p>
 
       <p>Deterministic is the important half. Nothing is random after the seed. Anyone starting from the same words and walking the same route through the tree arrives at exactly the same keys, every time, on any software. That is what makes a backup of twelve words sufficient to restore a wallet holding thousands of addresses.</p>
 
@@ -130,7 +130,7 @@
 
       <h2><span class="sc-article-num">3</span>The gap limit</h2>
 
-      <p>Even on the correct branch, a wallet does not check infinitely many addresses. It works forward from index zero, and it stops after a run of consecutive empty ones &mdash; conventionally twenty. That run is the gap limit.</p>
+      <p>Even on the correct branch, a wallet does not check infinitely many addresses. It works forward from index zero, and it stops after a run of consecutive empty ones. That run is the gap limit, and BIP44 sets it at twenty: if the software hits twenty unused addresses in a row, it concludes there are no used addresses beyond that point and stops searching. Twenty is the standard rather than a habit, which is why almost every wallet you meet uses the same number &mdash; and why raising it is usually an explicit setting rather than the default.</p>
 
       <p>It exists for a sensible reason: each address has to be checked against the chain, and scanning forever would make restoring impossibly slow. But it creates a specific and genuinely alarming failure.</p>
 
@@ -195,7 +195,16 @@
     <section class="sc-section sc-section-muted sc-related-guides">
       <div class="container">
         <div class="sc-section-head"><span class="sc-eyebrow">Keep going</span><h2>Related guides</h2></div>
-        <div class="row g-4"><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="recovery-test-drill.html">
+        <div class="row g-4"><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="seed-to-key.html">
+            <div class="sc-card-body">
+              <div class="sc-guide-card-top">
+                <div class="sc-icon"><i class="bi bi-diagram-2"></i></div>
+                <span class="sc-level sc-level-intermediate">Intermediate</span>
+              </div>
+              <h3>From words to keys</h3>
+              <p>How a wallet turns twelve words into a private key — the checksum, the 2,048 rounds of hashing, and the apostrophe in the derivation path that quietly decides whether an xpub can betray you.</p>
+              <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
+            </div></a></div><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="recovery-test-drill.html">
             <div class="sc-card-body">
               <div class="sc-guide-card-top">
                 <div class="sc-icon"><i class="bi bi-arrow-counterclockwise"></i></div>

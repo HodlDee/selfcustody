@@ -4950,8 +4950,13 @@ p.sc-price {
   .sc-survival-row span { border-top: 1px solid var(--sc-line); border-left: 0; }
   .sc-survival-row span + span { border-left: 1px solid var(--sc-line); }
   .sc-survival-row span::before { display: block; margin-right: 6px; color: var(--sc-muted); font-size: 0.58rem; text-transform: uppercase; }
-  .sc-survival-row span:nth-of-type(1)::before { content: "Single:"; }
-  .sc-survival-row span:nth-of-type(2)::before { content: "2-of-3:"; }
+  /* The head row is hidden at this width, so each cell restates its column.
+     These labels name the multisig guide's two columns specifically, so they
+     are scoped to it -- the base component has to stay reusable, and without
+     the scope any other guide's table silently inherits "Single:" / "2-of-3:"
+     on phones while looking perfect on a desktop. */
+  .sc-survival-grid.is-multisig .sc-survival-row span:nth-of-type(1)::before { content: "Single:"; }
+  .sc-survival-grid.is-multisig .sc-survival-row span:nth-of-type(2)::before { content: "2-of-3:"; }
   .sc-coldcard-cost-card { padding: 15px; }
   .sc-coldcard-cost-heading { grid-template-columns: 42px minmax(0, 1fr); gap: 11px; margin-bottom: 16px; }
   .sc-coldcard-cost-mark { width: 42px; height: 42px; }
@@ -12089,6 +12094,12 @@ body.site-refresh .sc-tool-actions .sc-hero-actions { width: 100%; margin: 0; }
   font-size: 0.92em;
   font-weight: 700;
   letter-spacing: 0.03em;
+  /* Commands and URLs have no break opportunity a browser will take by
+     default, so a gpg line runs off the side of a phone and the end of it --
+     which is the part being copied -- is simply not there. anywhere lets the
+     break happen mid-token when there is no other option, and changes nothing
+     for the short inline code that makes up most uses. */
+  overflow-wrap: anywhere;
 }
 
 /* ---- the self-check quiz -----------------------------------------------

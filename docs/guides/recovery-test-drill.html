@@ -81,7 +81,7 @@
         <p class="sc-lead">A backup you have never restored is a guess. Here is how to prove it works, including which method to use when you only own one device and it already holds funds.</p>
         <div class="sc-guide-meta">
           <span class="sc-level sc-level-intermediate">Intermediate</span>
-          <span><i class="bi bi-hourglass-split" aria-hidden="true"></i> About 25 minutes</span>
+          <span><i class="bi bi-hourglass-split" aria-hidden="true"></i> About 25 minutes to complete</span>
           <span>Updated Aug 17, 2026</span>
         </div>
         <div class="sc-tags sc-tags-lg"><span class="sc-tag">Recovery</span><span class="sc-tag">Backups</span></div>
@@ -163,7 +163,9 @@
 
       <p>Do not panic, and do not wipe anything. A mismatch usually means the test was set up differently from the original wallet, not that your backup is worthless. Work through these in order.</p>
 
-      <ul class="sc-check-list"><li><strong>Address type.</strong> Restoring as Legacy when the original was Native SegWit produces a completely different-looking set of addresses from the same correct words. This is the most common cause by a distance.</li><li><strong>A missing passphrase.</strong> Without it you get the wallet that exists at the words alone, which is a real, valid, empty wallet. It looks exactly like a failure.</li><li><strong>Word order.</strong> Two transposed words give a completely different wallet, and the <a href='../glossary.html#term-checksum'>checksum</a> will often still accept it.</li><li><strong>A misread word.</strong> Handwriting confusions and near-identical BIP39 words are common. Check each word against the official wordlist.</li><li><strong>Derivation path.</strong> Some wallets default to different paths. If the software lets you specify one, match the original.</li></ul>
+      <ul class="sc-check-list"><li><strong>Address type.</strong> Restoring as Legacy when the original was Native SegWit produces a completely different-looking set of addresses from the same correct words. This is the most common cause by a distance.</li><li><strong>A missing passphrase.</strong> Without it you get the wallet that exists at the words alone, which is a real, valid, empty wallet. It looks exactly like a failure.</li><li><strong>Word order.</strong> Two transposed words give a completely different wallet &mdash; but the <a href='../glossary.html#term-checksum'>checksum</a> usually refuses them outright, roughly fifteen times out of sixteen for twelve words and 255 out of 256 for twenty-four.</li><li><strong>A misread word.</strong> Handwriting confusions and near-identical BIP39 words are common, and the checksum rejects most of these too. Check each word against the official wordlist.</li><li><strong>Derivation path.</strong> Some wallets default to different paths. If the software lets you specify one, match the original.</li></ul>
+
+      <p>Those last two are worth weighing correctly, because the folklore runs the other way. The checksum is a real error detector: change any word and the check bits at the end have to match by coincidence, which happens about one time in sixteen for a twelve-word phrase and one in 256 for twenty-four. So <strong>if your wallet accepted the phrase, a transcription mistake is one of the less likely explanations on this list</strong> &mdash; and the causes above it, which no checksum can see, are the more likely ones.</p>
 
       <p>If you work through all of that and it still does not match, treat the backup as unreliable. The correct response is not to keep trying &mdash; it is to generate a brand-new wallet on a device you trust, back that one up carefully, test it, and then move the funds across while you still can. You have caught the problem at the only moment when it is fixable.</p>
 
@@ -234,6 +236,15 @@
               </div>
               <h3>What not to normalize</h3>
               <p>Six habits that look harmless, are extremely common, and are the reason most self-custody losses happen. None of them involve being hacked.</p>
+              <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
+            </div></a></div><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="seed-to-key.html">
+            <div class="sc-card-body">
+              <div class="sc-guide-card-top">
+                <div class="sc-icon"><i class="bi bi-diagram-2"></i></div>
+                <span class="sc-level sc-level-intermediate">Intermediate</span>
+              </div>
+              <h3>From words to keys</h3>
+              <p>How a wallet turns twelve words into a private key — the checksum, the 2,048 rounds of hashing, and the apostrophe in the derivation path that quietly decides whether an xpub can betray you.</p>
               <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
             </div></a></div></div>
       </div>
