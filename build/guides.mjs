@@ -2415,11 +2415,28 @@ const guides = [
 
       <h2><span class="sc-article-num">7</span>When there is only a checksum</h2>
 
-      <p>Some things are published with a hash and no signature at all &mdash; including <a href="../entropy.html">this site's own offline Workshop file</a>, whose SHA-256 sits beside it.</p>
+      <p>Some things are published with a hash and nothing else. Be exact about what that can do: it catches a truncated download, a proxy that rewrote something, a failing USB stick. It cannot catch an adversary, because the checksum is served from the same place as the file it describes, and anyone able to replace one can replace the other. <strong>Same-origin checksums catch accidents, not attackers.</strong></p>
 
-      <p>Be exact about what that can do. It catches a truncated download, a proxy that rewrote something, a failing USB stick. It cannot catch an adversary, because the checksum is served from the same place as the file it describes, and anyone able to replace one can replace the other. Same-origin checksums catch accidents, not attackers.</p>
+      <p>Where it matters, get a second copy of the expected hash from somewhere the same server does not control &mdash; a repository's commit history, a build log, a mirror &mdash; and compare.</p>
 
-      <p>Where it matters, get a second copy of the expected hash from somewhere the same server does not control &mdash; a repository's commit history, a build log, a mirror &mdash; and compare. <a href="bring-your-own-entropy.html">The Workshop guide</a> makes the same point about its own file, which is the correct way for a project to talk about its own checksums.</p>
+      <h3>Build provenance, which is a different thing</h3>
+
+      <p>A checksum on its own says nothing about where a file came from. A <em>signed build attestation</em> does: it is a signature over the file's digest, recording which repository and which workflow run produced those exact bytes. Verifying one is a claim about origin, not just integrity, and that is the gap between the two paragraphs above and this one.</p>
+
+      <p><a href="../entropy.html">This site's own offline Workshop file</a> has both. The SHA-256 sits beside it, and the repository's workflow also mints a keyless attestation over the downloadable bytes whenever they change. If you have GitHub's CLI:</p>
+
+      ${checklist([
+        "<code>gh attestation verify entropy-offline.html -R HodlDee/selfcustody</code>",
+        "If that reports no matching attestation, try <code>-R DeesNeez/selfcustody</code>. The repository was renamed, and an attestation records the name as it stood when it was signed &mdash; so a copy downloaded before the rename verifies under the old one. <strong>Neither is a sign of tampering.</strong>",
+        "A pass tells you these bytes were produced by that workflow in that repository. That is the whole of what it tells you."
+      ])}
+
+      ${cautions([
+        "<strong>Provenance is not safety.</strong> It establishes that the file came from the build you think it did. It says nothing about whether that build is any good, whether the source it was built from is trustworthy, or whether the repository itself was compromised. The same is true of a matching hash and a good signature &mdash; all three answer \"is this what the publisher published\", and none answers \"should I trust the publisher\".",
+        "<strong>The trust boundary is the repository and workflow named in the command.</strong> Verifying against the wrong repository name proves nothing about the right one, which is why both names are given above rather than one."
+      ])}
+
+      <p><a href="bring-your-own-entropy.html">The Workshop guide</a> makes the same points about its own file, and <code>SECURITY.md</code> in the repository carries the full procedure. A project talking honestly about its own checksums is the standard to hold others to.</p>
 
       <h2><span class="sc-article-num">8</span>Windows without a terminal</h2>
 
