@@ -3387,7 +3387,6 @@
   const glossary = document.querySelector("[data-glossary]");
 
   if (glossary) {
-    const API_URL = "https://btclexicon.com/api/v2/terms";
     const search = glossary.querySelector("[data-glossary-search]");
     const clear = glossary.querySelector("[data-glossary-clear]");
     const count = glossary.querySelector("[data-glossary-count]");
@@ -3397,127 +3396,6 @@
     const empty = glossary.querySelector("[data-glossary-empty]");
     const collator = new Intl.Collator("en", { sensitivity: "base", numeric: true });
     const state = { terms: [], query: "", letter: "all" };
-    const localTerms = [
-      {
-        id: "account_path",
-        title: "Account path",
-        definition: "The first three steps of a derivation path \u2014 m/84'/0'/0' \u2014 naming the script type, the coin, and which account. Everything a wallet shows you hangs below it: receiving addresses on one branch, change on another. It is the level an extended public key is normally exported from, so a wallet can watch a whole account without being handed anything that spends.",
-        example: "One seed can hold several accounts \u2014 m/84'/0'/0' and m/84'/0'/1' share recovery words but behave as separate wallets with separate balances.",
-        categories: ["Wallets", "Recovery", "Technical"]
-      },
-      {
-        id: "derivation_path",
-        title: "Derivation path",
-        definition: "The route from a wallet's master key down to one particular key, written as numbers separated by slashes \u2014 m/84'/0'/0'/0/0. Each step picks a child key, so one seed produces completely different addresses depending on the path taken. A wallet restored on the wrong path looks empty even though the recovery words were right.",
-        example: "Native SegWit wallets normally use m/84'/0'/0', so software expecting m/44'/0'/0' derives none of the same addresses from the same words.",
-        categories: ["Wallets", "Recovery", "Technical"]
-      },
-      {
-        id: "xprv",
-        title: "xprv",
-        definition: "An extended private key: a private key packaged with the chain code needed to derive every key beneath it. Whoever holds one can spend everything in that part of the wallet, so it should never be exported, photographed, or typed into software. Its public counterpart, the xpub, derives the same addresses but cannot spend from them.",
-        example: "Software that offers to export an xprv is offering the whole wallet \u2014 including every address it has not generated yet.",
-        categories: ["Wallets", "Security", "Technical"]
-      },
-      {
-        id: "master_fingerprint",
-        title: "Master fingerprint",
-        definition: "Eight hexadecimal characters identifying which wallet a device is holding, taken from a hash of the wallet's master public key. It reveals nothing that could spend, and appears in descriptors and partly signed transactions to record which key signed or still has to. Because it comes from the seed, adding a BIP39 passphrase changes it \u2014 which is how you confirm a passphrase was entered the way you meant.",
-        example: "A multisig coordinator lists each cosigner by master fingerprint, so a 2-of-3 shows three eight-character identifiers rather than three extended public keys.",
-        categories: ["Wallets", "Multisig", "Recovery", "Technical"]
-      },
-      {
-        id: "descriptor",
-        title: "Wallet descriptor",
-        definition: "A structured description of a Bitcoin wallet's public keys, derivation paths, script type, and spending policy. Also called an output descriptor, it lets compatible software reconstruct addresses and coordinate or watch the wallet without containing the private keys required to spend.",
-        example: "A multisig backup includes the wallet descriptor so compatible software can rebuild the same 2-of-3 policy and derive the same addresses.",
-        categories: ["Wallets", "Recovery", "Multisig", "Technical"]
-      },
-      {
-        id: "microsd_backup",
-        title: "MicroSD backup",
-        definition: "A backup file or wallet record stored on a removable MicroSD card. Hardware wallets may use MicroSD cards to move PSBTs, export wallet data, install firmware, or save an encrypted device backup without connecting the signer directly to an online computer. What the card contains—and whether it is encrypted—depends on the device and workflow.",
-        example: "A COLDCARD can save an encrypted backup containing its seed and settings to a MicroSD card; the backup file and its separate password are both required for recovery.",
-        categories: ["Hardware Wallets", "Backups", "Recovery", "Storage"]
-      },
-      {
-        id: "nfc",
-        title: "NFC",
-        definition: "Near Field Communication: a very short-range wireless technology that exchanges data when compatible devices are brought within a few centimetres of each other. Bitcoin devices and keycards may use NFC to transfer wallet data or approve actions, but NFC is still a communication channel and should not automatically be treated as an air gap.",
-        example: "A user taps an NFC keycard against a phone to authorize a wallet operation without plugging in a cable.",
-        categories: ["Hardware Wallets", "Connectivity", "Technical"]
-      },
-      {
-        id: "passphrase",
-        title: "Passphrase",
-        definition: "An optional secret combined with a wallet backup to derive a different wallet. Under BIP39, every passphrase—including an empty or incorrect one—produces a valid wallet, so there is no error message that can identify the right one. The same recovery words and exact passphrase are both required to restore the intended wallet.",
-        example: "Restoring the correct recovery words with a misspelled passphrase opens a different, usually empty wallet rather than reporting a mistake.",
-        categories: ["Wallets", "Security", "Recovery", "BIP39"]
-      },
-      {
-        id: "phishing",
-        title: "Phishing",
-        definition: "A social-engineering attack that impersonates a trusted person, company, website, or app to trick someone into revealing secrets or approving a harmful action. In Bitcoin, phishing commonly targets exchange credentials, recovery words, passphrases, wallet downloads, addresses, and transaction approvals.",
-        example: "A fake support message sends a user to a look-alike website that asks for recovery words to ‘verify’ a wallet.",
-        categories: ["Security", "Threats", "Exchanges"]
-      },
-      {
-        id: "secure_element",
-        title: "Secure element",
-        definition: "A tamper-resistant chip designed to store sensitive data and perform security-critical operations in an isolated environment. In a hardware wallet it may protect secrets, enforce PIN rules, or assist with signing, but its presence alone does not prove the entire device or firmware is secure.",
-        example: "A hardware wallet stores key material in a secure element while its main processor handles the display and user interface.",
-        categories: ["Hardware Wallets", "Security", "Technical"]
-      },
-      {
-        id: "shamir_backup",
-        title: "Shamir backup",
-        definition: "A threshold backup method, commonly implemented for wallets as SLIP39, that divides a master secret into multiple unique recovery shares. A chosen minimum number of shares can reconstruct the wallet; fewer than that threshold do not reveal the master secret. SLIP39 shares are not ordinary BIP39 recovery words and require compatible recovery software or hardware.",
-        example: "With a 2-of-3 Shamir backup, any two of the three shares can recover the wallet, while one share alone is insufficient.",
-        categories: ["Backups", "Recovery", "Security", "SLIP39"]
-      },
-      {
-        id: "reproducible_firmware",
-        title: "Reproducible firmware",
-        definition: "Firmware whose published source code and documented build process can be independently rebuilt to produce the same binary distributed by the vendor. Matching builds provide evidence that the released firmware corresponds to the reviewed source, but they do not prove that the source itself is bug-free or safe.",
-        example: "Independent builders compile a hardware wallet's tagged source release and compare the resulting firmware hash with the vendor's download.",
-        categories: ["Hardware Wallets", "Open Source", "Security", "Firmware"]
-      },
-      {
-        id: "sim_swap",
-        title: "SIM swap",
-        definition: "An account-takeover attack in which a criminal causes a mobile carrier to move a victim's phone number to a SIM or device the criminal controls. Calls and text messages—including SMS login codes—can then be intercepted, which is why SMS should not be the strongest protection on an exchange account.",
-        example: "An attacker takes over a phone number, resets an exchange password, and receives the exchange's SMS verification code.",
-        categories: ["Security", "Threats", "Exchanges", "2FA"]
-      },
-      {
-        id: "threat_model",
-        title: "Threat model",
-        definition: "A structured assessment of what you are protecting, who or what could harm it, how likely those events are, and which safeguards address them. A useful Bitcoin threat model includes digital theft, physical loss, coercion, fire or flood, user error, privacy leakage, and the people who may need to recover the wallet.",
-        example: "Someone living alone may prioritize recoverability and inheritance differently from a public figure who faces targeted physical threats.",
-        categories: ["Security", "Planning", "Risk"]
-      },
-      {
-        id: "watch_only_wallet",
-        title: "Watch-only wallet",
-        definition: "A wallet that tracks addresses, balances, and transactions without holding the private keys needed to spend. It can receive funds and usually construct unsigned transactions, but signing must happen in a separate wallet or hardware device. Importing an XPUB or descriptor can create a watch-only wallet while also exposing wallet history to the software or server used.",
-        example: "Sparrow on an online computer watches the wallet and prepares a PSBT; an offline hardware wallet reviews and signs it.",
-        categories: ["Wallets", "Security", "Privacy", "Technical"]
-      },
-      {
-        id: "wrench_attack",
-        title: "Wrench attack",
-        definition: "An attack that bypasses cryptography entirely by coercing the owner into handing over their keys or moving funds. Also called the $5 wrench attack, after a well-known comic observing that an adversary is far more likely to threaten a person than to break their encryption. Because no key length or signing policy applies, the defences are different in kind: discretion about holdings, arrangements that make immediate transfer genuinely impossible, and keeping a small amount available to surrender.",
-        example: "A holder is confronted at home and forced to unlock a wallet; a mandatory login countdown means the funds cannot be moved that evening by anyone, including them.",
-        categories: ["Security", "Risk", "Planning"]
-      },
-      {
-        id: "checksum",
-        title: "Checksum",
-        definition: "A short value calculated from a larger piece of data specifically to catch errors in it. Bitcoin uses checksums in several unrelated places: the final word of a BIP39 recovery phrase encodes a checksum of the words before it, so most (not all) transcription mistakes produce an invalid phrase rather than a silently different wallet; bech32 addresses carry a checksum strong enough to catch typos reliably; and software releases are distributed with a checksum file so a download can be verified against what the developers actually published.",
-        example: "Before flashing a signer's firmware, a user checks the published SHA256 checksum against the file they downloaded to confirm nothing was altered in transit.",
-        categories: ["Technical", "Backups", "Security"]
-      }
-    ];
 
     const normalize = value => String(value || "")
       .normalize("NFKD")
@@ -3618,51 +3496,37 @@
       render();
     });
 
-    fetch(API_URL, { headers: { Accept: "application/json" } })
-      .then(response => {
-        if (!response.ok) throw new Error(`Glossary request failed: ${response.status}`);
-        return response.json();
-      })
-      .then(payload => {
-        const apiTerms = Object.entries(payload)
-          .filter(([, group]) => group && typeof group === "object" && !Array.isArray(group))
-          .flatMap(([, group]) => Object.values(group));
+    /* The terms are rendered into the page at build time from
+       build/glossary.mjs, so every #term- anchor a guide links to exists in the
+       HTML and resolves with scripting disabled. This reads those cards back
+       out to build the search index; search and the letter filter are
+       enhancements over a page that already works without them.
 
-        state.terms = [...new Map([...apiTerms, ...localTerms].map(term => [term.id, term])).values()]
-          /* The API includes one `lexicon_categories` metadata record alongside
-             its term objects. It has a title but no definition and should not
-             be rendered as a glossary card. */
-          .filter(term => term && term.id && term.title && term.definition)
-          .map(term => ({
-            ...term,
-            categories: Array.isArray(term.categories) ? term.categories : [],
-            letter: firstLetter(term.title),
-            searchText: normalize([
-              term.title,
-              term.definition,
-              term.example,
-              term.part_of_speech,
-              ...(Array.isArray(term.categories) ? term.categories : [])
-            ].join(" "))
-          }))
-          .sort((a, b) => collator.compare(a.title, b.title));
+       It used to fetch a third-party lexicon on load, which meant the glossary
+       went blank whenever that service was unreachable, put several hundred
+       definitions the project had not written in front of readers, and rested
+       on content published under no licence at all. */
+    state.terms = [...results.querySelectorAll(".sc-glossary-card")].map(card => {
+      const title = card.querySelector("h2")?.textContent ?? "";
+      const definition = card.querySelector(".sc-glossary-definition")?.textContent ?? "";
+      const exampleEl = card.querySelector(".sc-glossary-example");
+      /* The "Example: " label is part of the card, not part of the sentence. */
+      const example = exampleEl ? exampleEl.textContent.replace(/^Example:\s*/, "") : "";
+      const categories = [...card.querySelectorAll(".sc-glossary-categories li")].map(li => li.textContent);
+      return {
+        id: card.id.replace(/^term-/, ""),
+        title,
+        definition,
+        example,
+        categories,
+        letter: firstLetter(title),
+        searchText: normalize([title, definition, example, ...categories].join(" "))
+      };
+    }).sort((a, b) => collator.compare(a.title, b.title));
 
-        status.hidden = true;
-        renderLetters();
-        render();
-
-        if (location.hash.startsWith("#term-")) {
-          requestAnimationFrame(() => document.querySelector(location.hash)?.scrollIntoView());
-        }
-      })
-      .catch(() => {
-        status.classList.add("is-error");
-        status.replaceChildren(
-          make("h2", "", "The glossary could not be loaded."),
-          make("p", "", "The source may be temporarily unavailable. Refresh this page to try again.")
-        );
-        count.textContent = "Glossary unavailable";
-      });
+    status.hidden = true;
+    renderLetters();
+    render();
   }
   /* ---- the mind reader ----------------------------------------------------
 

@@ -350,8 +350,8 @@ const entropySite = `<!DOCTYPE html>
 
        connect-src 'none' is the load-bearing line. This page has nothing to
        send anywhere, and the shared site script that runs on every other page
-       does fetch (the glossary loads its terms) -- so the policy states that
-       on this page, that must not happen.
+       does fetch (the dashboard pulls chain and price data) -- so the policy
+       states that on this page, that must not happen.
 
        frame-ancestors is absent on purpose: meta CSP cannot enforce it. It
        needs a response header, which GitHub Pages does not let us set. -->

@@ -5,6 +5,7 @@
    Do not hand-edit docs/*.html -- edit here and rebuild. */
 
 import { renderGuideFinder, renderGuideSections, renderGuideIndexNav, renderToolsBand, publishedGuides, productGuideLinks, renderGlossaryTag, guideCategories } from './guides.mjs';
+import { glossaryTerms } from './glossary.mjs';
 
 const currentYear = new Date().getFullYear();
 
@@ -1753,6 +1754,23 @@ const currentYear = new Date().getFullYear();
     }
   };
 
+
+/* Mirrors renderCard() in site-refresh.js element for element, because the
+   script reads these cards back out of the DOM and re-renders them when the
+   reader searches or picks a letter. If the two drift apart, a search result
+   stops looking like the card it replaced. */
+const escapeHtml = value => String(value)
+  .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+  .replace(/"/g, "&quot;");
+
+const renderGlossaryCards = () => glossaryTerms.map(term => `
+            <article class="sc-glossary-card" id="term-${term.id}">
+              <div class="sc-glossary-card-head"><h2>${escapeHtml(term.title)}</h2></div>
+              <p class="sc-glossary-definition">${escapeHtml(term.definition)}</p>${term.example ? `
+              <p class="sc-glossary-example"><span>Example: </span>${escapeHtml(term.example)}</p>` : ""}${term.categories && term.categories.length ? `
+              <ul class="sc-glossary-categories" aria-label="Categories">${term.categories.map(c => `<li>${escapeHtml(c)}</li>`).join("")}</ul>` : ""}
+            </article>`).join("");
+
   pages.glossary = {
     title: "Glossary | SelfCustody.ca",
     description: "Search more than 500 Bitcoin, mining, wallet, privacy, market, and self-custody terms.",
@@ -1781,16 +1799,14 @@ const currentYear = new Date().getFullYear();
               <button class="sc-glossary-clear" type="button" data-glossary-clear hidden>Clear</button>
             </div>
             <div class="sc-glossary-meta">
-              <p class="sc-glossary-count" data-glossary-count aria-live="polite">Loading the lexicon…</p>
+              <p class="sc-glossary-count" data-glossary-count aria-live="polite">${glossaryTerms.length} of ${glossaryTerms.length} terms</p>
               <div class="sc-glossary-letters" data-glossary-letters aria-label="Filter glossary by first letter"></div>
             </div>
           </div>
 
-          <div class="sc-glossary-status" data-glossary-status role="status">
-            <span class="sc-glossary-loader" aria-hidden="true"></span>
-            <p>Loading more than 500 Bitcoin terms…</p>
+          <div class="sc-glossary-status" data-glossary-status role="status" hidden></div>
+          <div class="sc-glossary-grid" data-glossary-results>${renderGlossaryCards()}
           </div>
-          <div class="sc-glossary-grid" data-glossary-results hidden></div>
 
           <div class="sc-glossary-empty" data-glossary-empty hidden>
             <span class="sc-eyebrow">No exact match</span>
@@ -1799,11 +1815,11 @@ const currentYear = new Date().getFullYear();
           </div>
 
           <noscript>
-            <div class="sc-callout"><h2>JavaScript is needed for the glossary</h2><p>The term catalogue is loaded from the public BTC Lexicon API so it can remain current.</p></div>
+            <div class="sc-callout"><h2>Search needs JavaScript</h2><p>Every term is on this page and every link into it works without scripting. The search box and the letter filter are the parts that do not.</p></div>
           </noscript>
 
           <footer class="sc-glossary-source">
-            <p><strong>Reference.</strong> The core term catalogue is provided by the public <a href="https://btclexicon.com/api/v2/terms" target="_blank" rel="noopener noreferrer">BTC Lexicon API</a>, as featured by <a href="https://timechainstats.com/" target="_blank" rel="noopener noreferrer">TimechainStats.com</a>. Additional entries are researched and written by SelfCustody.ca from primary specifications, official documentation, and public security guidance.</p>
+            <p><strong>Reference.</strong> Every definition here is written by SelfCustody.ca from primary specifications, official documentation, and public security guidance, and is published under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> along with the rest of this site's writing &mdash; reuse it, with credit. The glossary is deliberately narrow: it defines the terms these guides actually use, rather than cataloguing the whole vocabulary.</p>
           </footer>
         </div>
       </section>`
