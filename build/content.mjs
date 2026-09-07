@@ -534,7 +534,7 @@ const currentYear = new Date().getFullYear();
                   </tr>
                   <tr>
                     <th scope="row">Dedicated key-isolation chip</th>
-                    <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>EAL6+ TROPIC01</small></td>
+                    <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>TROPIC01, auditable; EAL6+ Optiga alongside</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-no" aria-label="Not part of the standard workflow">&#8212;</span><small>Secure MCU; 2-of-3 multisig</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>EAL6+ secure chip</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-partial" aria-label="Optional or model-dependent">&#9680;</span><small>Virtual secure element</small></td>
@@ -976,7 +976,7 @@ const currentYear = new Date().getFullYear();
                     <th scope="row">Personal/private node support</th>
                     <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>Bitcoin Core or Electrum server</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-partial" aria-label="Optional or model-dependent">&#9680;</span><small>Platform-dependent</small></td>
-                    <td><span class="sc-matrix-mark sc-matrix-no" aria-label="Not part of the standard workflow">&#8212;</span></td>
+                    <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>Own Electrum or Esplora node</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>Run your own Electrum server</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>EPS, ElectrumX, or Electrs</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-no" aria-label="Not part of the standard workflow">&#8212;</span></td>
@@ -999,7 +999,7 @@ const currentYear = new Date().getFullYear();
                     <td><span class="sc-matrix-mark sc-matrix-no" aria-label="Not part of the standard workflow">&#8212;</span></td>
                     <td><span class="sc-matrix-mark sc-matrix-no" aria-label="Not part of the standard workflow">&#8212;</span></td>
                     <td><span class="sc-matrix-mark sc-matrix-no" aria-label="Not part of the standard workflow">&#8212;</span></td>
-                    <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>WabiSabi coordinator</small></td>
+                    <td><span class="sc-matrix-mark sc-matrix-partial" aria-label="Optional or model-dependent">&#9680;</span><small>WabiSabi client; no first-party coordinator since 2024</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-no" aria-label="Not part of the standard workflow">&#8212;</span></td>
                   </tr>
 
@@ -1008,7 +1008,7 @@ const currentYear = new Date().getFullYear();
                     <th scope="row">Watch-only mode</th>
                     <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span></td>
                     <td><span class="sc-matrix-mark sc-matrix-partial" aria-label="Optional or model-dependent">&#9680;</span><small>Not fully detailed</small></td>
-                    <td><span class="sc-matrix-mark sc-matrix-no" aria-label="Not part of the standard workflow">&#8212;</span></td>
+                    <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span><small>From xpub or descriptor</small></td>
                     <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span></td>
                     <td><span class="sc-matrix-mark sc-matrix-yes" aria-label="Available">&#10003;</span></td>
                     <td><span class="sc-matrix-mark sc-matrix-partial" aria-label="Optional or model-dependent">&#9680;</span><small>Not fully detailed</small></td>
@@ -1296,7 +1296,7 @@ const currentYear = new Date().getFullYear();
               <div class="col-lg-6"><article id="bitcoinwell" class="sc-detail h-100"><div class="sc-exchange-brand"><img src="assets/img/exchanges/bitcoin-well.png" alt="" width="48" height="48" loading="lazy"><h2>Bitcoin Well</h2></div><p>A Canadian self-custody Bitcoin company offering an online portal, recurring buys, an OTC desk, and a network of cash ATMs. Its published model delivers purchased bitcoin to a wallet you control rather than providing custody.</p><h3>Why self-custody users consider it</h3><ul class="sc-check-list"><li>Automatic direct-to-wallet settlement.</li><li>Online, recurring, OTC, and cash purchase options.</li></ul><h3>Check</h3><ul class="sc-caution-list"><li>Online-portal and ATM pricing are different products.</li><li>Verification requirements and limits depend on the transaction method and amount.</li></ul>${externalLink("https://bitcoinwell.com/about")}</article></div>
               <div class="col-lg-6"><article id="shakepay" class="sc-detail is-custodial h-100"><div class="sc-exchange-brand"><img src="assets/img/exchanges/shakepay.png" alt="" width="48" height="48" loading="lazy"><h2>Shakepay</h2></div><p>A Canadian app focused on a simple buy, earn, and withdraw experience. Shakepay currently advertises free Bitcoin mainnet withdrawals and Lightning transfers, but bitcoin is custodial until you send it to your wallet.</p><h3>Why people consider it</h3><ul class="sc-check-list"><li>Simple onboarding, recurring buys, and Canadian app experience.</li><li>Beginner-friendly withdrawal flow.</li></ul><h3>Check</h3><ul class="sc-caution-list"><li>The effective spread in the quote even when a separate trading fee is not shown.</li><li>Current withdrawal minimums and policy before relying on free withdrawals.</li></ul>${externalLink("https://shakepay.com/bitcoin")}</article></div>
               <div class="col-lg-6"><article id="ndax" class="sc-detail is-custodial h-100"><div class="sc-exchange-brand"><img src="assets/img/exchanges/ndax.png" alt="" width="48" height="48" loading="lazy"><h2>Ndax</h2></div><p>A Canadian order-execution platform with CAD funding, an order book, multiple assets, and external withdrawals. Ndax currently publishes a flat 0.20% trading fee, while crypto withdrawals use asset-specific flat fees.</p><h3>Why people consider it</h3><ul class="sc-check-list"><li>Visible order-book workflow and posted trading fee.</li><li>CAD Interac and bank-transfer options.</li></ul><h3>Check</h3><ul class="sc-caution-list"><li>The bid-ask spread and asset withdrawal fee, not just the trading percentage.</li><li>Whether a smaller withdrawal is economical after the flat fee.</li></ul>${externalLink("https://ndax.io/en/fees")}</article></div>
-              <div class="col-lg-6"><article id="kraken" class="sc-detail is-custodial h-100"><div class="sc-exchange-brand"><img src="assets/img/exchanges/kraken.png" alt="" width="48" height="48" loading="lazy"><h2>Kraken</h2></div><p>A large global exchange with Canadian CAD support, Interac e-Transfer, cards, wire transfers, Canada Post funding, simple purchases, recurring buys, and advanced Kraken Pro trading tools.</p><h3>Why people consider it</h3><ul class="sc-check-list"><li>Deep product range, liquidity, advanced order types, and broad asset support.</li><li>Multiple Canadian funding methods.</li></ul><h3>Check</h3><ul class="sc-caution-list"><li>Simple-buy pricing can differ materially from Kraken Pro.</li><li>Funding and withdrawal charges vary by method and asset.</li></ul>${externalLink("https://www.kraken.com/ca/lp/kraken-in-canada")}</article></div>
+              <div class="col-lg-6"><article id="kraken" class="sc-detail is-custodial h-100"><div class="sc-exchange-brand"><img src="assets/img/exchanges/kraken.png" alt="" width="48" height="48" loading="lazy"><h2>Kraken</h2></div><p>A large global exchange with Canadian CAD support, Interac e-Transfer, cards, wire transfers, Canada Post funding, simple purchases, recurring buys, and advanced Kraken Pro trading tools.</p><h3>Why people consider it</h3><ul class="sc-check-list"><li>Deep product range, liquidity, advanced order types, and broad asset support.</li><li>Multiple Canadian funding methods.</li></ul><h3>Check</h3><ul class="sc-caution-list"><li>Simple-buy pricing can differ materially from Kraken Pro.</li><li>Funding and withdrawal charges vary by method and asset.</li></ul>${externalLink("https://www.kraken.com/ca")}</article></div>
               <div class="col-lg-6"><article id="bitbuy" class="sc-detail is-custodial h-100"><div class="sc-exchange-brand"><img src="assets/img/exchanges/bitbuy.png" alt="" width="48" height="48" loading="lazy"><h2>Bitbuy</h2></div><p>A Canadian crypto marketplace offering Express and Pro trading, Interac and bank funding, external withdrawals, and multiple assets. It operates under Coinsquare Capital Markets.</p><h3>Why people consider it</h3><ul class="sc-check-list"><li>Canadian-focused onboarding and regulation.</li><li>Choice between simple quotes and a Pro interface.</li></ul><h3>Check</h3><ul class="sc-caution-list"><li>Express quotes include spread; Pro uses maker/taker pricing.</li><li>Crypto withdrawal fees can change with the asset and network.</li></ul>${externalLink("https://bitbuy.ca/en-ca/fees")}</article></div>
             </div>
 
@@ -1305,7 +1305,7 @@ const currentYear = new Date().getFullYear();
               ["Bitcoin Well", "https://bitcoinwell.com/about"],
               ["Shakepay", "https://shakepay.com/bitcoin"],
               ["Ndax", "https://ndax.io/en/fees"],
-              ["Kraken Canada", "https://www.kraken.com/ca/lp/kraken-in-canada"],
+              ["Kraken Canada", "https://www.kraken.com/ca"],
               ["Bitbuy", "https://bitbuy.ca/en-ca/fees"]
             ])}
             <aside class="sc-exchange-next-step" aria-labelledby="exchange-next-step-title">
