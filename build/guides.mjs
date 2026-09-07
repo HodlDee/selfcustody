@@ -1319,7 +1319,7 @@ const guides = [
 
       <p>Two things metal is not. It is not theft protection &mdash; a plate is exactly as readable to whoever finds it as the paper was, and rather more durable in their hands. And it is not an excuse to keep only one copy. Durability and secrecy are separate problems, and location is still the whole of your defence on the second one.</p>
 
-      ${callout("The shortcut that halves the work", `Every word in the BIP39 list is uniquely identified by its first four letters &mdash; no two words share them. A plate recording <strong>ABAN</strong> is exactly as complete as one recording <strong>ABANDON</strong>. Four characters per word roughly halves both the stamping and the number of chances to mis-strike. Words shorter than four letters are written in full, and the shortcut applies to BIP39 wordlists only.`)}
+      ${callout("The shortcut that halves the work", `Every word in the BIP39 list is uniquely identified by its first four letters &mdash; no two words share them. A plate recording <strong>ABAN</strong> is exactly as complete as one recording <strong>ABANDON</strong>. Four characters per word roughly halves both the stamping and the number of chances to mis-strike. The 103 words shorter than four letters are written in full, and the shortcut applies to BIP39 wordlists only.`)}
 
       <p><a class="sc-text-link" href="seed-backup-metal.html">Durable seed backups <i class="bi bi-arrow-right"></i></a></p>
 
@@ -2100,10 +2100,12 @@ const guides = [
       ${checklist([
         "<strong>Address type.</strong> Restoring as Legacy when the original was Native SegWit produces a completely different-looking set of addresses from the same correct words. This is the most common cause by a distance.",
         "<strong>A missing passphrase.</strong> Without it you get the wallet that exists at the words alone, which is a real, valid, empty wallet. It looks exactly like a failure.",
-        "<strong>Word order.</strong> Two transposed words give a completely different wallet, and the <a href='../glossary.html#term-checksum'>checksum</a> will often still accept it.",
-        "<strong>A misread word.</strong> Handwriting confusions and near-identical BIP39 words are common. Check each word against the official wordlist.",
+        "<strong>Word order.</strong> Two transposed words give a completely different wallet &mdash; but the <a href='../glossary.html#term-checksum'>checksum</a> usually refuses them outright, roughly fifteen times out of sixteen for twelve words and 255 out of 256 for twenty-four.",
+        "<strong>A misread word.</strong> Handwriting confusions and near-identical BIP39 words are common, and the checksum rejects most of these too. Check each word against the official wordlist.",
         "<strong>Derivation path.</strong> Some wallets default to different paths. If the software lets you specify one, match the original."
       ])}
+
+      <p>Those last two are worth weighing correctly, because the folklore runs the other way. The checksum is a real error detector: change any word and the check bits at the end have to match by coincidence, which happens about one time in sixteen for a twelve-word phrase and one in 256 for twenty-four. So <strong>if your wallet accepted the phrase, a transcription mistake is one of the less likely explanations on this list</strong> &mdash; and the causes above it, which no checksum can see, are the more likely ones.</p>
 
       <p>If you work through all of that and it still does not match, treat the backup as unreliable. The correct response is not to keep trying &mdash; it is to generate a brand-new wallet on a device you trust, back that one up carefully, test it, and then move the funds across while you still can. You have caught the problem at the only moment when it is fixable.</p>
 
@@ -6977,13 +6979,13 @@ const guides = [
 
       <h2><span class="sc-article-num">3</span>You only need the first four letters</h2>
 
-      <p>Every word in the BIP39 list is uniquely identified by its first four letters. No two words share them. <em>Abandon</em> and <em>ability</em> differ by the fourth character; nothing beyond that is doing any work.</p>
+      <p>Every word in the BIP39 list is uniquely identified by its first four letters. No two words share them. <em>About</em> and <em>above</em> are identical until the fourth character, which is why four is the number; nothing beyond it is doing any work.</p>
 
       <p>So a backup recording <code>ABAN</code> is exactly as complete as one recording <code>ABANDON</code>, and stamping four characters per word rather than up to eight roughly halves the labour and the number of chances to make a mistake.</p>
 
       ${checklist([
         "Record four letters per word. Any wallet or wordlist will resolve them unambiguously.",
-        "Words shorter than four letters are written in full &mdash; there are only a handful.",
+        "Words shorter than four letters are written in full. There are 103 of them &mdash; about one word in twenty &mdash; so expect to meet one or two in a 24-word phrase.",
         "Number your words. Order is part of the secret, and a plate of unnumbered words is a puzzle you have set for your future self.",
         "This shortcut applies to BIP39 wordlists. If your wallet uses a different scheme &mdash; Electrum's own seed format, for instance &mdash; write the words in full."
       ])}
@@ -7608,7 +7610,7 @@ const guides = [
       <h2><span class="sc-article-num">7</span>Trade-offs you are choosing whether you notice or not</h2>
 
       <ul>
-        <li><strong>Secure element or open silicon.</strong> A secure element resists someone who has your device on a bench, which is a real and common threat. It is also, by construction, a chip you cannot audit. Fully open designs invert both halves of that.</li>
+        <li><strong>Secure element or open silicon.</strong> A secure element resists someone who has your device on a bench, which is a real and common threat. It has also, historically, been a chip you cannot audit &mdash; the design is behind an NDA and you are trusting a certification rather than reading anything. That is no longer quite the binary it was: Tropic Square's TROPIC01, shipping in the Trezor Safe 7 alongside a conventional certified element, publishes its design and datasheet for independent review. One example is not a trend, and the rest of the market still works the old way, but the trade is worth re-checking rather than assumed.</li>
         <li><strong>Closed or open firmware.</strong> Open firmware can be read and, at its best, reproduced. Closed firmware cannot, and you are trusting a process you can only see the outputs of. Neither answers the malicious-maintainer case on its own.</li>
         <li><strong>Standards or convenience.</strong> A device that stores a standard BIP39 phrase on a standard derivation path can be recovered on completely different hardware years from now. Anything proprietary makes the vendor&rsquo;s continued existence part of your backup plan.</li>
         <li><strong>How much the vendor knows about you.</strong> Customer databases leak; one hardware wallet company&rsquo;s did, and its customers received phishing and physical threats for years afterwards. Where a device is bought, and under what name, is part of this decision.</li>
@@ -7983,7 +7985,7 @@ const guides = [
 
       <h2><span class="sc-article-num">3</span>The gap limit</h2>
 
-      <p>Even on the correct branch, a wallet does not check infinitely many addresses. It works forward from index zero, and it stops after a run of consecutive empty ones &mdash; conventionally twenty. That run is the gap limit.</p>
+      <p>Even on the correct branch, a wallet does not check infinitely many addresses. It works forward from index zero, and it stops after a run of consecutive empty ones. That run is the gap limit, and BIP44 sets it at twenty: if the software hits twenty unused addresses in a row, it concludes there are no used addresses beyond that point and stops searching. Twenty is the standard rather than a habit, which is why almost every wallet you meet uses the same number &mdash; and why raising it is usually an explicit setting rather than the default.</p>
 
       <p>It exists for a sensible reason: each address has to be checked against the chain, and scanning forever would make restoring impossibly slow. But it creates a specific and genuinely alarming failure.</p>
 
