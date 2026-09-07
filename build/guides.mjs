@@ -2035,7 +2035,7 @@ const guides = [
     icon: "bi-arrow-counterclockwise",
     updated: "2026-08-17",
     status: "published",
-    related: ["quickstart", "owning-your-bitcoin", "what-not-to-normalize"],
+    related: ["quickstart", "owning-your-bitcoin", "what-not-to-normalize", "seed-to-key"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Writing down twelve or twenty-four words feels like the hard part is over. It is not. Until you have restored from those words and watched the correct wallet reappear, you do not have a backup &mdash; you have a hypothesis, and the test will otherwise be run for you at the worst possible time.</p>
@@ -6630,7 +6630,7 @@ const guides = [
     icon: "bi-shield-lock",
     updated: "2026-08-17",
     status: "published",
-    related: ["recovery-test-drill", "multisig-2of3", "what-not-to-normalize"],
+    related: ["recovery-test-drill", "multisig-2of3", "what-not-to-normalize", "seed-to-key"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Almost everything written about passphrases describes them as an extra password protecting your wallet. That description is wrong in a way that costs people their bitcoin, so it is worth replacing before anything else.</p>
@@ -7982,7 +7982,7 @@ const guides = [
     icon: "bi-diagram-2",
     updated: "2026-08-18",
     status: "published",
-    related: ["recovery-test-drill", "keys-addresses-utxos", "life-of-a-transaction"],
+    related: ["seed-to-key", "recovery-test-drill", "keys-addresses-utxos", "life-of-a-transaction"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Here is a scenario that plays out constantly, and almost never means what the person experiencing it thinks it means. You restore your seed words into a different wallet than the one you set up with. The words are accepted without complaint. The wallet opens. The balance is zero.</p>
@@ -7991,7 +7991,7 @@ const guides = [
 
       <h2><span class="sc-article-num">1</span>One seed, an unlimited tree of keys</h2>
 
-      <p>Your twelve or twenty-four words encode a single large number. From that number, a defined procedure produces a master key, and from the master key an endless branching structure of child keys &mdash; a hierarchical deterministic wallet, universally shortened to HD.</p>
+      <p>Your twelve or twenty-four words encode a single large number. From that number, a defined procedure produces a master key, and from the master key an endless branching structure of child keys &mdash; a hierarchical deterministic wallet, universally shortened to HD. (<a href="seed-to-key.html">What that procedure actually is</a>, step by step, if you want the layer underneath this one.)</p>
 
       <p>Deterministic is the important half. Nothing is random after the seed. Anyone starting from the same words and walking the same route through the tree arrives at exactly the same keys, every time, on any software. That is what makes a backup of twelve words sufficient to restore a wallet holding thousands of addresses.</p>
 
@@ -8081,6 +8081,192 @@ const guides = [
       <p>Seed words are the root of a deterministic tree, not a wallet. Finding your coins takes the words <em>plus</em> the route: address type, account, and enough patience to scan past the gap. Record the derivation path or, better, the descriptor alongside your backup, and a future restore becomes a two-minute job instead of an afternoon of dread.</p>
 
       ${callout("If you take one thing from this page", "An empty balance after a restore is far more often a wrong branch than a lost coin. Nothing on the chain has changed — the chain does not know or care which wallet you are using. Check the derivation path before you panic, and write it down now so you never have to.")}`
+  },
+  {
+    slug: "seed-to-key",
+    category: "concepts",
+    products: [],
+    title: "From words to keys",
+    summary: "How a wallet turns twelve words into a private key — the checksum, the 2,048 rounds of hashing, and the apostrophe in the derivation path that quietly decides whether an xpub can betray you.",
+    level: "intermediate",
+    minutes: 22,
+    goals: ["learn", "recover"],
+    tags: ["Fundamentals", "How it works"],
+    icon: "bi-diagram-2",
+    updated: "2026-09-06",
+    status: "published",
+    related: ["how-wallets-find-coins", "recovery-test-drill", "passphrase-setup"],
+    layout: "article",
+    body: `
+      <p class="sc-guide-intro"><a href="how-wallets-find-coins.html">How a wallet finds your coins</a> starts from a sentence worth stopping at: your words encode a number, and "a defined procedure produces a master key". This page is that procedure. It is four transformations, each of which explains a behaviour you have probably already met and found arbitrary.</p>
+
+      <p>None of this is required to use a wallet safely. It is required to <em>diagnose</em> one &mdash; because every silent failure in self-custody happens at one of these four steps, and knowing which one narrows an afternoon of guessing to a single question.</p>
+
+      <h2><span class="sc-article-num">1</span>The words are a number in a costume</h2>
+
+      <p>The BIP39 wordlist holds exactly 2,048 words. That number is not aesthetic. 2,048 is 2<sup>11</sup>, so each word stands for precisely eleven bits, and a phrase is nothing more than those bits laid end to end.</p>
+
+      <p>Twelve words is therefore 132 bits. But a 12-word wallet is described everywhere as 128-bit security, and the gap is the point of this section: <strong>128 bits are your secret, and the last 4 are a checksum computed from them.</strong></p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>Words</th><th>Secret (entropy)</th><th>Checksum</th><th>Total bits</th></tr></thead>
+          <tbody>
+            <tr><td><strong>12</strong></td><td>128 bits</td><td>4 bits</td><td>132 = 12 &times; 11</td></tr>
+            <tr><td><strong>15</strong></td><td>160 bits</td><td>5 bits</td><td>165</td></tr>
+            <tr><td><strong>18</strong></td><td>192 bits</td><td>6 bits</td><td>198</td></tr>
+            <tr><td><strong>21</strong></td><td>224 bits</td><td>7 bits</td><td>231</td></tr>
+            <tr><td><strong>24</strong></td><td>256 bits</td><td>8 bits</td><td>264</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The checksum is the first bits of the SHA-256 hash of your entropy &mdash; one checksum bit for every 32 bits of secret. That is the whole rule, and it is why the counts above are the only legal phrase lengths. Thirteen words is not a longer phrase; it is not a phrase.</p>
+
+      <h2><span class="sc-article-num">2</span>What the checksum actually catches</h2>
+
+      <p>The checksum is a genuine error detector, and it is worth knowing its strength precisely, because the folklore around it points people at the wrong suspect when a restore goes wrong.</p>
+
+      <p>Change anything about your phrase &mdash; a misread word, two words swapped &mdash; and the entropy bits change. The checksum recomputed from those new bits then has to coincidentally match the checksum bits already sitting at the end. For a 12-word phrase there are 4 such bits, so the odds of an accidental match are 1 in 16. For 24 words there are 8, so 1 in 256.</p>
+
+      ${checklist([
+        "<strong>A 12-word phrase catches a scrambled or misread word about 94% of the time.</strong> Roughly one error in sixteen slips through as a valid but different wallet.",
+        "<strong>A 24-word phrase catches it about 99.6% of the time.</strong> One in 256 slips through.",
+        "<strong>It cannot catch anything at all once the phrase is valid.</strong> A checksum says the words are internally consistent. It says nothing about whether they are <em>your</em> words."
+      ])}
+
+      <p>The practical inversion matters more than the arithmetic. If your wallet <em>accepted</em> the phrase and showed you an empty balance, a transcription error is one of the least likely explanations available &mdash; it had a 94% chance of being rejected outright and was not. The likely causes are the ones no checksum can see, and they are the subjects of the next two sections.</p>
+
+      ${callout("This is why the last word is not free", `In a 24-word phrase the final word carries the last three bits of your secret followed by all eight checksum bits. That is why you cannot simply pick a twenty-fourth word you like, and why <a href="dice-entropy.html">rolling your own entropy</a> ends with a device or a worksheet computing that word for you.`)}
+
+      ${figureSlot({
+        shot: "A handwritten seed card face down on a desk beside an open notebook, the notebook showing a column of hand-written eleven-digit binary numbers, one per line, in the same pen.",
+        caption: "Every word on the card is exactly eleven bits. The words are a friendlier way of writing down a number, not a different kind of thing.",
+        ratio: "16 / 9",
+        icon: "bi-diagram-2"
+      })}
+
+      <h2><span class="sc-article-num">3</span>The words are not the seed</h2>
+
+      <p>Here is the step most people skip, and it is the one that explains passphrases.</p>
+
+      <p>Your phrase is not fed to the wallet directly. It is put through PBKDF2 &mdash; a deliberately slow key-stretching function &mdash; running <strong>2,048 rounds of HMAC-SHA512</strong>, and what comes out is a 512-bit seed. The phrase is the password. And the salt, the other input, is the literal string <code>mnemonic</code> with your passphrase appended to it.</p>
+
+      <p>Three consequences fall straight out of that construction, and each is a thing people discover the hard way.</p>
+
+      <h3>A passphrase cannot be wrong</h3>
+
+      <p>Because the passphrase is part of the salt rather than something checked against a stored value, there is nothing to compare it to. Every passphrase produces a valid 512-bit seed, and therefore a real, working, completely different wallet. BIP39 says so directly: every passphrase generates a valid seed, but only the correct one makes the desired wallet available.</p>
+
+      <p>This is the mechanism behind the symptom. A mistyped passphrase cannot produce an error message, because from the software's point of view nothing went wrong &mdash; you asked for a different wallet and it built one, correctly, and it is empty. A trailing space, a capital letter, a different Unicode dash: each is a separate wallet, silently.</p>
+
+      <h3>The wordlist is part of the input</h3>
+
+      <p>PBKDF2 hashes the text of the phrase, not the numbers behind it. So the same twelve concepts written in the English and Japanese wordlists produce entirely unrelated seeds. The specification is blunt about it: translating a mnemonic to a different wordlist necessarily creates a completely different seed. Record the language along with the words.</p>
+
+      <h3>2,048 rounds is a speed bump, not armour</h3>
+
+      <p>Worth saying plainly, because passphrase advice often implies otherwise. 2,048 iterations is a very low work factor by modern standards &mdash; password hashing schemes designed for the job use orders of magnitude more. If someone holds your recovery words and is guessing at the passphrase, that stretching buys you very little.</p>
+
+      <p>A passphrase protects you because it is <em>long and unguessable</em>, not because the derivation is expensive. Treat a short memorable passphrase on top of a compromised seed card as a delay, not a defence &mdash; which is the argument <a href="passphrase-setup.html">the passphrase guide</a> makes from the practical side.</p>
+
+      <h2><span class="sc-article-num">4</span>The seed becomes the root of the tree</h2>
+
+      <p>The 512-bit seed is hashed once more, and this is where the tree in <a href="how-wallets-find-coins.html">the previous guide</a> actually begins. The seed is run through HMAC-SHA512 keyed with the fixed string <code>Bitcoin seed</code>, and the 64 bytes that come out are cut in half:</p>
+
+      ${checklist([
+        "<strong>The left 32 bytes become the master private key.</strong> This is the number everything else descends from.",
+        "<strong>The right 32 bytes become the master chain code.</strong> Extra entropy mixed into every child derivation, so that knowing a key is not enough to derive its siblings."
+      ])}
+
+      <p>A key plus its chain code is what an <em>extended</em> key means &mdash; the "x" in xprv and xpub. That pairing is what makes a whole branch derivable from one string, and it is what the next section is about.</p>
+
+      <h2><span class="sc-article-num">5</span>The apostrophe, and why it is a security control</h2>
+
+      <p>You have seen a path written <code>m/84'/0'/0'/0/0</code>. Three of those numbers carry an apostrophe and two do not, and the difference is not decorative &mdash; it is the most consequential detail on this page.</p>
+
+      <p>Each extended key can produce two kinds of child. Normal children use indexes 0 through 2<sup>31</sup>&minus;1. Hardened children use the range above that, and the apostrophe (sometimes written <code>h</code>) is shorthand for "add 2<sup>31</sup>". The two are derived by different procedures, and only one of them can be performed with a public key.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th></th><th>Normal (<code>0</code>)</th><th>Hardened (<code>0'</code>)</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Derives from</strong></td><td>The parent public key</td><td>The parent private key only</td></tr>
+            <tr><td><strong>An xpub can walk it</strong></td><td>Yes</td><td>No</td></tr>
+            <tr><td><strong>Enables watch-only</strong></td><td>Yes</td><td>No</td></tr>
+            <tr><td><strong>Contains the leak below</strong></td><td>No</td><td>Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The leak is the reason hardened derivation exists, and BIP32 flags it as a weakness that is not immediately obvious. Stated plainly:</p>
+
+      ${pullQuote("Anyone holding an extended public key <em>and</em> a single normal child private key descending from it can compute the parent private key — and from there every key in that branch.")}
+
+      <p>Read that as an operational rule rather than a curiosity. An xpub is not secret, and it gets handed out: to a watch-only phone, a coordinator, a block explorer. A private key for one address is a much smaller thing, and people are correspondingly casual with them &mdash; sweeping a single address into another wallet, exporting one key for a payment processor, pasting one into a tool. On their own, each is survivable. <strong>Together, in the same branch, they reconstruct the branch.</strong></p>
+
+      <h3>Which is why the path is shaped the way it is</h3>
+
+      <p>Look again at <code>m/84'/0'/0'/0/0</code> with that in mind, and the design stops looking arbitrary:</p>
+
+      ${checklist([
+        "<strong>Purpose, coin and account are hardened</strong> &mdash; <code>84'/0'/0'</code>. The account is the boundary you are allowed to export. Hardening it means an account xpub reveals that account and can never be walked upward into your master key or sideways into your other accounts.",
+        "<strong>Change and index are not</strong> &mdash; <code>/0/0</code>. They deliberately stay normal, because that is precisely what lets a watch-only wallet hold only an xpub and still generate every future receiving address without ever seeing a private key."
+      ])}
+
+      <p>The tree is drawn so that the cut line is the account. Everything above it is sealed; everything below it is publicly derivable on purpose. That single decision is what makes air-gapped signing and watch-only wallets possible at all.</p>
+
+      <h3>What it costs you in practice</h3>
+
+      <p>One habit follows from the leak, and it is cheap: <strong>do not export individual private keys out of an HD wallet whose xpub is anywhere else.</strong> If you need to move one address's coins somewhere, spend them in a transaction rather than exporting the key. Sweeping a single key from a wallet you have shared the xpub of is the exact shape of the attack.</p>
+
+      <h2><span class="sc-article-num">6</span>Same key, different hats: xpub, ypub, zpub</h2>
+
+      <p>Restore a wallet and you may be handed a string starting <code>zpub</code> where you expected <code>xpub</code>, or asked which one you have. This causes a great deal of confusion for something that is, underneath, cosmetic.</p>
+
+      <p>An extended key is serialised with four leading version bytes. SLIP-132 registered alternative values for those bytes so that the human-readable prefix would announce the intended address type &mdash; <code>xpub</code> for legacy, <code>ypub</code> for wrapped SegWit, <code>zpub</code> for native SegWit, with capitalised <code>Ypub</code> and <code>Zpub</code> for the multisig equivalents.</p>
+
+      ${cautions([
+        "The key material is identical. A <code>zpub</code> and an <code>xpub</code> for the same node differ only in four bytes of packaging; converting between them changes no keys and moves no coins.",
+        "It is a registry, not a Bitcoin standard. SLIP-132 exists because a bare <code>xpub</code> could not say which address type was meant, and it describes itself as an interim measure pending descriptors.",
+        "Plenty of software only speaks <code>xpub</code>. Bitcoin Core among them. Being told your <code>zpub</code> is invalid usually means the receiving software wants the same key in <code>xpub</code> clothing plus an explicit derivation path."
+      ])}
+
+      <p>This is the problem output descriptors were designed to end. A descriptor states the script type, the key and the path in one unambiguous string, so nothing has to be inferred from a prefix &mdash; which is why <a href="how-wallets-find-coins.html">the previous guide</a> tells you to save the descriptor rather than the path.</p>
+
+      <h2><span class="sc-article-num">7</span>Where each failure actually lives</h2>
+
+      <p>The point of walking the four transformations is that a symptom now tells you which one broke.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>Symptom</th><th>Step that produced it</th><th>Recoverable?</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Wallet rejects the phrase</strong></td><td>Step 2 &mdash; the checksum</td><td>Yes. A word is wrong; the check did its job.</td></tr>
+            <tr><td><strong>Accepted, zero balance, path confirmed</strong></td><td>Step 3 &mdash; passphrase</td><td><strong>Only if you recall it.</strong> Nothing can test it for you.</td></tr>
+            <tr><td><strong>Accepted, zero balance, no passphrase set</strong></td><td>Step 5 &mdash; wrong branch</td><td>Yes. Change the derivation path.</td></tr>
+            <tr><td><strong>Some coins visible, others missing</strong></td><td>The gap limit</td><td>Yes. Raise it and rescan.</td></tr>
+            <tr><td><strong>Software rejects your extended key</strong></td><td>Step 6 &mdash; SLIP-132 prefix</td><td>Yes. Convert the prefix; no keys change.</td></tr>
+            <tr><td><strong>Phrase was written in another language</strong></td><td>Step 3 &mdash; wordlist</td><td>Yes. Select the original wordlist.</td></tr>
+          </tbody>
+        </table>
+      </div>
+        <div class="sc-survival-row" role="row"><strong role="rowheader">Phrase written in another language</strong><span role="cell">3, wordlist</span><span class="is-pass" role="cell">Yes &mdash; select the language</span></div>
+      </div>
+
+      <p>Only one row in that table is genuinely unrecoverable, and it is the passphrase. Everything else is a matter of telling the software where to look. That asymmetry is the argument for treating a passphrase as a second irreplaceable secret rather than a convenience.</p>
+
+      <h2>The short version</h2>
+
+      <p>Words carry eleven bits each, with the tail end spent on a checksum that catches most transcription errors and no wrong-wallet errors at all. Those words plus a passphrase are stretched into a 512-bit seed, which is hashed into a master key and chain code. The apostrophes in the path mark where the tree is sealed, so that an account can be published as an xpub without publishing everything above it &mdash; and the segments without apostrophes are what let a watch-only wallet work.</p>
+
+      <p>Everything downstream is bookkeeping on top of those four steps.</p>
+
+      ${callout("If you take one thing from this page", `A checksum proves your words are internally consistent, not that they are yours. The failures that actually strand people &mdash; a passphrase off by one character, a branch nobody wrote down &mdash; all happen after the checksum has already said yes. That is why <a href="recovery-test-drill.html">restoring once, deliberately</a> is the only check that covers them.`)}
+
+      <p class="sc-source-note">
+        The mechanics here are drawn from the specifications rather than from any wallet's behaviour: BIP39 for the checksum and the PBKDF2 construction, BIP32 for master key generation and hardened derivation, and SLIP-132 for the version-byte prefixes. Where a wallet appears to disagree with this page, the wallet is what your coins obey.
+      </p>`
   },
   {
     slug: "address-types",

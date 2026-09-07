@@ -98,7 +98,7 @@
 
       <h2><span class="sc-article-num">1</span>One seed, an unlimited tree of keys</h2>
 
-      <p>Your twelve or twenty-four words encode a single large number. From that number, a defined procedure produces a master key, and from the master key an endless branching structure of child keys &mdash; a hierarchical deterministic wallet, universally shortened to HD.</p>
+      <p>Your twelve or twenty-four words encode a single large number. From that number, a defined procedure produces a master key, and from the master key an endless branching structure of child keys &mdash; a hierarchical deterministic wallet, universally shortened to HD. (<a href="seed-to-key.html">What that procedure actually is</a>, step by step, if you want the layer underneath this one.)</p>
 
       <p>Deterministic is the important half. Nothing is random after the seed. Anyone starting from the same words and walking the same route through the tree arrives at exactly the same keys, every time, on any software. That is what makes a backup of twelve words sufficient to restore a wallet holding thousands of addresses.</p>
 
@@ -195,7 +195,16 @@
     <section class="sc-section sc-section-muted sc-related-guides">
       <div class="container">
         <div class="sc-section-head"><span class="sc-eyebrow">Keep going</span><h2>Related guides</h2></div>
-        <div class="row g-4"><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="recovery-test-drill.html">
+        <div class="row g-4"><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="seed-to-key.html">
+            <div class="sc-card-body">
+              <div class="sc-guide-card-top">
+                <div class="sc-icon"><i class="bi bi-diagram-2"></i></div>
+                <span class="sc-level sc-level-intermediate">Intermediate</span>
+              </div>
+              <h3>From words to keys</h3>
+              <p>How a wallet turns twelve words into a private key — the checksum, the 2,048 rounds of hashing, and the apostrophe in the derivation path that quietly decides whether an xpub can betray you.</p>
+              <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
+            </div></a></div><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="recovery-test-drill.html">
             <div class="sc-card-body">
               <div class="sc-guide-card-top">
                 <div class="sc-icon"><i class="bi bi-arrow-counterclockwise"></i></div>
