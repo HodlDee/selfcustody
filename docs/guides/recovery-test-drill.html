@@ -25,9 +25,9 @@
   <link rel="icon" href="../assets/img/favicon.png">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css?v=20260829-03" rel="stylesheet">
-  <link href="../assets/css/style.css?v=20260829-03" rel="stylesheet">
-  <link href="../assets/css/site-refresh.css?v=20260829-03" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css?v=20260906-01" rel="stylesheet">
+  <link href="../assets/css/style.css?v=20260906-01" rel="stylesheet">
+  <link href="../assets/css/site-refresh.css?v=20260906-01" rel="stylesheet">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Test your recovery without risking your coins","description":"A backup you have never restored is a guess. Here is how to prove it works, including which method to use when you only own one device and it already holds funds.","url":"https://selfcustody.ca/guides/recovery-test-drill.html","datePublished":"2026-08-17","dateModified":"2026-08-17","inLanguage":"en-CA","publisher":{"@type":"Organization","name":"SelfCustody.ca","url":"https://selfcustody.ca/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://selfcustody.ca/guides/recovery-test-drill.html"}}</script>
 </head>
 <body class="site-refresh" data-page="guides">
@@ -163,7 +163,9 @@
 
       <p>Do not panic, and do not wipe anything. A mismatch usually means the test was set up differently from the original wallet, not that your backup is worthless. Work through these in order.</p>
 
-      <ul class="sc-check-list"><li><strong>Address type.</strong> Restoring as Legacy when the original was Native SegWit produces a completely different-looking set of addresses from the same correct words. This is the most common cause by a distance.</li><li><strong>A missing passphrase.</strong> Without it you get the wallet that exists at the words alone, which is a real, valid, empty wallet. It looks exactly like a failure.</li><li><strong>Word order.</strong> Two transposed words give a completely different wallet, and the <a href='../glossary.html#term-checksum'>checksum</a> will often still accept it.</li><li><strong>A misread word.</strong> Handwriting confusions and near-identical BIP39 words are common. Check each word against the official wordlist.</li><li><strong>Derivation path.</strong> Some wallets default to different paths. If the software lets you specify one, match the original.</li></ul>
+      <ul class="sc-check-list"><li><strong>Address type.</strong> Restoring as Legacy when the original was Native SegWit produces a completely different-looking set of addresses from the same correct words. This is the most common cause by a distance.</li><li><strong>A missing passphrase.</strong> Without it you get the wallet that exists at the words alone, which is a real, valid, empty wallet. It looks exactly like a failure.</li><li><strong>Word order.</strong> Two transposed words give a completely different wallet &mdash; but the <a href='../glossary.html#term-checksum'>checksum</a> usually refuses them outright, roughly fifteen times out of sixteen for twelve words and 255 out of 256 for twenty-four.</li><li><strong>A misread word.</strong> Handwriting confusions and near-identical BIP39 words are common, and the checksum rejects most of these too. Check each word against the official wordlist.</li><li><strong>Derivation path.</strong> Some wallets default to different paths. If the software lets you specify one, match the original.</li></ul>
+
+      <p>Those last two are worth weighing correctly, because the folklore runs the other way. The checksum is a real error detector: change any word and the check bits at the end have to match by coincidence, which happens about one time in sixteen for a twelve-word phrase and one in 256 for twenty-four. So <strong>if your wallet accepted the phrase, a transcription mistake is one of the less likely explanations on this list</strong> &mdash; and the causes above it, which no checksum can see, are the more likely ones.</p>
 
       <p>If you work through all of that and it still does not match, treat the backup as unreliable. The correct response is not to keep trying &mdash; it is to generate a brand-new wallet on a device you trust, back that one up carefully, test it, and then move the funds across while you still can. You have caught the problem at the only moment when it is fixable.</p>
 
@@ -277,6 +279,6 @@
       </div>
     </footer></div>
   <noscript><div class="container py-4"><p><strong>JavaScript is off, so the menu button will not open.</strong> Every page:</p><ul><li><a href="../index.html">Home</a></li><li><a href="../guides.html">Guides</a></li><li><a href="../devices.html">Devices</a></li><li><a href="../software.html">Software</a></li><li><a href="../exchanges.html">Exchanges</a></li><li><a href="../glossary.html">Glossary</a></li><li><a href="../dashboard.html">Dashboard</a></li><li><a href="../contact.html">Get Help</a></li></ul></div></noscript>
-  <script src="../assets/js/site-refresh.js?v=20260829-03"></script>
+  <script src="../assets/js/site-refresh.js?v=20260906-01"></script>
 </body>
 </html>
