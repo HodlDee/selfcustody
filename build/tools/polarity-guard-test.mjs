@@ -196,6 +196,45 @@ console.log('polarity guard');
     `${r.dashes} dashes, ${r.structural.length} structural`);
 }
 
+/* The prose side of the same failure, and the one that survived the first
+   hardening pass. Review added a second class to one guide's article div -- no
+   visible change, the kind of edit made while styling a page -- and the guard
+   read none of that guide, missed a contradiction planted in it, reported no
+   structural problem and passed all nineteen cases then in this file.
+
+   A harmless class must not remove a guide from review, and a guide that
+   genuinely cannot be read must say so. */
+{
+  const r = fixture(({ rewrite }) => {
+    rewrite('guides/jade-setup.html', '<div class="sc-article">',
+      '<div class="sc-article sc-article-wide"><p>Blockstream Jade Plus supports NFC.</p>');
+  });
+  ok('an extra class on the article div does not hide the guide',
+    r.conflicts.some(c => c.product === 'Blockstream Jade Plus' && c.feature === 'NFC'),
+    `${r.conflicts.length} conflicts, ${r.sentences} sentences`);
+}
+{
+  /* The class token has to be matched as a token. sc-article-num appears all
+     over these pages, and a regex using \b would match inside it. */
+  const r = fixture(({ rewrite }) => rewrite('guides/jade-setup.html',
+    '<div class="sc-article">', '<div id="body" class="wide sc-article extra" data-x="1">'));
+  ok('extra attributes and surrounding classes are tolerated',
+    r.structural.length === 0 && r.sentences > 6600,
+    `${r.sentences} sentences, structural ${JSON.stringify(r.structural)}`);
+}
+{
+  const r = fixture(({ rewrite }) => rewrite('guides/jade-setup.html',
+    '<div class="sc-article">', '<div class="sc-body">'));
+  ok('a guide body that cannot be read is a structural failure',
+    r.structural.some(s => /no readable article body/.test(s)), JSON.stringify(r.structural));
+}
+{
+  const r = fixture(({ rewrite }) => rewrite('software.html',
+    /<article([^>]*)class="([^"]*)sc-detail([^"]*)"/, '<article$1class="$2sc-details$3"'));
+  ok('a product detail section that goes missing is a structural failure',
+    r.structural.some(s => /detail sections/.test(s)), JSON.stringify(r.structural));
+}
+
 /* Coverage counts are part of the report, so a change that quietly reduces
    them is visible. */
 {
@@ -203,10 +242,14 @@ console.log('polarity guard');
   ok('the report carries explicit coverage counts',
     r.dashes === 87 && r.checked === 73,
     `${r.checked} of ${r.dashes} -- if the matrices changed on purpose, update MATRIX_PAGES and this case`);
+  /* Matrix counts did not move in the class-change defect above. The sentence
+     count did, by about a hundred, and nothing was reading it. */
+  ok('the report carries a prose count too',
+    r.sentences > 6000, `${r.sentences} sentences`);
 }
 
 if (failures) {
   console.error(`\n  ABORT: ${failures} polarity guard case(s) failed`);
   process.exit(1);
 }
-console.log('polarity guard: 19 cases pass -- planted claims found, denials ignored, partial loss of the matrices fatal');
+console.log('polarity guard: 24 cases pass -- planted claims found, denials ignored, partial loss of the matrices or the prose fatal');

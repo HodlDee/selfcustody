@@ -275,11 +275,43 @@ function readMatrices(root, structural) {
   return cells;
 }
 
+/* Does this tag's class attribute carry `name` as a whole token?
+
+   Written out rather than done with a regex because the obvious regex is
+   wrong. `\\bsc-article\\b` matches inside `sc-article-num`, since a hyphen is
+   a non-word character and the boundary falls between "article" and "-".
+   Splitting the attribute on whitespace cannot make that mistake. */
+function hasClass(tag, name) {
+  const attr = tag.match(/\sclass="([^"]*)"/);
+  return !!attr && attr[1].split(/\s+/).includes(name);
+}
+
+/* Every opening tag of `element` carrying `className`, whatever else is on it.
+
+   The first version matched the literal string `<div class="sc-article">`.
+   Review added one further class to one guide -- a change with no visible
+   effect, of exactly the kind someone makes while styling a page -- and the
+   guard read none of that guide's prose, found none of the contradiction
+   planted in it, reported no structural problem, and passed. The sentence
+   count fell by a hundred and nothing was looking at the sentence count. */
+function openingTags(html, element, className) {
+  const positions = [];
+  for (const m of html.matchAll(new RegExp(`<${element}\\b[^>]*>`, 'g'))) {
+    if (hasClass(m[0], className)) positions.push(m.index);
+  }
+  return positions;
+}
+
 /* The prose a reader would take as a statement about a product: guide bodies,
    and the detail sections on the product pages. Matrices, legends and source
    notes are cut out first -- a table describing a dash is not prose claiming
-   the opposite of one. */
-function readProse(root) {
+   the opposite of one.
+
+   Extraction failure is a structural failure here, not an empty result. A page
+   that should have a body and does not is the guard going blind on that page,
+   and going blind quietly is the thing this file keeps having to be taught not
+   to do. */
+function readProse(root, structural) {
   const units = [];
   const push = (where, html) => {
     const text = stripTags(
@@ -295,16 +327,47 @@ function readProse(root) {
   const guides = join(root, 'docs/guides');
   for (const file of readdirSync(guides).filter(f => f.endsWith('.html')).sort()) {
     const html = readFileSync(join(guides, file), 'utf8');
-    for (const body of html.match(/<div class="sc-article">[\s\S]*?<\/main>/g) || []) {
-      push(`guides/${file}`, body);
+    const bodies = openingTags(html, 'div', 'sc-article');
+
+    if (!bodies.length) {
+      /* The two redirect stubs have no article and are not meant to. Anything
+         else without one is a page this guard cannot see. */
+      if (!/<meta[^>]+http-equiv="refresh"/i.test(html)) {
+        structural.push(`guides/${file} has no readable article body, so none of its prose is checked`);
+      }
+      continue;
+    }
+
+    for (const start of bodies) {
+      const end = html.indexOf('</main>', start);
+      if (end === -1) {
+        structural.push(`guides/${file} opens an article body that never reaches </main>`);
+        continue;
+      }
+      push(`guides/${file}`, html.slice(start, end));
     }
   }
-  for (const { file } of MATRIX_PAGES) {
+  for (const { file, columns } of MATRIX_PAGES) {
     const path = join(root, file);
     if (!existsSync(path)) continue;
     const html = readFileSync(path, 'utf8');
-    for (const detail of html.match(/<article[^>]*class="[^"]*sc-detail[^"]*"[\s\S]*?<\/article>/g) || []) {
-      push(basename(file), detail);
+    const starts = openingTags(html, 'article', 'sc-detail');
+
+    /* One detail section per compared product. That is a property of how these
+       pages are written rather than a number picked to be asserted, which is
+       what makes it worth asserting: if the two drift apart, either a product
+       lost its prose or the matrix gained a column nobody described. */
+    if (starts.length !== columns) {
+      structural.push(`${basename(file)}: ${starts.length} product detail sections against ${columns} matrix columns`);
+    }
+
+    for (const start of starts) {
+      const end = html.indexOf('</article>', start);
+      if (end === -1) {
+        structural.push(`${basename(file)} opens a product detail that never closes`);
+        continue;
+      }
+      push(basename(file), html.slice(start, end));
     }
   }
   return units;
@@ -350,7 +413,7 @@ function claims(sentence, forms) {
 export function checkPolarity(root = '.') {
   const structural = [];
   const dashes = readMatrices(root, structural);
-  const prose = readProse(root);
+  const prose = readProse(root, structural);
   const acknowledged = new Map(ACKNOWLEDGED.map(a => [`${a.product}|${a.feature}|${a.where}|${a.digest}`, a]));
   const seen = new Set();
   const conflicts = [];
