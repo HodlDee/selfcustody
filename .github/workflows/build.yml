@@ -74,8 +74,9 @@ jobs:
         run: node build/tools/ci-scope-test.mjs
 
       # Also runs, in order: the icon-subset check, the fetch guard, the glyph
-      # guard, the licence-notice guard and the Workshop guard. Any of them
-      # failing exits non-zero.
+      # guard, the licence-notice guard, the Workshop guard and the polarity
+      # guard, which fails if a feature matrix and a guide disagree about what
+      # a product does. Any of them failing exits non-zero.
       # The ?v= asset query is derived by hashing four CSS/JS files. It used to
       # hash raw working-tree bytes, so a CRLF clone of the same commit stamped
       # a different version on all 72 pages -- against the very next step,
@@ -88,6 +89,15 @@ jobs:
 
       - name: Build and guards
         run: node build/render.mjs
+
+      # The polarity guard decides whether a sentence claims a capability, and
+      # that decision is a pile of regular expressions -- code that goes on
+      # passing after it has stopped working. This plants contradictions into a
+      # copy of the tree the step above just built and requires the guard to
+      # find them. It runs after the build so it reads generated pages rather
+      # than whatever was committed.
+      - name: The polarity guard still catches a contradiction
+        run: node build/tools/polarity-guard-test.mjs
 
       # A build on a clean checkout must leave the tree exactly as committed.
       # If this fails, either someone edited docs/ by hand or the build is not

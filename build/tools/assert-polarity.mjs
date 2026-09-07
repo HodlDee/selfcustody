@@ -1,0 +1,351 @@
+/* A comparison table and a guide may not say opposite things about a product.
+
+   Every product on this site is described twice: once as a mark in a feature
+   matrix on devices.html, software.html or exchanges.html, and again in prose
+   somewhere in the guide library. The two are written months apart, by
+   different passes, from different sources -- and nothing connected them. A
+   matrix cell could say a device has no air-gapped signing path while a guide
+   walked the reader through using one, and the build would be perfectly happy.
+
+   That is the specific failure this guard exists for, and it is worth stating
+   what makes it worse than an ordinary typo. A reader who notices the
+   contradiction learns that the site does not check itself. A reader who does
+   not notice takes whichever half they read first and acts on it. Neither
+   outcome is acceptable on a site whose whole instruction is verify rather
+   than trust, so this is asserted rather than left to review.
+
+   ---------------------------------------------------------------- scope ----
+
+   Only dashes are checked -- cells marked "not part of the standard
+   workflow". A dash is a flat denial, so prose asserting the capability is a
+   flat contradiction, and there is no reading under which both are true.
+
+   "Optional or model-dependent" is deliberately out of scope. Prose saying a
+   device does something a matrix marks half-available is usually correct and
+   more specific than the mark, and flagging it would train whoever reads this
+   output to skim past it. A guard nobody reads is worse than no guard.
+
+   The matrices are read from what is actually written to docs/, because that
+   is the copy a reader receives. The prose is read from the guide bodies and
+   the product detail sections, and not from index pages -- a card grid
+   concatenates a dozen summaries and their tag chips into text that reads
+   like a sentence and is not one.
+
+   -------------------------------------------------- how a claim is found ----
+
+   Co-occurrence is not attribution, and assuming otherwise is how this kind of
+   check becomes noise. "USB for Trezor, Ledger and BitBox02; microSD for
+   COLDCARD; QR for SeedSigner and Passport" names seven products and three
+   capabilities and attributes none of them wrongly. A first version of this
+   guard flagged that sentence six times.
+
+   So a claim has to be shaped like one: the product and the capability joined
+   by something that predicates one of the other -- has, offers, supports,
+   ships with, signs over, its own -- with no negation between them. Anything
+   looser was measured against the library as it stands and produced dozens of
+   candidates, none of them real.
+
+   ------------------------------------------------------- acknowledgements ----
+
+   Matching prose is a heuristic and always will be, so every candidate is
+   either a contradiction or a recorded judgement. ACKNOWLEDGED holds the
+   pairings that were read and found correct, each with the reason. That has
+   two consequences worth having: the reasoning is in the repository rather
+   than in a review comment nobody can find later, and editing an acknowledged
+   sentence changes its digest and puts it back in front of a reviewer, which
+   is the moment the judgement is most likely to have gone stale. */
+
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { join, basename } from 'node:path';
+
+/* The pages carrying a feature matrix. Each is also read for its own detail
+   prose, which is the other half of every product description on this site. */
+const MATRIX_PAGES = ['docs/devices.html', 'docs/software.html', 'docs/exchanges.html'];
+
+/* Column headings name a model or a range; prose names the brand. Each pattern
+   has to match the way a guide would actually refer to the product, which is
+   rarely the way a table column does. */
+const PRODUCT_PATTERNS = {
+  'Trezor Safe 7':         String.raw`Trezor(?:\s+Safe(?:\s+\w+)?)?`,
+  'Bitkey':                String.raw`Bitkey`,
+  'BitBox02':              String.raw`BitBox02`,
+  'Blockstream Jade Plus': String.raw`(?:Blockstream\s+)?Jade(?:\s+Plus)?`,
+  'COLDCARD Q / Mk5':      String.raw`COLDCARD(?:\s+(?:Q|Mk\d))?`,
+  'Foundation Passport':   String.raw`(?:Foundation\s+)?Passport(?:\s+Prime)?`,
+  'SeedSigner':            String.raw`SeedSigner`,
+  'Krux':                  String.raw`Krux`,
+  'Ledger':                String.raw`Ledger(?:\s+(?:Nano|Flex|Stax)(?:\s+\w+)?)?`,
+  'Sparrow':               String.raw`Sparrow`,
+  'Nunchuk':               String.raw`Nunchuk`,
+  'Cove':                  String.raw`Cove`,
+  'Electrum':              String.raw`Electrum`,
+  'BlueWallet':            String.raw`BlueWallet`,
+  'Wasabi':                String.raw`Wasabi`,
+  'Specter':               String.raw`Specter(?:\s+Desktop)?`,
+  'Bull Bitcoin':          String.raw`Bull\s+Bitcoin`,
+  'Bitcoin Well':          String.raw`Bitcoin\s+Well`,
+  'Shakepay':              String.raw`Shakepay`,
+  'Ndax':                  String.raw`Ndax`,
+  'Kraken':                String.raw`Kraken`,
+  'Bitbuy':                String.raw`Bitbuy`
+};
+
+/* What the capability sounds like in prose, keyed by the matrix row it belongs
+   to. A row with no entry here is not checked, and that is a deliberate
+   position rather than an omission: "Transaction review on device" and
+   "Interac e-Transfer" have no phrasing distinctive enough to tell a claim
+   from a passing mention, and a check that cannot tell those apart would only
+   produce work. Rows that are all-yes are not listed either, since there is no
+   dash for prose to contradict. */
+const CAPABILITY_PATTERNS = {
+  'Dedicated key-isolation chip':   String.raw`secure element|secure chip|key.isolation chip`,
+  'Bitcoin only firmware':          String.raw`[Bb]itcoin.only firmware`,
+  'Fully air-gapped signing path':  String.raw`air.?gapp?e?d?`,
+  'Camera-based QR signing':        String.raw`QR(?:\s+code)?s?\b|camera`,
+  'Removable media for signing':    String.raw`micro ?SD|SD card`,
+  'Removable-media backup':         String.raw`micro ?SD|SD card`,
+  'USB data connection':            String.raw`USB`,
+  'Bluetooth':                      String.raw`Bluetooth`,
+  'NFC':                            String.raw`NFC`,
+  'Recovery words supported':       String.raw`recovery words|seed phrase|BIP.?39`,
+  'Runs without storing a seed':    String.raw`stateless|amnesic`,
+  'Desktop app':                    String.raw`desktop app`,
+  'Mobile app':                     String.raw`mobile app|phone app`,
+  'Personal/private node support':  String.raw`own node|personal node`,
+  'Tor support':                    String.raw`Tor\b`,
+  'CoinJoin / advanced privacy':    String.raw`CoinJoin`,
+  'Coin control / UTXO management': String.raw`coin control`,
+  'Labels (BIP-329)':               String.raw`BIP.?329`,
+  'Multisig support':               String.raw`multisig|multisignature`,
+  'Lightning support':              String.raw`Lightning`,
+  'Bitcoin-only platform':          String.raw`[Bb]itcoin.only`,
+  'Direct-to-wallet settlement':    String.raw`direct.to.wallet`,
+  'Order-book / pro trading interface': String.raw`order.book`
+};
+
+/* The verbs that turn a mention into a claim. Nothing here is a preposition on
+   its own: "QR for SeedSigner" is a routing instruction, not an assertion that
+   SeedSigner reads QR codes -- even though in that case it happens to. */
+const PREDICATES = String.raw`has|have|had|offers?|supports?|includes?|provides?|ships? with|comes? with|carries|carry|adds?|uses?|signs? over|works? over|connects? over|pairs? over|reads?|writes?|backs? up to|is|are|with(?: an?| its)?|'s|’s`;
+
+/* A denial anywhere between the product and the capability turns the claim
+   into agreement with the dash. These are the forms the library actually uses;
+   each one was found in prose this guard flagged before it understood them.
+   The library states limitations far more often than capabilities, so this
+   list does more work than any other part of the matcher. */
+const DENIALS = String.raw`\bno\b|\bnot\b|\bnever\b|\bwithout\b|\blacks?\b|\bcannot\b|\bcan't\b|\bnor\b|\brather than\b|\binstead of\b|\bdrops?\b|\bdropped\b|\bremoved?\b|\babsent\b|\bunlike\b|\bunless\b`;
+
+/* Not denials, but the same effect here: they say the sentence is about a
+   different model from the one the column names. A matrix column is a current
+   product, and the guides discuss superseded ones -- the Passport guide
+   mentions the earlier bitcoin-only Passport, which really was bitcoin-only,
+   against a column that is about Passport Prime, which is not. */
+const OTHER_MODEL = String.raw`\bearlier\b|\bolder\b|\bformer\b|\bprevious\b|\bsuperseded\b|\bdiscontinued\b`;
+
+const NEGATIONS = `${DENIALS}|${OTHER_MODEL}`;
+
+/* How close the two have to be. Long enough for "the BitBox02 backs up to a
+   microSD card", short enough that two unrelated clauses in one sentence do
+   not count as a claim about each other. */
+const SPAN = 70;
+
+/* Read and found correct. Each entry names the pairing, the page, a digest of
+   the sentence as it stood when it was read, and why it is not a
+   contradiction. A sentence that changes loses its digest and comes back for
+   review, which is the point. */
+const ACKNOWLEDGED = [
+  /* Two rows in the devices matrix use the same word for different things:
+     "Removable media for signing" is a card carrying a PSBT, and
+     "Removable-media backup" is a card carrying the seed. The BitBox02 has a
+     dash on the first and a check on the second, and the guide is describing
+     the second. Nothing distinguishes them in prose, so this pair costs two
+     acknowledgements rather than a cleverer pattern. */
+  { product: 'BitBox02', feature: 'Removable media for signing',
+    where: 'guides/bitbox02-setup.html', digest: 'f093d89790',
+    why: 'Describes the microSD backup, which the matrix marks available. Signing is a separate row and is correctly dashed.' },
+  { product: 'BitBox02', feature: 'Removable media for signing',
+    where: 'guides/bitbox02-setup.html', digest: '2d32ba68ff',
+    why: 'Alt text for a photograph. Describes a card in the slot, and claims nothing about what it is for.' }
+];
+
+const stripTags = s => s
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/&mdash;|&#8212;/g, '—')
+  .replace(/&nbsp;|&#160;/g, ' ')
+  .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+  .replace(/&quot;/g, '"').replace(/&#39;|&rsquo;/g, "'")
+  .replace(/&[a-z]+;|&#\d+;/g, ' ')
+  .replace(/\s+/g, ' ')
+  .trim();
+
+const digest = s => createHash('sha256').update(s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()).digest('hex').slice(0, 10);
+
+/* Every dash in every matrix, as {page, feature, product}. */
+function readMatrices(root, structural) {
+  const cells = [];
+  for (const page of MATRIX_PAGES) {
+    const path = join(root, page);
+    if (!existsSync(path)) {
+      structural.push(`${page} carries a feature matrix and is not there to read`);
+      continue;
+    }
+    const html = readFileSync(path, 'utf8');
+    const tables = html.match(/<table[^>]*sc-feature-matrix[^>]*>[\s\S]*?<\/table>/g) || [];
+    if (!tables.length) {
+      structural.push(`${page} no longer contains a feature matrix, so nothing on it can be checked`);
+      continue;
+    }
+    for (const table of tables) {
+      const columns = [...table.matchAll(/<th scope="col">([\s\S]*?)<\/th>/g)]
+        .map(m => stripTags(m[1])).slice(1);
+      for (const row of table.match(/<tr>[\s\S]*?<\/tr>/g) || []) {
+        const head = row.match(/<th scope="row">([\s\S]*?)<\/th>/);
+        if (!head) continue;
+        const feature = stripTags(head[1]);
+        const marks = [...row.matchAll(/<td>([\s\S]*?)<\/td>/g)]
+          .map(m => (m[1].match(/sc-matrix-(yes|partial|no)/) || [])[1]);
+        columns.forEach((product, i) => {
+          if (marks[i] === 'no') cells.push({ page: basename(page), feature, product });
+        });
+      }
+    }
+  }
+  return cells;
+}
+
+/* The prose a reader would take as a statement about a product: guide bodies,
+   and the detail sections on the product pages. Matrices, legends and source
+   notes are cut out first -- a table describing a dash is not prose claiming
+   the opposite of one. */
+function readProse(root) {
+  const units = [];
+  const push = (where, html) => {
+    const text = stripTags(
+      html.replace(/<table[\s\S]*?<\/table>/g, ' ')
+          .replace(/<(script|style|nav|header|footer)[\s\S]*?<\/\1>/g, ' ')
+    );
+    for (const sentence of text.split(/(?<=[.!?])\s+/)) {
+      const trimmed = sentence.trim();
+      if (trimmed.length > 20) units.push({ where, sentence: trimmed });
+    }
+  };
+
+  const guides = join(root, 'docs/guides');
+  for (const file of readdirSync(guides).filter(f => f.endsWith('.html')).sort()) {
+    const html = readFileSync(join(guides, file), 'utf8');
+    for (const body of html.match(/<div class="sc-article">[\s\S]*?<\/main>/g) || []) {
+      push(`guides/${file}`, body);
+    }
+  }
+  for (const page of MATRIX_PAGES) {
+    const path = join(root, page);
+    if (!existsSync(path)) continue;
+    const html = readFileSync(path, 'utf8');
+    for (const detail of html.match(/<article[^>]*class="[^"]*sc-detail[^"]*"[\s\S]*?<\/article>/g) || []) {
+      push(basename(page), detail);
+    }
+  }
+  return units;
+}
+
+/* The three shapes a claim takes, compiled once per pairing rather than once
+   per sentence -- the difference is a second of build time. */
+function claimForms(productPattern, capabilityPattern) {
+  const p = productPattern, c = capabilityPattern;
+  const gap = `[^.;]{0,${SPAN}}?`;
+  return [
+    /* the device has / offers / ships with / is air-gapped */
+    new RegExp(`\\b(?:${p})\\b(${gap})\\b(?:${PREDICATES})\\b(${gap})\\b(?:${c})`, 'i'),
+    /* its microSD backup, the Jade's camera */
+    new RegExp(`\\b(?:${p})(?:'s|\u2019s)\\s+(${gap})\\b(?:${c})`, 'i'),
+    /* air-gapped signing on the SeedSigner */
+    new RegExp(`\\b(?:${c})\\b(${gap})\\b(?:on|in)\\s+(?:the\\s+|a\\s+|your\\s+)?(?:${p})\\b`, 'i')
+  ];
+}
+
+const NEGATED = new RegExp(NEGATIONS, 'i');
+const NEGATED_LEAD = new RegExp(`(?:${NEGATIONS})\\s*$`, 'i');
+
+/* Does this sentence predicate the capability of the product? */
+function claims(sentence, forms) {
+  for (const form of forms) {
+    const hit = sentence.match(form);
+    if (!hit) continue;
+    const between = hit.slice(1).filter(Boolean).join(' ');
+    if (NEGATED.test(between)) continue;
+    /* A negation immediately before the whole match denies it too:
+       "no air-gapped signing path" does not become a claim because the words
+       between product and capability happen to be clean. */
+    if (NEGATED_LEAD.test(sentence.slice(Math.max(0, hit.index - 24), hit.index))) continue;
+    return hit[0];
+  }
+  return null;
+}
+
+/* Separated from the reporting so the guard's own behaviour can be exercised
+   against a fixture. A heuristic that has never been shown to fire is a
+   comment, not a check. */
+export function checkPolarity(root = '.') {
+  const structural = [];
+  const dashes = readMatrices(root, structural);
+  const prose = readProse(root);
+  const acknowledged = new Map(ACKNOWLEDGED.map(a => [`${a.product}|${a.feature}|${a.where}|${a.digest}`, a]));
+  const seen = new Set();
+  const conflicts = [];
+
+  for (const { feature, product, page } of dashes) {
+    const capability = CAPABILITY_PATTERNS[feature];
+    const productPattern = PRODUCT_PATTERNS[product];
+    if (!capability || !productPattern) continue;
+    const forms = claimForms(productPattern, capability);
+    for (const { where, sentence } of prose) {
+      const matched = claims(sentence, forms);
+      if (!matched) continue;
+      const key = `${product}|${feature}|${where}|${digest(sentence)}`;
+      if (acknowledged.has(key)) { seen.add(key); continue; }
+      conflicts.push({ product, feature, page, where, sentence, matched, key });
+    }
+  }
+
+  const stale = [...acknowledged.keys()].filter(k => !seen.has(k));
+  const checked = dashes.filter(d => CAPABILITY_PATTERNS[d.feature] && PRODUCT_PATTERNS[d.product]).length;
+  return { structural, conflicts, stale, dashes: dashes.length, checked, sentences: prose.length };
+}
+
+export function assertPolarity() {
+  const { structural, conflicts, stale, dashes, checked, sentences } = checkPolarity('.');
+
+  if (structural.length) {
+    console.error('\n  ABORT: a page this guard depends on cannot be read');
+    for (const s of structural) console.error(`    ${s}`);
+    process.exit(1);
+  }
+
+  if (conflicts.length || stale.length) {
+    console.error('\n  ABORT: a feature matrix and a guide disagree about a product');
+    for (const c of conflicts) {
+      console.error(`\n    ${c.page} marks ${c.product} as not offering "${c.feature}".`);
+      console.error(`    ${c.where} says:`);
+      console.error(`      ${c.sentence}`);
+      console.error(`    (matched: "${c.matched.trim()}")`);
+      console.error('    If the prose is right and only reads like a claim, this is the entry:');
+      console.error(`      { product: ${JSON.stringify(c.product)}, feature: ${JSON.stringify(c.feature)},`);
+      console.error(`        where: ${JSON.stringify(c.where)}, digest: '${digest(c.sentence)}',`);
+      console.error(`        why: '...' },`);
+    }
+    if (stale.length) {
+      console.error('\n    These acknowledgements in build/tools/assert-polarity.mjs no longer');
+      console.error('    match anything, so the sentence was edited or removed. Re-read it and');
+      console.error('    either update the digest or delete the entry:');
+      for (const k of stale) console.error(`      ${k}`);
+    }
+    console.error('\n    Fix whichever side is wrong. If both are right and the prose only');
+    console.error('    reads like a claim, add it to ACKNOWLEDGED with the reason.\n');
+    process.exit(1);
+  }
+
+  console.log(`polarity check: ${checked} of ${dashes} dashes checked against ${sentences} sentences of product prose, no contradictions`);
+}
+
+if (import.meta.url === `file://${process.argv[1]}`) assertPolarity();

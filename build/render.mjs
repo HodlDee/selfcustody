@@ -20,6 +20,7 @@ import { assertGlyphCoverage } from './tools/assert-glyphs.mjs';
 import { assertWorkshop } from './tools/assert-workshop.mjs';
 import { assertNotices } from './tools/assert-notices.mjs';
 import { assetDigest } from './tools/asset-version.mjs';
+import { assertPolarity } from './tools/assert-polarity.mjs';
 import { createHash } from 'node:crypto';
 import { copyFileSync } from 'node:fs';
 
@@ -531,3 +532,4 @@ assertNoUnexpectedFetches('docs');
 assertGlyphCoverage('docs');
 assertWorkshop();
 assertNotices();
+assertPolarity();
