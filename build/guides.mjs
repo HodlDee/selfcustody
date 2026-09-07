@@ -2403,7 +2403,13 @@ const guides = [
 
       <p>If the fingerprints do not match, stop and work out why before going further. It means the software is watching a different wallet from the one the device will sign for, and every address it shows you would be wrong.</p>
 
-      <p class="mt-4"><a class="sc-text-link" href="sparrow-first-wallet.html">Next: pair it with Sparrow <i class="bi bi-arrow-right"></i></a></p>`
+      <p class="mt-4"><a class="sc-text-link" href="sparrow-first-wallet.html">Next: pair it with Sparrow <i class="bi bi-arrow-right"></i></a></p>
+
+      <p class="sc-source-note">
+        Menu wording, firmware versions and the differences between models change between releases, and the Q and Mk5 do not always agree. Confirm the current setup flow against
+        ${official("https://coldcard.com/docs/", "COLDCARD’s own documentation")}
+        before following any step here that does not match what your device is showing you.
+      </p>`
   },
   /* The planned standalone Mk5 setup guide was folded into coldcard-setup
      above: same codebase, same sequence, and two near-identical pages would
@@ -2556,7 +2562,13 @@ const guides = [
 
       <p>Trick PINs are alternate PINs that deceive, delay, wipe, or destroy instead of logging you in. The duress wallet is derived from your own seed and runs one way, so a decoy is recoverable by you and useless to them. Wipes and bricks are only survivable because of your written backup, which means none of this is safe to enable until that backup has been tested.</p>
 
-      ${callout("If you take one thing from this page", `These features do not add security to your wallet &mdash; they add ways for your device to refuse. What actually keeps the coins is the plate in the drawer. Turn on the least you need, write down what you turned on, and never let a clever configuration substitute for a backup you have proven works.`)}`
+      ${callout("If you take one thing from this page", `These features do not add security to your wallet &mdash; they add ways for your device to refuse. What actually keeps the coins is the plate in the drawer. Turn on the least you need, write down what you turned on, and never let a clever configuration substitute for a backup you have proven works.`)}
+
+      <p class="sc-source-note">
+        These features change more often than the basic setup does, and several of them can destroy a wallet by design. Confirm exactly what each one does on your firmware version against
+        ${official("https://coldcard.com/docs/", "COLDCARD’s own documentation")}
+        before following any step here that does not match what your device is showing you.
+      </p>`
   },
   {
     slug: "passport-setup",
@@ -3248,7 +3260,13 @@ const guides = [
 
       <p>Buy the right screen, assemble three parts, and verify the image signature before flashing it &mdash; that check is the only supply-chain protection a DIY device has. Then treat the device as disposable and the words as everything, because the SeedSigner is designed to hold nothing at all when it is switched off.</p>
 
-      ${callout("If you take one thing from this page", `The security here does not live in the hardware, and it was never meant to. It lives in a verified image, a written backup you have tested, and the discipline of reading each transaction on the device's own screen. Get those three right and the fifty-dollar signer is not a compromise.`)}`
+      ${callout("If you take one thing from this page", `The security here does not live in the hardware, and it was never meant to. It lives in a verified image, a written backup you have tested, and the discipline of reading each transaction on the device's own screen. Get those three right and the fifty-dollar signer is not a compromise.`)}
+
+      <p class="sc-source-note">
+        Release numbers, supported hardware and the verification commands all move between versions. Confirm the current release and its checksums against
+        ${official("https://seedsigner.com/", "the SeedSigner project’s own documentation")}
+        before following any step here that does not match what your device is showing you.
+      </p>`
   },
   {
     slug: "krux-setup",
@@ -3419,7 +3437,13 @@ const guides = [
 
       <p>Krux is firmware, so the device is your choice and the verification is your job. Flash a verified official release, generate a seed from dice or a photograph, write the words down on something physical, and treat the encrypted-storage feature as the convenience its authors say it is.</p>
 
-      ${callout("If you take one thing from this page", `The stored mnemonic is not your backup. Krux says so itself, in its own documentation, and it is the single most likely misunderstanding to cost somebody their coins on this device. The words on paper or metal are the wallet. Everything on the device is a copy that happens to be convenient.`)}`
+      ${callout("If you take one thing from this page", `The stored mnemonic is not your backup. Krux says so itself, in its own documentation, and it is the single most likely misunderstanding to cost somebody their coins on this device. The words on paper or metal are the wallet. Everything on the device is a copy that happens to be convenient.`)}
+
+      <p class="sc-source-note">
+        Krux is firmware you flash yourself onto hardware the project does not make, so both halves move independently. Confirm the current release, supported devices and flashing steps against
+        ${official("https://selfcustody.github.io/krux/", "the Krux documentation")}
+        before following any step here that does not match what your device is showing you.
+      </p>`
   },
   {
     slug: "ledger-setup",
@@ -3732,7 +3756,13 @@ const guides = [
 
       <p>It is the wrong answer for somebody whose priority is privacy from all counterparties, or who wants a wallet that can be restored into any software decades from now with nobody's help. Those people want a recovery phrase and the burden that comes with it.</p>
 
-      ${callout("If you take one thing from this page", `Block cannot move your coins, and that is arithmetic rather than trust &mdash; two of three keys are yours. What you are actually buying is a recovery service, priced in a seven-day delay and a company knowing your wallet exists. Generate the Emergency Exit Kit on day one, and the dependency stays a convenience rather than a trap.`)}`
+      ${callout("If you take one thing from this page", `Block cannot move your coins, and that is arithmetic rather than trust &mdash; two of three keys are yours. What you are actually buying is a recovery service, priced in a seven-day delay and a company knowing your wallet exists. Generate the Emergency Exit Kit on day one, and the dependency stays a convenience rather than a trap.`)}
+
+      <p class="sc-source-note">
+        Recovery timings, the Emergency Exit Kit and the trusted-contact features are the parts of this product most likely to change, and they are the parts this page rests on. Confirm the current behaviour against
+        ${official("https://bitkey.world/", "Bitkey’s own documentation")}
+        before following any step here that does not match what your device is showing you.
+      </p>`
   },
   {
     slug: "tapsigner-setup",
@@ -3833,7 +3863,13 @@ const guides = [
 
       <p>A TAPSIGNER is a key in a card that signs by tap and never reveals itself. It has no screen, so your phone is what you are trusting about each payment. Its backup is an encrypted file whose decryption key is printed on the card &mdash; copy that number down before the card leaves your desk, and never store the copy beside the file.</p>
 
-      ${callout("If you take one thing from this page", `Copy the decryption key off the back of the card today. Everything else here can be fixed later; that number cannot be recovered once the card is gone, and without it the backup file is a permanently locked box.`)}`
+      ${callout("If you take one thing from this page", `Copy the decryption key off the back of the card today. Everything else here can be fixed later; that number cannot be recovered once the card is gone, and without it the backup file is a permanently locked box.`)}
+
+      <p class="sc-source-note">
+        App support and the backup format matter more here than the card itself, and both change. Confirm the current process against
+        ${official("https://tapsigner.com/", "Coinkite’s own documentation")}
+        before following any step here that does not match what your device is showing you.
+      </p>`
   },
   {
     slug: "satscard-setup",
@@ -3940,7 +3976,13 @@ const guides = [
 
       <p>Ten slots, one sealed at a time, funded like any address. Handing over the card hands over the coins with no transaction at all. Unsealing releases the key permanently, so sweep the whole balance immediately and never touch that address again. Treat the card as cash, in amounts you would carry as cash.</p>
 
-      ${callout("If you take one thing from this page", `A sealed SATSCARD is a banknote with no serial number and no bank behind it. That is exactly what makes it useful for a physical handoff, and exactly why it should never hold more than you would be willing to lose in a coat pocket.`)}`
+      ${callout("If you take one thing from this page", `A sealed SATSCARD is a banknote with no serial number and no bank behind it. That is exactly what makes it useful for a physical handoff, and exactly why it should never hold more than you would be willing to lose in a coat pocket.`)}
+
+      <p class="sc-source-note">
+        Slot behaviour and compatible apps change, and unsealing a slot cannot be undone. Confirm the current process against
+        ${official("https://satscard.com/", "Coinkite’s own documentation")}
+        before following any step here that does not match what your device is showing you.
+      </p>`
   },
   {
     slug: "air-gapped-psbt-workflow",
@@ -4211,7 +4253,13 @@ const guides = [
 
       <p>Once that has worked end to end, you have a wallet you can actually reason about: the computer proposes, the device disposes, and you have watched both halves happen.</p>
 
-      <p class="mt-4"><a class="sc-text-link" href="quickstart.html">Then test your recovery <i class="bi bi-arrow-right"></i></a></p>`
+      <p class="mt-4"><a class="sc-text-link" href="quickstart.html">Then test your recovery <i class="bi bi-arrow-right"></i></a></p>
+
+      <p class="sc-source-note">
+        Menu paths and the wording of the import dialogs move between releases, and the verification filenames change with every version. Confirm the current steps against
+        ${official("https://sparrowwallet.com/docs/", "Sparrow’s own documentation")}
+        before following any step here that does not match what your screen is showing you.
+      </p>`
   },
   {
     slug: "sparrow-coin-control",
@@ -4614,7 +4662,13 @@ const guides = [
 
       <p>Cove is a Bitcoin-only, open-source phone wallet that works as a hot wallet for spending money or as a coordinator for a hardware signer over QR, NFC, or file. Everything about how much that protects you comes down to whether the signer has a screen you can read the transaction on.</p>
 
-      ${callout("If you take one thing from this page", `Putting the coordinator on your phone is a genuine convenience win and costs you nothing in security &mdash; as long as the device you pair with has its own display and you actually read it. Pair with something screenless and the phone becomes the thing you are trusting, which is the arrangement a hardware wallet exists to avoid.`)}`
+      ${callout("If you take one thing from this page", `Putting the coordinator on your phone is a genuine convenience win and costs you nothing in security &mdash; as long as the device you pair with has its own display and you actually read it. Pair with something screenless and the phone becomes the thing you are trusting, which is the arrangement a hardware wallet exists to avoid.`)}
+
+      <p class="sc-source-note">
+        Cove is a young project and its features are moving quickly, particularly around hardware pairing. Confirm the current behaviour against
+        ${official("https://covebitcoin.com/", "Cove’s own documentation")}
+        before following any step here that does not match what your screen is showing you.
+      </p>`
   },
   {
     slug: "electrum-setup",
@@ -4881,7 +4935,13 @@ const guides = [
 
       <p>Import an extended public key and your phone becomes a window onto cold storage that cannot spend anything. The price is that the phone now carries a permanent, unrevocable view of your finances, so point it at your own node if you can. And do not take receive addresses from it for amounts that matter, because the device that could verify them is exactly the device you left at home.</p>
 
-      ${callout("If you take one thing from this page", `Watch-only protects you from theft, not from being watched. Treat the phone as a read-only dashboard: excellent for answering "did it arrive?", and the wrong tool for answering "where should they send it?"`)}`
+      ${callout("If you take one thing from this page", `Watch-only protects you from theft, not from being watched. Treat the phone as a read-only dashboard: excellent for answering "did it arrive?", and the wrong tool for answering "where should they send it?"`)}
+
+      <p class="sc-source-note">
+        App layout and the import options change between releases. Confirm the current steps against
+        ${official("https://bluewallet.io/", "BlueWallet’s own documentation")}
+        before following any step here that does not match what your screen is showing you.
+      </p>`
   },
   {
     slug: "wasabi-coinjoin-basics",
@@ -4998,7 +5058,13 @@ const guides = [
 
       <p>A CoinJoin makes it impossible to tell which output of a collaborative transaction is yours, forward from that point. It cannot erase your past, hide that you participated, or survive your own careless consolidation afterwards. It costs coordinator fees, mining fees, days of patience, and a permanent obligation to handle those coins deliberately &mdash; and the coordinator it depends on is a single point that has already gone away once.</p>
 
-      ${callout("If you take one thing from this page", `The cryptography is not the weak link and never was. The weak links are the coordinator, which is a legally exposed service run by someone else, and your own handling of the coins afterwards. Only one of those two is under your control, so it is worth being very good at it.`)}`
+      ${callout("If you take one thing from this page", `The cryptography is not the weak link and never was. The weak links are the coordinator, which is a legally exposed service run by someone else, and your own handling of the coins afterwards. Only one of those two is under your control, so it is worth being very good at it.`)}
+
+      <p class="sc-source-note">
+        Coordinator arrangements, fees and the client defaults have all changed materially since the original coordinator shut down, and they may change again. Confirm the current position against
+        ${official("https://docs.wasabiwallet.io/", "Wasabi’s own documentation")}
+        before following any step here that does not match what your screen is showing you.
+      </p>`
   },
   {
     slug: "specter-multisig-coordinator",
@@ -5164,7 +5230,13 @@ const guides = [
 
       <p>Specter is a front end for your own Bitcoin Core node, which means your multisig descriptor &mdash; the most complete description of your finances that exists &mdash; never leaves your machine. The price is running and maintaining a node. Add each device, build the wallet, register the configuration back onto every signer, and store that configuration with every seed backup.</p>
 
-      ${callout("If you take one thing from this page", `Register the wallet configuration on every device, and store a copy with every seed. The first makes your signers able to detect a hostile change address; the second is the difference between three seed backups and an actual recoverable wallet. Neither is optional, and Specter makes both easy enough that skipping them is a choice.`)}`
+      ${callout("If you take one thing from this page", `Register the wallet configuration on every device, and store a copy with every seed. The first makes your signers able to detect a hostile change address; the second is the difference between three seed backups and an actual recoverable wallet. Neither is optional, and Specter makes both easy enough that skipping them is a choice.`)}
+
+      <p class="sc-source-note">
+        Specter tracks Bitcoin Core, so both halves move, and device support changes with each release. Confirm the current setup against
+        ${official("https://docs.specter.solutions/", "Specter’s own documentation")}
+        before following any step here that does not match what your screen is showing you.
+      </p>`
   },
   {
     slug: "own-node-connection",
@@ -6848,7 +6920,13 @@ const guides = [
 
       <p>If you hold a single wallet, BIP85 solves a problem you do not have. If you hold five and can name each one's backup location from memory, you are already doing the hard version well and may not want to change it. It is the middle case &mdash; several wallets, backups you know are not all up to standard &mdash; where this genuinely helps.</p>
 
-      ${callout("If you take one thing from this page", "BIP85 converts a backup problem into a bookkeeping problem. That is a real improvement, because backups are physical and bookkeeping is not — but only if you actually keep the books. An index you cannot remember is a wallet you cannot reach, and the master seed sitting safely in your safe will not tell you which number it was.")}`
+      ${callout("If you take one thing from this page", "BIP85 converts a backup problem into a bookkeeping problem. That is a real improvement, because backups are physical and bookkeeping is not — but only if you actually keep the books. An index you cannot remember is a wallet you cannot reach, and the master seed sitting safely in your safe will not tell you which number it was.")}
+
+      <p class="sc-source-note">
+        Which wallets and devices implement BIP85 changes as projects ship releases, so the support table above is a snapshot rather than a standing fact. The standard itself is stable and specifies the derivation exactly &mdash;
+        ${official("https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki", "BIP85")}
+        &mdash; but confirm current support against each project’s own documentation before planning a setup around it.
+      </p>`
   },
   {
     slug: "seed-backup-metal",
