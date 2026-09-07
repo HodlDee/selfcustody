@@ -172,7 +172,7 @@
 
       <p>None of these is the wrong answer. The wrong answer is leaving the coins on an exchange for another eighteen months while you decide.</p>
 
-      <div class="sc-callout mt-4"><h3>A note on Bitcoin Core</h3><p><a href="why-run-a-node.html">Running your own node</a> means you verify the rules yourself instead of asking somebody else's server what your balance is, and Bitcoin Core includes a perfectly usable wallet. Two things to know before you pick it. Its keys sit on the computer, so it is a hot wallet unless you pair it with a signing device. And it does not hand you twelve words &mdash; a Core wallet is described by a <a href="../glossary.html#term-descriptor">descriptor</a> containing an extended private key, and the backup is a file rather than a phrase. That is a good backup, but it is not the one the rest of this page describes, and it restores into other descriptor-aware software rather than by typing words into a device. Many people run Core as their node and keep the keys elsewhere, which is the best of both.</p></div>
+      <div class="sc-callout mt-4"><h3>A note on Bitcoin Core</h3><p><a href="why-run-a-node.html">Running your own node</a> means you verify the rules yourself instead of asking somebody else's server what your balance is, and Bitcoin Core includes a perfectly usable wallet. Two things to know before you pick it. Its keys sit on the computer, so it is a hot wallet unless you pair it with a signing device. And it does not hand you twelve words &mdash; a Core wallet is described by a <a href="../glossary.html#term-descriptor">descriptor</a> containing an extended private key, and the backup is a file rather than a phrase. That is a good backup, but it is not the one the rest of this page describes, and it restores into other descriptor-aware software rather than by typing words into a device. <a href='bitcoin-core-wallet.html'>What a Core wallet actually holds</a> goes through that properly, including how to give Core a wallet derived from a seed you do hold. Many people run Core as their node and keep the keys elsewhere, which is the best of both.</p></div>
 
       <p><a class="sc-text-link" href="choosing-your-first-setup.html">Choosing your first setup <i class="bi bi-arrow-right"></i></a> &nbsp; <a class="sc-text-link" href="../devices.html">Compare hardware <i class="bi bi-arrow-right"></i></a> &nbsp; <a class="sc-text-link" href="../software.html">Compare wallet software <i class="bi bi-arrow-right"></i></a></p>
 
@@ -639,6 +639,15 @@
               </div>
               <h3>Test your recovery without risking your coins</h3>
               <p>A backup you have never restored is a guess. Here is how to prove it works, including which method to use when you only own one device and it already holds funds.</p>
+              <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
+            </div></a></div><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="bitcoin-core-wallet.html">
+            <div class="sc-card-body">
+              <div class="sc-guide-card-top">
+                <div class="sc-icon"><i class="bi bi-stack"></i></div>
+                <span class="sc-level sc-level-intermediate">Intermediate</span>
+              </div>
+              <h3>Bitcoin Core wallets, and what wallet.dat actually is</h3>
+              <p>Core's wallet does not hand you twelve words, and the file everyone argues about on the internet is no longer the file Core writes. What is actually in it now, how to make one, and how to load a wallet.dat the Entropy Workshop produced from a seed you already have.</p>
               <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
             </div></a></div></div>
       </div>

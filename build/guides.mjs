@@ -1145,7 +1145,7 @@ const guides = [
     icon: "bi-signpost-split",
     updated: "2026-08-25",
     status: "published",
-    related: ["what-not-to-normalize", "choosing-your-first-setup", "recovery-test-drill"],
+    related: ["what-not-to-normalize", "choosing-your-first-setup", "recovery-test-drill", "bitcoin-core-wallet"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Self custody means one specific thing: the secret that authorises spending your bitcoin exists only where you put it. No company holds a copy &mdash; which is why no company can freeze it, lose it in a bankruptcy, or hand it over on request, and why nobody can help you if you destroy it. Both halves of that sentence are the job.</p>
@@ -1240,7 +1240,7 @@ const guides = [
 
       <p>None of these is the wrong answer. The wrong answer is leaving the coins on an exchange for another eighteen months while you decide.</p>
 
-      ${callout("A note on Bitcoin Core", `<a href="why-run-a-node.html">Running your own node</a> means you verify the rules yourself instead of asking somebody else's server what your balance is, and Bitcoin Core includes a perfectly usable wallet. Two things to know before you pick it. Its keys sit on the computer, so it is a hot wallet unless you pair it with a signing device. And it does not hand you twelve words &mdash; a Core wallet is described by a <a href="../glossary.html#term-descriptor">descriptor</a> containing an extended private key, and the backup is a file rather than a phrase. That is a good backup, but it is not the one the rest of this page describes, and it restores into other descriptor-aware software rather than by typing words into a device. Many people run Core as their node and keep the keys elsewhere, which is the best of both.`)}
+      ${callout("A note on Bitcoin Core", `<a href="why-run-a-node.html">Running your own node</a> means you verify the rules yourself instead of asking somebody else's server what your balance is, and Bitcoin Core includes a perfectly usable wallet. Two things to know before you pick it. Its keys sit on the computer, so it is a hot wallet unless you pair it with a signing device. And it does not hand you twelve words &mdash; a Core wallet is described by a <a href="../glossary.html#term-descriptor">descriptor</a> containing an extended private key, and the backup is a file rather than a phrase. That is a good backup, but it is not the one the rest of this page describes, and it restores into other descriptor-aware software rather than by typing words into a device. <a href='bitcoin-core-wallet.html'>What a Core wallet actually holds</a> goes through that properly, including how to give Core a wallet derived from a seed you do hold. Many people run Core as their node and keep the keys elsewhere, which is the best of both.`)}
 
       <p><a class="sc-text-link" href="choosing-your-first-setup.html">Choosing your first setup <i class="bi bi-arrow-right"></i></a> &nbsp; <a class="sc-text-link" href="../devices.html">Compare hardware <i class="bi bi-arrow-right"></i></a> &nbsp; <a class="sc-text-link" href="../software.html">Compare wallet software <i class="bi bi-arrow-right"></i></a></p>
 
@@ -5264,7 +5264,7 @@ const guides = [
     updated: "2026-08-18",
     productGuide: true,
     status: "published",
-    related: ["multisig-2of3", "air-gapped-psbt-workflow", "why-run-a-node"],
+    related: ["multisig-2of3", "air-gapped-psbt-workflow", "why-run-a-node", "bitcoin-core-wallet"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Specter Desktop is not really a wallet. It is a graphical face for Bitcoin Core, built for people who already run a node and want to drive hardware signers &mdash; particularly several of them at once, from different manufacturers, in a multisig.</p>
@@ -5436,7 +5436,7 @@ const guides = [
     icon: "bi-cpu",
     updated: "2026-08-18",
     status: "published",
-    related: ["why-run-a-node", "bitcoin-privacy", "specter-multisig-coordinator"],
+    related: ["why-run-a-node", "bitcoin-privacy", "specter-multisig-coordinator", "bitcoin-core-wallet"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Plenty of people run a node and still leak everything. The node hums away in a cupboard, validating blocks, while their wallet carries on asking a stranger's server for balances &mdash; because nothing about installing Bitcoin Core changes what your wallet is configured to talk to.</p>
@@ -5453,7 +5453,7 @@ const guides = [
 
       ${callout("What this means in practice", "\"I installed Bitcoin Core\" is not enough to point Sparrow at it. You need Core <em>plus</em> an index server. Node distributions like Umbrel, Start9, and RaspiBlitz bundle one already, which is most of why they exist. A manual Core install almost always needs one added.")}
 
-      <p>Specter is the notable exception, because it drives Core's own descriptor wallets directly rather than speaking Electrum &mdash; which is why <a href='specter-multisig-coordinator.html'>the Specter guide</a> requires Core and nothing else.</p>
+      <p>Specter is the notable exception, because it drives Core's own descriptor wallets directly rather than speaking Electrum &mdash; which is why <a href='specter-multisig-coordinator.html'>the Specter guide</a> requires Core and nothing else. <a href='bitcoin-core-wallet.html'>Core's own wallet</a> is a guide of its own.</p>
 
       <h2><span class="sc-article-num">2</span>Choosing the index server</h2>
 
@@ -5547,6 +5547,155 @@ const guides = [
       <p>Bitcoin Core alone cannot answer the questions wallets ask, so you need an index server &mdash; electrs, Fulcrum, or ElectrumX &mdash; alongside it, which node distributions bundle for you. Point each wallet at it explicitly, use Tor or a VPN to reach it from a phone, and then verify by switching the node off and confirming your wallet actually breaks.</p>
 
       ${callout("If you take one thing from this page", `Test it by turning your node off. It is the only check that cannot be fooled by a setting that did not take or a fallback you did not know about — and a wallet that keeps working when your node is down was never using it.`)}`
+  },
+
+  {
+    slug: "bitcoin-core-wallet",
+    category: "software",
+    products: [],
+    title: "Bitcoin Core wallets, and what wallet.dat actually is",
+    summary: "Core's wallet does not hand you twelve words, and the file everyone argues about on the internet is no longer the file Core writes. What is actually in it now, how to make one, and how to load a wallet.dat the Entropy Workshop produced from a seed you already have.",
+    level: "intermediate",
+    minutes: 30,
+    effort: "task",
+    goals: ["setup", "learn"],
+    tags: ["Wallets", "Connectivity"],
+    icon: "bi-stack",
+    updated: "2026-09-07",
+    status: "published",
+    related: ["own-node-connection", "why-run-a-node", "seed-to-key"],
+    layout: "article",
+    body: `
+      <p class="sc-guide-intro"><code>wallet.dat</code> is the most discussed and least understood file in bitcoin. Most of what is written about it &mdash; the recovery services, the forum threads, the <code>dumpprivkey</code> incantations &mdash; describes a file format Bitcoin Core no longer opens. This page is what it is now.</p>
+
+      <p><a href="quickstart.html">Start Here</a> says in passing that Core "does not hand you twelve words &mdash; a Core wallet is described by a descriptor containing an extended private key, and the backup is a file rather than a phrase". That sentence is the whole of this page, unpacked.</p>
+
+      ${prerequisites([
+        "Bitcoin Core installed and synced, or at least installed. Nothing here needs a finished initial block download except the final balance check.",
+        "Comfort with a terminal, or with Core's GUI menus. Both routes are given.",
+        "No bitcoin. Everything below can be done on an empty wallet, and should be the first time.",
+        "If you intend to import a Workshop export: a test sequence, not the rolls behind a wallet you use."
+      ])}
+
+      <h2><span class="sc-article-num">1</span>The file changed underneath the folklore</h2>
+
+      <p>For most of bitcoin's history a Core wallet was a Berkeley DB file holding a pool of individual private keys. That is the <code>wallet.dat</code> of the recovery industry, of <code>dumpwallet</code> and <code>importprivkey</code>, and of every story about a hard drive in a landfill.</p>
+
+      <p>It is gone. Bitcoin Core 30.0 states it plainly: <strong>Berkeley DB legacy wallets can no longer be created or loaded.</strong> The RPCs that went with them &mdash; <code>dumpprivkey</code>, <code>dumpwallet</code>, <code>importprivkey</code>, <code>importaddress</code>, <code>importmulti</code>, <code>sethdseed</code> and others &mdash; were removed in the same release.</p>
+
+      ${cautions([
+        "Advice telling you to run <code>importprivkey</code> is describing software that no longer exists. The command is not deprecated; it is absent.",
+        "A genuinely old <code>wallet.dat</code> from a Berkeley DB era cannot be opened by a current Core. It has to be migrated, which needs a version that still reads both.",
+        "Recovery services advertising <code>wallet.dat</code> extraction are usually talking about the old format. That is a different problem from anything on this page."
+      ])}
+
+      <h2><span class="sc-article-num">2</span>What a Core wallet is today</h2>
+
+      <p>A modern Core wallet is a <em>descriptor wallet</em>, stored as an SQLite database. The database file is still called <code>wallet.dat</code>, which is most of why the confusion persists &mdash; same name, different thing entirely.</p>
+
+      <p>Each wallet is a folder inside Core's <code>wallets</code> directory, and the folder holds the database:</p>
+
+      ${checklist([
+        "<strong>Linux.</strong> <code>~/.bitcoin/wallets/&lt;name&gt;/wallet.dat</code>",
+        "<strong>macOS.</strong> <code>~/Library/Application Support/Bitcoin/wallets/&lt;name&gt;/wallet.dat</code>",
+        "<strong>Windows.</strong> <code>%LOCALAPPDATA%\\Bitcoin\\wallets\\&lt;name&gt;\\wallet.dat</code>"
+      ])}
+
+      <p>Inside, rather than a heap of keys, it holds <a href="../glossary.html#term-descriptor">descriptors</a>: a compact statement of the script type, the key, and the derivation path, from which every address is computed on demand. That is the same object <a href="how-wallets-find-coins.html">a restore needs</a> in any other wallet, written down properly.</p>
+
+      <h2><span class="sc-article-num">3</span>Creating one</h2>
+
+      <p>Either route produces the same thing.</p>
+
+      ${checklist([
+        "<strong>Terminal.</strong> <code>bitcoin-cli createwallet \"savings\"</code>",
+        "<strong>Terminal, encrypted from the start.</strong> <code>bitcoin-cli -named createwallet wallet_name=\"savings\" passphrase=\"…\"</code>",
+        "<strong>GUI.</strong> File, then Create Wallet."
+      ])}
+
+      <p>Encrypting at creation is worth doing, because <strong>a Core wallet file is not encrypted by default.</strong> An unencrypted <code>wallet.dat</code> containing private keys is exactly as sensitive as a written seed phrase, and considerably easier to copy.</p>
+
+      <h2><span class="sc-article-num">4</span>The part that surprises people</h2>
+
+      <p>Core does not use <a href="../glossary.html#term-mnemonic_phrase">BIP39 recovery words</a>. It never has.</p>
+
+      <p>When Core generates a wallet it produces its own entropy and stores the resulting keys in the database. There is no phrase to write down, because none exists. The backup is the file, or the descriptor exported from it, and it restores into descriptor-aware software rather than by typing words into a device.</p>
+
+      ${pullQuote("A Core wallet's backup is a file. Losing the file, with no descriptor written down elsewhere, loses the wallet exactly as thoroughly as losing a seed phrase.")}
+
+      <p>That is a perfectly good backup and it is a different discipline from the rest of this site. It also explains the gap the next section fills: if you want a wallet that Core can drive <em>and</em> that twelve words can rebuild, Core will not make one for you.</p>
+
+      <h2><span class="sc-article-num">5</span>Exporting a wallet.dat from the Entropy Workshop</h2>
+
+      <p>The <a href="../entropy.html">Entropy Workshop</a> converts dice, coins or cards into a seed, and can write the resulting account out as a Bitcoin Core descriptor wallet. The point is not convenience. It is that the wallet Core ends up driving is derived from a BIP39 seed you hold, so <strong>the words remain the master backup</strong> even though Core has no concept of them.</p>
+
+      <p>It offers two files, and the difference is the entire safety question.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>File</th><th>Contains</th><th>Can it spend?</th></tr></thead>
+          <tbody>
+            <tr><td><code>watch-only-wallet.dat</code></td><td>Account public keys and checked descriptors. Flagged disable-private-keys.</td><td><strong>No.</strong> Watching only.</td></tr>
+            <tr><td><code>wallet.dat</code></td><td>The above, plus the account private key as a wallet descriptor key record.</td><td><strong>Yes.</strong> Treat it like a seed.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The private file is only produced while "Show private recovery material" is switched on, and both the button and the filename say which one you are downloading. That is deliberate: the two files look identical in a downloads folder otherwise.</p>
+
+      ${cautions([
+        "The exported file is <strong>not encrypted</strong>. Encrypt the wallet in Core after loading it, or keep the file somewhere you would keep a seed card.",
+        "<strong>Never replace or overwrite an existing <code>wallet.dat</code>.</strong> There is no undo, and the wallet you overwrite may be the one holding coins.",
+        "Use the Workshop for a test sequence first. It is experimental software and says so, and a wallet you intend to keep deserves a device that was built for it."
+      ])}
+
+      <h2><span class="sc-article-num">6</span>Loading it into Core</h2>
+
+      <p>The tidy route is <code>restorewallet</code>, which takes the file and builds the folder around it rather than asking you to place anything by hand:</p>
+
+      ${checklist([
+        "<code>bitcoin-cli restorewallet \"workshop-test\" /path/to/wallet.dat</code>",
+        "In the GUI: File, then Restore Wallet, then pick the file and give it a name.",
+        "The name is Core's label for the wallet, not part of the file. Choose one you will still recognise later."
+      ])}
+
+      <p>Core will refuse if a wallet of that name already exists, which is the behaviour you want. If it loads, the wallet appears in the wallet list and Core begins scanning the chain for its addresses.</p>
+
+      <p>A freshly imported descriptor wallet has no transaction history until that scan finishes. On a fully synced node it is quick; on a node still catching up it will show nothing until it gets there, which is not a fault.</p>
+
+      <h2><span class="sc-article-num">7</span>Prove it is the wallet you think it is</h2>
+
+      <p>Everything above is an assumption until checked, and the checks are quick.</p>
+
+      ${checklist([
+        "<strong>Compare the descriptor.</strong> <code>bitcoin-cli -rpcwallet=\"workshop-test\" listdescriptors</code> and confirm the key origin and path match what the Workshop showed you.",
+        "<strong>Compare an address.</strong> <code>bitcoin-cli -rpcwallet=\"workshop-test\" getnewaddress</code> against the first receiving address the Workshop displayed. They must match exactly.",
+        "<strong>Confirm what it can do.</strong> A watch-only import reports private keys as disabled; a private one does not. Check you got the file you meant to.",
+        "<strong>Then a test amount</strong>, and only then anything more. <a href=\"test-transaction.html\">Sending a test transaction</a> covers that loop."
+      ])}
+
+      <h2><span class="sc-article-num">8</span>Backing it up afterwards</h2>
+
+      <p>Once a Core wallet is real, it has a backup story of its own.</p>
+
+      ${checklist([
+        "<code>bitcoin-cli -rpcwallet=\"savings\" backupwallet /path/to/backup.dat</code> writes a safe copy while the wallet is in use. Copying the live file with the node running is not safe.",
+        "<strong>Export and store the descriptor separately.</strong> <code>listdescriptors</code> gives you the public form; it cannot spend, and it is what lets any descriptor-aware wallet rebuild the addresses.",
+        "If the wallet came from a BIP39 seed by way of the Workshop, <strong>the words are still the real backup</strong> and the file is a convenience.",
+        "If Core generated the wallet itself, the file is the only backup there is. Treat that accordingly."
+      ])}
+
+      <h2>The short version</h2>
+
+      <p>The <code>wallet.dat</code> people argue about on the internet is a Berkeley DB file Core stopped opening at version 30. What Core writes now is an SQLite descriptor wallet in a folder of its own, holding descriptors rather than a pile of keys, with no recovery phrase anywhere because Core does not use them. The Workshop can hand Core a wallet derived from a BIP39 seed instead &mdash; in a watch-only form that cannot spend, or a private one that can and should be treated exactly like a seed card.</p>
+
+      ${callout("If you take one thing from this page", `Core's backup is a file, not a phrase. That is not a flaw, but it is a different discipline from every other guide here &mdash; and if you delete the file without having written the descriptor down somewhere, the wallet is gone as completely as if you had burned a seed card.`)}
+
+      <p class="sc-source-note">
+        Paths, commands and the removal of Berkeley DB wallets are taken from Bitcoin Core's own documentation and its v30.0 release notes; the Workshop's export follows the descriptor-wallet layout Core writes and has been loaded against a current release. Wallet behaviour changes between versions, so confirm against
+        ${official("https://bitcoincore.org/en/doc/", "Bitcoin Core's documentation")}
+        for the version you are actually running.
+      </p>`
   },
 
   /* ---------------------------------------------------------------- exchanges */
@@ -6281,7 +6430,7 @@ const guides = [
     icon: "bi-rulers",
     updated: "2026-08-27",
     status: "published",
-    related: ["dice-entropy", "quickstart", "three-dice-seed", "human-randomness"],
+    related: ["dice-entropy", "quickstart", "three-dice-seed", "human-randomness", "bitcoin-core-wallet"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">A wallet is one enormous secret number. The Entropy Workshop will not make that number for you &mdash; there is no random number generator anywhere in it, and that absence is the whole design. You bring the randomness in from the physical world, and the page does the arithmetic in front of you: the same arithmetic your signing device does privately, so you can hold the two side by side and see whether they agree.</p>
@@ -8760,7 +8909,7 @@ const guides = [
     icon: "bi-cpu",
     updated: "2026-08-18",
     status: "published",
-    related: ["double-spend-problem", "life-of-a-transaction", "bitcoin-privacy"],
+    related: ["double-spend-problem", "life-of-a-transaction", "bitcoin-privacy", "bitcoin-core-wallet"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Open your wallet and it shows a balance. Where did that number come from? Not from the bitcoin network in the abstract &mdash; networks do not answer questions. It came from a specific computer, owned by somebody, that your wallet asked. Unless you run a node, that somebody is a stranger, and their answer is what you are looking at.</p>

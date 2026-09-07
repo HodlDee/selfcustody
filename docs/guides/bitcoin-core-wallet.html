@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Core's wallet does not hand you twelve words, and the file everyone argues about on the internet is no longer the file Core writes. What is actually in it now, how to make one, and how to load a wallet.dat the Entropy Workshop produced from a seed you already have.">
+  <title>Bitcoin Core wallets, and what wallet.dat actually is | SelfCustody.ca</title>
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://selfcustody.ca/guides/bitcoin-core-wallet.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_CA">
+  <meta property="og:site_name" content="SelfCustody.ca">
+  <meta property="og:title" content="Bitcoin Core wallets, and what wallet.dat actually is | SelfCustody.ca">
+  <meta property="og:description" content="Core's wallet does not hand you twelve words, and the file everyone argues about on the internet is no longer the file Core writes. What is actually in it now, how to make one, and how to load a wallet.dat the Entropy Workshop produced from a seed you already have.">
+  <meta property="og:url" content="https://selfcustody.ca/guides/bitcoin-core-wallet.html">
+  <meta property="og:image" content="https://selfcustody.ca/assets/img/social-preview.jpg?v=5">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1406">
+  <meta property="og:image:height" content="703">
+  <meta property="og:image:alt" content="SelfCustody.ca beside an open bank vault on a dark brick wall">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://selfcustody.ca/assets/img/social-preview.jpg?v=5">
+  <meta name="twitter:image:alt" content="SelfCustody.ca beside an open bank vault on a dark brick wall">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/self-custody-favicon.svg">
+  <link rel="icon" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css?v=6cfebdc237b7" rel="stylesheet">
+  <link href="../assets/css/style.css?v=6cfebdc237b7" rel="stylesheet">
+  <link href="../assets/css/site-refresh.css?v=6cfebdc237b7" rel="stylesheet">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Bitcoin Core wallets, and what wallet.dat actually is","description":"Core's wallet does not hand you twelve words, and the file everyone argues about on the internet is no longer the file Core writes. What is actually in it now, how to make one, and how to load a wallet.dat the Entropy Workshop produced from a seed you already have.","url":"https://selfcustody.ca/guides/bitcoin-core-wallet.html","datePublished":"2026-09-07","dateModified":"2026-09-07","inLanguage":"en-CA","publisher":{"@type":"Organization","name":"SelfCustody.ca","url":"https://selfcustody.ca/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://selfcustody.ca/guides/bitcoin-core-wallet.html"}}</script>
+</head>
+<body class="site-refresh" data-page="guides">
+  <div id="site-header">
+      <a class="sc-skip-link" href="#main-content">Skip to main content</a>
+      <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center">
+          <a class="sc-brand me-auto" href="../index.html" aria-label="Self Custody home">
+            <span class="sc-brand-mark" aria-hidden="true"></span>
+            <span class="sc-brand-name">SELF CUSTODY</span>
+            <span class="sc-brand-domain" aria-hidden="true"><span class="sc-brand-domain-text">.CA</span></span>
+          </a>
+          <nav id="navbar" class="navbar" aria-label="Primary navigation">
+            <ul><li><a class=" " href="../index.html"><span>Home</span></a></li><li class="sc-nav-menu">
+          <button class="sc-nav-menu-toggle active" type="button" aria-expanded="false" aria-haspopup="true">
+            <span>Guides</span><span class="sc-nav-menu-chevron" aria-hidden="true"></span>
+          </button>
+          <ul class="sc-nav-submenu">
+            <li><a href="../guides.html">Start here</a></li>
+            <li><a href="../guides.html#devices">Devices</a></li>
+            <li><a href="../guides.html#software">Software</a></li>
+            <li><a href="../guides.html#exchanges">Exchanges</a></li>
+            <li><a href="../guides.html#advanced">Techniques</a></li>
+            <li><a href="../guides.html#concepts">Concepts</a></li>
+            <li class="sc-nav-tool-item"><a class="sc-nav-tool-link" href="../entropy.html">Entropy Workshop</a></li>
+          </ul>
+        </li><li class="sc-nav-menu">
+          <button class="sc-nav-menu-toggle " type="button" aria-expanded="false" aria-haspopup="true">
+            <span>Compare</span><span class="sc-nav-menu-chevron" aria-hidden="true"></span>
+          </button>
+          <ul class="sc-nav-submenu">
+            <li><a class="" href="../devices.html">Devices</a></li>
+            <li><a class="" href="../software.html">Software</a></li>
+            <li><a class="" href="../exchanges.html">Exchanges</a></li>
+          </ul>
+        </li><li><a class=" " href="../glossary.html"><span>Glossary</span></a></li><li><a class=" " href="../dashboard.html"><span>Dashboard</span></a></li><li><a class=" sc-contact-link" href="../contact.html"><span>Get Help</span></a></li></ul>
+            <i class="bi bi-list mobile-nav-toggle" aria-label="Open navigation" role="button" tabindex="0"></i>
+          </nav>
+        </div>
+      </header></div>
+    <main id="main-content">
+    <section class="sc-guide-head">
+      <div class="container">
+        <nav class="sc-breadcrumb" aria-label="Breadcrumb">
+          <a href="../guides.html">Guides</a>
+          <i class="bi bi-arrow-right" aria-hidden="true"></i>
+          <a href="../guides.html#software">Software</a>
+        </nav>
+        <span class="sc-eyebrow">Wallets</span>
+        <h1>Bitcoin Core wallets, and what wallet.dat actually is</h1>
+        <p class="sc-lead">Core's wallet does not hand you twelve words, and the file everyone argues about on the internet is no longer the file Core writes. What is actually in it now, how to make one, and how to load a wallet.dat the Entropy Workshop produced from a seed you already have.</p>
+        <div class="sc-guide-meta">
+          <span class="sc-level sc-level-intermediate">Intermediate</span>
+          <span><i class="bi bi-hourglass-split" aria-hidden="true"></i> About 30 minutes to complete</span>
+          <span>Updated Sep 7, 2026</span>
+        </div>
+        <div class="sc-tags sc-tags-lg"><span class="sc-tag">Wallets</span><span class="sc-tag">Connectivity</span></div>
+        
+      </div>
+    </section>
+
+    <section class="sc-section sc-guide-body">
+      <div class="container">
+        <div class="sc-article">
+      <p class="sc-guide-intro"><code>wallet.dat</code> is the most discussed and least understood file in bitcoin. Most of what is written about it &mdash; the recovery services, the forum threads, the <code>dumpprivkey</code> incantations &mdash; describes a file format Bitcoin Core no longer opens. This page is what it is now.</p>
+
+      <p><a href="quickstart.html">Start Here</a> says in passing that Core "does not hand you twelve words &mdash; a Core wallet is described by a descriptor containing an extended private key, and the backup is a file rather than a phrase". That sentence is the whole of this page, unpacked.</p>
+
+      
+  <div class="sc-guide-prereq">
+    <h2>Before you start</h2>
+    <ul class="sc-check-list"><li>Bitcoin Core installed and synced, or at least installed. Nothing here needs a finished initial block download except the final balance check.</li><li>Comfort with a terminal, or with Core's GUI menus. Both routes are given.</li><li>No bitcoin. Everything below can be done on an empty wallet, and should be the first time.</li><li>If you intend to import a Workshop export: a test sequence, not the rolls behind a wallet you use.</li></ul>
+  </div>
+
+      <h2><span class="sc-article-num">1</span>The file changed underneath the folklore</h2>
+
+      <p>For most of bitcoin's history a Core wallet was a Berkeley DB file holding a pool of individual private keys. That is the <code>wallet.dat</code> of the recovery industry, of <code>dumpwallet</code> and <code>importprivkey</code>, and of every story about a hard drive in a landfill.</p>
+
+      <p>It is gone. Bitcoin Core 30.0 states it plainly: <strong>Berkeley DB legacy wallets can no longer be created or loaded.</strong> The RPCs that went with them &mdash; <code>dumpprivkey</code>, <code>dumpwallet</code>, <code>importprivkey</code>, <code>importaddress</code>, <code>importmulti</code>, <code>sethdseed</code> and others &mdash; were removed in the same release.</p>
+
+      <ul class="sc-caution-list"><li>Advice telling you to run <code>importprivkey</code> is describing software that no longer exists. The command is not deprecated; it is absent.</li><li>A genuinely old <code>wallet.dat</code> from a Berkeley DB era cannot be opened by a current Core. It has to be migrated, which needs a version that still reads both.</li><li>Recovery services advertising <code>wallet.dat</code> extraction are usually talking about the old format. That is a different problem from anything on this page.</li></ul>
+
+      <h2><span class="sc-article-num">2</span>What a Core wallet is today</h2>
+
+      <p>A modern Core wallet is a <em>descriptor wallet</em>, stored as an SQLite database. The database file is still called <code>wallet.dat</code>, which is most of why the confusion persists &mdash; same name, different thing entirely.</p>
+
+      <p>Each wallet is a folder inside Core's <code>wallets</code> directory, and the folder holds the database:</p>
+
+      <ul class="sc-check-list"><li><strong>Linux.</strong> <code>~/.bitcoin/wallets/&lt;name&gt;/wallet.dat</code></li><li><strong>macOS.</strong> <code>~/Library/Application Support/Bitcoin/wallets/&lt;name&gt;/wallet.dat</code></li><li><strong>Windows.</strong> <code>%LOCALAPPDATA%\Bitcoin\wallets\&lt;name&gt;\wallet.dat</code></li></ul>
+
+      <p>Inside, rather than a heap of keys, it holds <a href="../glossary.html#term-descriptor">descriptors</a>: a compact statement of the script type, the key, and the derivation path, from which every address is computed on demand. That is the same object <a href="how-wallets-find-coins.html">a restore needs</a> in any other wallet, written down properly.</p>
+
+      <h2><span class="sc-article-num">3</span>Creating one</h2>
+
+      <p>Either route produces the same thing.</p>
+
+      <ul class="sc-check-list"><li><strong>Terminal.</strong> <code>bitcoin-cli createwallet "savings"</code></li><li><strong>Terminal, encrypted from the start.</strong> <code>bitcoin-cli -named createwallet wallet_name="savings" passphrase="…"</code></li><li><strong>GUI.</strong> File, then Create Wallet.</li></ul>
+
+      <p>Encrypting at creation is worth doing, because <strong>a Core wallet file is not encrypted by default.</strong> An unencrypted <code>wallet.dat</code> containing private keys is exactly as sensitive as a written seed phrase, and considerably easier to copy.</p>
+
+      <h2><span class="sc-article-num">4</span>The part that surprises people</h2>
+
+      <p>Core does not use <a href="../glossary.html#term-mnemonic_phrase">BIP39 recovery words</a>. It never has.</p>
+
+      <p>When Core generates a wallet it produces its own entropy and stores the resulting keys in the database. There is no phrase to write down, because none exists. The backup is the file, or the descriptor exported from it, and it restores into descriptor-aware software rather than by typing words into a device.</p>
+
+      <blockquote class="sc-pull-quote"><p>A Core wallet's backup is a file. Losing the file, with no descriptor written down elsewhere, loses the wallet exactly as thoroughly as losing a seed phrase.</p></blockquote>
+
+      <p>That is a perfectly good backup and it is a different discipline from the rest of this site. It also explains the gap the next section fills: if you want a wallet that Core can drive <em>and</em> that twelve words can rebuild, Core will not make one for you.</p>
+
+      <h2><span class="sc-article-num">5</span>Exporting a wallet.dat from the Entropy Workshop</h2>
+
+      <p>The <a href="../entropy.html">Entropy Workshop</a> converts dice, coins or cards into a seed, and can write the resulting account out as a Bitcoin Core descriptor wallet. The point is not convenience. It is that the wallet Core ends up driving is derived from a BIP39 seed you hold, so <strong>the words remain the master backup</strong> even though Core has no concept of them.</p>
+
+      <p>It offers two files, and the difference is the entire safety question.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>File</th><th>Contains</th><th>Can it spend?</th></tr></thead>
+          <tbody>
+            <tr><td><code>watch-only-wallet.dat</code></td><td>Account public keys and checked descriptors. Flagged disable-private-keys.</td><td><strong>No.</strong> Watching only.</td></tr>
+            <tr><td><code>wallet.dat</code></td><td>The above, plus the account private key as a wallet descriptor key record.</td><td><strong>Yes.</strong> Treat it like a seed.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The private file is only produced while "Show private recovery material" is switched on, and both the button and the filename say which one you are downloading. That is deliberate: the two files look identical in a downloads folder otherwise.</p>
+
+      <ul class="sc-caution-list"><li>The exported file is <strong>not encrypted</strong>. Encrypt the wallet in Core after loading it, or keep the file somewhere you would keep a seed card.</li><li><strong>Never replace or overwrite an existing <code>wallet.dat</code>.</strong> There is no undo, and the wallet you overwrite may be the one holding coins.</li><li>Use the Workshop for a test sequence first. It is experimental software and says so, and a wallet you intend to keep deserves a device that was built for it.</li></ul>
+
+      <h2><span class="sc-article-num">6</span>Loading it into Core</h2>
+
+      <p>The tidy route is <code>restorewallet</code>, which takes the file and builds the folder around it rather than asking you to place anything by hand:</p>
+
+      <ul class="sc-check-list"><li><code>bitcoin-cli restorewallet "workshop-test" /path/to/wallet.dat</code></li><li>In the GUI: File, then Restore Wallet, then pick the file and give it a name.</li><li>The name is Core's label for the wallet, not part of the file. Choose one you will still recognise later.</li></ul>
+
+      <p>Core will refuse if a wallet of that name already exists, which is the behaviour you want. If it loads, the wallet appears in the wallet list and Core begins scanning the chain for its addresses.</p>
+
+      <p>A freshly imported descriptor wallet has no transaction history until that scan finishes. On a fully synced node it is quick; on a node still catching up it will show nothing until it gets there, which is not a fault.</p>
+
+      <h2><span class="sc-article-num">7</span>Prove it is the wallet you think it is</h2>
+
+      <p>Everything above is an assumption until checked, and the checks are quick.</p>
+
+      <ul class="sc-check-list"><li><strong>Compare the descriptor.</strong> <code>bitcoin-cli -rpcwallet="workshop-test" listdescriptors</code> and confirm the key origin and path match what the Workshop showed you.</li><li><strong>Compare an address.</strong> <code>bitcoin-cli -rpcwallet="workshop-test" getnewaddress</code> against the first receiving address the Workshop displayed. They must match exactly.</li><li><strong>Confirm what it can do.</strong> A watch-only import reports private keys as disabled; a private one does not. Check you got the file you meant to.</li><li><strong>Then a test amount</strong>, and only then anything more. <a href="test-transaction.html">Sending a test transaction</a> covers that loop.</li></ul>
+
+      <h2><span class="sc-article-num">8</span>Backing it up afterwards</h2>
+
+      <p>Once a Core wallet is real, it has a backup story of its own.</p>
+
+      <ul class="sc-check-list"><li><code>bitcoin-cli -rpcwallet="savings" backupwallet /path/to/backup.dat</code> writes a safe copy while the wallet is in use. Copying the live file with the node running is not safe.</li><li><strong>Export and store the descriptor separately.</strong> <code>listdescriptors</code> gives you the public form; it cannot spend, and it is what lets any descriptor-aware wallet rebuild the addresses.</li><li>If the wallet came from a BIP39 seed by way of the Workshop, <strong>the words are still the real backup</strong> and the file is a convenience.</li><li>If Core generated the wallet itself, the file is the only backup there is. Treat that accordingly.</li></ul>
+
+      <h2>The short version</h2>
+
+      <p>The <code>wallet.dat</code> people argue about on the internet is a Berkeley DB file Core stopped opening at version 30. What Core writes now is an SQLite descriptor wallet in a folder of its own, holding descriptors rather than a pile of keys, with no recovery phrase anywhere because Core does not use them. The Workshop can hand Core a wallet derived from a BIP39 seed instead &mdash; in a watch-only form that cannot spend, or a private one that can and should be treated exactly like a seed card.</p>
+
+      <div class="sc-callout mt-4"><h3>If you take one thing from this page</h3><p>Core's backup is a file, not a phrase. That is not a flaw, but it is a different discipline from every other guide here &mdash; and if you delete the file without having written the descriptor down somewhere, the wallet is gone as completely as if you had burned a seed card.</p></div>
+
+      <p class="sc-source-note">
+        Paths, commands and the removal of Berkeley DB wallets are taken from Bitcoin Core's own documentation and its v30.0 release notes; the Workshop's export follows the descriptor-wallet layout Core writes and has been loaded against a current release. Wallet behaviour changes between versions, so confirm against
+        <a class="sc-text-link" href="https://bitcoincore.org/en/doc/" target="_blank" rel="noopener">Bitcoin Core's documentation <i class="bi bi-arrow-up-right"></i></a>
+        for the version you are actually running.
+      </p></div>
+      </div>
+    </section>
+
+    <section class="sc-guide-foot">
+      <div class="container">
+        <div class="sc-guide-next">
+          <div class="sc-guide-next-copy">
+            <span class="sc-eyebrow">Do not guess</span>
+            <h2>Stuck on a step?</h2>
+            <p>If the screen in front of you does not match the guide, stop. Review the related walkthroughs or get a second set of eyes before exposing recovery words or approving a transaction.</p>
+          </div>
+          <div class="sc-hero-actions sc-guide-next-actions">
+            <a class="sc-btn sc-btn-primary" href="../guides.html"><span>All Guides</span></a>
+            <a class="sc-btn sc-btn-ghost sc-guide-help-btn" href="../contact.html"><span>Get Help</span></a>
+          </div>
+          <div class="sc-guide-next-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="sc-section sc-section-muted sc-related-guides">
+      <div class="container">
+        <div class="sc-section-head"><span class="sc-eyebrow">Keep going</span><h2>Related guides</h2></div>
+        <div class="row g-4"><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="own-node-connection.html">
+            <div class="sc-card-body">
+              <div class="sc-guide-card-top">
+                <div class="sc-icon"><i class="bi bi-cpu"></i></div>
+                <span class="sc-level sc-level-advanced">Advanced</span>
+              </div>
+              <h3>Connecting wallets to your node</h3>
+              <p>Running a node and using it are two different achievements. The index layer nobody mentions, connecting each wallet to it, reaching it from outside your house, and proving your wallet is not quietly still using somebody else's server.</p>
+              <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
+            </div></a></div><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="why-run-a-node.html">
+            <div class="sc-card-body">
+              <div class="sc-guide-card-top">
+                <div class="sc-icon"><i class="bi bi-cpu"></i></div>
+                <span class="sc-level sc-level-intermediate">Intermediate</span>
+              </div>
+              <h3>Why run a node</h3>
+              <p>Without one, your wallet is asking a stranger's computer what you own and believing the answer. A node is how “don't trust, verify” stops being a slogan and becomes something you actually do.</p>
+              <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
+            </div></a></div><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="seed-to-key.html">
+            <div class="sc-card-body">
+              <div class="sc-guide-card-top">
+                <div class="sc-icon"><i class="bi bi-diagram-2"></i></div>
+                <span class="sc-level sc-level-intermediate">Intermediate</span>
+              </div>
+              <h3>From words to keys</h3>
+              <p>How a wallet turns twelve words into a private key — the checksum, the 2,048 rounds of hashing, and the apostrophe in the derivation path that quietly decides whether an xpub can betray you.</p>
+              <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
+            </div></a></div></div>
+      </div>
+    </section></main>
+    <div id="site-footer">
+    <footer class="sc-footer">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-5">
+            <h3 class="sc-footer-brand"><img src="../assets/img/self-custody-favicon.svg" alt="" width="34" height="34"><span>SelfCustody.ca</span></h3>
+            <p>Clear, practical guidance to self custody your bitcoin. Learn the basics, test your backups, and keep control of your keys.</p>
+          </div>
+          <div class="col-12 col-lg-4 sc-footer-explore">
+            <h4>Explore</h4>
+            <ul class="sc-footer-links sc-footer-links-grid">
+              <li><a href="../index.html">Home</a></li>
+              <li><a href="../guides.html">Guides</a></li>
+              <li><a href="../devices.html">Devices</a></li>
+              <li><a href="../software.html">Software</a></li>
+              <li><a href="../exchanges.html">Exchanges</a></li>
+              <li><a href="../glossary.html">Glossary</a></li>
+              <li><a href="../dashboard.html">Dashboard</a></li>
+              <li><a href="../contact.html">Get Help</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3">
+            <aside class="sc-footer-warning" aria-label="Important security warning">
+              <div class="sc-footer-warning-heading">
+                <div class="sc-footer-warning-icon" aria-hidden="true"><i class="bi bi-exclamation-triangle-fill"></i></div>
+                <h4>Important!</h4>
+              </div>
+              <p><strong>NEVER</strong> share your seed words, or other sensitive information.</p>
+              <p>This site provides education, <strong class="sc-footer-not">NOT</strong> financial, tax, or legal advice.</p>
+            </aside>
+          </div>
+        </div>
+        <div class="sc-footer-bottom d-flex flex-wrap justify-content-between gap-2">
+          <span>© <span data-year>2026</span> SelfCustody.ca</span>
+          <span><a href="mailto:info@selfcustody.ca">info@selfcustody.ca</a></span>
+        </div>
+      </div>
+    </footer></div>
+  <noscript><div class="container py-4"><p><strong>JavaScript is off, so the menu button will not open.</strong> Every page:</p><ul><li><a href="../index.html">Home</a></li><li><a href="../guides.html">Guides</a></li><li><a href="../devices.html">Devices</a></li><li><a href="../software.html">Software</a></li><li><a href="../exchanges.html">Exchanges</a></li><li><a href="../glossary.html">Glossary</a></li><li><a href="../dashboard.html">Dashboard</a></li><li><a href="../contact.html">Get Help</a></li></ul></div></noscript>
+  <script src="../assets/js/site-refresh.js?v=6cfebdc237b7"></script>
+</body>
+</html>
