@@ -87,7 +87,38 @@ const FILES = {
 };
 
 const SITE = 'https://selfcustody.ca';
-const ASSET_VERSION = '20260906-01';
+
+/* The cache key stamped onto every versioned asset link, derived from the
+   bytes of the assets themselves.
+
+   It used to be a string typed by hand, and that failed in the one direction
+   that matters. Changing a stylesheet without remembering to bump it shipped
+   the fix to new visitors and to nobody who had been here before -- silently,
+   because the build passes, CI passes, and the site looks right to whoever
+   made the change, whose cache is cold. A CSS bugfix invisible to exactly the
+   readers who already hit the bug is the worst shape that failure can take.
+
+   Hashing the files removes the step that could be forgotten. Change an asset
+   and the version moves; change nothing and it stays put, so this does not
+   churn the eleven shell pages on every unrelated build.
+
+   Deterministic by construction, which the reproducibility guard requires:
+   the same bytes in a fixed order always give the same digest. The list is
+   written out rather than derived from the regex below so that adding a file
+   to one and forgetting the other is a visible mismatch rather than a silent
+   one. */
+const VERSIONED_ASSETS = [
+  'docs/assets/vendor/bootstrap-icons/bootstrap-icons.css',
+  'docs/assets/css/style.css',
+  'docs/assets/css/site-refresh.css',
+  'docs/assets/js/site-refresh.js',
+];
+
+const ASSET_VERSION = VERSIONED_ASSETS
+  .reduce((hash, file) => hash.update(readFileSync(file)), createHash('sha256'))
+  .digest('hex')
+  .slice(0, 12);
+
 const ASSET_QUERY = /(assets\/(?:vendor\/bootstrap-icons\/bootstrap-icons\.css|css\/(?:style|site-refresh)\.css|js\/site-refresh\.js)\?v=)[^"']+/g;
 
 /* The whole container block, anchored on the <noscript> that always follows it.
