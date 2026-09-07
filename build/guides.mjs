@@ -5617,7 +5617,7 @@ const guides = [
 
       <h2><span class="sc-article-num">4</span>The part that surprises people</h2>
 
-      <p>Core does not use <a href="../glossary.html#term-mnemonic_phrase">BIP39 recovery words</a>. It never has.</p>
+      <p>Core does not use <a href="../glossary.html#term-seed_phrase">BIP39 recovery words</a>. It never has.</p>
 
       <p>When Core generates a wallet it produces its own entropy and stores the resulting keys in the database. There is no phrase to write down, because none exists. The backup is the file, or the descriptor exported from it, and it restores into descriptor-aware software rather than by typing words into a device.</p>
 
