@@ -2100,10 +2100,12 @@ const guides = [
       ${checklist([
         "<strong>Address type.</strong> Restoring as Legacy when the original was Native SegWit produces a completely different-looking set of addresses from the same correct words. This is the most common cause by a distance.",
         "<strong>A missing passphrase.</strong> Without it you get the wallet that exists at the words alone, which is a real, valid, empty wallet. It looks exactly like a failure.",
-        "<strong>Word order.</strong> Two transposed words give a completely different wallet, and the <a href='../glossary.html#term-checksum'>checksum</a> will often still accept it.",
-        "<strong>A misread word.</strong> Handwriting confusions and near-identical BIP39 words are common. Check each word against the official wordlist.",
+        "<strong>Word order.</strong> Two transposed words give a completely different wallet &mdash; but the <a href='../glossary.html#term-checksum'>checksum</a> usually refuses them outright, roughly fifteen times out of sixteen for twelve words and 255 out of 256 for twenty-four.",
+        "<strong>A misread word.</strong> Handwriting confusions and near-identical BIP39 words are common, and the checksum rejects most of these too. Check each word against the official wordlist.",
         "<strong>Derivation path.</strong> Some wallets default to different paths. If the software lets you specify one, match the original."
       ])}
+
+      <p>Those last two are worth weighing correctly, because the folklore runs the other way. The checksum is a real error detector: change any word and the check bits at the end have to match by coincidence, which happens about one time in sixteen for a twelve-word phrase and one in 256 for twenty-four. So <strong>if your wallet accepted the phrase, a transcription mistake is one of the less likely explanations on this list</strong> &mdash; and the causes above it, which no checksum can see, are the more likely ones.</p>
 
       <p>If you work through all of that and it still does not match, treat the backup as unreliable. The correct response is not to keep trying &mdash; it is to generate a brand-new wallet on a device you trust, back that one up carefully, test it, and then move the funds across while you still can. You have caught the problem at the only moment when it is fixable.</p>
 
