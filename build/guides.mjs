@@ -8284,7 +8284,7 @@ const guides = [
         "<strong>It cannot catch anything at all once the phrase is valid.</strong> A checksum says the words are internally consistent. It says nothing about whether they are <em>your</em> words."
       ])}
 
-      <p>The practical inversion matters more than the arithmetic. If your wallet <em>accepted</em> the phrase and showed you an empty balance, a transcription error is one of the least likely explanations available &mdash; it had a 94% chance of being rejected outright and was not. The likely causes are the ones no checksum can see, and they are the subjects of the next two sections.</p>
+      <p>What follows from this is narrower than it first appears. If your wallet <em>accepted</em> the phrase and showed you an empty balance, the checksum has ruled out most transcription errors &mdash; but it has not ruled out the one in sixteen that produces a different valid wallet, and it never had anything to say about a wrong passphrase, a wrong branch or a scan still in progress. Those are the causes no checksum can see, and they are the subjects of the next two sections.</p>
 
       ${callout("This is why the last word is not free", `In a 24-word phrase the final word carries the last three bits of your secret followed by all eight checksum bits. That is why you cannot simply pick a twenty-fourth word you like, and why <a href="dice-entropy.html">rolling your own entropy</a> ends with a device or a worksheet computing that word for you.`)}
 
@@ -8385,25 +8385,24 @@ const guides = [
 
       <h2><span class="sc-article-num">7</span>Where each failure actually lives</h2>
 
-      <p>The point of walking the four transformations is that a symptom now tells you which one broke.</p>
+      <p>A symptom narrows the search. It rarely settles it on its own, because several of these steps fail the same way &mdash; an empty wallet looks identical whether the passphrase is wrong, the branch is wrong, or the scan has not finished. So the table below gives the checks rather than a verdict, and they are worth running in order.</p>
 
       <div class="sc-table-wrap">
         <table class="table sc-table">
-          <thead><tr><th>Symptom</th><th>Step that produced it</th><th>Recoverable?</th></tr></thead>
+          <thead><tr><th>Symptom</th><th>Candidate causes</th><th>What to check</th></tr></thead>
           <tbody>
-            <tr><td><strong>Wallet rejects the phrase</strong></td><td>Step 2 &mdash; the checksum</td><td>Yes. A word is wrong; the check did its job.</td></tr>
-            <tr><td><strong>Accepted, zero balance, path confirmed</strong></td><td>Step 3 &mdash; passphrase</td><td><strong>Only if you recall it.</strong> Nothing can test it for you.</td></tr>
-            <tr><td><strong>Accepted, zero balance, no passphrase set</strong></td><td>Step 5 &mdash; wrong branch</td><td>Yes. Change the derivation path.</td></tr>
-            <tr><td><strong>Some coins visible, others missing</strong></td><td>The gap limit</td><td>Yes. Raise it and rescan.</td></tr>
-            <tr><td><strong>Software rejects your extended key</strong></td><td>Step 6 &mdash; SLIP-132 prefix</td><td>Yes. Convert the prefix; no keys change.</td></tr>
-            <tr><td><strong>Phrase was written in another language</strong></td><td>Step 3 &mdash; wordlist</td><td>Yes. Select the original wordlist.</td></tr>
+            <tr><td><strong>Wallet rejects the phrase</strong></td><td>Step 2 &mdash; a word is misread, misspelled or out of order</td><td>Re-read the card. The checksum has done its job and the phrase you typed is not a valid one.</td></tr>
+            <tr><td><strong>Accepted, zero balance</strong></td><td>Step 3 (passphrase), step 5 (branch), a valid but <em>different</em> phrase, or a scan that has not finished</td><td>Confirm the wallet has finished syncing first. Then try the alternative paths. Then treat the phrase and passphrase as the remaining candidates &mdash; and if you have a receiving address from this wallet, that settles which one it is.</td></tr>
+            <tr><td><strong>Some coins visible, others missing</strong></td><td>The gap limit, or a second account branch</td><td>Raise the gap limit and rescan before concluding anything is lost.</td></tr>
+            <tr><td><strong>Software rejects your extended key</strong></td><td>Step 6 &mdash; a SLIP-132 prefix it does not accept</td><td>Convert the prefix. No keys change, and the same key in <code>xpub</code> form plus an explicit path usually works.</td></tr>
+            <tr><td><strong>Phrase was written in another language</strong></td><td>Step 3 &mdash; the wordlist</td><td>Select the original wordlist. The same words index differently in each.</td></tr>
           </tbody>
         </table>
       </div>
-        <div class="sc-survival-row" role="row"><strong role="rowheader">Phrase written in another language</strong><span role="cell">3, wordlist</span><span class="is-pass" role="cell">Yes &mdash; select the language</span></div>
-      </div>
 
-      <p>Only one row in that table is genuinely unrecoverable, and it is the passphrase. Everything else is a matter of telling the software where to look. That asymmetry is the argument for treating a passphrase as a second irreplaceable secret rather than a convenience.</p>
+      ${callout("A recorded address is the test people assume does not exist", `BIP39 has no built-in notion of a correct passphrase &mdash; every passphrase produces a valid wallet, which is the whole point of the design and the reason a wrong one shows you an empty one rather than an error. But that is a statement about the specification, not about your situation. <strong>If you kept a receiving address, an xpub, or a descriptor from the wallet you are trying to reach, you can test candidates against it</strong> &mdash; restore, derive, compare, discard. A one-character typo is findable that way and is not findable any other way, which is the argument for recording a receiving address somewhere alongside the backup.`)}
+
+      <p>Notice that most of these are the software being pointed somewhere else, and one is not. A passphrase you cannot reproduce is the only entry with no procedure behind it, which is the argument for treating it as a second irreplaceable secret rather than a convenience.</p>
 
       <h2>The short version</h2>
 
