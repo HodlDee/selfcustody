@@ -8284,7 +8284,7 @@ const guides = [
         "<strong>It cannot catch anything at all once the phrase is valid.</strong> A checksum says the words are internally consistent. It says nothing about whether they are <em>your</em> words."
       ])}
 
-      <p>What follows from this is narrower than it first appears. If your wallet <em>accepted</em> the phrase and showed you an empty balance, the checksum has ruled out most transcription errors &mdash; but it has not ruled out the one in sixteen that produces a different valid wallet, and it never had anything to say about a wrong passphrase, a wrong branch or a scan still in progress. Those are the causes no checksum can see, and they are the subjects of the next two sections.</p>
+      <p>What follows from this is narrower than it first appears. If your wallet <em>accepted</em> the phrase and showed you an empty balance, the checksum has ruled out most transcription errors. It has not ruled out the one in sixteen that produces a different valid wallet, and it never had anything to say about a wrong passphrase, a wrong branch or a scan still in progress. Those are the causes no checksum can see, and they are the subjects of the next two sections.</p>
 
       ${callout("This is why the last word is not free", `In a 24-word phrase the final word carries the last three bits of your secret followed by all eight checksum bits. That is why you cannot simply pick a twenty-fourth word you like, and why <a href="dice-entropy.html">rolling your own entropy</a> ends with a device or a worksheet computing that word for you.`)}
 
@@ -8385,24 +8385,24 @@ const guides = [
 
       <h2><span class="sc-article-num">7</span>Where each failure actually lives</h2>
 
-      <p>A symptom narrows the search. It rarely settles it on its own, because several of these steps fail the same way &mdash; an empty wallet looks identical whether the passphrase is wrong, the branch is wrong, or the scan has not finished. So the table below gives the checks rather than a verdict, and they are worth running in order.</p>
+      <p>A symptom narrows the search. It rarely settles it on its own, because several of these steps fail the same way. An empty wallet looks identical whether the passphrase is wrong, the branch is wrong, or the scan has not finished. So the table below gives the checks rather than a verdict, and they are worth running in order.</p>
 
       <div class="sc-table-wrap">
         <table class="table sc-table">
           <thead><tr><th>Symptom</th><th>Candidate causes</th><th>What to check</th></tr></thead>
           <tbody>
-            <tr><td><strong>Wallet rejects the phrase</strong></td><td>Step 2 &mdash; a word is misread, misspelled or out of order</td><td>Re-read the card. The checksum has done its job and the phrase you typed is not a valid one.</td></tr>
-            <tr><td><strong>Accepted, zero balance</strong></td><td>Step 3 (passphrase), step 5 (branch), a valid but <em>different</em> phrase, or a scan that has not finished</td><td>Confirm the wallet has finished syncing first. Then try the alternative paths. Then treat the phrase and passphrase as the remaining candidates &mdash; and if you have a receiving address from this wallet, that settles which one it is.</td></tr>
+            <tr><td><strong>Wallet rejects the phrase</strong></td><td>Step 2, a word misread, misspelled or out of order</td><td>Re-read the card. The checksum has done its job and the phrase you typed is not a valid one.</td></tr>
+            <tr><td><strong>Accepted, zero balance</strong></td><td>Step 3 (passphrase), step 5 (branch), a valid but <em>different</em> phrase, or a scan that has not finished</td><td>Confirm the wallet has finished syncing first. Then try the alternative paths. Then treat the phrase and the passphrase as the remaining candidates. If you have a receiving address from this wallet, you can test a candidate <em>combination</em> against it. That tells you when you have found the right pair. It does not tell you which of the two was wrong, and it cannot hand you back one you no longer have.</td></tr>
             <tr><td><strong>Some coins visible, others missing</strong></td><td>The gap limit, or a second account branch</td><td>Raise the gap limit and rescan before concluding anything is lost.</td></tr>
-            <tr><td><strong>Software rejects your extended key</strong></td><td>Step 6 &mdash; a SLIP-132 prefix it does not accept</td><td>Convert the prefix. No keys change, and the same key in <code>xpub</code> form plus an explicit path usually works.</td></tr>
-            <tr><td><strong>Phrase was written in another language</strong></td><td>Step 3 &mdash; the wordlist</td><td>Select the original wordlist. The same words index differently in each.</td></tr>
+            <tr><td><strong>Software rejects your extended key</strong></td><td>Step 6, a SLIP-132 prefix it does not accept</td><td>Convert the prefix. No keys change, and the same key in <code>xpub</code> form plus an explicit path usually works.</td></tr>
+            <tr><td><strong>Phrase was written in another language</strong></td><td>Step 3, the wordlist</td><td>Select the original wordlist. The same words index differently in each.</td></tr>
           </tbody>
         </table>
       </div>
 
-      ${callout("A recorded address is the test people assume does not exist", `BIP39 has no built-in notion of a correct passphrase &mdash; every passphrase produces a valid wallet, which is the whole point of the design and the reason a wrong one shows you an empty one rather than an error. But that is a statement about the specification, not about your situation. <strong>If you kept a receiving address, an xpub, or a descriptor from the wallet you are trying to reach, you can test candidates against it</strong> &mdash; restore, derive, compare, discard. A one-character typo is findable that way and is not findable any other way, which is the argument for recording a receiving address somewhere alongside the backup.`)}
+      ${callout("A recorded address tests candidates. It does not recover secrets.", `BIP39 has no built-in notion of a correct passphrase. Every passphrase produces a valid wallet, which is the whole point of the design and the reason a wrong one shows you an empty wallet rather than an error. So if you kept a receiving address, an xpub or a descriptor from the wallet you are trying to reach, <strong>you can test candidates against it</strong>: restore, derive, compare, discard. A one-character typo in a passphrase you still roughly remember is findable that way and is findable no other way.<br><br>Be clear about the limit, because it is the difference between a bad afternoon and a lost wallet. <strong>The address verifies a guess. It cannot produce one.</strong> If you have no idea what the passphrase was, or the card with the words on it is gone, there is nothing to test and no procedure that ends well.`)}
 
-      <p>Notice that most of these are the software being pointed somewhere else, and one is not. A passphrase you cannot reproduce is the only entry with no procedure behind it, which is the argument for treating it as a second irreplaceable secret rather than a convenience.</p>
+      <p>Which is the honest summary of the whole table. Most of these symptoms are the software being pointed somewhere else, and pointing it correctly is a matter of an afternoon. But two rows are not: <strong>losing any secret the wallet actually requires, whether the words or the passphrase or both, can end recovery permanently.</strong> A checksum-valid phrase that is not yours is exactly as unrecoverable as a forgotten passphrase, and neither is a settings problem. That is the argument for treating a passphrase as a second irreplaceable secret rather than a convenience, and for treating the words as the first.</p>
 
       <h2>The short version</h2>
 
