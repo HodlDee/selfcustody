@@ -126,6 +126,31 @@ const guideProducts = [
 
 const levelLabels = { beginner: "Beginner", intermediate: "Intermediate", advanced: "Advanced" };
 
+/* `minutes` has always meant two different things: how long a setup guide takes
+   to carry out, and how long an explainer takes to read. Rendered as a bare
+   "About 45 minutes" a reader cannot tell which they are being promised --
+   krux-setup's hour at a workbench looked identical to what-is-money's hour of
+   reading, and that one reads in about eight minutes.
+
+   This is not derivable. A "Before you start" block is the best available
+   signal and it misses genuine tasks -- own-node-connection has no prerequisite
+   list and is forty minutes of configuration. Implied reading rate is no help
+   either, because these estimates are deliberately unhurried: the explainers sit
+   around 60-90 words a minute, so any threshold that catches own-node-connection
+   also catches what-is-money. The two signals disagree on exactly half the
+   library.
+
+   So `effort: "task"` is set on the guide when the prerequisite block is absent
+   but the guide still describes something to go and do. Everything else falls
+   back to the block, which keeps new setup guides right by default. */
+const isTaskGuide = guide =>
+  guide.effort === "task" ||
+  (guide.effort !== "read" && /sc-guide-prereq/.test(guide.body || ""));
+const minutesLong = guide =>
+  `About ${guide.minutes} minutes ${isTaskGuide(guide) ? "to complete" : "to read"}`;
+const minutesShort = guide =>
+  `${guide.minutes} min ${isTaskGuide(guide) ? "hands-on" : "read"}`;
+
 /* ---- body helpers -------------------------------------------------------
    Guide bodies are written as prose: plain <h2> and <p>, with these for the
    parts that repeat. Every guide uses layout: "article" -- the numbered
@@ -2430,6 +2455,7 @@ const guides = [
     summary: "Trick PINs, duress wallets, the brick-me PIN, and the login countdown. What each one actually does, and the honest accounting of which of them can cost you your own coins.",
     level: "advanced",
     minutes: 30,
+    effort: "task",
     goals: ["harden"],
     tags: ["Duress", "PIN policy"],
     icon: "bi-shield-lock",
@@ -3886,6 +3912,7 @@ const guides = [
     summary: "Ten slots, one sealed at a time, and bitcoin that travels with the physical card. How to load one, what to check before accepting one, and why unsealing is a door that only opens once.",
     level: "beginner",
     minutes: 15,
+    effort: "task",
     goals: ["setup", "learn"],
     tags: ["NFC", "Card"],
     icon: "bi-credit-card-2-front",
@@ -3999,6 +4026,7 @@ const guides = [
     summary: "How an unsigned transaction reaches an offline signer and a signature comes back, by microSD, QR, or NFC. What the file actually contains, why your device can be lied to, and the one output people never think to check.",
     level: "intermediate",
     minutes: 25,
+    effort: "task",
     goals: ["harden", "learn", "multisig"],
     tags: ["PSBT", "Air-gapped"],
     icon: "bi-arrow-repeat",
@@ -5253,6 +5281,7 @@ const guides = [
     summary: "Running a node and using it are two different achievements. The index layer nobody mentions, connecting each wallet to it, reaching it from outside your house, and proving your wallet is not quietly still using somebody else's server.",
     level: "advanced",
     minutes: 40,
+    effort: "task",
     goals: ["harden", "privacy"],
     tags: ["Node", "Privacy"],
     icon: "bi-cpu",
@@ -5526,6 +5555,7 @@ const guides = [
     summary: "Most people who lose bitcoin from a platform were not victims of an exchange hack. Their own account was opened by someone else — usually through email or a phone number.",
     level: "beginner",
     minutes: 20,
+    effort: "task",
     goals: ["harden"],
     tags: ["2FA", "Account security", "SIM swap"],
     icon: "bi-shield-lock",
@@ -5843,6 +5873,7 @@ const guides = [
     summary: "One octal die and two hex dice throw exactly eleven bits \u2014 one recovery word, with nothing hashed and nothing to trust. The method, the arithmetic, and the one detail that quietly ruins it.",
     level: "intermediate",
     minutes: 14,
+    effort: "task",
     goals: ["setup", "harden", "learn"],
     tags: ["Entropy", "Dice", "Seed generation"],
     icon: "bi-dice-3",
@@ -6593,6 +6624,7 @@ const guides = [
     summary: "A passphrase is not a password on your wallet. It is a switch that selects a different wallet entirely — which is why a single wrong character shows you an empty balance and no error message.",
     level: "advanced",
     minutes: 30,
+    effort: "task",
     goals: ["harden", "recover"],
     tags: ["Passphrase", "Recovery", "Threat model"],
     icon: "bi-shield-lock",
@@ -6718,6 +6750,7 @@ const guides = [
     summary: "One seed can generate an unlimited supply of ordinary, independent wallets on demand — so you protect one backup instead of six. The catch is a bookkeeping obligation nobody warns you about, and a master seed that is now worth six times as much to a thief.",
     level: "advanced",
     minutes: 28,
+    effort: "task",
     goals: ["harden", "learn", "recover"],
     tags: ["Seed derivation", "Backups", "Threat model"],
     icon: "bi-diagram-3",
@@ -6943,6 +6976,7 @@ const guides = [
     summary: "Paper survives everything except the events your backup exists for. What metal actually buys you, the four-letter shortcut that halves the work, and the mistakes that quietly ruin a plate.",
     level: "intermediate",
     minutes: 25,
+    effort: "task",
     goals: ["harden", "recover"],
     tags: ["Backups", "Metal", "Storage"],
     icon: "bi-box-seam",
@@ -7085,6 +7119,7 @@ const guides = [
     summary: "Instructions someone can follow while grieving, that are not enough to steal with while you are alive. Why your will is the wrong place for any of it, and the failure that loses more coins than any other.",
     level: "advanced",
     minutes: 45,
+    effort: "task",
     goals: ["harden", "inherit", "multisig"],
     tags: ["Inheritance", "Estate"],
     icon: "bi-people",
@@ -9096,7 +9131,7 @@ const productGuideLinks = key => {
   const hits = published.filter(g => g.productGuide && g.products.includes(key));
   if (!hits.length) return "";
   const items = hits.map(g => {
-    const detail = `${g.title} — ${levelLabels[g.level]} · ${g.minutes} min`;
+    const detail = `${g.title} — ${levelLabels[g.level]} · ${minutesShort(g)}`;
     return `<a class="sc-text-link" href="guides/${g.slug}.html" title="${detail}" aria-label="${detail}">Guide <i class="bi bi-arrow-right" aria-hidden="true"></i></a>`;
   }).join("");
 
@@ -9137,11 +9172,12 @@ const guideCard = guide => {
   const cardTitle = guide.category === "devices"
     ? guide.title.replace(/:\s*first-time setup$/i, "")
     : guide.title;
-  /* Just the reading time. The review date used to sit here too, which forced
-     "Read guide" onto a line of its own underneath and made every card taller
-     for a per-guide fact the guide's own header already carries -- the hub
-     states the range once per section instead. */
-  const meta = `<span><i class="bi bi-hourglass-split" aria-hidden="true"></i> ${guide.minutes} min</span>`;
+  /* How long it takes, and which kind of "long" that is -- see minutesShort.
+     The review date used to sit here too, which forced "Read guide" onto a line
+     of its own underneath and made every card taller for a per-guide fact the
+     guide's own header already carries -- the hub states the range once per
+     section instead. */
+  const meta = `<span><i class="bi bi-hourglass-split" aria-hidden="true"></i> ${minutesShort(guide)}</span>`;
   const cardProduct = ["devices", "software"].includes(guide.category)
     ? guide.products.map(key => productByKey.get(key)).find(product => product?.image)
     : null;
@@ -9426,7 +9462,7 @@ const renderGuideBody = guide => {
         <p class="sc-lead">${guide.summary}</p>
         <div class="sc-guide-meta">
           <span class="sc-level sc-level-${guide.level}">${levelLabels[guide.level]}</span>
-          <span><i class="bi bi-hourglass-split" aria-hidden="true"></i> About ${guide.minutes} minutes</span>
+          <span><i class="bi bi-hourglass-split" aria-hidden="true"></i> ${minutesLong(guide)}</span>
           <span>Updated ${formatUpdated(guide.updated)}</span>
         </div>
         <div class="sc-tags sc-tags-lg">${guide.tags.map(t => renderGlossaryTag(t, "../")).join("")}</div>
