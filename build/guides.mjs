@@ -2295,6 +2295,155 @@ const guides = [
       ${callout("If you take one thing from this page", `The test is not a ritual for the nervous &mdash; it is the only point in the process where being wrong is cheap. Spend the fee, wait the ten minutes, and let a mistake cost five dollars instead of the balance.`)}`
   },
 
+  {
+    slug: "verify-a-download",
+    category: "fundamentals",
+    products: [],
+    title: "Verify a download before you run it",
+    summary: "Every setup guide says to check the signature and then moves on. This is the part they skip: the three files, the three commands, and the alarming warning that appears when everything has in fact gone right.",
+    level: "intermediate",
+    minutes: 20,
+    goals: ["setup", "harden", "learn"],
+    tags: ["Fundamentals", "Verification"],
+    icon: "bi-check2-circle",
+    updated: "2026-09-06",
+    status: "published",
+    related: ["supply-chain-and-vendor-risk", "what-not-to-normalize", "choosing-your-first-setup"],
+    layout: "article",
+    body: `
+      <p class="sc-guide-intro">Wallet software is the one thing in self-custody you install from the internet before you have any way to tell whether it is genuine. <a href="supply-chain-and-vendor-risk.html">Supply chain and vendor risk</a> covers what verification proves and where the chain runs out. This page is the missing half: how to actually do it, and how to read the output, which is where most people quietly give up.</p>
+
+      <p>It takes about ten minutes the first time and under a minute afterwards. Do it once per download, on every machine that will run the software.</p>
+
+      <h2><span class="sc-article-num">1</span>What this defends against, precisely</h2>
+
+      <p>Being specific here matters, because verification is often sold as a general-purpose safety ritual and it is not one.</p>
+
+      ${checklist([
+        "<strong>A substituted download.</strong> A hostile mirror, a compromised CDN, a corrupted transfer, a file altered in flight.",
+        "<strong>The wrong site entirely.</strong> Fake wallet sites buy search ads and rank above the real project. A file from an impostor site will not verify against the real project's key.",
+        "<strong>A tampered update.</strong> Particularly worth it for wallets that have historically had fake update prompts pushed at users from inside the application."
+      ])}
+
+      ${cautions([
+        "It does not tell you the software is safe. It tells you the project published it.",
+        "It does not defeat a dishonest maintainer. Someone entitled to sign releases can sign a bad one, and it will verify perfectly.",
+        "It does not help if you got the key from the same page as a fake download. That is the loop this page's last section is about."
+      ])}
+
+      <h2><span class="sc-article-num">2</span>Why there are three files, not two</h2>
+
+      <p>Almost every serious Bitcoin project publishes the same three things, and the shape only makes sense once you see what each one is for.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>File</th><th>Looks like</th><th>What it is for</th></tr></thead>
+          <tbody>
+            <tr><td><strong>The release</strong></td><td><code>Sparrow-2.5.4.msi</code></td><td>The thing you actually want to run.</td></tr>
+            <tr><td><strong>A checksum manifest</strong></td><td><code>manifest.txt</code>, <code>SHA256SUMS</code></td><td>A list of filenames and their SHA-256 hashes.</td></tr>
+            <tr><td><strong>A signature over the manifest</strong></td><td><code>manifest.txt.asc</code>, <code>SHA256SUMS.asc</code></td><td>Proof the manifest came from the project.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The indirection is the clever part. Signing every installer separately would be tedious, so the project signs one small text file listing the hashes of all of them. Verify the signature on that list, then check your download against the list, and you have transitively verified your download. Two links in a chain.</p>
+
+      <p>This is also why a checksum published on its own proves much less. A hash tells you the file arrived intact. Only a signature tells you who published the hash.</p>
+
+      <h2><span class="sc-article-num">3</span>The three commands</h2>
+
+      <p>You need GnuPG. On macOS it comes with GPG Suite or <code>brew install gnupg</code>; on Linux it is <code>gpg</code> in every package manager; on Windows it ships with Gpg4win.</p>
+
+      <p>The pattern is always the same three steps, whatever the project. Sparrow's own published instructions look like this &mdash; substitute the version you actually downloaded, and use whatever filenames your vendor publishes.</p>
+
+      ${checklist([
+        "<strong>Import the signing key.</strong> <code>curl https://keybase.io/craigraw/pgp_keys.asc | gpg --import</code>",
+        "<strong>Verify the manifest's signature.</strong> <code>gpg --verify sparrow-2.5.4-manifest.txt.asc</code>",
+        "<strong>Check your file against the manifest.</strong> <code>shasum -a 256 --ignore-missing --check sparrow-2.5.4-manifest.txt</code> on macOS, or <code>sha256sum --ignore-missing --check sparrow-2.5.4-manifest.txt</code> on Linux."
+      ])}
+
+      <p>Step three should print your filename followed by <code>OK</code>. The <code>--ignore-missing</code> flag matters: the manifest lists every platform's build, and without it the command complains loudly about the dozen files you did not download.</p>
+
+      <p>All three must pass. Any one of them alone proves very little &mdash; a signature check without the hash check tells you the project signed <em>some</em> list, and a hash check without the signature check tells you your file matches a list that anyone could have written.</p>
+
+      ${figureSlot({
+        shot: "A laptop screen photographed slightly off-axis in a dim room, a terminal showing a completed gpg verification: the Good signature line and the capitalised WARNING about the key not being certified both legible in the same frame.",
+        caption: "Both of these appear on a check that passed. Only the first line is the result; the second is answering a different question.",
+        ratio: "16 / 9",
+        icon: "bi-check2-circle"
+      })}
+
+      <h2><span class="sc-article-num">4</span>The warning that means everything worked</h2>
+
+      <p>This is the step that stops people, and nothing on the download page prepares them for it. A completely successful verification prints something like this:</p>
+
+      ${checklist([
+        "<code>gpg: Good signature from &quot;Craig Raw &lt;craig@sparrowwallet.com&gt;&quot; [unknown]</code>",
+        "<code>gpg: WARNING: This key is not certified with a trusted signature!</code>",
+        "<code>gpg: There is no indication that the signature belongs to the owner.</code>",
+        "<code>Primary key fingerprint: D4D0 D320 2FC0 6849 A257 B38D E946 1833 4C67 4B40</code>"
+      ])}
+
+      <p>Read in order, that looks like a pass followed by a failure. It is not. <strong>The first line is the verification result and it says the signature is valid.</strong> The warning underneath is answering a completely different question.</p>
+
+      <p>GnuPG maintains a web of trust &mdash; a record of whose keys you have personally vouched for. You have not vouched for this key, because you imported it thirty seconds ago from a URL. So GnuPG tells you, correctly, that it has no independent basis for believing the key belongs to the person named in it. That warning will appear every time until you explicitly sign the key locally, and essentially nobody does.</p>
+
+      ${callout("What to actually look for", `<strong>Good signature</strong> is the pass. <strong>BAD signature</strong> is the failure, and it is unambiguous when it happens &mdash; it does not hide in a warning. If you see BAD, delete the download and start again from a freshly typed address; do not retry the same file.`)}
+
+      <h2><span class="sc-article-num">5</span>The fingerprint is the part you actually verify</h2>
+
+      <p>Given the warning above, the honest question is what the signature check is worth at all. The answer is that it is worth exactly as much as your confidence in the fingerprint &mdash; and that is a thing you can work on.</p>
+
+      <p>The fingerprint on the last line is the key's identity. Confirming it is the whole of the trust decision, and the useful moves are these:</p>
+
+      ${checklist([
+        "<strong>Compare it against a second, independent source.</strong> The project's GitHub, its documentation, a release announcement, an archived copy of the page. A fake site can serve you a fake key; serving you a fake key that also matches four other places is a much larger job.",
+        "<strong>Fetch it over a different network.</strong> A phone on mobile data rather than the same wifi is a cheap and surprisingly effective check.",
+        "<strong>Prefer a key you have used before.</strong> A fingerprint you verified two years ago and have checked against every release since is far stronger evidence than one you fetched five minutes ago. Keep your keyring rather than re-importing each time.",
+        "<strong>Write the fingerprint down.</strong> Once, in your notes, next to the project name. Then future releases are a comparison rather than a fresh act of faith."
+      ])}
+
+      <h2><span class="sc-article-num">6</span>One signer, or many</h2>
+
+      <p>Sparrow is signed by one person. Bitcoin Core is not, and the difference is worth understanding because it is a genuinely stronger model.</p>
+
+      <p>Bitcoin Core's <code>SHA256SUMS.asc</code> carries signatures from a number of independent developers, each of whom built the release themselves from source and got the same bytes. Verifying it produces a run of separate results rather than one, and the project's guidance is to import keys from several people you find trustworthy rather than relying on any single one.</p>
+
+      <p>What that buys is a defence the single-signer model cannot offer: one compromised developer machine, or one coerced maintainer, does not silently produce a valid release. It also demonstrates the reproducibility claim rather than asserting it &mdash; independent people compiling the same source and arriving at identical binaries is the evidence.</p>
+
+      <p>So a single <code>Good signature</code> line on a multi-signer project is a partial result. Check that enough of the signers are keys you meant to trust.</p>
+
+      <h2><span class="sc-article-num">7</span>When there is only a checksum</h2>
+
+      <p>Some things are published with a hash and no signature at all &mdash; including <a href="../entropy.html">this site's own offline Workshop file</a>, whose SHA-256 sits beside it.</p>
+
+      <p>Be exact about what that can do. It catches a truncated download, a proxy that rewrote something, a failing USB stick. It cannot catch an adversary, because the checksum is served from the same place as the file it describes, and anyone able to replace one can replace the other. Same-origin checksums catch accidents, not attackers.</p>
+
+      <p>Where it matters, get a second copy of the expected hash from somewhere the same server does not control &mdash; a repository's commit history, a build log, a mirror &mdash; and compare. <a href="bring-your-own-entropy.html">The Workshop guide</a> makes the same point about its own file, which is the correct way for a project to talk about its own checksums.</p>
+
+      <h2><span class="sc-article-num">8</span>Windows without a terminal</h2>
+
+      <p>Windows has no <code>sha256sum</code>, and its built-in tool prints the hash rather than checking it for you:</p>
+
+      ${checklist([
+        "<code>CertUtil -hashfile Sparrow-2.5.4.msi SHA256</code> prints the file's hash.",
+        "Open the manifest in Notepad, find the line for your filename, and compare the two strings.",
+        "<strong>Compare the whole string, not the ends.</strong> Checking the first and last few characters is the one shortcut that an attacker can actually plan around."
+      ])}
+
+      <p>For the signature step, Gpg4win installs the same <code>gpg --verify</code> command, and Kleopatra offers it through a window if you would rather not use a terminal at all.</p>
+
+      <h2>The short version</h2>
+
+      <p>Download three files, not one. Verify the signature on the checksum list, then check your file against the list, and require both to pass. Expect the not-certified warning and do not read it as a failure &mdash; <code>Good signature</code> is the result, <code>BAD signature</code> is the failure. Then spend your attention where it actually counts, which is deciding that the fingerprint belongs to the project, and keeping that key so every later release is a comparison instead of a leap.</p>
+
+      ${callout("If you take one thing from this page", `Verification answers one narrow question &mdash; did this file come from the same key as the last one &mdash; and answers it very well. It cannot tell you the project deserves your trust. Keep the two questions separate, and <a href="supply-chain-and-vendor-risk.html">read what a signature cannot prove</a> before deciding how much weight to put on a green line in a terminal.`)}
+
+      <p class="sc-source-note">
+        Commands and filenames follow the projects' own published instructions and change between releases; substitute the version you downloaded and prefer the vendor's current page over this one. The multi-signer description reflects Bitcoin Core's documented release process, where checksums are signed by a number of independent builders.
+      </p>`
+  },
+
   /* ------------------------------------------------------------------ devices */
   {
     slug: "coldcard-setup",
@@ -3202,7 +3351,7 @@ const guides = [
 
       <h2><span class="sc-article-num">3</span>Verify the image, then flash it</h2>
 
-      <p>This is the step that replaces the tamper-evident bag, and skipping it means running software of unknown origin on a device you are about to show your seed to.</p>
+      <p>This is the step that replaces the tamper-evident bag, and skipping it means running software of unknown origin on a device you are about to show your seed to. The same three-step pattern is explained line by line in <a href="verify-a-download.html">verifying a download</a>.</p>
 
       <p>Download the release image along with its <a href="../glossary.html#term-checksum">checksum</a> file and the signature of that checksum file. Then, on your computer, three commands do the work &mdash; substituting the version you actually downloaded:</p>
 
@@ -4195,7 +4344,7 @@ const guides = [
     updated: "2026-08-17",
     productGuide: true,
     status: "published",
-    related: ["coldcard-setup", "exchange-withdrawal", "sparrow-coin-control"],
+    related: ["coldcard-setup", "exchange-withdrawal", "sparrow-coin-control", "verify-a-download"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">A hardware wallet on its own cannot tell you what you own. It holds keys and signs things; it has no idea what is on the blockchain. Sparrow is the other half &mdash; the part that watches the network, builds transactions, and hands them to your device to be signed.</p>
@@ -4221,7 +4370,7 @@ const guides = [
 
       <h2><span class="sc-article-num">1</span>Verify the download before you run it</h2>
 
-      <p>Wallet software is impersonated relentlessly, and a convincing fake will behave exactly like the real thing right up until it shows you an address that is not yours. The release page publishes a manifest and a signature so you can confirm the file came from the project.</p>
+      <p>Wallet software is impersonated relentlessly, and a convincing fake will behave exactly like the real thing right up until it shows you an address that is not yours. <a href="verify-a-download.html">The commands, and how to read their output</a>, are set out in full separately. The release page publishes a manifest and a signature so you can confirm the file came from the project.</p>
 
       ${checklist([
         "Download only from sparrowwallet.com, typed by hand rather than clicked from a search result.",
@@ -4719,7 +4868,7 @@ const guides = [
     updated: "2026-08-17",
     productGuide: true,
     status: "published",
-    related: ["recovery-test-drill", "sparrow-first-wallet", "what-not-to-normalize"],
+    related: ["recovery-test-drill", "sparrow-first-wallet", "what-not-to-normalize", "verify-a-download"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Electrum can split one wallet across two machines. The online one watches the blockchain, shows your balance, and builds transactions but holds no keys and can spend nothing. The offline one holds the keys, never touches a network, and does nothing but sign.</p>
@@ -4747,7 +4896,7 @@ const guides = [
 
       <h2><span class="sc-article-num">1</span>Verify the download before you run anything</h2>
 
-      <p>Electrum publishes a GPG signature alongside each release. Checking it confirms the file came from the project rather than from whoever bought the search advert above the real site.</p>
+      <p>Electrum publishes a GPG signature alongside each release. Checking it confirms the file came from the project rather than from whoever bought the search advert above the real site. <a href="verify-a-download.html">How to run that check</a>, and why a successful one prints a warning, is a guide of its own.</p>
 
       ${checklist([
         "Type electrum.org into the address bar yourself. Do not arrive from a search result, an email, or a forum link.",
