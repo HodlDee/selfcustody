@@ -118,7 +118,7 @@
 
       <p>Jade has no dedicated secure element chip. Instead it uses what Blockstream calls a virtual secure element: your seed is stored encrypted on the device, and the key needed to decrypt it is not held entirely on the device either. Part of it lives on a server &mdash; Blockstream's, by default.</p>
 
-      <p>When you enter your PIN, the device talks to that server to complete the unlock. The server is what enforces the limit on wrong attempts, doing the job a secure element chip does elsewhere.</p>
+      <p>When you enter your PIN, the device talks to that server to complete the unlock. The server is what enforces the limit on wrong attempts, doing the job a secure element chip does elsewhere &mdash; and <a href='inside-the-device.html'>that job is the whole point of the chip</a>.</p>
 
       <p>Two things follow, and neither is hidden or sinister &mdash; but both are yours to plan around:</p>
 
@@ -229,6 +229,15 @@
               </div>
               <h3>Build a 2-of-3 multisig</h3>
               <p>Three keys, any two can spend. The real work is not the setup — it is the wallet configuration everybody forgets to back up, and the rehearsal that proves the whole thing works.</p>
+              <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
+            </div></a></div><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="inside-the-device.html">
+            <div class="sc-card-body">
+              <div class="sc-guide-card-top">
+                <div class="sc-icon"><i class="bi bi-cpu"></i></div>
+                <span class="sc-level sc-level-intermediate">Intermediate</span>
+              </div>
+              <h3>What is actually protecting your seed</h3>
+              <p>Every device guide on this site says the PIN protects the device rather than the seed. This is the part underneath that sentence — what a secure element is, what happened to the devices that did not have one, and the two things that actually survive someone holding your hardware.</p>
               <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
             </div></a></div></div>
       </div>

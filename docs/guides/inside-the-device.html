@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Every device guide on this site says the PIN protects the device rather than the seed. This is the part underneath that sentence — what a secure element is, what happened to the devices that did not have one, and the two things that actually survive someone holding your hardware.">
+  <title>What is actually protecting your seed | SelfCustody.ca</title>
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://selfcustody.ca/guides/inside-the-device.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_CA">
+  <meta property="og:site_name" content="SelfCustody.ca">
+  <meta property="og:title" content="What is actually protecting your seed | SelfCustody.ca">
+  <meta property="og:description" content="Every device guide on this site says the PIN protects the device rather than the seed. This is the part underneath that sentence — what a secure element is, what happened to the devices that did not have one, and the two things that actually survive someone holding your hardware.">
+  <meta property="og:url" content="https://selfcustody.ca/guides/inside-the-device.html">
+  <meta property="og:image" content="https://selfcustody.ca/assets/img/social-preview.jpg?v=5">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1406">
+  <meta property="og:image:height" content="703">
+  <meta property="og:image:alt" content="SelfCustody.ca beside an open bank vault on a dark brick wall">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://selfcustody.ca/assets/img/social-preview.jpg?v=5">
+  <meta name="twitter:image:alt" content="SelfCustody.ca beside an open bank vault on a dark brick wall">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/self-custody-favicon.svg">
+  <link rel="icon" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css?v=20260906-01" rel="stylesheet">
+  <link href="../assets/css/style.css?v=20260906-01" rel="stylesheet">
+  <link href="../assets/css/site-refresh.css?v=20260906-01" rel="stylesheet">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"What is actually protecting your seed","description":"Every device guide on this site says the PIN protects the device rather than the seed. This is the part underneath that sentence — what a secure element is, what happened to the devices that did not have one, and the two things that actually survive someone holding your hardware.","url":"https://selfcustody.ca/guides/inside-the-device.html","datePublished":"2026-09-06","dateModified":"2026-09-06","inLanguage":"en-CA","publisher":{"@type":"Organization","name":"SelfCustody.ca","url":"https://selfcustody.ca/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://selfcustody.ca/guides/inside-the-device.html"}}</script>
+</head>
+<body class="site-refresh" data-page="guides">
+  <div id="site-header">
+      <a class="sc-skip-link" href="#main-content">Skip to main content</a>
+      <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center">
+          <a class="sc-brand me-auto" href="../index.html" aria-label="Self Custody home">
+            <span class="sc-brand-mark" aria-hidden="true"></span>
+            <span class="sc-brand-name">SELF CUSTODY</span>
+            <span class="sc-brand-domain" aria-hidden="true"><span class="sc-brand-domain-text">.CA</span></span>
+          </a>
+          <nav id="navbar" class="navbar" aria-label="Primary navigation">
+            <ul><li><a class=" " href="../index.html"><span>Home</span></a></li><li class="sc-nav-menu">
+          <button class="sc-nav-menu-toggle active" type="button" aria-expanded="false" aria-haspopup="true">
+            <span>Guides</span><span class="sc-nav-menu-chevron" aria-hidden="true"></span>
+          </button>
+          <ul class="sc-nav-submenu">
+            <li><a href="../guides.html">Start here</a></li>
+            <li><a href="../guides.html#devices">Devices</a></li>
+            <li><a href="../guides.html#software">Software</a></li>
+            <li><a href="../guides.html#exchanges">Exchanges</a></li>
+            <li><a href="../guides.html#advanced">Techniques</a></li>
+            <li><a href="../guides.html#concepts">Concepts</a></li>
+            <li class="sc-nav-tool-item"><a class="sc-nav-tool-link" href="../entropy.html">Entropy Workshop</a></li>
+          </ul>
+        </li><li class="sc-nav-menu">
+          <button class="sc-nav-menu-toggle " type="button" aria-expanded="false" aria-haspopup="true">
+            <span>Compare</span><span class="sc-nav-menu-chevron" aria-hidden="true"></span>
+          </button>
+          <ul class="sc-nav-submenu">
+            <li><a class="" href="../devices.html">Devices</a></li>
+            <li><a class="" href="../software.html">Software</a></li>
+            <li><a class="" href="../exchanges.html">Exchanges</a></li>
+          </ul>
+        </li><li><a class=" " href="../glossary.html"><span>Glossary</span></a></li><li><a class=" " href="../dashboard.html"><span>Dashboard</span></a></li><li><a class=" sc-contact-link" href="../contact.html"><span>Get Help</span></a></li></ul>
+            <i class="bi bi-list mobile-nav-toggle" aria-label="Open navigation" role="button" tabindex="0"></i>
+          </nav>
+        </div>
+      </header></div>
+    <main id="main-content">
+    <section class="sc-guide-head">
+      <div class="container">
+        <nav class="sc-breadcrumb" aria-label="Breadcrumb">
+          <a href="../guides.html">Guides</a>
+          <i class="bi bi-arrow-right" aria-hidden="true"></i>
+          <a href="../guides.html#concepts">Concepts</a>
+        </nav>
+        <span class="sc-eyebrow">How it works</span>
+        <h1>What is actually protecting your seed</h1>
+        <p class="sc-lead">Every device guide on this site says the PIN protects the device rather than the seed. This is the part underneath that sentence — what a secure element is, what happened to the devices that did not have one, and the two things that actually survive someone holding your hardware.</p>
+        <div class="sc-guide-meta">
+          <span class="sc-level sc-level-intermediate">Intermediate</span>
+          <span><i class="bi bi-hourglass-split" aria-hidden="true"></i> About 20 minutes to read</span>
+          <span>Updated Sep 6, 2026</span>
+        </div>
+        <div class="sc-tags sc-tags-lg"><span class="sc-tag">Hardware</span><span class="sc-tag">How it works</span></div>
+        
+      </div>
+    </section>
+
+    <section class="sc-section sc-guide-body">
+      <div class="container">
+        <div class="sc-article">
+      <p class="sc-guide-intro">The phrase "secure element" appears in eight guides on this site. It justifies why a COLDCARD wipes itself after thirteen wrong PINs, why <a href="jade-setup.html">Jade is built differently</a>, why <a href="seedsigner-setup.html">SeedSigner deliberately stores nothing</a>, and why Ledger's closed firmware is a live argument. It is doing an enormous amount of work in those sentences, and none of them says what it is.</p>
+
+      <p>This page is that missing definition, and the honest account of what it buys. The short version, if you read nothing else: a secure element raises the price of stealing your seed from someone holding your device. It does not set that price to infinity, and the two things that genuinely do are not chips at all.</p>
+
+      <h2><span class="sc-article-num">1</span>Where the seed actually sits</h2>
+
+      <p>When your device is switched off, your seed is somewhere on it, in storage that survives losing power. That is the entire problem in one sentence. A backup you wrote on paper is protected by being in your house; a seed inside a device is protected only by whatever that device does to protect it.</p>
+
+      <p>There are broadly three answers on the market, and every device on this site takes one of them.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>Approach</th><th>Where the secret rests</th><th>Devices here</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Secure element</strong></td><td>Inside a chip built to resist being read</td><td>COLDCARD, Trezor Safe, BitBox02, Passport, Ledger, TAPSIGNER</td></tr>
+            <tr><td><strong>Nothing stored</strong></td><td>Nowhere. The seed is entered per session and lost on power-off</td><td>SeedSigner, Krux</td></tr>
+            <tr><td><strong>Virtual secure element</strong></td><td>Encrypted on the device, with part of the key held off it</td><td>Jade</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Those are three different answers to the same question, not three quality tiers, and the rest of this page is about what each one actually costs.</p>
+
+      
+  <figure class="sc-figure sc-figure-slot">
+    <div class="sc-figure-slot-frame" style="aspect-ratio: 16 / 9">
+      <i class="bi bi-cpu" aria-hidden="true"></i>
+      <p class="sc-figure-slot-shot">A hardware wallet's bare circuit board on a workbench, lifted out of its case, shot close and slightly overhead with hard side light. The small secure element in sharp focus, the larger microcontroller behind it falling out of focus.</p>
+      <p class="sc-figure-slot-note">Image to come</p>
+    </div>
+    <figcaption>The small chip is the one counting your failed attempts. That counter, and where it lives, is most of what you are buying.</figcaption>
+  </figure>
+
+      <h2><span class="sc-article-num">2</span>What a secure element actually is</h2>
+
+      <p>A secure element is a separate chip whose job is to hold secrets and refuse to give them up, including to someone with the chip in their hand and a laboratory around it. It is not simply "encrypted storage". Three properties make it different from ordinary memory:</p>
+
+      <ul class="sc-check-list"><li><strong>It resists physical reading.</strong> Shielding, sensors that detect the device being opened or run outside normal voltage and temperature, and layouts designed so that grinding the chip down destroys what you were trying to read. Historically this has come with a catch &mdash; the design is behind an NDA, so you are trusting a certification rather than reading anything. That is beginning to change.</li><li><strong>Secrets do not leave it.</strong> The chip performs operations internally and returns results. The key is used inside and never handed to the main processor, so reading the rest of the device does not reveal it.</li><li><strong>It counts your failures itself.</strong> This is the property that matters most, and the one most people miss.</li></ul>
+
+      <p>The reason a four-digit PIN can be reasonable protection is not that four digits are hard to guess. Ten thousand combinations is nothing. It is reasonable only because something is counting the wrong ones and will act before an attacker gets through them.</p>
+
+      <p>The whole security of a PIN therefore rests on <em>where that counter lives</em>. A counter kept in ordinary storage is a number an attacker can find and reset. A counter enforced inside a secure element is one they have to defeat the chip to reach. That is the actual product being sold.</p>
+
+      <div class="sc-callout mt-4"><h3>Which is why the wipe is a feature</h3><p>A COLDCARD destroying its own contents after thirteen wrong attempts sounds alarming until you see it from this angle. The counter is worth nothing unless it eventually does something irreversible &mdash; and a device that merely slows down is a device an attacker waits out.</p></div>
+
+      <h2><span class="sc-article-num">3</span>What happened to the devices without one</h2>
+
+      <p>This is not theoretical, and the best-documented case involves a widely-owned device.</p>
+
+      <p>Trezor's earlier models, the One and the Model T, had no secure element. The seed lived encrypted in the flash of a general-purpose microcontroller, and the attempt counter lived there too. In 2020 Kraken Security Labs showed that this could be defeated with roughly fifteen minutes of physical access: desolder the microcontroller, and interfere with its supply voltage at a precisely timed moment during boot &mdash; a technique called voltage glitching &mdash; to get the encrypted seed out without knowing the PIN.</p>
+
+      <p>The original work needed skill and several hundred dollars of equipment. Kraken's own estimate was that a purpose-built consumer version of the tool could be produced for around seventy-five dollars.</p>
+
+      <p>Two things about that are worth sitting with.</p>
+
+      <ul class="sc-check-list"><li><strong>The PIN was not broken.</strong> Nobody guessed it. The attack went around it, because the thing enforcing it was ordinary memory on a chip that was never built to resist this.</li><li><strong>The fix was already available to users.</strong> Trezor's response noted that the attack does not work against a wallet using a BIP39 passphrase &mdash; because the passphrase is not stored on the device at all, so there is nothing on the chip to extract.</li></ul>
+
+      <p>The later Trezor Safe line added a secure element, which is precisely the gap this closed. But the lesson generalises past one manufacturer: <strong>a device's resistance to someone holding it is a property of its hardware, and it is not something firmware can add later.</strong></p>
+
+      <h2><span class="sc-article-num">4</span>The stateless answer</h2>
+
+      <p>SeedSigner and Krux answer the question by refusing it. They store no seed at all. You enter your words at the start of a session, the device holds them in volatile memory while it signs, and cutting the power erases them completely.</p>
+
+      <p>A device with nothing on it cannot have anything extracted from it. That is a genuinely strong property, and it is why a SeedSigner can be left in a drawer, or disassembled, with no more concern than any other Raspberry Pi.</p>
+
+      <p>It moves the problem rather than removing it. The seed still exists &mdash; on whatever you wrote it on, and in your hands every time you type it in. A stateless device converts "protect the hardware" into "protect the backup, and protect every session", which is a fair trade for some people and a worse one for others. It is the reason those guides spend so long on where you are standing when you enter the words.</p>
+
+      <h2><span class="sc-article-num">5</span>What an attacker with your device can actually do</h2>
+
+      <p>The honest version, since every device guide gestures at this and none of them states it plainly.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>They have</th><th>Realistic outcome</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Device with a secure element, PIN unknown</strong></td><td>Expensive and uncertain. Their practical route is to make you tell them the PIN.</td></tr>
+            <tr><td><strong>Device without one, PIN unknown</strong></td><td>Demonstrated to be feasible with modest equipment and a short window.</td></tr>
+            <tr><td><strong>Device plus your PIN</strong></td><td>Everything. The chip is doing what it was told by someone who authenticated.</td></tr>
+            <tr><td><strong>Stateless device, powered off</strong></td><td>Nothing. There is nothing on it.</td></tr>
+            <tr><td><strong>Your written backup</strong></td><td>Everything, unless a passphrase exists. The device was never the protection.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Read the last row twice. Most of this page is about hardware, and the most common way seeds are actually taken is that somebody found the paper. Chips are a defence against a threat that is real but comparatively rare; the backup is the one nearly everybody actually faces.</p>
+
+      <h2><span class="sc-article-num">6</span>The two things that survive physical possession</h2>
+
+      <p>Everything above is about raising a price. These two change the shape of the problem, because neither can be extracted from hardware someone is holding.</p>
+
+      <h3>A passphrase</h3>
+
+      <p>A BIP39 passphrase is never stored on the device. It is mixed into the key derivation itself &mdash; the words and the passphrase together produce the seed &mdash; which means there is nothing on the chip for a physical attack to recover. This is exactly why Trezor's answer to the glitching attack was to point at the passphrase feature. It is also why the wallet-compatibility trackers mark devices as physically unsafe with a full secret <em>specifically when no passphrase or multisig is in use</em> &mdash; that qualifier is the whole finding.</p>
+
+      <p>The cost is real and it is covered properly in <a href="passphrase-setup.html">the passphrase guide</a>: it is a second irreplaceable secret, and forgetting it loses the wallet as thoroughly as losing the words.</p>
+
+      <h3>Multisig</h3>
+
+      <p>A key extracted from one device in a 2-of-3 is a key that cannot spend anything. The attacker needs a second one, held elsewhere, running different firmware. That is a structural answer rather than a procedural one, and it is the same reasoning <a href="supply-chain-and-vendor-risk.html">that makes multi-vendor multisig the only defence against a dishonest manufacturer</a>.</p>
+
+      <h2><span class="sc-article-num">7</span>What to actually take from this</h2>
+
+      <ul class="sc-check-list"><li><strong>Treat a lost or stolen device as urgent, not annoying.</strong> A secure element buys you time to move funds. It does not make the device safe to write off.</li><li><strong>Match the chip to the threat you actually have.</strong> If your realistic concern is fire, flood and your own filing, secure elements are close to irrelevant and your backup is everything.</li><li><strong>Add a passphrase before you conclude your hardware is the weak point.</strong> It costs nothing, it is the documented answer to physical extraction, and it is a decision you make once.</li><li><strong>Do not let the chip choice decide the product.</strong> A closed secure element and a fully open device with no secure element are two coherent positions, and the manufacturers taking each one are explicit about it. A third has recently appeared &mdash; an auditable secure element, published rather than certified-and-sealed &mdash; which is worth watching without yet being a reason to replace anything.</li></ul>
+
+      <h2>The short version</h2>
+
+      <p>A secure element is a chip built to hold secrets and count failed attempts somewhere an attacker cannot simply reset. Devices that lacked one have had their seeds pulled out with a soldering iron and a well-timed voltage drop. Devices that store nothing cannot be read at all, and move the problem to your backup and your hands. But every one of those is a price, not a wall &mdash; and the two things that actually survive somebody holding your hardware are a passphrase that was never on it and a second key that is somewhere else.</p>
+
+      <div class="sc-callout mt-4"><h3>If you take one thing from this page</h3><p>The PIN is not what is protecting your bitcoin, and neither, ultimately, is the chip. They buy time against a physical attacker. A passphrase and multisig are the only things on this page that keep working after someone already has your device in their hands.</p></div>
+
+      <p class="sc-source-note">
+        The extraction technique described here is documented public research from 2020 against hardware that has since been superseded, and it is included because it is the clearest illustration of what the attempt counter is for &mdash; not as a live claim about any current product. Chip choices, firmware and model lineups change; confirm what your own device uses against the manufacturer's documentation, and treat this page as the reasoning rather than the specification.
+      </p></div>
+      </div>
+    </section>
+
+    <section class="sc-guide-foot">
+      <div class="container">
+        <div class="sc-guide-next">
+          <div class="sc-guide-next-copy">
+            <span class="sc-eyebrow">Do not guess</span>
+            <h2>Stuck on a step?</h2>
+            <p>If the screen in front of you does not match the guide, stop. Review the related walkthroughs or get a second set of eyes before exposing recovery words or approving a transaction.</p>
+          </div>
+          <div class="sc-hero-actions sc-guide-next-actions">
+            <a class="sc-btn sc-btn-primary" href="../guides.html"><span>All Guides</span></a>
+            <a class="sc-btn sc-btn-ghost sc-guide-help-btn" href="../contact.html"><span>Get Help</span></a>
+          </div>
+          <div class="sc-guide-next-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="sc-section sc-section-muted sc-related-guides">
+      <div class="container">
+        <div class="sc-section-head"><span class="sc-eyebrow">Keep going</span><h2>Related guides</h2></div>
+        <div class="row g-4"><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="supply-chain-and-vendor-risk.html">
+            <div class="sc-card-body">
+              <div class="sc-guide-card-top">
+                <div class="sc-icon"><i class="bi bi-box-seam"></i></div>
+                <span class="sc-level sc-level-intermediate">Intermediate</span>
+              </div>
+              <h3>Supply chain, long cons, and the vendor you cannot avoid trusting</h3>
+              <p>You cannot read the silicon, and you did not watch the parcel. Three different problems hide under one heading &mdash; the intercepted package, the patient maintainer, and the vendor who simply changes &mdash; and only one defence survives all three.</p>
+              <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
+            </div></a></div><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="passphrase-setup.html">
+            <div class="sc-card-body">
+              <div class="sc-guide-card-top">
+                <div class="sc-icon"><i class="bi bi-shield-lock"></i></div>
+                <span class="sc-level sc-level-advanced">Advanced</span>
+              </div>
+              <h3>BIP39 passphrases, and when not to use one</h3>
+              <p>A passphrase is not a password on your wallet. It is a switch that selects a different wallet entirely — which is why a single wrong character shows you an empty balance and no error message.</p>
+              <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
+            </div></a></div><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="duress-and-coercion.html">
+            <div class="sc-card-body">
+              <div class="sc-guide-card-top">
+                <div class="sc-icon"><i class="bi bi-shield-exclamation"></i></div>
+                <span class="sc-level sc-level-advanced">Advanced</span>
+              </div>
+              <h3>Planning for coercion</h3>
+              <p>The attack that ignores your cryptography and comes for you instead. Why decoy wallets are weaker than they sound, why being genuinely unable to comply beats lying convincingly, and the arrangements that make a bad situation worse.</p>
+              <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
+            </div></a></div></div>
+      </div>
+    </section></main>
+    <div id="site-footer">
+    <footer class="sc-footer">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-5">
+            <h3 class="sc-footer-brand"><img src="../assets/img/self-custody-favicon.svg" alt="" width="34" height="34"><span>SelfCustody.ca</span></h3>
+            <p>Clear, practical guidance to self custody your bitcoin. Learn the basics, test your backups, and keep control of your keys.</p>
+          </div>
+          <div class="col-12 col-lg-4 sc-footer-explore">
+            <h4>Explore</h4>
+            <ul class="sc-footer-links sc-footer-links-grid">
+              <li><a href="../index.html">Home</a></li>
+              <li><a href="../guides.html">Guides</a></li>
+              <li><a href="../devices.html">Devices</a></li>
+              <li><a href="../software.html">Software</a></li>
+              <li><a href="../exchanges.html">Exchanges</a></li>
+              <li><a href="../glossary.html">Glossary</a></li>
+              <li><a href="../dashboard.html">Dashboard</a></li>
+              <li><a href="../contact.html">Get Help</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3">
+            <aside class="sc-footer-warning" aria-label="Important security warning">
+              <div class="sc-footer-warning-heading">
+                <div class="sc-footer-warning-icon" aria-hidden="true"><i class="bi bi-exclamation-triangle-fill"></i></div>
+                <h4>Important!</h4>
+              </div>
+              <p><strong>NEVER</strong> share your seed words, or other sensitive information.</p>
+              <p>This site provides education, <strong class="sc-footer-not">NOT</strong> financial, tax, or legal advice.</p>
+            </aside>
+          </div>
+        </div>
+        <div class="sc-footer-bottom d-flex flex-wrap justify-content-between gap-2">
+          <span>© <span data-year>2026</span> SelfCustody.ca</span>
+          <span><a href="mailto:info@selfcustody.ca">info@selfcustody.ca</a></span>
+        </div>
+      </div>
+    </footer></div>
+  <noscript><div class="container py-4"><p><strong>JavaScript is off, so the menu button will not open.</strong> Every page:</p><ul><li><a href="../index.html">Home</a></li><li><a href="../guides.html">Guides</a></li><li><a href="../devices.html">Devices</a></li><li><a href="../software.html">Software</a></li><li><a href="../exchanges.html">Exchanges</a></li><li><a href="../glossary.html">Glossary</a></li><li><a href="../dashboard.html">Dashboard</a></li><li><a href="../contact.html">Get Help</a></li></ul></div></noscript>
+  <script src="../assets/js/site-refresh.js?v=20260906-01"></script>
+</body>
+</html>
