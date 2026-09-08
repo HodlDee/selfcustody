@@ -124,6 +124,20 @@ const ASSET_QUERY = /(assets\/(?:vendor\/bootstrap-icons\/bootstrap-icons\.css|c
    A non-greedy match on </div> would work on the empty shell but not on an
    already-built file, where the header contains nested divs of its own -- so
    the build has to be greedy here to stay idempotent. */
+/* Trailing whitespace on generated lines, removed at the point of writing.
+
+   Template literals indent their blank lines along with everything else, so
+   the rendered pages carry a few hundred lines that are nothing but spaces.
+   Harmless to a browser, and `git diff --check` flags each one as it enters a
+   diff, which puts noise in front of every reviewer of every change that
+   happens to shift those lines.
+
+   Applied to the site's own pages only. The offline Workshop artifact is
+   written separately and deliberately untouched: its bytes are published as a
+   SHA-256 and signed by an attestation, so "harmless formatting" is exactly
+   the kind of change that must not reach it. */
+const tidy = html => html.replace(/[ \t]+$/gm, '');
+
 const SHELL = /<div id="site-header">[\s\S]*<\/div>(?=\s*<noscript)/;
 const NOSCRIPT = /<noscript>[\s\S]*?<\/noscript>/;
 
@@ -172,6 +186,7 @@ for (const [file, key] of Object.entries(FILES)) {
 
   let out = html.replace(SHELL, () => filled);
   if (NOSCRIPT.test(out)) out = out.replace(NOSCRIPT, () => noscriptFor(key));
+  out = tidy(out);
   if (out !== source) {
     writeFileSync(path, out);
     changed++;
@@ -291,7 +306,7 @@ for (const guide of publishedGuides) {
 </body>
 </html>
 `;
-  writeFileSync(`docs/guides/${guide.slug}.html`, html);
+  writeFileSync(`docs/guides/${guide.slug}.html`, tidy(html));
   console.log(`  guides/${guide.slug}.html`.padEnd(46) + `${Math.round(html.length / 1024)} KB`);
 }
 
