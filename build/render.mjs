@@ -19,6 +19,8 @@ import { assertNoUnexpectedFetches } from './tools/assert-no-fetch.mjs';
 import { assertGlyphCoverage } from './tools/assert-glyphs.mjs';
 import { assertWorkshop } from './tools/assert-workshop.mjs';
 import { assertNotices } from './tools/assert-notices.mjs';
+import { assetDigest } from './tools/asset-version.mjs';
+import { assertPolarity } from './tools/assert-polarity.mjs';
 import { createHash } from 'node:crypto';
 import { copyFileSync } from 'node:fs';
 
@@ -114,10 +116,7 @@ const VERSIONED_ASSETS = [
   'docs/assets/js/site-refresh.js',
 ];
 
-const ASSET_VERSION = VERSIONED_ASSETS
-  .reduce((hash, file) => hash.update(readFileSync(file)), createHash('sha256'))
-  .digest('hex')
-  .slice(0, 12);
+const ASSET_VERSION = assetDigest(VERSIONED_ASSETS);
 
 const ASSET_QUERY = /(assets\/(?:vendor\/bootstrap-icons\/bootstrap-icons\.css|css\/(?:style|site-refresh)\.css|js\/site-refresh\.js)\?v=)[^"']+/g;
 
@@ -533,3 +532,4 @@ assertNoUnexpectedFetches('docs');
 assertGlyphCoverage('docs');
 assertWorkshop();
 assertNotices();
+assertPolarity();
