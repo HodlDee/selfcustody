@@ -8284,7 +8284,7 @@ const guides = [
         "<strong>It cannot catch anything at all once the phrase is valid.</strong> A checksum says the words are internally consistent. It says nothing about whether they are <em>your</em> words."
       ])}
 
-      <p>The practical inversion matters more than the arithmetic. If your wallet <em>accepted</em> the phrase and showed you an empty balance, a transcription error is one of the least likely explanations available &mdash; it had a 94% chance of being rejected outright and was not. The likely causes are the ones no checksum can see, and they are the subjects of the next two sections.</p>
+      <p>What follows from this is narrower than it first appears. If your wallet <em>accepted</em> the phrase and showed you an empty balance, the checksum has ruled out most transcription errors. It has not ruled out the one in sixteen that produces a different valid wallet, and it never had anything to say about a wrong passphrase, a wrong branch or a scan still in progress. Those are the causes no checksum can see, and they are the subjects of the next two sections.</p>
 
       ${callout("This is why the last word is not free", `In a 24-word phrase the final word carries the last three bits of your secret followed by all eight checksum bits. That is why you cannot simply pick a twenty-fourth word you like, and why <a href="dice-entropy.html">rolling your own entropy</a> ends with a device or a worksheet computing that word for you.`)}
 
@@ -8385,25 +8385,24 @@ const guides = [
 
       <h2><span class="sc-article-num">7</span>Where each failure actually lives</h2>
 
-      <p>The point of walking the four transformations is that a symptom now tells you which one broke.</p>
+      <p>A symptom narrows the search. It rarely settles it on its own, because several of these steps fail the same way. An empty wallet looks identical whether the passphrase is wrong, the branch is wrong, or the scan has not finished. So the table below gives the checks rather than a verdict, and they are worth running in order.</p>
 
       <div class="sc-table-wrap">
         <table class="table sc-table">
-          <thead><tr><th>Symptom</th><th>Step that produced it</th><th>Recoverable?</th></tr></thead>
+          <thead><tr><th>Symptom</th><th>Candidate causes</th><th>What to check</th></tr></thead>
           <tbody>
-            <tr><td><strong>Wallet rejects the phrase</strong></td><td>Step 2 &mdash; the checksum</td><td>Yes. A word is wrong; the check did its job.</td></tr>
-            <tr><td><strong>Accepted, zero balance, path confirmed</strong></td><td>Step 3 &mdash; passphrase</td><td><strong>Only if you recall it.</strong> Nothing can test it for you.</td></tr>
-            <tr><td><strong>Accepted, zero balance, no passphrase set</strong></td><td>Step 5 &mdash; wrong branch</td><td>Yes. Change the derivation path.</td></tr>
-            <tr><td><strong>Some coins visible, others missing</strong></td><td>The gap limit</td><td>Yes. Raise it and rescan.</td></tr>
-            <tr><td><strong>Software rejects your extended key</strong></td><td>Step 6 &mdash; SLIP-132 prefix</td><td>Yes. Convert the prefix; no keys change.</td></tr>
-            <tr><td><strong>Phrase was written in another language</strong></td><td>Step 3 &mdash; wordlist</td><td>Yes. Select the original wordlist.</td></tr>
+            <tr><td><strong>Wallet rejects the phrase</strong></td><td>Step 2, a word misread, misspelled or out of order</td><td>Re-read the card. The checksum has done its job and the phrase you typed is not a valid one.</td></tr>
+            <tr><td><strong>Accepted, zero balance</strong></td><td>Step 3 (passphrase), step 5 (branch), a valid but <em>different</em> phrase, or a scan that has not finished</td><td>Confirm the wallet has finished syncing first. Then try the alternative paths. Then treat the phrase and the passphrase as the remaining candidates. If you have a receiving address from this wallet, you can test a candidate <em>combination</em> against it. That tells you when you have found the right pair. It does not tell you which of the two was wrong, and it cannot hand you back one you no longer have.</td></tr>
+            <tr><td><strong>Some coins visible, others missing</strong></td><td>The gap limit, or a second account branch</td><td>Raise the gap limit and rescan before concluding anything is lost.</td></tr>
+            <tr><td><strong>Software rejects your extended key</strong></td><td>Step 6, a SLIP-132 prefix it does not accept</td><td>Convert the prefix. No keys change, and the same key in <code>xpub</code> form plus an explicit path usually works.</td></tr>
+            <tr><td><strong>Phrase was written in another language</strong></td><td>Step 3, the wordlist</td><td>Select the original wordlist. The same words index differently in each.</td></tr>
           </tbody>
         </table>
       </div>
-        <div class="sc-survival-row" role="row"><strong role="rowheader">Phrase written in another language</strong><span role="cell">3, wordlist</span><span class="is-pass" role="cell">Yes &mdash; select the language</span></div>
-      </div>
 
-      <p>Only one row in that table is genuinely unrecoverable, and it is the passphrase. Everything else is a matter of telling the software where to look. That asymmetry is the argument for treating a passphrase as a second irreplaceable secret rather than a convenience.</p>
+      ${callout("A recorded address tests candidates. It does not recover secrets.", `BIP39 has no built-in notion of a correct passphrase. Every passphrase produces a valid wallet, which is the whole point of the design and the reason a wrong one shows you an empty wallet rather than an error. So if you kept a receiving address, an xpub or a descriptor from the wallet you are trying to reach, <strong>you can test candidates against it</strong>: restore, derive, compare, discard. A one-character typo in a passphrase you still roughly remember is findable that way and is findable no other way.<br><br>Be clear about the limit, because it is the difference between a bad afternoon and a lost wallet. <strong>The address verifies a guess. It cannot produce one.</strong> If you have no idea what the passphrase was, or the card with the words on it is gone, there is nothing to test and no procedure that ends well.`)}
+
+      <p>Which is the honest summary of the whole table. Most of these symptoms are the software being pointed somewhere else, and pointing it correctly is a matter of an afternoon. But two rows are not: <strong>losing any secret the wallet actually requires, whether the words or the passphrase or both, can end recovery permanently.</strong> A checksum-valid phrase that is not yours is exactly as unrecoverable as a forgotten passphrase, and neither is a settings problem. That is the argument for treating a passphrase as a second irreplaceable secret rather than a convenience, and for treating the words as the first.</p>
 
       <h2>The short version</h2>
 
@@ -9537,7 +9536,7 @@ const guides = [
     body: `
       <p class="sc-guide-intro">The phrase "secure element" appears in eight guides on this site. It justifies why a COLDCARD wipes itself after thirteen wrong PINs, why <a href="jade-setup.html">Jade is built differently</a>, why <a href="seedsigner-setup.html">SeedSigner deliberately stores nothing</a>, and why Ledger's closed firmware is a live argument. It is doing an enormous amount of work in those sentences, and none of them says what it is.</p>
 
-      <p>This page is that missing definition, and the honest account of what it buys. The short version, if you read nothing else: a secure element raises the price of stealing your seed from someone holding your device. It does not set that price to infinity, and the two things that genuinely do are not chips at all.</p>
+      <p>This page is that missing definition, and the honest account of what it buys. The short version, if you read nothing else: a secure element raises the price of stealing your seed from someone holding your device. It does not set that price to infinity, and neither does anything else on this page. The two measures that raise it furthest are not chips at all, and both come with conditions worth knowing before you rely on them.</p>
 
       <h2><span class="sc-article-num">1</span>Where the seed actually sits</h2>
 
@@ -9549,14 +9548,16 @@ const guides = [
         <table class="table sc-table">
           <thead><tr><th>Approach</th><th>Where the secret rests</th><th>Devices here</th></tr></thead>
           <tbody>
-            <tr><td><strong>Secure element</strong></td><td>Inside a chip built to resist being read</td><td>COLDCARD, Trezor Safe, BitBox02, Passport, Ledger, TAPSIGNER</td></tr>
-            <tr><td><strong>Nothing stored</strong></td><td>Nowhere. The seed is entered per session and lost on power-off</td><td>SeedSigner, Krux</td></tr>
+            <tr><td><strong>Guarded by a secure element</strong></td><td>In storage a dedicated chip controls access to. <strong>Which storage varies by device</strong>, as set out below</td><td>COLDCARD, Trezor Safe, BitBox02, Passport, Ledger, TAPSIGNER</td></tr>
+            <tr><td><strong>Nothing stored by default</strong></td><td>Nowhere, unless you turn storage on. The seed is entered per session and lost on power-off</td><td>SeedSigner, Krux</td></tr>
             <tr><td><strong>Virtual secure element</strong></td><td>Encrypted on the device, with part of the key held off it</td><td>Jade</td></tr>
           </tbody>
         </table>
       </div>
 
       <p>Those are three different answers to the same question, not three quality tiers, and the rest of this page is about what each one actually costs.</p>
+
+      ${callout("\"Has a secure element\" does not say where the seed is", `Two separate questions get collapsed into one, and the marketing does not help. <strong>What the chip protects</strong> and <strong>where the key material physically sits</strong> are different. Some devices keep the key inside the secure element and perform signing there. Others keep it encrypted in the main processor's flash, with the secure element holding the secret that decrypts it and refusing to release that secret without the right PIN. Trezor documents the Safe line working exactly this way. Both are real designs and both are defensible; they simply fail differently, so a page that flattens them is not describing either. Check your own device's documentation rather than inferring from the phrase.`)}
 
       ${figureSlot({
         shot: "A hardware wallet's bare circuit board on a workbench, lifted out of its case, shot close and slightly overhead with hard side light. The small secure element in sharp focus, the larger microcontroller behind it falling out of focus.",
@@ -9571,7 +9572,7 @@ const guides = [
 
       ${checklist([
         "<strong>It resists physical reading.</strong> Shielding, sensors that detect the device being opened or run outside normal voltage and temperature, and layouts designed so that grinding the chip down destroys what you were trying to read. Historically this has come with a catch &mdash; the design is behind an NDA, so you are trusting a certification rather than reading anything. That is beginning to change.",
-        "<strong>Secrets do not leave it.</strong> The chip performs operations internally and returns results. The key is used inside and never handed to the main processor, so reading the rest of the device does not reveal it.",
+        "<strong>It can keep a secret to itself.</strong> The chip performs operations internally and returns results rather than handing over what it holds. <em>What</em> it holds is the design decision: in some devices that is the signing key itself, used inside and never given to the main processor. In others it is the secret that decrypts a key stored elsewhere on the device. That still means an attacker reading the main flash gets ciphertext, but the seed is not living inside the chip.",
         "<strong>It counts your failures itself.</strong> This is the property that matters most, and the one most people miss."
       ])}
 
@@ -9585,24 +9586,33 @@ const guides = [
 
       <p>This is not theoretical, and the best-documented case involves a widely-owned device.</p>
 
-      <p>Trezor's earlier models, the One and the Model T, had no secure element. The seed lived encrypted in the flash of a general-purpose microcontroller, and the attempt counter lived there too. In 2020 Kraken Security Labs showed that this could be defeated with roughly fifteen minutes of physical access: desolder the microcontroller, and interfere with its supply voltage at a precisely timed moment during boot &mdash; a technique called voltage glitching &mdash; to get the encrypted seed out without knowing the PIN.</p>
+      <p>Trezor's earlier models, the One and the Model T, had no secure element. The seed lived encrypted in the flash of a general-purpose microcontroller, and the attempt counter lived there too. In 2020 Kraken Security Labs showed that this could be defeated with roughly fifteen minutes of physical access: desolder the microcontroller, and interfere with its supply voltage at a precisely timed moment during boot, a technique called voltage glitching, to dump the encrypted seed without knowing the PIN.</p>
+
+      <p><strong>That dump was not the end of the attack, and the second half is the part worth understanding.</strong> The extracted storage was still encrypted under a key derived from the PIN. Kraken then guessed the PIN <em>offline</em>, against the dump, on their own hardware, and reported that a four-digit PIN fell in under two minutes even at a deliberately unoptimised guessing rate.</p>
 
       <p>The original work needed skill and several hundred dollars of equipment. Kraken's own estimate was that a purpose-built consumer version of the tool could be produced for around seventy-five dollars.</p>
 
       <p>Two things about that are worth sitting with.</p>
 
       ${checklist([
-        "<strong>The PIN was not broken.</strong> Nobody guessed it. The attack went around it, because the thing enforcing it was ordinary memory on a chip that was never built to resist this.",
-        "<strong>The fix was already available to users.</strong> Trezor's response noted that the attack does not work against a wallet using a BIP39 passphrase &mdash; because the passphrase is not stored on the device at all, so there is nothing on the chip to extract."
+        "<strong>The PIN was broken, but not on the device.</strong> This is the distinction the whole page turns on. The counter was never defeated. It was made irrelevant, because once the encrypted storage is on an attacker's bench there is nothing left to count wrong attempts or wipe anything. A four-digit PIN is only ever protected by the thing enforcing it, and copying the data away removes that thing.",
+        "<strong>The fix was already available to users.</strong> Trezor's response noted that the attack does not work against a wallet using a BIP39 passphrase. On these devices the passphrase was not written to the chip, so the dump did not contain it.",
+        "<strong>It applied to the models researched, in the configurations researched.</strong> The Trezor One and Model T, with their particular STM32 microcontrollers. It is an illustration of what happens without an attempt counter you cannot walk away from, not a live claim about hardware sold today."
       ])}
 
       <p>The later Trezor Safe line added a secure element, which is precisely the gap this closed. But the lesson generalises past one manufacturer: <strong>a device's resistance to someone holding it is a property of its hardware, and it is not something firmware can add later.</strong></p>
 
       <h2><span class="sc-article-num">4</span>The stateless answer</h2>
 
-      <p>SeedSigner and Krux answer the question by refusing it. They store no seed at all. You enter your words at the start of a session, the device holds them in volatile memory while it signs, and cutting the power erases them completely.</p>
+      <p>SeedSigner and Krux answer the question by refusing it. Out of the box they store no seed at all: you enter your words at the start of a session, the device holds them in volatile memory while it signs, and cutting the power erases them completely.</p>
 
       <p>A device with nothing on it cannot have anything extracted from it. That is a genuinely strong property, and it is why a SeedSigner can be left in a drawer, or disassembled, with no more concern than any other Raspberry Pi.</p>
+
+      ${cautions([
+        "<strong>Krux is stateless by default, not by construction.</strong> Its own documentation describes storing an encrypted mnemonic in the device's internal memory or on an SD card, and loading it back by entering the key used to encrypt it. A Krux configured that way has something on it, and the protection is the encryption rather than the absence.",
+        "<strong>So \"nothing to extract\" is a claim about how you are running it.</strong> If you have used the stored-mnemonic feature, the device and any SD card left with it are sensitive objects: on loss, on disposal, and in a drawer. Treat them the way you would treat a written backup with a password on it.",
+        "<strong>An inserted SD card counts.</strong> A stateless device with a mnemonic backup card still in the slot is not a stateless device while that card is in it."
+      ])}
 
       <p>It moves the problem rather than removing it. The seed still exists &mdash; on whatever you wrote it on, and in your hands every time you type it in. A stateless device converts "protect the hardware" into "protect the backup, and protect every session", which is a fair trade for some people and a worse one for others. It is the reason those guides spend so long on where you are standing when you enter the words.</p>
 
@@ -9616,9 +9626,10 @@ const guides = [
           <tbody>
             <tr><td><strong>Device with a secure element, PIN unknown</strong></td><td>Expensive and uncertain. Their practical route is to make you tell them the PIN.</td></tr>
             <tr><td><strong>Device without one, PIN unknown</strong></td><td>Demonstrated to be feasible with modest equipment and a short window.</td></tr>
-            <tr><td><strong>Device plus your PIN</strong></td><td>Everything. The chip is doing what it was told by someone who authenticated.</td></tr>
-            <tr><td><strong>Stateless device, powered off</strong></td><td>Nothing. There is nothing on it.</td></tr>
-            <tr><td><strong>Your written backup</strong></td><td>Everything, unless a passphrase exists. The device was never the protection.</td></tr>
+            <tr><td><strong>Device plus your PIN</strong></td><td>Everything that PIN unlocks. The chip is doing what it was told by someone who authenticated, and on a device that stores passphrases against a PIN, that includes the wallet behind it.</td></tr>
+            <tr><td><strong>Stateless device, powered off, nothing saved</strong></td><td>Nothing. There is nothing on it.</td></tr>
+            <tr><td><strong>Stateless device with a stored encrypted mnemonic</strong></td><td>Whatever the encryption holds off. This is a password problem now, not an empty-device one.</td></tr>
+            <tr><td><strong>Your written backup</strong></td><td>Everything, unless a passphrase they cannot guess is also required. The device was never the protection.</td></tr>
           </tbody>
         </table>
       </div>
@@ -9629,9 +9640,15 @@ const guides = [
 
       <p>Everything above is about raising a price. These two change the shape of the problem, because neither can be extracted from hardware someone is holding.</p>
 
-      <h3>A passphrase</h3>
+      <h3>A passphrase the device does not retain</h3>
 
-      <p>A BIP39 passphrase is never stored on the device. It is mixed into the key derivation itself &mdash; the words and the passphrase together produce the seed &mdash; which means there is nothing on the chip for a physical attack to recover. This is exactly why Trezor's answer to the glitching attack was to point at the passphrase feature. It is also why the wallet-compatibility trackers mark devices as physically unsafe with a full secret <em>specifically when no passphrase or multisig is in use</em> &mdash; that qualifier is the whole finding.</p>
+      <p>A BIP39 passphrase is not part of the seed sitting in storage. It is mixed into the key derivation itself, so that the words and the passphrase together produce the seed. A passphrase you type in each time is therefore not on the chip for a physical attack to recover. This is exactly why Trezor's answer to the glitching attack was to point at the passphrase feature, and why the wallet-compatibility trackers qualify their physical-extraction findings with <em>when no passphrase or multisig is in use</em>.</p>
+
+      ${cautions([
+        "<strong>Some devices will store it for you, and then it is on the device.</strong> Ledger's OS documents attaching a passphrase to a second PIN, so that unlocking with that PIN activates that wallet. That is a convenience feature and a real one, but a passphrase stored this way is no longer a secret held outside the hardware, and anyone who obtains that PIN reaches that wallet. If the passphrase is doing the work described in this section, it has to be one you enter rather than one the device remembers.",
+        "<strong>A weak passphrase is guessable once the seed is out.</strong> The protection is not the mechanism, it is the search space. After a successful extraction an attacker holds the words and can try passphrases offline, as fast as their hardware allows, with no device counting anything. A short or memorable passphrase does not survive that; a long, high-entropy one is what the argument in this section actually depends on.",
+        "<strong>A device in use is handling derived keys regardless.</strong> A passphrase protects the secret at rest. It is not a claim about a powered-on, unlocked signer, which necessarily has signing material in memory while it works."
+      ])}
 
       <p>The cost is real and it is covered properly in <a href="passphrase-setup.html">the passphrase guide</a>: it is a second irreplaceable secret, and forgetting it loses the wallet as thoroughly as losing the words.</p>
 
@@ -9644,18 +9661,18 @@ const guides = [
       ${checklist([
         "<strong>Treat a lost or stolen device as urgent, not annoying.</strong> A secure element buys you time to move funds. It does not make the device safe to write off.",
         "<strong>Match the chip to the threat you actually have.</strong> If your realistic concern is fire, flood and your own filing, secure elements are close to irrelevant and your backup is everything.",
-        "<strong>Add a passphrase before you conclude your hardware is the weak point.</strong> It costs nothing, it is the documented answer to physical extraction, and it is a decision you make once.",
+        "<strong>Consider a passphrase before you conclude your hardware is the weak point.</strong> Use one you enter rather than one the device stores, long enough to survive offline guessing. It is the documented answer to physical extraction. It is not free: it is a second irreplaceable secret, and <a href='passphrase-setup.html'>the passphrase guide</a> exists because losing it loses the wallet.",
         "<strong>Do not let the chip choice decide the product.</strong> A closed secure element and a fully open device with no secure element are two coherent positions, and the manufacturers taking each one are explicit about it. A third has recently appeared &mdash; an auditable secure element, published rather than certified-and-sealed &mdash; which is worth watching without yet being a reason to replace anything."
       ])}
 
       <h2>The short version</h2>
 
-      <p>A secure element is a chip built to hold secrets and count failed attempts somewhere an attacker cannot simply reset. Devices that lacked one have had their seeds pulled out with a soldering iron and a well-timed voltage drop. Devices that store nothing cannot be read at all, and move the problem to your backup and your hands. But every one of those is a price, not a wall &mdash; and the two things that actually survive somebody holding your hardware are a passphrase that was never on it and a second key that is somewhere else.</p>
+      <p>A secure element is a chip built to hold secrets and count failed attempts somewhere an attacker cannot simply reset. Devices that lacked one have had their storage pulled out with a soldering iron and a well-timed voltage drop, after which the PIN was guessed offline in minutes. Devices that store nothing cannot be read at all, and move the problem to your backup and your hands. Every one of those is a price rather than a wall. The two measures that raise it furthest are a passphrase the device does not retain and a second key somewhere else, and each holds only under conditions this page has tried to state rather than assume.</p>
 
-      ${callout("If you take one thing from this page", `The PIN is not what is protecting your bitcoin, and neither, ultimately, is the chip. They buy time against a physical attacker. A passphrase and multisig are the only things on this page that keep working after someone already has your device in their hands.`)}
+      ${callout("If you take one thing from this page", `The PIN is not what is protecting your bitcoin, and neither, ultimately, is the chip. They buy time against a physical attacker. What keeps working after someone already holds your device is a secret it does not retain, meaning a passphrase you type in each session rather than one it stores, strong enough that guessing it offline is not worth doing. A second key they would also have to go and find does the same job.`)}
 
       <p class="sc-source-note">
-        The extraction technique described here is documented public research from 2020 against hardware that has since been superseded, and it is included because it is the clearest illustration of what the attempt counter is for &mdash; not as a live claim about any current product. Chip choices, firmware and model lineups change; confirm what your own device uses against the manufacturer's documentation, and treat this page as the reasoning rather than the specification.
+        The extraction technique described here is documented public research from 2020 against hardware that has since been superseded, including its offline PIN-guessing step, and it is included because it is the clearest illustration of what the attempt counter is for, not as a live claim about any current product. The Trezor Safe architecture described above, Ledger's passphrase-to-PIN option and Krux's stored-mnemonic feature are each taken from that project's own current documentation. Chip choices, firmware and model lineups change; confirm what your own device uses against the manufacturer's documentation, and treat this page as the reasoning rather than the specification.
       </p>`
   },
 ];
