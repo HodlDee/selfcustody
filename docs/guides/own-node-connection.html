@@ -25,9 +25,9 @@
   <link rel="icon" href="../assets/img/favicon.png">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css?v=6cfebdc237b7" rel="stylesheet">
-  <link href="../assets/css/style.css?v=6cfebdc237b7" rel="stylesheet">
-  <link href="../assets/css/site-refresh.css?v=6cfebdc237b7" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css?v=dc451fb456a8" rel="stylesheet">
+  <link href="../assets/css/style.css?v=dc451fb456a8" rel="stylesheet">
+  <link href="../assets/css/site-refresh.css?v=dc451fb456a8" rel="stylesheet">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Connecting wallets to your node","description":"Running a node and using it are two different achievements. The index layer nobody mentions, connecting each wallet to it, reaching it from outside your house, and proving your wallet is not quietly still using somebody else's server.","url":"https://selfcustody.ca/guides/own-node-connection.html","datePublished":"2026-08-18","dateModified":"2026-08-18","inLanguage":"en-CA","publisher":{"@type":"Organization","name":"SelfCustody.ca","url":"https://selfcustody.ca/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://selfcustody.ca/guides/own-node-connection.html"}}</script>
 </head>
 <body class="site-refresh" data-page="guides">
@@ -106,7 +106,7 @@
 
       <div class="sc-callout mt-4"><h3>What this means in practice</h3><p>"I installed Bitcoin Core" is not enough to point Sparrow at it. You need Core <em>plus</em> an index server. Node distributions like Umbrel, Start9, and RaspiBlitz bundle one already, which is most of why they exist. A manual Core install almost always needs one added.</p></div>
 
-      <p>Specter is the notable exception, because it drives Core's own descriptor wallets directly rather than speaking Electrum &mdash; which is why <a href='specter-multisig-coordinator.html'>the Specter guide</a> requires Core and nothing else.</p>
+      <p>Specter is the notable exception, because it drives Core's own descriptor wallets directly rather than speaking Electrum, which is why <a href='specter-multisig-coordinator.html'>the Specter guide</a> requires Core and nothing else. <a href='bitcoin-core-wallet.html'>Core's own wallet</a> is a guide of its own.</p>
 
       <h2><span class="sc-article-num">2</span>Choosing the index server</h2>
 
@@ -221,6 +221,15 @@
               <h3>Specter: coordinating a multi-brand multisig</h3>
               <p>Specter is a face for your own Bitcoin Core node and nothing else, which matters more for multisig than for any other wallet. Building a wallet from three different manufacturers, and collecting signatures across three different transports.</p>
               <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
+            </div></a></div><div class="col-md-6 col-xl-4"><a class="sc-card sc-guide-card sc-path-card-link" href="bitcoin-core-wallet.html">
+            <div class="sc-card-body">
+              <div class="sc-guide-card-top">
+                <div class="sc-icon"><i class="bi bi-stack"></i></div>
+                <span class="sc-level sc-level-intermediate">Intermediate</span>
+              </div>
+              <h3>Bitcoin Core wallets, and what wallet.dat actually is</h3>
+              <p>Core's wallet does not hand you twelve words, and the file everyone argues about on the internet is no longer the file Core writes. What is actually in it now, how to make one, and how to load a wallet.dat the Entropy Workshop produced from a seed you already have.</p>
+              <span class="sc-text-link">Read guide <i class="bi bi-arrow-right"></i></span>
             </div></a></div></div>
       </div>
     </section></main>
@@ -263,6 +272,6 @@
       </div>
     </footer></div>
   <noscript><div class="container py-4"><p><strong>JavaScript is off, so the menu button will not open.</strong> Every page:</p><ul><li><a href="../index.html">Home</a></li><li><a href="../guides.html">Guides</a></li><li><a href="../devices.html">Devices</a></li><li><a href="../software.html">Software</a></li><li><a href="../exchanges.html">Exchanges</a></li><li><a href="../glossary.html">Glossary</a></li><li><a href="../dashboard.html">Dashboard</a></li><li><a href="../contact.html">Get Help</a></li></ul></div></noscript>
-  <script src="../assets/js/site-refresh.js?v=6cfebdc237b7"></script>
+  <script src="../assets/js/site-refresh.js?v=dc451fb456a8"></script>
 </body>
 </html>

@@ -25,9 +25,9 @@
   <link rel="icon" href="../assets/img/favicon.png">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css?v=6cfebdc237b7" rel="stylesheet">
-  <link href="../assets/css/style.css?v=6cfebdc237b7" rel="stylesheet">
-  <link href="../assets/css/site-refresh.css?v=6cfebdc237b7" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css?v=dc451fb456a8" rel="stylesheet">
+  <link href="../assets/css/style.css?v=dc451fb456a8" rel="stylesheet">
+  <link href="../assets/css/site-refresh.css?v=dc451fb456a8" rel="stylesheet">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Verify a download before you run it","description":"Every setup guide says to check the signature and then moves on. This is the part they skip: the three files, the three commands, and the alarming warning that appears when everything has in fact gone right.","url":"https://selfcustody.ca/guides/verify-a-download.html","datePublished":"2026-09-06","dateModified":"2026-09-06","inLanguage":"en-CA","publisher":{"@type":"Organization","name":"SelfCustody.ca","url":"https://selfcustody.ca/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://selfcustody.ca/guides/verify-a-download.html"}}</script>
 </head>
 <body class="site-refresh" data-page="guides">
@@ -81,7 +81,7 @@
         <p class="sc-lead">Every setup guide says to check the signature and then moves on. This is the part they skip: the three files, the three commands, and the alarming warning that appears when everything has in fact gone right.</p>
         <div class="sc-guide-meta">
           <span class="sc-level sc-level-intermediate">Intermediate</span>
-          <span><i class="bi bi-hourglass-split" aria-hidden="true"></i> About 20 minutes to read</span>
+          <span><i class="bi bi-hourglass-split" aria-hidden="true"></i> About 20 minutes to complete</span>
           <span>Updated Sep 6, 2026</span>
         </div>
         <div class="sc-tags sc-tags-lg"><span class="sc-tag">Fundamentals</span><span class="sc-tag">Verification</span></div>
@@ -177,11 +177,21 @@
 
       <h2><span class="sc-article-num">7</span>When there is only a checksum</h2>
 
-      <p>Some things are published with a hash and no signature at all &mdash; including <a href="../entropy.html">this site's own offline Workshop file</a>, whose SHA-256 sits beside it.</p>
+      <p>Some things are published with a hash and nothing else. Be exact about what that can do: it catches a truncated download, a proxy that rewrote something, a failing USB stick. It cannot catch an adversary, because the checksum is served from the same place as the file it describes, and anyone able to replace one can replace the other. <strong>Same-origin checksums catch accidents, not attackers.</strong></p>
 
-      <p>Be exact about what that can do. It catches a truncated download, a proxy that rewrote something, a failing USB stick. It cannot catch an adversary, because the checksum is served from the same place as the file it describes, and anyone able to replace one can replace the other. Same-origin checksums catch accidents, not attackers.</p>
+      <p>Where it matters, get a second copy of the expected hash from somewhere the same server does not control. A repository's commit history, a build log, or a mirror will do. Then compare the two.</p>
 
-      <p>Where it matters, get a second copy of the expected hash from somewhere the same server does not control &mdash; a repository's commit history, a build log, a mirror &mdash; and compare. <a href="bring-your-own-entropy.html">The Workshop guide</a> makes the same point about its own file, which is the correct way for a project to talk about its own checksums.</p>
+      <h3>Build provenance, which is a different thing</h3>
+
+      <p>A checksum on its own says nothing about where a file came from. It says only whether your copy matches the digest you were handed. A <em>signed build attestation</em> is different in kind: it is a signature over the file's digest, recording which repository, which workflow and which source ref produced those exact bytes, and it is verified against a signer identity rather than against a number on the same page. That is the gap between the two paragraphs above and this one.</p>
+
+      <p><a href="../entropy.html">This site's own offline Workshop file</a> has both. The SHA-256 sits beside it, and the repository's workflow also mints a keyless attestation over the downloadable bytes whenever they change. If you have GitHub's CLI:</p>
+
+      <ul class="sc-check-list"><li><strong>The short form</strong> checks that some attestation from that repository covers these bytes: <code>gh attestation verify entropy-offline.html -R HodlDee/selfcustody</code></li><li><strong>The form worth using</strong> also pins <em>which</em> workflow and <em>which</em> branch signed it:<br><code>gh attestation verify entropy-offline.html -R HodlDee/selfcustody --signer-workflow HodlDee/selfcustody/.github/workflows/build.yml --source-ref refs/heads/main</code></li><li>If either reports no matching attestation, the file may predate this repository being renamed. An attestation records the identity as it stood when it was signed, so <strong>the owner has to change in both arguments, not just the first</strong>:<br><code>gh attestation verify entropy-offline.html -R DeesNeez/selfcustody --signer-workflow DeesNeez/selfcustody/.github/workflows/build.yml --source-ref refs/heads/main</code></li><li><strong>One of the two has to pass.</strong> A name mismatch by itself is not evidence of tampering, and it is not permission to run the file either. If neither identity verifies, you have an unverified file, and the right response is to download it again from the published location rather than to decide it is probably fine.</li></ul>
+
+      <ul class="sc-caution-list"><li><strong>The two commands do not prove the same thing, which is why both are here.</strong> A repository name on its own does not say which workflow produced the file. Any workflow in that repository able to mint an attestation would satisfy it, so a compromised or newly added one would pass. <code>--signer-workflow</code> and <code>--source-ref</code> pin the answer to the build this project actually publishes from. They are the difference between "something in that repository" and "that build, on main".</li><li><strong>Keep the three checks separate in your head.</strong> A matching hash establishes that your copy agrees with the digest you were given. If that digest came from the same server as the file, it establishes nothing else, which is the whole point of the section above. A signature or an attestation additionally ties those bytes to a signer you can name. <strong>None of the three says the software is any good</strong>, that the source it was built from is trustworthy, or that the repository was not compromised before the build ran.</li><li><strong>An attestation covers bytes, not versions.</strong> It says these exact bytes came from that build. It does not say they are the current release, or that a later one does not fix something.</li></ul>
+
+      <p><a href="bring-your-own-entropy.html">The Workshop guide</a> makes the same points about its own file, and <a href="https://github.com/HodlDee/selfcustody/blob/main/SECURITY.md" target="_blank" rel="noopener">this project's SECURITY.md</a> carries the full procedure. A project talking honestly about its own checksums is the standard to hold others to.</p>
 
       <h2><span class="sc-article-num">8</span>Windows without a terminal</h2>
 
@@ -295,6 +305,6 @@
       </div>
     </footer></div>
   <noscript><div class="container py-4"><p><strong>JavaScript is off, so the menu button will not open.</strong> Every page:</p><ul><li><a href="../index.html">Home</a></li><li><a href="../guides.html">Guides</a></li><li><a href="../devices.html">Devices</a></li><li><a href="../software.html">Software</a></li><li><a href="../exchanges.html">Exchanges</a></li><li><a href="../glossary.html">Glossary</a></li><li><a href="../dashboard.html">Dashboard</a></li><li><a href="../contact.html">Get Help</a></li></ul></div></noscript>
-  <script src="../assets/js/site-refresh.js?v=6cfebdc237b7"></script>
+  <script src="../assets/js/site-refresh.js?v=dc451fb456a8"></script>
 </body>
 </html>
