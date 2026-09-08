@@ -1039,7 +1039,7 @@ const guides = [
     icon: "bi-currency-bitcoin",
     updated: "2026-08-17",
     status: "published",
-    related: ["quickstart", "what-not-to-normalize", "recovery-test-drill", "how-custody-fails"],
+    related: ["quickstart", "what-not-to-normalize", "recovery-test-drill", "how-custody-fails", "evaluating-a-monetary-asset"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">"Be your own bank" is a good slogan and a bad description. It gets the freedom right and leaves out the job description &mdash; because a bank is not just a place that holds money. It is a large organisation performing a dozen unglamorous tasks on your behalf, most of which you have never had to think about.</p>
@@ -1072,7 +1072,7 @@ const guides = [
 
       <h2>The Canadian version of this is not hypothetical</h2>
 
-      <p>Deposits at a Canadian bank are protected by CDIC up to defined limits. Crypto assets held on a trading platform are not, whatever the platform's marketing implies. Registration with securities regulators sets rules for how a platform must operate; it is not deposit insurance and does not make you whole if the business fails.</p>
+      <p>Deposits at a Canadian bank are protected by CDIC up to defined limits. Crypto assets held on a trading platform are not, whatever the platform's marketing implies. ("Crypto" is doing a lot of work in that sentence. <a href='evaluating-a-monetary-asset.html'>There are better questions to ask than which category something is in</a>.) Registration with securities regulators sets rules for how a platform must operate; it is not deposit insurance and does not make you whole if the business fails.</p>
 
       <p>Canada has its own case study. QuadrigaCX was the country's largest bitcoin exchange until it collapsed in 2019, leaving roughly 76,000 users unable to reach their funds. The Ontario Securities Commission's subsequent investigation concluded the platform had been operating as a fraud. Customers had done nothing wrong &mdash; they had simply left their coins with someone else, which is what everyone does until they decide not to. It is not an isolated case, and the differences between it and the others matter: <a href='how-custody-fails.html'>four platforms, four different mechanisms</a>.</p>
 
@@ -7691,7 +7691,7 @@ const guides = [
     icon: "bi-bank",
     updated: "2026-08-20",
     status: "published",
-    related: ["twenty-one-million", "who-decides-the-rules", "owning-your-bitcoin"],
+    related: ["twenty-one-million", "who-decides-the-rules", "owning-your-bitcoin", "evaluating-a-monetary-asset"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Ask what money is and most answers point at examples &mdash; notes, coins, the balance in a banking app. That is a list of things currently doing the job, not a description of the job itself. The job is the interesting part, because the list keeps changing.</p>
@@ -8911,7 +8911,7 @@ const guides = [
     icon: "bi-graph-down-arrow",
     updated: "2026-08-18",
     status: "published",
-    related: ["double-spend-problem", "why-run-a-node", "owning-your-bitcoin"],
+    related: ["double-spend-problem", "why-run-a-node", "owning-your-bitcoin", "evaluating-a-monetary-asset"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Twenty-one million is the most quoted number in bitcoin and the least examined. It is usually presented as a rule someone wrote down &mdash; a cap, a limit, a promise. It is none of those things. Nobody decreed it, no document states it as a target, and there is no clause anywhere saying "the supply shall be 21,000,000".</p>
@@ -9551,7 +9551,7 @@ const guides = [
     icon: "bi-check2-circle",
     updated: "2026-08-18",
     status: "published",
-    related: ["double-spend-problem", "why-run-a-node", "twenty-one-million"],
+    related: ["double-spend-problem", "why-run-a-node", "twenty-one-million", "evaluating-a-monetary-asset"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Bitcoin has no chief executive, no board, no shareholders, and no mechanism by which anyone can be made to accept a change. There is no vote that binds anybody. And yet the rules have changed several times, and other attempts to change them have failed decisively.</p>
@@ -9676,7 +9676,7 @@ const guides = [
     icon: "bi-building-lock",
     updated: "2026-09-06",
     status: "published",
-    related: ["owning-your-bitcoin", "exchange-account-security", "exchange-withdrawal"],
+    related: ["owning-your-bitcoin", "exchange-account-security", "exchange-withdrawal", "evaluating-a-monetary-asset"],
     layout: "article",
     body: `
       <p class="sc-guide-intro"><a href="owning-your-bitcoin.html">The responsibilities that transfer</a> makes an argument: leaving bitcoin with a company means your access depends on things you cannot audit. That is easy to nod along to and hard to feel. This page is the evidence &mdash; four collapses, each of which failed in a genuinely different way.</p>
@@ -9944,6 +9944,138 @@ const guides = [
 
       <p class="sc-source-note">
         The extraction technique described here is documented public research from 2020 against hardware that has since been superseded, including its offline PIN-guessing step, and it is included because it is the clearest illustration of what the attempt counter is for, not as a live claim about any current product. The Trezor Safe architecture described above, Ledger's passphrase-to-PIN option and Krux's stored-mnemonic feature are each taken from that project's own current documentation. Chip choices, firmware and model lineups change; confirm what your own device uses against the manufacturer's documentation, and treat this page as the reasoning rather than the specification.
+      </p>`
+  },
+  {
+    slug: "evaluating-a-monetary-asset",
+    category: "concepts",
+    products: [],
+    title: "Eight questions to ask about any digital asset",
+    summary: "\"Crypto\" is a category label rather than a description of how anything works. These are the structural questions that separate the things inside it: who can change the rules, who was allocated what, and what it would cost them. Bitcoin's answers are the worked example.",
+    level: "beginner",
+    minutes: 20,
+    effort: "read",
+    goals: ["learn"],
+    tags: ["Mindset", "How it works"],
+    icon: "bi-signpost-split",
+    updated: "2026-09-07",
+    status: "published",
+    related: ["what-is-money", "how-custody-fails", "who-decides-the-rules"],
+    layout: "article",
+    body: `
+      <p class="sc-guide-intro">"Crypto" covers thousands of assets whose governance, issuance and failure modes have almost nothing in common. That makes it useless as a description, and it is why comparisons that begin "crypto is…" tend to be arguments rather than analysis.</p>
+
+      <p>There is a better approach than deciding which side of that word something falls on, and it is one you can apply yourself to anything, including things that do not exist yet. <strong>Ask who can change the rules, and what it would cost them.</strong> The eight questions below are that question, broken into parts you can actually check.</p>
+
+      <p>Bitcoin is used as the worked example throughout, because it is what this site is about and because its answers happen to be verifiable. The point is the method rather than the verdict.</p>
+
+      <h2><span class="sc-article-num">1</span>The eight questions</h2>
+
+      <p>For each one: what is being asked, and what a good answer looks like. None of them is about price.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>Question</th><th>What a strong answer looks like</th><th>What a weak one looks like</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Who sets issuance?</strong></td><td>A fixed rule anyone can read, that no party can revise.</td><td>A team, a foundation, or a schedule that has been changed before.</td></tr>
+            <tr><td><strong>Who was allocated supply, and when?</strong></td><td>Nobody. Everyone acquired it on the same terms.</td><td>Pre-mines, founder allocations, vesting tranches at prices unavailable to others.</td></tr>
+            <tr><td><strong>Can you verify the supply yourself?</strong></td><td>Software you run computes it from the ledger and rejects violations.</td><td>A published figure you are asked to believe.</td></tr>
+            <tr><td><strong>What does it cost to rewrite history?</strong></td><td>An ongoing, external, physical cost that rises with participation.</td><td>A permission setting, or a majority of a stake that insiders hold.</td></tr>
+            <tr><td><strong>Who validates?</strong></td><td>Anyone, on ordinary hardware, checking every rule themselves.</td><td>A handful of operators, or a company's servers.</td></tr>
+            <tr><td><strong>Who can deny you service?</strong></td><td>Nobody at the protocol level, whatever the surrounding businesses can do.</td><td>An issuer with a freeze function, a registry, or an admin key.</td></tr>
+            <tr><td><strong>Can you hold it yourself?</strong></td><td>Yes, with keys you generate, and no counterparty at all.</td><td>Only through a custodian, or a wrapped representation of the real thing.</td></tr>
+            <tr><td><strong>Who controls the roadmap?</strong></td><td>Nobody unilaterally. Changes take effect only for those who run them.</td><td>An executive team that can repurpose or upgrade the network at will.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Notice what is absent. Nothing here asks whether the technology is clever, whether the team is credible, or whether adoption is growing. Those are real questions and they are not <em>structural</em> ones. They describe how well something is going rather than who it depends on.</p>
+
+      <h2><span class="sc-article-num">2</span>Bitcoin's answers, and how to check them</h2>
+
+      <p>Worked example. Each of these is checkable by someone with a node and a browser, which is the standard the questions were chosen to allow.</p>
+
+      ${checklist([
+        "<strong>Issuance</strong> follows a halving schedule capping supply just under 21 million. Changing it would need a large majority to voluntarily run incompatible software, and anyone declining keeps the existing rules.",
+        "<strong>Allocation:</strong> no pre-mine and no founder allocation. Its creator left, and no successor inherited authority.",
+        "<strong>Verification:</strong> a node computes total issuance from the chain and rejects any block that overpays. You do not take the number on report. The auditability is the point, and the figure is downstream of it.",
+        "<strong>Rewriting history</strong> means redoing proof of work faster than everyone else produces new work. An ongoing physical cost, not a setting.",
+        "<strong>Validation:</strong> anyone can run a node on ordinary hardware and check every rule: signatures, issuance, block validity, supply.",
+        "<strong>Denial of service:</strong> the protocol has no user registry and no freeze function. The businesses and jurisdictions around it have both, and use them.",
+        "<strong>Self-custody:</strong> you can hold your own keys, which removes the counterparty entirely and transfers the whole burden of key management to you.",
+        "<strong>Roadmap:</strong> changes are proposed in the open and take effect only for those who choose to run them. <a href='who-decides-the-rules.html'>Who decides the rules</a> covers how that has actually played out."
+      ])}
+
+      <h2><span class="sc-article-num">3</span>What the weak answers look like together</h2>
+
+      <p>None of the following is illegal in itself, and none proves fraud. They are the structural features that make extraction from later buyers possible, which is why they are worth spotting rather than condemning.</p>
+
+      ${cautions([
+        "<strong>Concentrated ownership.</strong> A small number of entities hold enough supply to move the market at will.",
+        "<strong>Pre-mines and insider allocations.</strong> Founders and funds receive large blocks at or before launch, at prices unavailable to anyone else.",
+        "<strong>Discretionary issuance.</strong> The issuer can mint more, unlock vested tranches, or change the emission schedule.",
+        "<strong>Paid promotion and manufactured community.</strong> Undisclosed influencers and bot-amplified sentiment standing in for organic use.",
+        "<strong>Promised returns.</strong> Guaranteed yield, \"risk-free\" staking, or returns funded by new deposits rather than revenue.",
+        "<strong>A small team controlling upgrades, infrastructure and treasury.</strong> Admin keys, upgradeable contracts, one sequencer, a discretionary treasury.",
+        "<strong>Single points of dependence.</strong> One company, one website, one founder whose departure ends the project.",
+        "<strong>Thin liquidity.</strong> Order books too shallow to absorb insider selling, which is what lets insiders exit onto retail buyers."
+      ])}
+
+      <p>Read together, those describe a system whose outcome depends on the continued honesty and solvency of particular people. That is a fact about structure, and you can establish it without forming a view about anyone's intentions.</p>
+
+      <h2><span class="sc-article-num">4</span>Twice, the answers needed people</h2>
+
+      <p>Applying the method honestly means applying it to the worked example too, and bitcoin has twice failed to simply carry on. Both occasions bear on question three, whether the supply is enforced or promised, so they belong here rather than in a footnote.</p>
+
+      <h3>August 2010: the supply cap failed for five hours</h3>
+
+      <p>Block 74638 contained a transaction that created <strong>roughly 184 billion bitcoin</strong>. The code checking transactions did not account for outputs so large that summing them overflowed, so the block was accepted and mined.</p>
+
+      <p>A patched client was released within about five hours, rejecting overflow transactions, and the honest chain overtook the bad one by block 74691. No permanent inflation, no user funds lost.</p>
+
+      <p>Note what actually held the cap. Not arithmetic operating unattended. People noticed, wrote a fix, and ran it. <strong>The rule was enforced by the participants who enforce it, which is a weaker and more precise claim than "the cap cannot fail".</strong></p>
+
+      <h3>March 2013: the chain split in two</h3>
+
+      <p>Bitcoin Core 0.8 moved from Berkeley DB to LevelDB and lost an accidental limit the old database had imposed. A block arrived that 0.8 nodes accepted and older nodes rejected, and the network ran as two chains for roughly six hours until miners downgraded.</p>
+
+      <p>It was not free. <a href="https://github.com/bitcoin/bips/blob/master/bip-0050.mediawiki" target="_blank" rel="noopener">BIP 50</a>, the project's own write-up, records <strong>at least one large double spend</strong> during the split, by someone testing whether it was possible rather than robbing anyone, and notes that the two pool operators who downgraded first to restore the older chain did so "despite the fact that this caused them to sacrifice significant amounts of money". BIP 50 does not report customers left permanently out of pocket, and this page is not going to invent any. What it does record is that money moved which should not have, and that mining revenue was thrown away on purpose to end it.</p>
+
+      <p>Which is why "it has run continuously since 2009" is not quite true, and a page about checking claims should not repeat one it has not checked.</p>
+
+      ${callout("What the incidents actually demonstrate", `Both are evidence about question eight rather than exceptions to it. Each failure was found, published, fixed in the open, and resolved by independent operators choosing to run corrected software, with no company to appeal to and nobody able to impose an outcome. Whether that reassures you is your call to make; the point is that it is a matter of record rather than a matter of opinion.`)}
+
+      <h2><span class="sc-article-num">5</span>What the method does not tell you</h2>
+
+      <p>Structural answers are narrow on purpose, and the limits are part of using them properly rather than caveats bolted on.</p>
+
+      ${checklist([
+        "<strong>Nothing about price.</strong> Monetary properties and market price are different things. Bitcoin has repeatedly lost most of its value, with drawdowns beyond seventy per cent more than once, and may again.",
+        "<strong>Nothing about volatility.</strong> A fixed supply means demand shocks are absorbed entirely by price. That follows from the design rather than contradicting it.",
+        "<strong>Nothing about safety.</strong> Software bugs, key loss, theft, mining centralisation and regulatory action against on- and off-ramps are all real and none is answered by these questions.",
+        "<strong>Nothing about the businesses.</strong> Exchanges, lenders, custodians, ETFs and miners are ordinary companies that can be insolvent, negligent or fraudulent, and several have been.",
+        "<strong>Nothing about intent.</strong> Some projects with weak structural answers are honest experiments. The questions describe dependencies, not motives."
+      ])}
+
+      <p>That fourth point is where most losses actually happen. <a href="how-custody-fails.html">Four ways a platform loses your bitcoin</a> walks through four collapses with four different mechanisms, and the thing they had in common was that the customer held a claim rather than a coin. <strong>Holding bitcoin at a custodian means holding that custodian's risks, whatever the protocol underneath does.</strong></p>
+
+      <h2><span class="sc-article-num">6</span>Using it</h2>
+
+      ${checklist([
+        "<strong>Ask the eight questions of anything</strong> before you form a view about it, including things this site recommends. A method you only apply to other people's assets is not a method.",
+        "<strong>Verify rather than trust.</strong> Read the rules, run a node, audit the supply. Treat anything you cannot check, including this page, as unconfirmed.",
+        "<strong>Separate the protocol from the businesses built on it.</strong> They have different answers to every question above, and almost everything that goes wrong in this industry goes wrong at the businesses.",
+        "<strong>Be wary of promised returns specifically.</strong> Anyone guaranteeing you a yield is describing a business, whatever asset it is denominated in."
+      ])}
+
+      <h2>The short version</h2>
+
+      <p>Whether something counts as "crypto" is a question about vocabulary. Who can change the rules, who was allocated what, and whether you can check the supply yourself are questions about structure, and they have answers you can go and establish. Bitcoin's answers are unusual and are also a matter of record rather than assertion, including the two occasions when holding the line required people to notice and act.</p>
+
+      ${callout("If you take one thing from this page", `The questions are more useful than any verdict they produce, because the next thing marketed at you will not be on any list written today. Learn to ask who the system depends on, and you can evaluate something nobody has warned you about yet.`)}
+
+      <p class="sc-source-note">
+        The 2010 value overflow is catalogued as CVE-2010-5139; the March 2013 split, the double spend during it and the pools' sacrificed revenue are all recorded in BIP 50, alongside the alert Bitcoin published at the time. Supply, issuance and validation behaviour are checkable against a node you run, which is the standard this page asks of itself.
       </p>`
   },
 ];
