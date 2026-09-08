@@ -23,7 +23,7 @@ const glossaryTerms = [
   {
     "id": "21_million",
     "title": "21 million",
-    "definition": "The approximate total number of bitcoin that will ever exist — slightly under, because the subsidy is halved using integer arithmetic and rounds away small amounts, and because coins with lost keys are permanently unspendable. The figure is a consequence of the halving schedule rather than a parameter set independently.",
+    "definition": "The approximate total number of bitcoin that will ever be issued. It is slightly under, because the subsidy is halved using integer arithmetic and rounds away small amounts, and because some blocks have claimed less than they were owed. Coins with lost keys are a separate matter: they were issued and are counted, they simply cannot be moved, so the spendable supply is smaller still and nobody knows by how much. The figure is a consequence of the halving schedule rather than a parameter set independently.",
     "example": "The final fraction of the supply is issued so slowly that the last coins are not expected until well into the next century.",
     "categories": [
       "Technical"
@@ -53,7 +53,7 @@ const glossaryTerms = [
   {
     "id": "address",
     "title": "Address",
-    "definition": "A string encoding the conditions under which a payment can later be spent. It is derived from a public key or a script, is safe to share, and should be used once. Reading one on a screen a compromised computer controls is the moment most thefts actually happen.",
+    "definition": "A string encoding the conditions under which a payment can later be spent. It is derived from a public key or a script, is safe to share, and should be used once. Reading one on a screen a compromised computer controls is where address substitution gets its opportunity.",
     "example": "Addresses beginning 1, 3, bc1q and bc1p all work; they differ in age, cost to spend, and how widely they are accepted.",
     "categories": [
       "Wallets",
@@ -72,8 +72,8 @@ const glossaryTerms = [
   {
     "id": "address_substitution",
     "title": "Address substitution",
-    "definition": "Malware that watches for something address-shaped and replaces it with the attacker's own. It breaks no cryptography and needs no privilege beyond reading your clipboard. The defence is not vigilance on the computer but reading the address on the signing device, which the malware cannot reach.",
-    "example": "The computer and the browser both show the attacker's address; only the device shows yours.",
+    "definition": "Malware that watches for something address-shaped and replaces it with the attacker's own. It breaks no cryptography and needs no privilege beyond reading your clipboard. The defence differs by direction. Receiving: derive the address on the signing device and read it there, since malware cannot change what the device computes. Sending: the device shows the destination it was handed, so if the substitution happened before the transaction was built it will display the attacker's address faithfully. There the check is against the recipient's address as confirmed through a channel the malware does not control.",
+    "example": "Receiving, the computer shows the attacker's address and the device shows yours. Sending, both show the same address, and only comparing it against the payee's own confirmed details reveals it is not theirs.",
     "categories": [
       "Threats",
       "Security"
@@ -273,8 +273,8 @@ const glossaryTerms = [
   {
     "id": "bip125",
     "title": "BIP125 (opt-in RBF)",
-    "definition": "The rule set defining when an unconfirmed transaction may be replaced by one paying a higher fee, and what the replacement must do to be accepted. Opt-in means the original had to signal it; whether it did is usually a wallet default rather than a choice the sender made.",
-    "example": "A wallet that does not signal replaceability leaves fee bumping to the recipient via CPFP instead.",
+    "definition": "The rule set defining when an unconfirmed transaction may be replaced by one paying a higher fee, and what the replacement must do to be accepted. Opt-in means the original had to signal it, and whether it did is usually a wallet default rather than a choice the sender made. Note that opt-in is a relay policy rather than a consensus rule, and it is no longer the only one in use: Bitcoin Core enables full replace-by-fee by default from version 28.0, under which a node will replace an unsignalled transaction too. Treat the absence of a signal as saying nothing about whether an unconfirmed payment can still change.",
+    "example": "A wallet that does not signal replaceability may still find its transaction replaced by a node running full RBF, so the recipient waits for a confirmation rather than for a signal.",
     "categories": [
       "Technical"
     ]
@@ -581,8 +581,8 @@ const glossaryTerms = [
   {
     "id": "cold_storage",
     "title": "Cold storage",
-    "definition": "Keeping the keys that authorise spending on something that has never been connected to the internet, and signing transactions without connecting it. The phrase describes where the keys are, not what product is used. It reduces exposure to malware and remote theft, and does nothing about losing the backup or being coerced.",
-    "example": "A signing device kept in a drawer, paired with watch-only software on a laptop, is cold storage; the same device left plugged into a computer is not.",
+    "definition": "Keeping the keys that authorise spending on a device that holds them in isolation, so they are never present on an internet-connected computer. The phrase describes where the keys live, not what product is used and not whether a cable is involved: a hardware wallet signing over USB keeps its keys isolated, while an air-gapped setup goes further and never connects at all. Both reduce exposure to malware and remote theft, and neither does anything about losing the backup or being coerced.",
+    "example": "A signing device kept in a drawer, paired with watch-only software on a laptop, is cold storage. Plugging that device into a computer to sign does not hand over the keys, which stay isolated on it. A key generated or typed on the computer itself was never cold to begin with.",
     "categories": [
       "Storage",
       "Security",
@@ -603,7 +603,7 @@ const glossaryTerms = [
   {
     "id": "common_input_ownership",
     "title": "Common-input-ownership",
-    "definition": "The assumption that if a transaction spends several coins, one entity controlled all of them. It is the strongest heuristic in chain analysis and correct the overwhelming majority of the time. Coin control exists mostly to avoid triggering it, and PayJoin exists to make it produce wrong answers.",
+    "definition": "The assumption that if a transaction spends several coins, one entity controlled all of them. It is the strongest heuristic in chain analysis, and it is right often enough that analysts treat it as a default rather than a guess. Coin control exists mostly to avoid triggering it, and PayJoin exists to make it produce wrong answers.",
     "example": "Spending two coins together publicly asserts they share an owner, permanently and without any way to withdraw the claim.",
     "categories": [
       "Privacy"
@@ -759,8 +759,8 @@ const glossaryTerms = [
   {
     "id": "difficulty_adjustment",
     "title": "Difficulty adjustment",
-    "definition": "The recalibration, every 2,016 blocks, of how hard it is to mine one — raising the target if blocks came too fast and lowering it if they came too slowly. It is what keeps the ten-minute average steady regardless of how much mining hardware joins or leaves, and what makes the issuance schedule hold to something close to its intended pace.",
-    "example": "A large drop in mining activity is followed by an adjustment that makes blocks easier to find, restoring the pace.",
+    "definition": "The recalibration, every 2,016 blocks, of how hard it is to mine one. Blocks that arrived too quickly make the next period harder, and blocks that arrived too slowly make it easier. The mechanism is a threshold a block's hash must fall below, so the numbers run backwards from the intuition: harder means a lower threshold, easier a higher one. It is what keeps the ten-minute average steady regardless of how much mining hardware joins or leaves, and what makes the issuance schedule hold to something close to its intended pace.",
+    "example": "A fortnight of blocks arriving every eight minutes ends in an adjustment that makes the next ones harder to find, pulling the average back toward ten.",
     "categories": [
       "Technical"
     ]
@@ -1693,8 +1693,8 @@ const glossaryTerms = [
   {
     "id": "quantum_computing",
     "title": "Quantum computing",
-    "definition": "A computing model that would, at sufficient scale, break the elliptic curve mathematics behind bitcoin signatures. No such machine exists, and the timeline is genuinely uncertain. The practical near-term implication is unremarkable: avoid reusing addresses, since an unspent output whose public key has never been revealed is harder to attack.",
-    "example": "An address that has received but never spent has not published its public key, which is a meaningful difference under this threat.",
+    "definition": "A computing model that would, at sufficient scale, break the elliptic curve mathematics behind bitcoin signatures. No such machine exists, and the timeline is genuinely uncertain. The usual near-term advice is to avoid reusing addresses, on the grounds that an output whose public key has never been revealed is harder to attack. That holds for the address types that commit to a hash of the key. It does not hold for Taproot, where the output itself is a public key and is on the chain from the moment it is paid.",
+    "example": "A never-spent P2WPKH output has published only a hash; a never-spent Taproot output has published a key, so the two are not in the same position under this threat.",
     "categories": [
       "Technical",
       "Threats"
@@ -1763,7 +1763,7 @@ const glossaryTerms = [
   {
     "id": "replace_by_fee",
     "title": "Replace-by-fee (RBF)",
-    "definition": "Replacing an unconfirmed transaction with a version paying a higher fee. It is the normal way to unstick a payment you sent, and it requires that the original signalled it was replaceable — a per-wallet default more than a per-user decision. The replacement must pay the same recipient the same amount to be useful.",
+    "definition": "Replacing an unconfirmed transaction with a version paying a higher fee. It is the normal way to unstick a payment you sent. Under BIP125 the original had to signal that it was replaceable; that is no longer the network-wide condition it once was, since Bitcoin Core made full replace-by-fee its default in version 28.0, and a node running that policy will replace a transaction that never signalled anything. Whether your own wallet can build the replacement is a separate question from whether the network will relay it. A replacement is also free to change its outputs, so an unconfirmed payment is not a promise about who gets paid.",
     "example": "A payment stuck at a low fee rate can be bumped by broadcasting a replacement paying more, which miners prefer.",
     "categories": [
       "Technical"
@@ -2277,8 +2277,8 @@ const glossaryTerms = [
   {
     "id": "descriptor",
     "title": "Wallet descriptor",
-    "definition": "A structured description of a Bitcoin wallet's public keys, derivation paths, script type, and spending policy. Also called an output descriptor, it lets compatible software reconstruct addresses and coordinate or watch the wallet without containing the private keys required to spend.",
-    "example": "A multisig backup includes the wallet descriptor so compatible software can rebuild the same 2-of-3 policy and derive the same addresses.",
+    "definition": "A structured description of a Bitcoin wallet's keys, derivation paths, script type, and spending policy. Also called an output descriptor, it lets compatible software reconstruct the same addresses. Descriptors come in two forms and the difference is the whole of their handling: a public one contains extended public keys, rebuilds visibility and cannot spend, while BIP380 equally permits extended private keys, and a descriptor containing those is spending material to be treated exactly like a seed.",
+    "example": "A multisig backup includes the public wallet descriptor so compatible software can rebuild the same 2-of-3 policy and derive the same addresses; a descriptor exported with its private keys would additionally be able to move the coins.",
     "categories": [
       "Wallets",
       "Recovery",
@@ -2341,7 +2341,7 @@ const glossaryTerms = [
     "id": "wrench_attack",
     "title": "Wrench attack",
     "definition": "An attack that bypasses cryptography entirely by coercing the owner into handing over their keys or moving funds. Also called the $5 wrench attack, after a well-known comic observing that an adversary is far more likely to threaten a person than to break their encryption. Because no key length or signing policy applies, the defences are different in kind: discretion about holdings, arrangements that make immediate transfer genuinely impossible, and keeping a small amount available to surrender.",
-    "example": "A holder is confronted at home and forced to unlock a wallet; a mandatory login countdown means the funds cannot be moved that evening by anyone, including them.",
+    "example": "A holder is confronted at home and forced to unlock a wallet. A device login delay buys minutes rather than safety, since a backup can be restored on another signer. Only a spending policy enforced by the coins themselves, such as a timelock, makes \"not tonight\" true rather than inconvenient.",
     "categories": [
       "Security",
       "Risk",
@@ -2357,6 +2357,16 @@ const glossaryTerms = [
       "Wallets",
       "Security",
       "Technical"
+    ]
+  },
+  {
+    "id": "zero_knowledge_proof",
+    "title": "Zero-knowledge proof",
+    "definition": "A proof that a statement is true which reveals nothing beyond its truth: not the values behind it, and not how the prover knows. Bitcoin's base layer does not use them, and encountering the phrase in a bitcoin context usually means one of three things: an exchange proving reserves without publishing every address, a sidechain or rollup proving its own state, or a project whose privacy claims deserve reading closely. The mathematics is real and long-established; whether a given product needs it is a separate question.",
+    "example": "A proof-of-reserves scheme can show that customer balances are covered without disclosing which addresses hold them or what any one customer holds.",
+    "categories": [
+      "Technical",
+      "Privacy"
     ]
   },
   {
