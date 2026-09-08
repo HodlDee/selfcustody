@@ -237,6 +237,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://selfcustody.ca/guides/bitcoin-core-wallet.html</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://selfcustody.ca/guides/exchange-withdrawal.html</loc>
     <lastmod>2026-08-17</lastmod>
     <changefreq>monthly</changefreq>
