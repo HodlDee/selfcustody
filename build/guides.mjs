@@ -1145,7 +1145,7 @@ const guides = [
     icon: "bi-signpost-split",
     updated: "2026-08-25",
     status: "published",
-    related: ["what-not-to-normalize", "choosing-your-first-setup", "recovery-test-drill"],
+    related: ["what-not-to-normalize", "choosing-your-first-setup", "recovery-test-drill", "bitcoin-core-wallet"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Self custody means one specific thing: the secret that authorises spending your bitcoin exists only where you put it. No company holds a copy &mdash; which is why no company can freeze it, lose it in a bankruptcy, or hand it over on request, and why nobody can help you if you destroy it. Both halves of that sentence are the job.</p>
@@ -1240,7 +1240,7 @@ const guides = [
 
       <p>None of these is the wrong answer. The wrong answer is leaving the coins on an exchange for another eighteen months while you decide.</p>
 
-      ${callout("A note on Bitcoin Core", `<a href="why-run-a-node.html">Running your own node</a> means you verify the rules yourself instead of asking somebody else's server what your balance is, and Bitcoin Core includes a perfectly usable wallet. Two things to know before you pick it. Its keys sit on the computer, so it is a hot wallet unless you pair it with a signing device. And it does not hand you twelve words &mdash; a Core wallet is described by a <a href="../glossary.html#term-descriptor">descriptor</a> containing an extended private key, and the backup is a file rather than a phrase. That is a good backup, but it is not the one the rest of this page describes, and it restores into other descriptor-aware software rather than by typing words into a device. Many people run Core as their node and keep the keys elsewhere, which is the best of both.`)}
+      ${callout("A note on Bitcoin Core", `<a href="why-run-a-node.html">Running your own node</a> means you verify the rules yourself instead of asking somebody else's server what your balance is, and Bitcoin Core includes a perfectly usable wallet. Two things to know before you pick it. Its keys sit on the computer, so it is a hot wallet unless you pair it with a signing device. And it does not hand you twelve words. A Core wallet is described by a <a href="../glossary.html#term-descriptor">descriptor</a> containing an extended private key, and the backup is a file rather than a phrase. That is a good backup, but it is not the one the rest of this page describes, and it restores into other descriptor-aware software rather than by typing words into a device. <a href='bitcoin-core-wallet.html'>What a Core wallet actually holds</a> goes through that properly, including how to give Core a wallet derived from a seed you do hold. Many people run Core as their node and keep the keys elsewhere, which is the best of both.`)}
 
       <p><a class="sc-text-link" href="choosing-your-first-setup.html">Choosing your first setup <i class="bi bi-arrow-right"></i></a> &nbsp; <a class="sc-text-link" href="../devices.html">Compare hardware <i class="bi bi-arrow-right"></i></a> &nbsp; <a class="sc-text-link" href="../software.html">Compare wallet software <i class="bi bi-arrow-right"></i></a></p>
 
@@ -2303,6 +2303,7 @@ const guides = [
     summary: "Every setup guide says to check the signature and then moves on. This is the part they skip: the three files, the three commands, and the alarming warning that appears when everything has in fact gone right.",
     level: "intermediate",
     minutes: 20,
+    effort: "task",
     goals: ["setup", "harden", "learn"],
     tags: ["Fundamentals", "Verification"],
     icon: "bi-check2-circle",
@@ -2415,11 +2416,30 @@ const guides = [
 
       <h2><span class="sc-article-num">7</span>When there is only a checksum</h2>
 
-      <p>Some things are published with a hash and no signature at all &mdash; including <a href="../entropy.html">this site's own offline Workshop file</a>, whose SHA-256 sits beside it.</p>
+      <p>Some things are published with a hash and nothing else. Be exact about what that can do: it catches a truncated download, a proxy that rewrote something, a failing USB stick. It cannot catch an adversary, because the checksum is served from the same place as the file it describes, and anyone able to replace one can replace the other. <strong>Same-origin checksums catch accidents, not attackers.</strong></p>
 
-      <p>Be exact about what that can do. It catches a truncated download, a proxy that rewrote something, a failing USB stick. It cannot catch an adversary, because the checksum is served from the same place as the file it describes, and anyone able to replace one can replace the other. Same-origin checksums catch accidents, not attackers.</p>
+      <p>Where it matters, get a second copy of the expected hash from somewhere the same server does not control. A repository's commit history, a build log, or a mirror will do. Then compare the two.</p>
 
-      <p>Where it matters, get a second copy of the expected hash from somewhere the same server does not control &mdash; a repository's commit history, a build log, a mirror &mdash; and compare. <a href="bring-your-own-entropy.html">The Workshop guide</a> makes the same point about its own file, which is the correct way for a project to talk about its own checksums.</p>
+      <h3>Build provenance, which is a different thing</h3>
+
+      <p>A checksum on its own says nothing about where a file came from. It says only whether your copy matches the digest you were handed. A <em>signed build attestation</em> is different in kind: it is a signature over the file's digest, recording which repository, which workflow and which source ref produced those exact bytes, and it is verified against a signer identity rather than against a number on the same page. That is the gap between the two paragraphs above and this one.</p>
+
+      <p><a href="../entropy.html">This site's own offline Workshop file</a> has both. The SHA-256 sits beside it, and the repository's workflow also mints a keyless attestation over the downloadable bytes whenever they change. If you have GitHub's CLI:</p>
+
+      ${checklist([
+        "<strong>The short form</strong> checks that some attestation from that repository covers these bytes: <code>gh attestation verify entropy-offline.html -R HodlDee/selfcustody</code>",
+        "<strong>The form worth using</strong> also pins <em>which</em> workflow and <em>which</em> branch signed it:<br><code>gh attestation verify entropy-offline.html -R HodlDee/selfcustody --signer-workflow HodlDee/selfcustody/.github/workflows/build.yml --source-ref refs/heads/main</code>",
+        "If either reports no matching attestation, the file may predate this repository being renamed. An attestation records the identity as it stood when it was signed, so <strong>the owner has to change in both arguments, not just the first</strong>:<br><code>gh attestation verify entropy-offline.html -R DeesNeez/selfcustody --signer-workflow DeesNeez/selfcustody/.github/workflows/build.yml --source-ref refs/heads/main</code>",
+        "<strong>One of the two has to pass.</strong> A name mismatch by itself is not evidence of tampering, and it is not permission to run the file either. If neither identity verifies, you have an unverified file, and the right response is to download it again from the published location rather than to decide it is probably fine."
+      ])}
+
+      ${cautions([
+        "<strong>The two commands do not prove the same thing, which is why both are here.</strong> A repository name on its own does not say which workflow produced the file. Any workflow in that repository able to mint an attestation would satisfy it, so a compromised or newly added one would pass. <code>--signer-workflow</code> and <code>--source-ref</code> pin the answer to the build this project actually publishes from. They are the difference between \"something in that repository\" and \"that build, on main\".",
+        "<strong>Keep the three checks separate in your head.</strong> A matching hash establishes that your copy agrees with the digest you were given. If that digest came from the same server as the file, it establishes nothing else, which is the whole point of the section above. A signature or an attestation additionally ties those bytes to a signer you can name. <strong>None of the three says the software is any good</strong>, that the source it was built from is trustworthy, or that the repository was not compromised before the build ran.",
+        "<strong>An attestation covers bytes, not versions.</strong> It says these exact bytes came from that build. It does not say they are the current release, or that a later one does not fix something."
+      ])}
+
+      <p><a href="bring-your-own-entropy.html">The Workshop guide</a> makes the same points about its own file, and <a href="https://github.com/HodlDee/selfcustody/blob/main/SECURITY.md" target="_blank" rel="noopener">this project's SECURITY.md</a> carries the full procedure. A project talking honestly about its own checksums is the standard to hold others to.</p>
 
       <h2><span class="sc-article-num">8</span>Windows without a terminal</h2>
 
@@ -5264,7 +5284,7 @@ const guides = [
     updated: "2026-08-18",
     productGuide: true,
     status: "published",
-    related: ["multisig-2of3", "air-gapped-psbt-workflow", "why-run-a-node"],
+    related: ["multisig-2of3", "air-gapped-psbt-workflow", "why-run-a-node", "bitcoin-core-wallet"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Specter Desktop is not really a wallet. It is a graphical face for Bitcoin Core, built for people who already run a node and want to drive hardware signers &mdash; particularly several of them at once, from different manufacturers, in a multisig.</p>
@@ -5436,7 +5456,7 @@ const guides = [
     icon: "bi-cpu",
     updated: "2026-08-18",
     status: "published",
-    related: ["why-run-a-node", "bitcoin-privacy", "specter-multisig-coordinator"],
+    related: ["why-run-a-node", "bitcoin-privacy", "specter-multisig-coordinator", "bitcoin-core-wallet"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Plenty of people run a node and still leak everything. The node hums away in a cupboard, validating blocks, while their wallet carries on asking a stranger's server for balances &mdash; because nothing about installing Bitcoin Core changes what your wallet is configured to talk to.</p>
@@ -5453,7 +5473,7 @@ const guides = [
 
       ${callout("What this means in practice", "\"I installed Bitcoin Core\" is not enough to point Sparrow at it. You need Core <em>plus</em> an index server. Node distributions like Umbrel, Start9, and RaspiBlitz bundle one already, which is most of why they exist. A manual Core install almost always needs one added.")}
 
-      <p>Specter is the notable exception, because it drives Core's own descriptor wallets directly rather than speaking Electrum &mdash; which is why <a href='specter-multisig-coordinator.html'>the Specter guide</a> requires Core and nothing else.</p>
+      <p>Specter is the notable exception, because it drives Core's own descriptor wallets directly rather than speaking Electrum, which is why <a href='specter-multisig-coordinator.html'>the Specter guide</a> requires Core and nothing else. <a href='bitcoin-core-wallet.html'>Core's own wallet</a> is a guide of its own.</p>
 
       <h2><span class="sc-article-num">2</span>Choosing the index server</h2>
 
@@ -5547,6 +5567,251 @@ const guides = [
       <p>Bitcoin Core alone cannot answer the questions wallets ask, so you need an index server &mdash; electrs, Fulcrum, or ElectrumX &mdash; alongside it, which node distributions bundle for you. Point each wallet at it explicitly, use Tor or a VPN to reach it from a phone, and then verify by switching the node off and confirming your wallet actually breaks.</p>
 
       ${callout("If you take one thing from this page", `Test it by turning your node off. It is the only check that cannot be fooled by a setting that did not take or a fallback you did not know about — and a wallet that keeps working when your node is down was never using it.`)}`
+  },
+
+  {
+    slug: "bitcoin-core-wallet",
+    category: "software",
+    products: [],
+    title: "Bitcoin Core wallets, and what wallet.dat actually is",
+    summary: "Core's wallet does not hand you twelve words, and the file everyone argues about on the internet is no longer the file Core writes. What is actually in it now, how to make one, and how to load a wallet.dat the Entropy Workshop produced from a seed you already have.",
+    level: "intermediate",
+    minutes: 30,
+    effort: "task",
+    goals: ["setup", "learn"],
+    tags: ["Wallets", "Connectivity"],
+    icon: "bi-stack",
+    updated: "2026-09-07",
+    status: "published",
+    related: ["own-node-connection", "why-run-a-node", "seed-to-key"],
+    layout: "article",
+    body: `
+      <p class="sc-guide-intro"><code>wallet.dat</code> is the most discussed and least understood file in bitcoin. Most of what is written about it &mdash; the recovery services, the forum threads, the <code>dumpprivkey</code> incantations &mdash; describes a file format Bitcoin Core no longer opens. This page is what it is now.</p>
+
+      <p><a href="quickstart.html">Start Here</a> says in passing that Core "does not hand you twelve words. A Core wallet is described by a descriptor containing an extended private key, and the backup is a file rather than a phrase." That sentence is the whole of this page, unpacked.</p>
+
+      ${prerequisites([
+        "Bitcoin Core installed. It does <strong>not</strong> need to be synced. Every step here except the final balance check works on a node that is still catching up.",
+        "Comfort with a terminal, or with Core's GUI menus. Both routes are given.",
+        "No bitcoin. Everything below can be done on an empty wallet, and should be the first time.",
+        "If you intend to import a Workshop export: a test sequence, not the rolls behind a wallet you use."
+      ])}
+
+      <h2><span class="sc-article-num">1</span>Verify the download first</h2>
+
+      <p>Core is the software that decides what your node believes. A substituted copy is not a wallet problem, it is a validation problem. It could accept blocks nobody else accepts, or report a balance that is not there.</p>
+
+      <p>Core is signed by a number of independent builders rather than one, which is a stronger arrangement than most projects manage: several people compile the release themselves and sign the same checksums. Verifying it means checking your download against those checksums and checking the checksums against builders you chose to trust.</p>
+
+      ${markLink("verify-a-download.html", "How to verify a download, and how to read the output", "sc-die-mark")}
+
+      <p>A single good signature on a multi-signer project is a partial result. That guide covers the distinction, and the alarming warning a successful check prints.</p>
+
+      <h2><span class="sc-article-num">2</span>What running a node actually needs</h2>
+
+      <p>Worth knowing before you start, because the requirement people expect is not the one that bites. Bitcoin Core's own guidance:</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>Resource</th><th>What it needs</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Disk</strong></td><td>Over 750&nbsp;GB for the full chain, or about 7&nbsp;GB pruned. Read/write of at least 100&nbsp;MB/s.</td></tr>
+            <tr><td><strong>Memory</strong></td><td>2&nbsp;GB of RAM.</td></tr>
+            <tr><td><strong>Upload</strong></td><td>At least 400&nbsp;kbit/s, and around 200&nbsp;GB a month if you leave it serving peers.</td></tr>
+            <tr><td><strong>Download</strong></td><td>Around 20&nbsp;GB a month, plus roughly 740&nbsp;GB the first time.</td></tr>
+            <tr><td><strong>Time</strong></td><td>The initial download takes at least several days, longer on slow hardware or a slow connection.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Pruning is the setting most people want. It validates every block exactly as a full node does and then discards the old ones, taking disk from over 750&nbsp;GB to around 7&nbsp;GB. The trade is that a pruned node cannot serve historical blocks or rescan for a wallet with years of history, which matters if you plan to import an old wallet later.</p>
+
+      ${callout("You do not need a synced node to make a wallet", `This stops more people than the disk requirement does. <code>createwallet</code>, <code>restorewallet</code>, address generation and descriptor export all work the moment Core is installed, because none of them ask the chain anything. Only balances and transaction history need a synced node, because only those are questions about what happened. Set the wallet up on day one and let the sync finish in its own time.`)}
+
+      <p>Two other guides cover the surrounding decisions: <a href="why-run-a-node.html">why run a node</a> makes the case, and <a href="own-node-connection.html">connecting wallets to your node</a> deals with the part nobody warns you about, which is that installing Core is not enough to point most wallets at it.</p>
+
+      <h2><span class="sc-article-num">3</span>The file changed underneath the folklore</h2>
+
+      <p>For most of bitcoin's history a Core wallet was a Berkeley DB file holding a pool of individual private keys. That is the <code>wallet.dat</code> of the recovery industry, of <code>dumpwallet</code> and <code>importprivkey</code>, and of every story about a hard drive in a landfill.</p>
+
+      <p>It is gone. Bitcoin Core 30.0 states it plainly: <strong>Berkeley DB legacy wallets can no longer be created or loaded.</strong> The RPCs that went with them &mdash; <code>dumpprivkey</code>, <code>dumpwallet</code>, <code>importprivkey</code>, <code>importaddress</code>, <code>importmulti</code>, <code>sethdseed</code> and others &mdash; were removed in the same release.</p>
+
+      ${cautions([
+        "Advice telling you to run <code>importprivkey</code> is describing software that no longer exists. The command is not deprecated; it is absent.",
+        "A genuinely old <code>wallet.dat</code> from a Berkeley DB era cannot be <em>loaded</em> by a current Core, but it can still be <em>migrated</em> by one. Core 30 keeps the <code>migratewallet</code> RPC for exactly this, and its release notes say so: legacy wallets \"can be migrated to the new descriptor wallet format\". You do not need to find an old version, and you should not go looking for one.",
+        "Recovery services advertising <code>wallet.dat</code> extraction are usually talking about the old format. That is a different problem from anything on this page."
+      ])}
+
+      ${callout("If you are migrating a legacy wallet, mind the version", `Bitcoin Core published a notice about a <strong>wallet-migration bug in 30.0 and 30.1</strong>: where a default unnamed <code>wallet.dat</code> failed to migrate or load, Core could delete every file in the wallet directory, and the project asked users not to migrate on those versions at all until 30.2. <strong>Migrate on 30.2 or later.</strong> Take an independent copy of the whole wallet directory first, somewhere Core is not writing &mdash; that is cheap, and it is the one precaution that survives being wrong about any of the rest of this.`)}
+
+      <h2><span class="sc-article-num">4</span>What a Core wallet is today</h2>
+
+      <p>A modern Core wallet is a <em>descriptor wallet</em>, stored as an SQLite database. The database file is still called <code>wallet.dat</code>, which is most of why the confusion persists &mdash; same name, different thing entirely.</p>
+
+      <p>Each wallet is a folder inside Core's <code>wallets</code> directory, and the folder holds the database:</p>
+
+      ${checklist([
+        "<strong>Linux.</strong> <code>~/.bitcoin/wallets/&lt;name&gt;/wallet.dat</code>",
+        "<strong>macOS.</strong> <code>~/Library/Application Support/Bitcoin/wallets/&lt;name&gt;/wallet.dat</code>",
+        "<strong>Windows.</strong> <code>%LOCALAPPDATA%\\Bitcoin\\wallets\\&lt;name&gt;\\wallet.dat</code>"
+      ])}
+
+      <p>Inside, rather than a heap of keys, it holds <a href="../glossary.html#term-descriptor">descriptors</a>: a compact statement of the script type, the key, and the derivation path, from which every address is computed on demand. That is the same object <a href="how-wallets-find-coins.html">a restore needs</a> in any other wallet, written down properly.</p>
+
+      <h2><span class="sc-article-num">5</span>Creating one</h2>
+
+      <p>Either route produces the same thing.</p>
+
+      ${checklist([
+        "<strong>Terminal.</strong> <code>bitcoin-cli createwallet \"savings\"</code>",
+        "<strong>Terminal, encrypted from the start.</strong> <code>bitcoin-cli -named createwallet wallet_name=\"savings\" passphrase=\"…\"</code>",
+        "<strong>GUI.</strong> File, then Create Wallet."
+      ])}
+
+      <p><strong>Encrypt at creation if you are going to encrypt at all.</strong> A Core wallet file is not encrypted by default, and an unencrypted <code>wallet.dat</code> containing private keys is exactly as sensitive as a written seed phrase and considerably easier to copy. But the stronger reason is what encrypting <em>later</em> does, which is not what most people expect.</p>
+
+      ${cautions([
+        "<strong>Encrypting an existing Core-generated wallet rotates its keys.</strong> Core does not simply put a password on what is already there. It generates fresh descriptors and marks the old ones inactive, so every address issued afterwards belongs to key material your earlier backup does not contain. Core prints a warning saying a new backup is required, and it means that literally.",
+        "<strong>A backup taken before encryption stops covering the wallet's new key material.</strong> Be precise about what that means, because it is narrower than it sounds and worse than it sounds. The old backup still holds the keys it always held, so it recognises addresses issued <em>before</em> you encrypted, including payments arriving at those addresses long afterwards. What it cannot reach is anything received at an address the wallet issued <em>after</em> encryption, because those come from descriptors it has never seen.",
+        "If you encrypt an existing wallet anyway, <strong>run <code>backupwallet</code> immediately afterwards</strong>, refresh any private descriptor backup you keep, and test the new one before relying on it. Section 10 has the drill.",
+        "This is about wallets Core generated for itself. A Workshop export is a different case &mdash; it arrives with its descriptors already set, and encrypting it does not replace them."
+      ])}
+
+      <h2><span class="sc-article-num">6</span>The part that surprises people</h2>
+
+      <p>Core does not use <a href="../glossary.html#term-seed_phrase">BIP39 recovery words</a>. It never has.</p>
+
+      <p>When Core generates a wallet it produces its own entropy and stores the resulting keys in the database. There is no phrase to write down, because none exists. The backup is the file itself, or a <strong>private</strong> descriptor export from it, and it restores into descriptor-aware software rather than by typing words into a device. A public descriptor is a different object and does not stand in for either: it rebuilds your addresses and your balance, and it cannot sign.</p>
+
+      ${pullQuote("A Core wallet's backup is a file. Losing it, with nothing holding the private keys elsewhere, loses the wallet exactly as thoroughly as losing a seed phrase. A public descriptor is not that something.")}
+
+      <p>That is a perfectly good backup and it is a different discipline from the rest of this site. It also explains the gap the next section fills: if you want a wallet that Core can drive <em>and</em> that twelve words can rebuild, Core will not make one for you.</p>
+
+      <h2><span class="sc-article-num">7</span>Exporting a wallet.dat from the Entropy Workshop</h2>
+
+      <p>The <a href="../entropy.html">Entropy Workshop</a> converts dice, coins or cards into a seed, and can write the resulting account out as a Bitcoin Core descriptor wallet. The point is not convenience. It is that the wallet Core ends up driving is derived from a BIP39 seed you hold, so <strong>the words remain the master backup</strong> even though Core has no concept of them.</p>
+
+      <p>It offers two files, and the difference is the entire safety question.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>File</th><th>Contains</th><th>Can it spend?</th></tr></thead>
+          <tbody>
+            <tr><td><code>watch-only-wallet.dat</code></td><td>Account public keys and checked descriptors. Flagged disable-private-keys.</td><td><strong>No.</strong> Watching only.</td></tr>
+            <tr><td><code>wallet.dat</code></td><td>The above, plus the account private key as a wallet descriptor key record.</td><td><strong>Yes.</strong> Treat it like a seed.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The private file is only produced while "Show private recovery material" is switched on, and both the button and the filename say which one you are downloading. That is deliberate: the two files look identical in a downloads folder otherwise.</p>
+
+      ${cautions([
+        "The exported file is <strong>not encrypted</strong>. Encrypt the wallet in Core after loading it, or keep the file somewhere you would keep a seed card.",
+        "<strong>Never replace or overwrite an existing <code>wallet.dat</code>.</strong> There is no undo, and the wallet you overwrite may be the one holding coins.",
+        "Use the Workshop for a test sequence first. It is experimental software and says so, and a wallet you intend to keep deserves a device that was built for it."
+      ])}
+
+      <h2><span class="sc-article-num">8</span>Loading it into Core</h2>
+
+      <p>The tidy route is <code>restorewallet</code>, which takes the file and builds the folder around it rather than asking you to place anything by hand:</p>
+
+      ${checklist([
+        "<code>bitcoin-cli restorewallet \"workshop-test\" /path/to/wallet.dat</code>",
+        "In the GUI: File, then Restore Wallet, then pick the file and give it a name.",
+        "The name is Core's label for the wallet, not part of the file. Choose one you will still recognise later."
+      ])}
+
+      <p>Core will refuse if a wallet of that name already exists, which is the behaviour you want. If it loads, the wallet appears in the wallet list and Core begins scanning the chain for its addresses.</p>
+
+      <p>A freshly imported descriptor wallet has no transaction history until that scan finishes. On a fully synced node it is quick; on a node still catching up it will show nothing until it gets there, which is not a fault.</p>
+
+      <h2><span class="sc-article-num">9</span>Prove it is the wallet you think it is</h2>
+
+      <p>Everything above is an assumption until checked, and the checks are quick.</p>
+
+      ${checklist([
+        "<strong>Compare the descriptor.</strong> <code>bitcoin-cli -rpcwallet=\"workshop-test\" listdescriptors</code> and confirm the key origin and path match what the Workshop showed you.",
+        "<strong>Derive address zero and compare it</strong> to the first receiving address the Workshop displayed. Take the external descriptor from the output above &mdash; the one ending <code>/0/*</code>, with its checksum &mdash; and run <code>bitcoin-cli deriveaddresses \"&lt;descriptor&gt;\" \"[0,0]\"</code>. They must match exactly.",
+        "<strong>Confirm what it can do.</strong> A watch-only import reports private keys as disabled; a private one does not. Check you got the file you meant to.",
+        "<strong>Then a test amount</strong>, and only then anything more. <a href=\"test-transaction.html\">Sending a test transaction</a> covers that loop."
+      ])}
+
+      ${cautions([
+        "<strong>Do not use <code>getnewaddress</code> for this comparison</strong>, which is the obvious move and is wrong twice. It asks for bech32 by default, so on a wallet exported as legacy, nested SegWit or Taproot it fails outright with <code>-12: No bech32 addresses available</code>. And passing the right type is only half a fix, because it also <strong>advances the wallet's next index</strong>. Run it once and the address you meant to compare is no longer the one you get back.",
+        "If you reach for it anyway, the type argument has to match the export: <code>legacy</code>, <code>p2sh-segwit</code>, <code>bech32</code>, or <code>bech32m</code> for Taproot. <code>deriveaddresses</code> needs none of that, changes nothing, and gives the same answer on a wallet that has already issued addresses."
+      ])}
+
+      <h2><span class="sc-article-num">10</span>Backing up a Core wallet</h2>
+
+      <p>This is the part that behaves least like the rest of this site, so it is worth doing deliberately rather than by analogy.</p>
+
+      <h3>Do not copy the live file</h3>
+
+      <p>Copying <code>wallet.dat</code> while Core is running can capture it mid-write. The database may be consistent, or it may not, and you will not find out until the day you need it. Core has a command that takes a safe copy while the wallet is in use:</p>
+
+      ${checklist([
+        "<code>bitcoin-cli -rpcwallet=\"savings\" backupwallet /path/to/backup.dat</code>",
+        "In the GUI: File, then Backup Wallet.",
+        "The result is a single file. Restore it later with <code>restorewallet</code>, the same command used for the Workshop export above."
+      ])}
+
+      <p>If you would rather copy the file by hand, stop Core first and let it shut down fully. A clean shutdown is what makes the file safe to copy.</p>
+
+      <h3>Back up the descriptor as well</h3>
+
+      <p>The file is the whole wallet; the descriptor is the part that survives the file. Export it and keep it separately:</p>
+
+      ${checklist([
+        "<code>bitcoin-cli -rpcwallet=\"savings\" listdescriptors</code> gives the public form &mdash; script type, extended public key, derivation path, checksum.",
+        "It <strong>cannot spend</strong>, so it is safe to store where a spending backup would not be. It does reveal your addresses and balance to anyone who reads it. <strong>And it cannot restore access to coins on its own.</strong> Keeping only this and losing the file leaves you able to watch the wallet and unable to move it.",
+        "Any descriptor-aware wallet can rebuild your addresses from it, which is what makes it worth having when the file is gone or the software has moved on.",
+        "<code>listdescriptors true</code> includes the private keys. That output is a spending backup and should be treated exactly like a seed."
+      ])}
+
+      <p>This is the same advice <a href="how-wallets-find-coins.html">the restore guide</a> gives for every wallet, and it matters more here because there is no phrase standing behind it.</p>
+
+      <h3>Encryption is separate from the backup</h3>
+
+      <p>A Core wallet is not encrypted unless you encrypt it, and a backup of an unencrypted wallet is an unencrypted spending key in a file. Encrypting sets a passphrase that Core requires before signing.</p>
+
+      ${cautions([
+        "The passphrase is <strong>not stored in the backup file</strong> in any recoverable form. Lose it and the backup is inert, exactly like a forgotten BIP39 passphrase.",
+        "Record it separately from the file, in a different place, with the same durability you would give a seed card.",
+        "Encrypting after the fact does not retroactively protect a backup you already made while it was unencrypted. Destroy those or treat them as spending material forever.",
+        "<strong>And on a Core-generated wallet it invalidates that backup going forward as well</strong>, because encrypting rotates the active descriptors. Section 5 covers this. Take a fresh <code>backupwallet</code> immediately afterwards and prove it with the drill below."
+      ])}
+
+      <h3>Then prove it</h3>
+
+      <p>An untested backup is a guess here as much as anywhere. The drill is cheap:</p>
+
+      ${checklist([
+        "Restore the backup under a different wallet name on the same node, with <code>restorewallet \"backup-test\" /path/to/backup.dat</code>.",
+        "Compare the descriptors against the original with <code>listdescriptors</code>, and derive address zero from each with <code>deriveaddresses</code>. They must match exactly.",
+        "<strong>Then check an address the wallet issued <em>most recently</em></strong>, not only the first one. <code>getaddressinfo</code> on the restored wallet should report <code>ismine: true</code> for it. This is the check that catches a backup which covers the wallet's original keys and none of the ones in use, which is the exact state encrypting an existing wallet leaves you in.",
+        "Unload the test wallet afterwards so you are not running two copies of the same wallet.",
+        "Repeat after anything that changes the wallet's structure, encrypting it above all, and periodically regardless."
+      ])}
+
+      <h3>Where the real backup lives</h3>
+
+      ${checklist([
+        "<strong>If Core generated the wallet</strong>, the file &mdash; or a private descriptor export of it &mdash; is the only thing that can spend. There is no phrase and nothing to fall back on. Keep the public descriptor too, but keep it knowing it restores your view of the wallet and not your access to it.",
+        "<strong>If it came from a BIP39 seed by way of the Workshop</strong>, the words are the master backup and the file is a convenience. Losing the file costs you an afternoon; losing the words costs you the wallet.",
+        "Either way, store the backup somewhere a single event cannot reach alongside the machine running the node. <a href=\"seed-backup-metal.html\">The durability guide</a> applies to a file on a drive as much as to words on a card &mdash; drives fail, and they fail silently."
+      ])}
+
+      <h2>The short version</h2>
+
+      <p>The <code>wallet.dat</code> people argue about on the internet is a Berkeley DB file Core stopped opening at version 30. What Core writes now is an SQLite descriptor wallet in a folder of its own, holding descriptors rather than a pile of keys, with no recovery phrase anywhere because Core does not use them. The Workshop can hand Core a wallet derived from a BIP39 seed instead &mdash; in a watch-only form that cannot spend, or a private one that can and should be treated exactly like a seed card.</p>
+
+      ${callout("If you take one thing from this page", `Core's backup is a file, not a phrase. That is not a flaw, but it is a different discipline from every other guide here. If you delete the file with nothing holding its private keys elsewhere, the wallet is gone as completely as if you had burned a seed card.`)}
+
+      <p class="sc-source-note">
+        Paths, commands and the removal of Berkeley DB wallets are taken from Bitcoin Core's own documentation and its v30.0 release notes, which also record that legacy wallets can still be migrated; the migration bug in 30.0 and 30.1 is from the project's own notice. The key rotation on encrypting an existing wallet, and the address-type behaviour of <code>getnewaddress</code> against a Workshop export, were reproduced against Core 30.2 during review of this page rather than inferred. The Workshop's export follows the descriptor-wallet layout Core writes and has been loaded against a current release. Wallet behaviour changes between versions, so confirm against
+        ${official("https://bitcoincore.org/en/doc/", "Bitcoin Core's documentation")}
+        for the version you are actually running.
+      </p>`
   },
 
   /* ---------------------------------------------------------------- exchanges */
@@ -6281,7 +6546,7 @@ const guides = [
     icon: "bi-rulers",
     updated: "2026-08-27",
     status: "published",
-    related: ["dice-entropy", "quickstart", "three-dice-seed", "human-randomness"],
+    related: ["dice-entropy", "quickstart", "three-dice-seed", "human-randomness", "bitcoin-core-wallet"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">A wallet is one enormous secret number. The Entropy Workshop will not make that number for you &mdash; there is no random number generator anywhere in it, and that absence is the whole design. You bring the randomness in from the physical world, and the page does the arithmetic in front of you: the same arithmetic your signing device does privately, so you can hold the two side by side and see whether they agree.</p>
@@ -6472,7 +6737,7 @@ const guides = [
 
       <p>Note the fourth row. It is the only failure in that comparison which multisig <em>introduces</em>, and it is entirely preventable.</p>
 
-      ${callout("Store the configuration with every seed backup", "The descriptor contains public keys, not private ones — it cannot be used to steal from you. It does reveal your balance and history to anyone who reads it, so it is not something to publish. But losing it is catastrophic while leaking it is merely a privacy problem, so availability wins: put a copy with each of the three backups, not in one clever place.")}
+      ${callout("Store the configuration with every seed backup", "A multisig wallet configuration like this one holds extended <em>public</em> keys, so it cannot be used to steal from you. That is worth saying plainly, because a descriptor is not public by definition, and one exported with private keys is spending material. This one is not. It does reveal your balance and history to anyone who reads it, so it is not something to publish. But losing it is catastrophic while leaking it is merely a privacy problem, so availability wins: put a copy with each of the three backups, not in one clever place.")}
 
       <h2>Choosing the three keys</h2>
 
@@ -8208,7 +8473,13 @@ const guides = [
 
       <p>That says: native SegWit, this key, this path, this branch, all indexes. There is nothing left for the receiving wallet to assume. Descriptors also handle multisig and more complex conditions, which plain paths cannot describe at all.</p>
 
-      <p>The practical advice follows directly: <strong>when your wallet offers to export a descriptor, save it with your backup.</strong> It is not secret in the way your seed is &mdash; it contains public keys only &mdash; but it is the difference between a restore that works immediately and one that starts with guesswork.</p>
+      <p>The practical advice follows directly: <strong>when your wallet offers to export a descriptor, save it with your backup.</strong> It is the difference between a restore that works immediately and one that starts with guesswork.</p>
+
+      ${cautions([
+        "<strong>Check which kind you exported before deciding how to store it.</strong> A <em>public</em> descriptor carries extended public keys. It rebuilds every address and restores visibility, cannot spend, and is the one this section is about. It is not secret the way your seed is, though it does reveal your balance and history to anyone who reads it.",
+        "<strong>A descriptor can also carry extended private keys</strong>, which the specification permits and several wallets will export on request. That file <em>can</em> spend. It is seed-equivalent material and belongs wherever your seed backup lives, not in a notes app beside the wallet configuration.",
+        "<strong>A public descriptor is not a substitute for your seed backup.</strong> It tells software where to look; it cannot sign. Keep both, and know which one you are holding. The two look similar enough that people have kept the wrong one."
+      ])}
 
       <h2><span class="sc-article-num">6</span>What to do when a restore comes back empty</h2>
 
@@ -8284,7 +8555,7 @@ const guides = [
         "<strong>It cannot catch anything at all once the phrase is valid.</strong> A checksum says the words are internally consistent. It says nothing about whether they are <em>your</em> words."
       ])}
 
-      <p>The practical inversion matters more than the arithmetic. If your wallet <em>accepted</em> the phrase and showed you an empty balance, a transcription error is one of the least likely explanations available &mdash; it had a 94% chance of being rejected outright and was not. The likely causes are the ones no checksum can see, and they are the subjects of the next two sections.</p>
+      <p>What follows from this is narrower than it first appears. If your wallet <em>accepted</em> the phrase and showed you an empty balance, the checksum has ruled out most transcription errors. It has not ruled out the one in sixteen that produces a different valid wallet, and it never had anything to say about a wrong passphrase, a wrong branch or a scan still in progress. Those are the causes no checksum can see, and they are the subjects of the next two sections.</p>
 
       ${callout("This is why the last word is not free", `In a 24-word phrase the final word carries the last three bits of your secret followed by all eight checksum bits. That is why you cannot simply pick a twenty-fourth word you like, and why <a href="dice-entropy.html">rolling your own entropy</a> ends with a device or a worksheet computing that word for you.`)}
 
@@ -8385,25 +8656,24 @@ const guides = [
 
       <h2><span class="sc-article-num">7</span>Where each failure actually lives</h2>
 
-      <p>The point of walking the four transformations is that a symptom now tells you which one broke.</p>
+      <p>A symptom narrows the search. It rarely settles it on its own, because several of these steps fail the same way. An empty wallet looks identical whether the passphrase is wrong, the branch is wrong, or the scan has not finished. So the table below gives the checks rather than a verdict, and they are worth running in order.</p>
 
       <div class="sc-table-wrap">
         <table class="table sc-table">
-          <thead><tr><th>Symptom</th><th>Step that produced it</th><th>Recoverable?</th></tr></thead>
+          <thead><tr><th>Symptom</th><th>Candidate causes</th><th>What to check</th></tr></thead>
           <tbody>
-            <tr><td><strong>Wallet rejects the phrase</strong></td><td>Step 2 &mdash; the checksum</td><td>Yes. A word is wrong; the check did its job.</td></tr>
-            <tr><td><strong>Accepted, zero balance, path confirmed</strong></td><td>Step 3 &mdash; passphrase</td><td><strong>Only if you recall it.</strong> Nothing can test it for you.</td></tr>
-            <tr><td><strong>Accepted, zero balance, no passphrase set</strong></td><td>Step 5 &mdash; wrong branch</td><td>Yes. Change the derivation path.</td></tr>
-            <tr><td><strong>Some coins visible, others missing</strong></td><td>The gap limit</td><td>Yes. Raise it and rescan.</td></tr>
-            <tr><td><strong>Software rejects your extended key</strong></td><td>Step 6 &mdash; SLIP-132 prefix</td><td>Yes. Convert the prefix; no keys change.</td></tr>
-            <tr><td><strong>Phrase was written in another language</strong></td><td>Step 3 &mdash; wordlist</td><td>Yes. Select the original wordlist.</td></tr>
+            <tr><td><strong>Wallet rejects the phrase</strong></td><td>Step 2, a word misread, misspelled or out of order</td><td>Re-read the card. The checksum has done its job and the phrase you typed is not a valid one.</td></tr>
+            <tr><td><strong>Accepted, zero balance</strong></td><td>Step 3 (passphrase), step 5 (branch), a valid but <em>different</em> phrase, or a scan that has not finished</td><td>Confirm the wallet has finished syncing first. Then try the alternative paths. Then treat the phrase and the passphrase as the remaining candidates. If you have a receiving address from this wallet, you can test a candidate <em>combination</em> against it. That tells you when you have found the right pair. It does not tell you which of the two was wrong, and it cannot hand you back one you no longer have.</td></tr>
+            <tr><td><strong>Some coins visible, others missing</strong></td><td>The gap limit, or a second account branch</td><td>Raise the gap limit and rescan before concluding anything is lost.</td></tr>
+            <tr><td><strong>Software rejects your extended key</strong></td><td>Step 6, a SLIP-132 prefix it does not accept</td><td>Convert the prefix. No keys change, and the same key in <code>xpub</code> form plus an explicit path usually works.</td></tr>
+            <tr><td><strong>Phrase was written in another language</strong></td><td>Step 3, the wordlist</td><td>Select the original wordlist. The same words index differently in each.</td></tr>
           </tbody>
         </table>
       </div>
-        <div class="sc-survival-row" role="row"><strong role="rowheader">Phrase written in another language</strong><span role="cell">3, wordlist</span><span class="is-pass" role="cell">Yes &mdash; select the language</span></div>
-      </div>
 
-      <p>Only one row in that table is genuinely unrecoverable, and it is the passphrase. Everything else is a matter of telling the software where to look. That asymmetry is the argument for treating a passphrase as a second irreplaceable secret rather than a convenience.</p>
+      ${callout("A recorded address tests candidates. It does not recover secrets.", `BIP39 has no built-in notion of a correct passphrase. Every passphrase produces a valid wallet, which is the whole point of the design and the reason a wrong one shows you an empty wallet rather than an error. So if you kept a receiving address, an xpub or a descriptor from the wallet you are trying to reach, <strong>you can test candidates against it</strong>: restore, derive, compare, discard. A one-character typo in a passphrase you still roughly remember is findable that way and is findable no other way.<br><br>Be clear about the limit, because it is the difference between a bad afternoon and a lost wallet. <strong>The address verifies a guess. It cannot produce one.</strong> If you have no idea what the passphrase was, or the card with the words on it is gone, there is nothing to test and no procedure that ends well.`)}
+
+      <p>Which is the honest summary of the whole table. Most of these symptoms are the software being pointed somewhere else, and pointing it correctly is a matter of an afternoon. But two rows are not: <strong>losing any secret the wallet actually requires, whether the words or the passphrase or both, can end recovery permanently.</strong> A checksum-valid phrase that is not yours is exactly as unrecoverable as a forgotten passphrase, and neither is a settings problem. That is the argument for treating a passphrase as a second irreplaceable secret rather than a convenience, and for treating the words as the first.</p>
 
       <h2>The short version</h2>
 
@@ -8760,7 +9030,7 @@ const guides = [
     icon: "bi-cpu",
     updated: "2026-08-18",
     status: "published",
-    related: ["double-spend-problem", "life-of-a-transaction", "bitcoin-privacy"],
+    related: ["double-spend-problem", "life-of-a-transaction", "bitcoin-privacy", "bitcoin-core-wallet"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Open your wallet and it shows a balance. Where did that number come from? Not from the bitcoin network in the abstract &mdash; networks do not answer questions. It came from a specific computer, owned by somebody, that your wallet asked. Unless you run a node, that somebody is a stranger, and their answer is what you are looking at.</p>
@@ -9440,11 +9710,18 @@ const guides = [
 
       <h2><span class="sc-article-num">3</span>The yield that made you a creditor</h2>
 
-      <p><strong>Celsius, Voyager, BlockFi &mdash; 2022.</strong> These were not hacked and, in the ordinary sense, they were not hiding anything. They told customers what they were doing.</p>
+      <p><strong>Celsius, Voyager, BlockFi, 2022.</strong> None of these was hacked. The coins left through the front door, as lending, and the customers had agreed to it.</p>
 
       <p>The offer was interest on your bitcoin. To pay interest, the platform has to do something with the coins, which means lending them out. That is not custody at all &mdash; it is a loan from you to the company. When their borrowers failed and the companies entered bankruptcy, customers discovered what they had actually been holding: <strong>an unsecured claim against an insolvent business</strong>, queued behind secured creditors.</p>
 
-      <p>Nothing was concealed. The terms said so. But "earn 8% on your bitcoin" and "make an unsecured loan to a company whose balance sheet you have never seen" describe the same arrangement, and only one of them was on the marketing.</p>
+      <p>The terms said so. But "earn 8% on your bitcoin" and "make an unsecured loan to a company whose balance sheet you have never seen" describe the same arrangement, and only one of them was on the marketing.</p>
+
+      ${cautions([
+        "<strong>Do not read this as \"they were honest and customers did not listen\".</strong> Celsius's founder, Alexander Mashinsky, pleaded guilty to commodities fraud and to manipulating the company's own CEL token, and was sentenced to twelve years in 2025. Prosecutors described him misrepresenting the platform's safety and financial condition, implying regulatory approval the company did not have, and using customer deposits to buy CEL and hold up its price, while selling his own holdings.",
+        "<strong>The disclosure and the deception are two separate facts, and both matter.</strong> The lending was in the terms; how the business was actually being run was not. A reader who concludes \"so I should read the terms more carefully\" has taken only half of it."
+      ])}
+
+      <p>Which is the harder lesson. The structural risk was real from the first day and readable in the paperwork: you are a creditor, not an owner. Everything else about how those coins were being handled was not, and no amount of careful reading would have surfaced it. <strong>Disclosure told you the shape of the risk and nothing about the size of it.</strong></p>
 
       <p>What this one demonstrates: <strong>yield is the tell.</strong> Bitcoin sitting still does not generate a return. If a platform pays you to hold it there, your coins are not sitting still, and you are being paid for taking a risk that has not been named.</p>
 
@@ -9479,13 +9756,13 @@ const guides = [
           <tbody>
             <tr><td><strong>Mt. Gox</strong></td><td>Losses accumulating unnoticed over years</td><td>No &mdash; not even internally</td></tr>
             <tr><td><strong>QuadrigaCX</strong></td><td>Fraud, presented as key-person risk</td><td>No &mdash; it was registered and operating</td></tr>
-            <tr><td><strong>Celsius and others</strong></td><td>Customer coins lent out; customers became creditors</td><td><em>Yes</em> &mdash; it was in the terms</td></tr>
+            <tr><td><strong>Celsius and others</strong></td><td>Customer coins lent out; customers became creditors. At Celsius, also fraud: a guilty plea and a twelve-year sentence</td><td><em>Partly</em>. The lending was in the terms, the rest was not</td></tr>
             <tr><td><strong>FTX</strong></td><td>Deposits spent as company money</td><td>No &mdash; every external signal was positive</td></tr>
           </tbody>
         </table>
       </div>
 
-      <p>Note the third row, which is the uncomfortable one. That failure <em>was</em> disclosed, in writing, to everyone. It still took people by surprise, because reading a terms-of-service document is not the same as believing it.</p>
+      <p>Note the third row, which is the uncomfortable one in both directions. The arrangement <em>was</em> disclosed, in writing, to everyone, and still took people by surprise, because reading a terms-of-service document is not the same as believing it. And the disclosure covered the structure only. What was being done with the money underneath it came out in a courtroom.</p>
 
       ${pullQuote("In all four, the customer's bitcoin was a number in a company's database and a liability on its balance sheet. What differed was only how they found out.")}
 
@@ -9504,12 +9781,12 @@ const guides = [
 
       <h2>The short version</h2>
 
-      <p>Mt. Gox bled coins for years without anyone noticing. Quadriga was a fraud wearing the costume of a tragedy. Celsius and its peers told customers the truth and were misunderstood anyway. FTX simply spent the deposits. Different mechanisms, different warning signs, and one structure in common: the bitcoin belonged to the company and the customer held a promise.</p>
+      <p>Mt. Gox bled coins for years without anyone noticing. Quadriga was a fraud wearing the costume of a tragedy. Celsius disclosed the lending, concealed the rest, and its founder is serving twelve years. FTX simply spent the deposits. Different mechanisms, different warning signs, and one structure in common: the bitcoin belonged to the company and the customer held a promise.</p>
 
       ${callout("If you take one thing from this page", `Every customer in every case above believed their balance was their bitcoin. The number on the screen was accurate right up until the moment it was not, and there was no way to check from outside. <a href="owning-your-bitcoin.html">Holding your own keys</a> replaces that promise with something you can verify yourself &mdash; which is the entire trade, and the reason it is worth the work.`)}
 
       <p class="sc-source-note">
-        Figures here are the widely reported ones and are deliberately approximate; bankruptcy claims, recovered amounts and final accounting have moved for several of these cases and in some are still moving. The mechanisms are the durable part and are what this page is for. For the Canadian case, the Ontario Securities Commission's own published investigation is the primary account.
+        Figures here are the widely reported ones and are deliberately approximate; bankruptcy claims, recovered amounts and final accounting have moved for several of these cases and in some are still moving. The mechanisms are the durable part and are what this page is for. For the Canadian case, the Ontario Securities Commission's own published investigation is the primary account; for Celsius, the guilty plea and the twelve-year sentence handed down in May 2025 are a matter of public record in the Southern District of New York.
       </p>`
   },
   {
@@ -9530,7 +9807,7 @@ const guides = [
     body: `
       <p class="sc-guide-intro">The phrase "secure element" appears in eight guides on this site. It justifies why a COLDCARD wipes itself after thirteen wrong PINs, why <a href="jade-setup.html">Jade is built differently</a>, why <a href="seedsigner-setup.html">SeedSigner deliberately stores nothing</a>, and why Ledger's closed firmware is a live argument. It is doing an enormous amount of work in those sentences, and none of them says what it is.</p>
 
-      <p>This page is that missing definition, and the honest account of what it buys. The short version, if you read nothing else: a secure element raises the price of stealing your seed from someone holding your device. It does not set that price to infinity, and the two things that genuinely do are not chips at all.</p>
+      <p>This page is that missing definition, and the honest account of what it buys. The short version, if you read nothing else: a secure element raises the price of stealing your seed from someone holding your device. It does not set that price to infinity, and neither does anything else on this page. The two measures that raise it furthest are not chips at all, and both come with conditions worth knowing before you rely on them.</p>
 
       <h2><span class="sc-article-num">1</span>Where the seed actually sits</h2>
 
@@ -9542,14 +9819,16 @@ const guides = [
         <table class="table sc-table">
           <thead><tr><th>Approach</th><th>Where the secret rests</th><th>Devices here</th></tr></thead>
           <tbody>
-            <tr><td><strong>Secure element</strong></td><td>Inside a chip built to resist being read</td><td>COLDCARD, Trezor Safe, BitBox02, Passport, Ledger, TAPSIGNER</td></tr>
-            <tr><td><strong>Nothing stored</strong></td><td>Nowhere. The seed is entered per session and lost on power-off</td><td>SeedSigner, Krux</td></tr>
+            <tr><td><strong>Guarded by a secure element</strong></td><td>In storage a dedicated chip controls access to. <strong>Which storage varies by device</strong>, as set out below</td><td>COLDCARD, Trezor Safe, BitBox02, Passport, Ledger, TAPSIGNER</td></tr>
+            <tr><td><strong>Nothing stored by default</strong></td><td>Nowhere, unless you turn storage on. The seed is entered per session and lost on power-off</td><td>SeedSigner, Krux</td></tr>
             <tr><td><strong>Virtual secure element</strong></td><td>Encrypted on the device, with part of the key held off it</td><td>Jade</td></tr>
           </tbody>
         </table>
       </div>
 
       <p>Those are three different answers to the same question, not three quality tiers, and the rest of this page is about what each one actually costs.</p>
+
+      ${callout("\"Has a secure element\" does not say where the seed is", `Two separate questions get collapsed into one, and the marketing does not help. <strong>What the chip protects</strong> and <strong>where the key material physically sits</strong> are different. Some devices keep the key inside the secure element and perform signing there. Others keep it encrypted in the main processor's flash, with the secure element holding the secret that decrypts it and refusing to release that secret without the right PIN. Trezor documents the Safe line working exactly this way. Both are real designs and both are defensible; they simply fail differently, so a page that flattens them is not describing either. Check your own device's documentation rather than inferring from the phrase.`)}
 
       ${figureSlot({
         shot: "A hardware wallet's bare circuit board on a workbench, lifted out of its case, shot close and slightly overhead with hard side light. The small secure element in sharp focus, the larger microcontroller behind it falling out of focus.",
@@ -9564,7 +9843,7 @@ const guides = [
 
       ${checklist([
         "<strong>It resists physical reading.</strong> Shielding, sensors that detect the device being opened or run outside normal voltage and temperature, and layouts designed so that grinding the chip down destroys what you were trying to read. Historically this has come with a catch &mdash; the design is behind an NDA, so you are trusting a certification rather than reading anything. That is beginning to change.",
-        "<strong>Secrets do not leave it.</strong> The chip performs operations internally and returns results. The key is used inside and never handed to the main processor, so reading the rest of the device does not reveal it.",
+        "<strong>It can keep a secret to itself.</strong> The chip performs operations internally and returns results rather than handing over what it holds. <em>What</em> it holds is the design decision: in some devices that is the signing key itself, used inside and never given to the main processor. In others it is the secret that decrypts a key stored elsewhere on the device. That still means an attacker reading the main flash gets ciphertext, but the seed is not living inside the chip.",
         "<strong>It counts your failures itself.</strong> This is the property that matters most, and the one most people miss."
       ])}
 
@@ -9578,24 +9857,33 @@ const guides = [
 
       <p>This is not theoretical, and the best-documented case involves a widely-owned device.</p>
 
-      <p>Trezor's earlier models, the One and the Model T, had no secure element. The seed lived encrypted in the flash of a general-purpose microcontroller, and the attempt counter lived there too. In 2020 Kraken Security Labs showed that this could be defeated with roughly fifteen minutes of physical access: desolder the microcontroller, and interfere with its supply voltage at a precisely timed moment during boot &mdash; a technique called voltage glitching &mdash; to get the encrypted seed out without knowing the PIN.</p>
+      <p>Trezor's earlier models, the One and the Model T, had no secure element. The seed lived encrypted in the flash of a general-purpose microcontroller, and the attempt counter lived there too. In 2020 Kraken Security Labs showed that this could be defeated with roughly fifteen minutes of physical access: desolder the microcontroller, and interfere with its supply voltage at a precisely timed moment during boot, a technique called voltage glitching, to dump the encrypted seed without knowing the PIN.</p>
+
+      <p><strong>That dump was not the end of the attack, and the second half is the part worth understanding.</strong> The extracted storage was still encrypted under a key derived from the PIN. Kraken then guessed the PIN <em>offline</em>, against the dump, on their own hardware, and reported that a four-digit PIN fell in under two minutes even at a deliberately unoptimised guessing rate.</p>
 
       <p>The original work needed skill and several hundred dollars of equipment. Kraken's own estimate was that a purpose-built consumer version of the tool could be produced for around seventy-five dollars.</p>
 
       <p>Two things about that are worth sitting with.</p>
 
       ${checklist([
-        "<strong>The PIN was not broken.</strong> Nobody guessed it. The attack went around it, because the thing enforcing it was ordinary memory on a chip that was never built to resist this.",
-        "<strong>The fix was already available to users.</strong> Trezor's response noted that the attack does not work against a wallet using a BIP39 passphrase &mdash; because the passphrase is not stored on the device at all, so there is nothing on the chip to extract."
+        "<strong>The PIN was broken, but not on the device.</strong> This is the distinction the whole page turns on. The counter was never defeated. It was made irrelevant, because once the encrypted storage is on an attacker's bench there is nothing left to count wrong attempts or wipe anything. A four-digit PIN is only ever protected by the thing enforcing it, and copying the data away removes that thing.",
+        "<strong>The fix was already available to users.</strong> Trezor's response noted that the attack does not work against a wallet using a BIP39 passphrase. On these devices the passphrase was not written to the chip, so the dump did not contain it.",
+        "<strong>It applied to the models researched, in the configurations researched.</strong> The Trezor One and Model T, with their particular STM32 microcontrollers. It is an illustration of what happens without an attempt counter you cannot walk away from, not a live claim about hardware sold today."
       ])}
 
       <p>The later Trezor Safe line added a secure element, which is precisely the gap this closed. But the lesson generalises past one manufacturer: <strong>a device's resistance to someone holding it is a property of its hardware, and it is not something firmware can add later.</strong></p>
 
       <h2><span class="sc-article-num">4</span>The stateless answer</h2>
 
-      <p>SeedSigner and Krux answer the question by refusing it. They store no seed at all. You enter your words at the start of a session, the device holds them in volatile memory while it signs, and cutting the power erases them completely.</p>
+      <p>SeedSigner and Krux answer the question by refusing it. Out of the box they store no seed at all: you enter your words at the start of a session, the device holds them in volatile memory while it signs, and cutting the power erases them completely.</p>
 
       <p>A device with nothing on it cannot have anything extracted from it. That is a genuinely strong property, and it is why a SeedSigner can be left in a drawer, or disassembled, with no more concern than any other Raspberry Pi.</p>
+
+      ${cautions([
+        "<strong>Krux is stateless by default, not by construction.</strong> Its own documentation describes storing an encrypted mnemonic in the device's internal memory or on an SD card, and loading it back by entering the key used to encrypt it. A Krux configured that way has something on it, and the protection is the encryption rather than the absence.",
+        "<strong>So \"nothing to extract\" is a claim about how you are running it.</strong> If you have used the stored-mnemonic feature, the device and any SD card left with it are sensitive objects: on loss, on disposal, and in a drawer. Treat them the way you would treat a written backup with a password on it.",
+        "<strong>An inserted SD card counts.</strong> A stateless device with a mnemonic backup card still in the slot is not a stateless device while that card is in it."
+      ])}
 
       <p>It moves the problem rather than removing it. The seed still exists &mdash; on whatever you wrote it on, and in your hands every time you type it in. A stateless device converts "protect the hardware" into "protect the backup, and protect every session", which is a fair trade for some people and a worse one for others. It is the reason those guides spend so long on where you are standing when you enter the words.</p>
 
@@ -9609,9 +9897,10 @@ const guides = [
           <tbody>
             <tr><td><strong>Device with a secure element, PIN unknown</strong></td><td>Expensive and uncertain. Their practical route is to make you tell them the PIN.</td></tr>
             <tr><td><strong>Device without one, PIN unknown</strong></td><td>Demonstrated to be feasible with modest equipment and a short window.</td></tr>
-            <tr><td><strong>Device plus your PIN</strong></td><td>Everything. The chip is doing what it was told by someone who authenticated.</td></tr>
-            <tr><td><strong>Stateless device, powered off</strong></td><td>Nothing. There is nothing on it.</td></tr>
-            <tr><td><strong>Your written backup</strong></td><td>Everything, unless a passphrase exists. The device was never the protection.</td></tr>
+            <tr><td><strong>Device plus your PIN</strong></td><td>Everything that PIN unlocks. The chip is doing what it was told by someone who authenticated, and on a device that stores passphrases against a PIN, that includes the wallet behind it.</td></tr>
+            <tr><td><strong>Stateless device, powered off, nothing saved</strong></td><td>Nothing. There is nothing on it.</td></tr>
+            <tr><td><strong>Stateless device with a stored encrypted mnemonic</strong></td><td>Whatever the encryption holds off. This is a password problem now, not an empty-device one.</td></tr>
+            <tr><td><strong>Your written backup</strong></td><td>Everything, unless a passphrase they cannot guess is also required. The device was never the protection.</td></tr>
           </tbody>
         </table>
       </div>
@@ -9622,9 +9911,15 @@ const guides = [
 
       <p>Everything above is about raising a price. These two change the shape of the problem, because neither can be extracted from hardware someone is holding.</p>
 
-      <h3>A passphrase</h3>
+      <h3>A passphrase the device does not retain</h3>
 
-      <p>A BIP39 passphrase is never stored on the device. It is mixed into the key derivation itself &mdash; the words and the passphrase together produce the seed &mdash; which means there is nothing on the chip for a physical attack to recover. This is exactly why Trezor's answer to the glitching attack was to point at the passphrase feature. It is also why the wallet-compatibility trackers mark devices as physically unsafe with a full secret <em>specifically when no passphrase or multisig is in use</em> &mdash; that qualifier is the whole finding.</p>
+      <p>A BIP39 passphrase is not part of the seed sitting in storage. It is mixed into the key derivation itself, so that the words and the passphrase together produce the seed. A passphrase you type in each time is therefore not on the chip for a physical attack to recover. This is exactly why Trezor's answer to the glitching attack was to point at the passphrase feature, and why the wallet-compatibility trackers qualify their physical-extraction findings with <em>when no passphrase or multisig is in use</em>.</p>
+
+      ${cautions([
+        "<strong>Some devices will store it for you, and then it is on the device.</strong> Ledger's OS documents attaching a passphrase to a second PIN, so that unlocking with that PIN activates that wallet. That is a convenience feature and a real one, but a passphrase stored this way is no longer a secret held outside the hardware, and anyone who obtains that PIN reaches that wallet. If the passphrase is doing the work described in this section, it has to be one you enter rather than one the device remembers.",
+        "<strong>A weak passphrase is guessable once the seed is out.</strong> The protection is not the mechanism, it is the search space. After a successful extraction an attacker holds the words and can try passphrases offline, as fast as their hardware allows, with no device counting anything. A short or memorable passphrase does not survive that; a long, high-entropy one is what the argument in this section actually depends on.",
+        "<strong>A device in use is handling derived keys regardless.</strong> A passphrase protects the secret at rest. It is not a claim about a powered-on, unlocked signer, which necessarily has signing material in memory while it works."
+      ])}
 
       <p>The cost is real and it is covered properly in <a href="passphrase-setup.html">the passphrase guide</a>: it is a second irreplaceable secret, and forgetting it loses the wallet as thoroughly as losing the words.</p>
 
@@ -9637,18 +9932,18 @@ const guides = [
       ${checklist([
         "<strong>Treat a lost or stolen device as urgent, not annoying.</strong> A secure element buys you time to move funds. It does not make the device safe to write off.",
         "<strong>Match the chip to the threat you actually have.</strong> If your realistic concern is fire, flood and your own filing, secure elements are close to irrelevant and your backup is everything.",
-        "<strong>Add a passphrase before you conclude your hardware is the weak point.</strong> It costs nothing, it is the documented answer to physical extraction, and it is a decision you make once.",
+        "<strong>Consider a passphrase before you conclude your hardware is the weak point.</strong> Use one you enter rather than one the device stores, long enough to survive offline guessing. It is the documented answer to physical extraction. It is not free: it is a second irreplaceable secret, and <a href='passphrase-setup.html'>the passphrase guide</a> exists because losing it loses the wallet.",
         "<strong>Do not let the chip choice decide the product.</strong> A closed secure element and a fully open device with no secure element are two coherent positions, and the manufacturers taking each one are explicit about it. A third has recently appeared &mdash; an auditable secure element, published rather than certified-and-sealed &mdash; which is worth watching without yet being a reason to replace anything."
       ])}
 
       <h2>The short version</h2>
 
-      <p>A secure element is a chip built to hold secrets and count failed attempts somewhere an attacker cannot simply reset. Devices that lacked one have had their seeds pulled out with a soldering iron and a well-timed voltage drop. Devices that store nothing cannot be read at all, and move the problem to your backup and your hands. But every one of those is a price, not a wall &mdash; and the two things that actually survive somebody holding your hardware are a passphrase that was never on it and a second key that is somewhere else.</p>
+      <p>A secure element is a chip built to hold secrets and count failed attempts somewhere an attacker cannot simply reset. Devices that lacked one have had their storage pulled out with a soldering iron and a well-timed voltage drop, after which the PIN was guessed offline in minutes. Devices that store nothing cannot be read at all, and move the problem to your backup and your hands. Every one of those is a price rather than a wall. The two measures that raise it furthest are a passphrase the device does not retain and a second key somewhere else, and each holds only under conditions this page has tried to state rather than assume.</p>
 
-      ${callout("If you take one thing from this page", `The PIN is not what is protecting your bitcoin, and neither, ultimately, is the chip. They buy time against a physical attacker. A passphrase and multisig are the only things on this page that keep working after someone already has your device in their hands.`)}
+      ${callout("If you take one thing from this page", `The PIN is not what is protecting your bitcoin, and neither, ultimately, is the chip. They buy time against a physical attacker. What keeps working after someone already holds your device is a secret it does not retain, meaning a passphrase you type in each session rather than one it stores, strong enough that guessing it offline is not worth doing. A second key they would also have to go and find does the same job.`)}
 
       <p class="sc-source-note">
-        The extraction technique described here is documented public research from 2020 against hardware that has since been superseded, and it is included because it is the clearest illustration of what the attempt counter is for &mdash; not as a live claim about any current product. Chip choices, firmware and model lineups change; confirm what your own device uses against the manufacturer's documentation, and treat this page as the reasoning rather than the specification.
+        The extraction technique described here is documented public research from 2020 against hardware that has since been superseded, including its offline PIN-guessing step, and it is included because it is the clearest illustration of what the attempt counter is for, not as a live claim about any current product. The Trezor Safe architecture described above, Ledger's passphrase-to-PIN option and Krux's stored-mnemonic feature are each taken from that project's own current documentation. Chip choices, firmware and model lineups change; confirm what your own device uses against the manufacturer's documentation, and treat this page as the reasoning rather than the specification.
       </p>`
   },
   {
