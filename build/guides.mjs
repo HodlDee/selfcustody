@@ -1039,7 +1039,7 @@ const guides = [
     icon: "bi-currency-bitcoin",
     updated: "2026-08-17",
     status: "published",
-    related: ["quickstart", "what-not-to-normalize", "recovery-test-drill", "how-custody-fails", "evaluating-a-monetary-asset"],
+    related: ["quickstart", "what-not-to-normalize", "recovery-test-drill", "how-custody-fails", "custody-journey", "evaluating-a-monetary-asset"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">"Be your own bank" is a good slogan and a bad description. It gets the freedom right and leaves out the job description &mdash; because a bank is not just a place that holds money. It is a large organisation performing a dozen unglamorous tasks on your behalf, most of which you have never had to think about.</p>
@@ -1145,7 +1145,7 @@ const guides = [
     icon: "bi-signpost-split",
     updated: "2026-08-25",
     status: "published",
-    related: ["what-not-to-normalize", "choosing-your-first-setup", "recovery-test-drill", "bitcoin-core-wallet"],
+    related: ["what-not-to-normalize", "choosing-your-first-setup", "recovery-test-drill", "custody-journey", "bitcoin-core-wallet"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Self custody means one specific thing: the secret that authorises spending your bitcoin exists only where you put it. No company holds a copy &mdash; which is why no company can freeze it, lose it in a bankruptcy, or hand it over on request, and why nobody can help you if you destroy it. Both halves of that sentence are the job.</p>
@@ -1772,7 +1772,7 @@ const guides = [
     icon: "bi-signpost-split",
     updated: "2026-08-17",
     status: "published",
-    related: ["quickstart", "owning-your-bitcoin", "keys-addresses-utxos"],
+    related: ["quickstart", "owning-your-bitcoin", "keys-addresses-utxos", "custody-journey"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">There is no one-size-fits-all bitcoin wallet, and the search for one is where a lot of people stall &mdash; comparing devices for weeks while their bitcoin sits on an exchange, which is the one option they had already decided against.</p>
@@ -1880,7 +1880,7 @@ const guides = [
 
       <h2><span class="sc-article-num">5</span>Plan to outgrow it</h2>
 
-      <p>Your first setup is not a permanent commitment, and treating it as one is why people stall. Because every wallet is restorable from its recovery words, moving between setups later is a normal, expected operation rather than a migration crisis.</p>
+      <p>Your first setup is not a permanent commitment, and treating it as one is why people stall. <a href='custody-journey.html'>Self-custody is a journey</a> takes that further, covering where you are allowed to start and how to tell you are ready to move. Because every wallet is restorable from its recovery words, moving between setups later is a normal, expected operation rather than a migration crisis.</p>
 
       <p>A reasonable arc, spread over years rather than weeks:</p>
 
@@ -2462,6 +2462,118 @@ const guides = [
       <p class="sc-source-note">
         Commands and filenames follow the projects' own published instructions and change between releases; substitute the version you downloaded and prefer the vendor's current page over this one. The multi-signer description reflects Bitcoin Core's documented release process, where checksums are signed by a number of independent builders.
       </p>`
+  },
+
+  {
+    slug: "custody-journey",
+    category: "fundamentals",
+    products: [],
+    title: "Self-custody is a journey, not a test you pass",
+    summary: "Buying an ETF or leaving your first purchase on an exchange is a reasonable place to start, and being told otherwise is why people stall for years. Here is the road out, why it takes time, and how to tell you are ready for the next step rather than guessing.",
+    level: "beginner",
+    minutes: 16,
+    effort: "read",
+    goals: ["learn"],
+    tags: ["Mindset", "Start here"],
+    icon: "bi-rulers",
+    updated: "2026-09-07",
+    status: "published",
+    related: ["choosing-your-first-setup", "quickstart", "how-custody-fails", "evaluating-a-monetary-asset"],
+    layout: "article",
+    body: `
+      <p class="sc-guide-intro">Nobody drives onto a motorway on their first lesson. They start in an empty car park, at ten miles an hour, with someone sensible in the passenger seat, and nobody thinks less of them for it. Bitcoin custody works the same way, and the culture around it frequently forgets that.</p>
+
+      <p>This page is about the road rather than the destination: where it is reasonable to start, what each step actually buys, why it takes longer than people expect, and how to tell you are ready to move rather than guessing.</p>
+
+      <h2><span class="sc-article-num">1</span>Wherever you are is a place to start from</h2>
+
+      <p>If you bought a spot ETF, or your first purchase is sitting on an exchange, you have not failed at anything. You made a decision with the understanding you had, which is the only kind of decision anyone makes. This page is the road out of that position for anyone who wants one.</p>
+
+      <p>It is also worth saying plainly what this page is not doing. <strong>Whether to own bitcoin at all is not a question this site answers for you.</strong> Deciding it is not for you, or that now is not the time, is a complete and respectable answer, and nothing here is an argument that you are behind. What follows is about custody: how to move between arrangements without hurting yourself, for people who have coins or have decided to get some.</p>
+
+      ${pullQuote("Staying where you started, by default, for years, because nobody told you the next step was allowed to be small. That is the thing this page exists to prevent.")}
+
+      <p>There is a good first step that involves buying nothing at all, and it answers the question people are usually stuck on, which is whether they can actually do this, without asking them to decide anything about money.</p>
+
+      ${checklist([
+        "<strong>Set up a wallet and put nothing in it.</strong> Software is free; a hardware device is not, but neither needs funding to be set up.",
+        "<strong>Write down the backup</strong> the way you would if it mattered, because the point is practising the thing you will do for real.",
+        "<strong>Write down the first receiving address too.</strong> It is the check that makes the next step mean something.",
+        "<strong>Wipe the wallet and restore it from the backup alone.</strong> No shortcuts, no copy of the words on a screen.",
+        "<strong>Compare the first receiving address to the one you wrote down.</strong> If they match, your backup works and you know how to use it. If they do not, you have learned that for free rather than later."
+      ])}
+
+      <p>Every step there costs nothing and risks nothing, because there is nothing in the wallet to lose. <a href="recovery-test-drill.html">The recovery drill</a> is the same exercise in more detail, and it is worth doing before there is ever a balance rather than after.</p>
+
+      <p>Sending an actual payment is the one thing this exercise cannot cover, since it needs coins to send. If and when you have some, <a href="test-transaction.html">the test-transaction guide</a> is the next rehearsal. That one does involve real money and a real fee, however small, so it belongs after the backup you have already proven.</p>
+
+      <p>This site is unambiguous that platform balances carry risks you cannot inspect, and <a href="how-custody-fails.html">four ways a platform loses your bitcoin</a> is the evidence. <a href="evaluating-a-monetary-asset.html">The eight questions</a> are the same instinct pointed at the asset rather than the custodian. Both things are true at once. The right response to that risk is a route out, not shame about being on it.</p>
+
+      <h2><span class="sc-article-num">2</span>The road, honestly</h2>
+
+      <p>These are rungs rather than grades. Each one gives up something and gains something, and stopping at any of them can be the correct answer for a given person and amount.</p>
+
+      <div class="sc-table-wrap">
+        <table class="table sc-table">
+          <thead><tr><th>Where you are</th><th>What you actually hold</th><th>What it costs you</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Spot ETF or fund</strong></td><td>A security that tracks the price. <strong>Not bitcoin</strong>, and never any keys.</td><td>Cannot be withdrawn, spent or self-custodied. Market hours. Fees forever.</td></tr>
+            <tr><td><strong>Custodial exchange</strong></td><td>A claim on a company that says it owes you bitcoin.</td><td>Their solvency, their policies, their jurisdiction. Withdrawable, which is the important difference from the row above.</td></tr>
+            <tr><td><strong>Direct-to-wallet broker</strong></td><td>Bitcoin, settled to an address you control.</td><td>Nothing structural, though the address you configured is now load-bearing.</td></tr>
+            <tr><td><strong>Phone wallet</strong></td><td>Bitcoin, keys on a connected device.</td><td>Malware reaches keys on the same device. Fine for amounts you would be annoyed rather than devastated to lose.</td></tr>
+            <tr><td><strong>Hardware wallet</strong></td><td>Bitcoin, keys off any networked machine.</td><td>A backup you must keep for decades, and a device to verify on. <strong>The right answer for most people, for years.</strong></td></tr>
+            <tr><td><strong>Multisig</strong></td><td>Bitcoin, needing several keys to move.</td><td>Three backups, a wallet configuration no seed contains, and considerably more ways to lock yourself out.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The jump worth naming is the first one. An ETF gives you price exposure and nothing else. There is no withdrawal, ever, because there is nothing to withdraw. Everything below it is bitcoin you can eventually hold. If the plan is self-custody, the fund is a waiting room rather than a first rung.</p>
+
+      <h2><span class="sc-article-num">3</span>Why it takes time, and should</h2>
+
+      <p>The reason to move slowly is not that the steps are difficult. Most are an afternoon. It is that <strong>each one has to become boring before the next one is safe.</strong></p>
+
+      ${checklist([
+        "<strong>You need repetitions, not comprehension.</strong> Reading about a test transaction teaches you nothing about the small panic when it has not arrived after ten minutes. Doing it three times teaches you that this is normal.",
+        "<strong>Mistakes should be cheap when you make them</strong>, and you will make them at every rung. The amount should stay small enough that a mistake is a lesson rather than a loss.",
+        "<strong>Complexity you cannot operate is a risk of its own.</strong> A multisig you set up in one enthusiastic evening and never rehearsed is more dangerous than the phone wallet it replaced.",
+        "<strong>Your life has to fit around it.</strong> Where a backup lives, who else knows, what happens if you are not here: those are not technical questions and they do not resolve in an afternoon."
+      ])}
+
+      <p>Back in the car park, this is the difference between knowing the pedals and having driven in rain. Both matter, and only one can be read about.</p>
+
+      <h2><span class="sc-article-num">4</span>How to know you are ready for the next rung</h2>
+
+      <p>Readiness is a thing you can check rather than feel. Before moving up, each of these should be true, and if one is not, that is the actual next step.</p>
+
+      ${checklist([
+        "<strong>You have restored from your backup at least once.</strong> Not read about it. Done it, on purpose, and watched the same wallet appear. Nothing below this line counts until this is true.",
+        "<strong>You have sent and received deliberately</strong>, including a payment that went out and came back, and you know what the fee did.",
+        "<strong>You can say where your keys are and what would have to happen to lose them.</strong> If that sentence is vague, the setup is more complex than your understanding of it.",
+        "<strong>The current arrangement has stopped being interesting.</strong> Boredom is the signal. Novelty means you are still learning the rung you are on."
+      ])}
+
+      ${callout("The step nobody should postpone", `Everything on this page can wait except one thing. <a href="recovery-test-drill.html">Testing your recovery</a> is what turns a backup from an intention into a fact, and it is cheapest to do on the day the wallet is empty. Every rung above assumes you have done it; none of them is safe if you have not.`)}
+
+      <h2><span class="sc-article-num">5</span>Where the road should stop</h2>
+
+      <p>Not everyone is going to multisig, and the assumption that everyone should is where this framing usually goes wrong.</p>
+
+      <p>A hardware wallet with a tested backup, stored somewhere sensible, with a note for whoever comes after you, is a complete and correct answer for most people holding most amounts. It is not a waypoint on the way to something better. Multisig earns its place when a single backup being found or destroyed would be genuinely catastrophic, and it charges for that in complexity you have to keep paying.</p>
+
+      ${checklist([
+        "<strong>Multi-vendor multisig</strong> is worth the extra difficulty for one specific reason: it is the only common arrangement that survives a dishonest or compromised manufacturer, because no single firmware can sign alone. <a href=\"supply-chain-and-vendor-risk.html\">The vendor-risk guide</a> makes that case properly.",
+        "<strong>Same-vendor multisig</strong> still removes the single point of failure for loss and theft, at a lower learning cost. That is a reasonable trade rather than a compromise.",
+        "<strong>Neither</strong> is right if you could not rehearse a recovery with two of three keys today. The complexity is only protective if you can actually operate it."
+      ])}
+
+      <p><a href="choosing-your-first-setup.html">Choosing your first setup</a> is the companion to this page: it asks what shape fits the amount you actually hold, where this one asks how to move between shapes without hurting yourself.</p>
+
+      <h2>The short version</h2>
+
+      <p>Start where you are. An ETF is price exposure rather than bitcoin, and an exchange balance is a claim rather than a coin, but neither is a moral failure. Move one rung at a time, keep the amount small enough that mistakes stay cheap, and treat boredom as the signal to move rather than confidence. Test your recovery before anything else, and stop at a hardware wallet unless you have a specific reason not to.</p>
+
+      ${callout("If you take one thing from this page", `You do not have to arrive anywhere by a particular date, and nobody is marking this. The only rung that genuinely matters is the one where you stop holding a claim and start holding a key. Everything after that is refinement, and it can take as long as it takes.`)}`
   },
 
   /* ------------------------------------------------------------------ devices */
@@ -5829,7 +5941,7 @@ const guides = [
     updated: "2026-08-17",
     productGuide: true,
     status: "published",
-    related: ["quickstart", "sparrow-first-wallet", "what-not-to-normalize", "how-custody-fails"],
+    related: ["quickstart", "sparrow-first-wallet", "what-not-to-normalize", "how-custody-fails", "custody-journey"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">Until you withdraw, you do not own bitcoin. You own an entry in a company's database saying they owe you some. The two behave identically right up until the moment they do not &mdash; and by then the withdrawal is no longer available.</p>
@@ -9676,7 +9788,7 @@ const guides = [
     icon: "bi-building-lock",
     updated: "2026-09-06",
     status: "published",
-    related: ["owning-your-bitcoin", "exchange-account-security", "exchange-withdrawal", "evaluating-a-monetary-asset"],
+    related: ["owning-your-bitcoin", "exchange-account-security", "exchange-withdrawal", "custody-journey", "evaluating-a-monetary-asset"],
     layout: "article",
     body: `
       <p class="sc-guide-intro"><a href="owning-your-bitcoin.html">The responsibilities that transfer</a> makes an argument: leaving bitcoin with a company means your access depends on things you cannot audit. That is easy to nod along to and hard to feel. This page is the evidence &mdash; four collapses, each of which failed in a genuinely different way.</p>
@@ -9960,7 +10072,7 @@ const guides = [
     icon: "bi-signpost-split",
     updated: "2026-09-07",
     status: "published",
-    related: ["what-is-money", "how-custody-fails", "who-decides-the-rules"],
+    related: ["what-is-money", "how-custody-fails", "who-decides-the-rules", "custody-journey"],
     layout: "article",
     body: `
       <p class="sc-guide-intro">"Crypto" covers thousands of assets whose governance, issuance and failure modes have almost nothing in common. That makes it useless as a description, and it is why comparisons that begin "crypto is…" tend to be arguments rather than analysis.</p>
@@ -10057,7 +10169,7 @@ const guides = [
         "<strong>Nothing about intent.</strong> Some projects with weak structural answers are honest experiments. The questions describe dependencies, not motives."
       ])}
 
-      <p>That fourth point is where most losses actually happen. <a href="how-custody-fails.html">Four ways a platform loses your bitcoin</a> walks through four collapses with four different mechanisms, and the thing they had in common was that the customer held a claim rather than a coin. <strong>Holding bitcoin at a custodian means holding that custodian's risks, whatever the protocol underneath does.</strong></p>
+      <p>That fourth point is where most losses actually happen, and <a href="custody-journey.html">the route out of a platform balance</a> is a page of its own. <a href="how-custody-fails.html">Four ways a platform loses your bitcoin</a> walks through four collapses with four different mechanisms, and the thing they had in common was that the customer held a claim rather than a coin. <strong>Holding bitcoin at a custodian means holding that custodian's risks, whatever the protocol underneath does.</strong></p>
 
       <h2><span class="sc-article-num">6</span>Using it</h2>
 

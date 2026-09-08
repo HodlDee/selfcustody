@@ -105,6 +105,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://selfcustody.ca/guides/custody-journey.html</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://selfcustody.ca/guides/coldcard-setup.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>monthly</changefreq>
