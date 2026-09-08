@@ -1,3 +1,38 @@
+# Line endings, and why this file leads with them.
+#
+# The build is byte-reproducible and its output is committed: CI rebuilds the
+# site and fails if anything under docs/ differs from what is in the tree. That
+# guarantee is only as good as the bytes git hands the build. On a checkout
+# configured with core.autocrlf=true, git would translate every text file here
+# on the way out, and the build would then be reading and writing different
+# bytes from the ones committed -- while every local build on an LF machine
+# stayed clean, which is exactly the kind of failure nobody finds.
+#
+# One concrete consequence, found in review: ASSET_VERSION in build/render.mjs
+# hashes four CSS and JS files to derive the ?v= query on every page. A CRLF
+# checkout of the same commit produced a different digest, and 72 generated
+# HTML files differed on nothing but that query string.
+#
+# So every text file the build reads or writes is pinned. This includes the
+# build sources themselves: guides.mjs and glossary.mjs hold HTML inside
+# template literals, so a CR in one of those files is a CR in the published
+# page.
+#
+# ORDER MATTERS BELOW. The last matching pattern wins, so these broad rules
+# come first and the deliberate exceptions after them. Moving the entropy
+# artifact's -text lines above these would silently re-enable translation on
+# the one file whose exact bytes are published as a checksum.
+*.css    text eol=lf
+*.js     text eol=lf
+*.mjs    text eol=lf
+*.html   text eol=lf
+*.json   text eol=lf
+*.svg    text eol=lf
+*.xml    text eol=lf
+*.txt    text eol=lf
+*.yml    text eol=lf
+*.mts    text eol=lf
+
 # The Entropy Workshop's downloadable artifact and its checksum.
 #
 # -text means git stores and checks out these bytes exactly, with no
@@ -6,8 +41,14 @@
 # describes specific bytes, and letting git rewrite them on commit or checkout
 # made the published checksum describe a file nobody could obtain. Someone
 # following the verify instructions got a mismatch and was right to stop.
-docs/entropy-offline.html       -text
-docs/entropy-offline.html.sha256 -text
+#
+# !eol unspecifies the eol attribute the *.html rule above would otherwise
+# leave set. -text alone is already authoritative -- git performs no
+# conversion when text is unset, whatever eol says -- but leaving a stale
+# "eol: lf" showing in `git check-attr` output invites someone to remove the
+# -text later and assume the file is still protected.
+docs/entropy-offline.html        -text !eol
+docs/entropy-offline.html.sha256 -text !eol
 *.sh text eol=lf
 
 # Markdown is written on Windows and Linux both, and nothing in the build
