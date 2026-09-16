@@ -1,0 +1,22 @@
+/* Hit areas follow the same source coordinates as the approved artwork. */
+.rocket-launch-link{position:absolute;left:60.3%;top:49%;width:16%;height:40.5%;display:block;pointer-events:auto;border-radius:48% 48% 15% 15%;cursor:pointer;text-decoration:none;outline:none;-webkit-tap-highlight-color:transparent}
+.rocket-launch-link span{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translate(-50%,5px);padding:8px 14px;border:1px solid #e7b37170;border-radius:24px;background:#091420ed;color:#fff0d8;font:600 14px/1.2 system-ui,sans-serif;white-space:nowrap;opacity:0;transition:opacity .2s,transform .2s;box-shadow:0 3px 18px #0004}
+.rocket-launch-link:hover span,.rocket-launch-link:focus-visible span{opacity:1;transform:translate(-50%,0)}
+.rocket-launch-link:focus-visible{outline:2px solid #f5c68a;outline-offset:5px}
+.launch-transition[hidden]{display:none}
+.launch-transition{position:fixed;inset:0;z-index:10000;overflow:hidden;isolation:isolate}
+.launch-transition video{position:absolute;top:0;left:0;right:auto;bottom:auto;display:block;width:100%;height:auto;max-width:none;max-height:none;object-fit:cover;object-position:center bottom;opacity:0;transition:opacity .7s ease-in-out;will-change:opacity}
+.launch-transition.is-playing video{opacity:1}
+body:has(.launch-transition) #site-header{transition:opacity .3s ease}
+body.launch-in-progress #site-header{opacity:0}
+.launch-skip{position:absolute;top:max(20px,env(safe-area-inset-top));right:max(24px,env(safe-area-inset-right));z-index:2;padding:9px 15px;border:1px solid #e8c79966;border-radius:24px;color:#fff0dc;background:#081320d9;font:500 14px/1.2 system-ui,sans-serif;cursor:pointer}
+.launch-skip:hover,.launch-skip:focus-visible{background:#172331;border-color:#ffcf85;outline:2px solid #ffcf85;outline-offset:3px}
+.cockpit-preloader{position:fixed;left:-200vw;top:0;width:100vw;height:100vh;border:0;visibility:hidden;pointer-events:none}
+.cockpit-preloader.is-prepared{left:0;visibility:visible;z-index:9999;background:#000}
+.cockpit-preloader.is-presented{pointer-events:auto}
+@media(max-width:800px),(max-aspect-ratio:6/5){
+ .launch-transition video{object-position:var(--launch-focus-x,68.4%) bottom}
+ .rocket-launch-link span{font-size:12px;padding:6px 10px}
+ .launch-skip{top:16px;right:16px}
+}
+@media(prefers-reduced-motion:reduce){.rocket-launch-link span{transition:none}}

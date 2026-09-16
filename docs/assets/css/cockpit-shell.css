@@ -1,0 +1,123 @@
+/* Separate cockpit study: exterior assets retain their approved positioning. */
+.cabin-mask-defs{position:absolute;pointer-events:none}
+.cabin-art{position:absolute;inset:0;z-index:4;pointer-events:none;clip-path:url(#cabin-window-cutout)}
+.cabin-art img{display:block;width:100%;height:100%;object-fit:fill}
+.cabin-mobile-art{display:none}
+.navmock .cockpit-composition .selection-rocket{display:none!important}
+.navmock .cockpit-composition .selection-copy{inset:0;width:100%;max-width:none;z-index:5;pointer-events:none}
+.cockpit-composition .cabin-intro{position:absolute;left:10%;top:calc(max(96px,12.8%) - 5px);width:29.5%}
+.navmock .cockpit-composition .selection-copy h1{position:static;width:100%;max-width:none;font-size:clamp(24px,2.55vw,46px);line-height:1.12;white-space:normal;margin:0 0 12px;font-weight:650;background:none;-webkit-text-fill-color:initial;color:#fff0d8;text-shadow:0 2px 4px #0006}
+.navmock .cockpit-composition .selection-copy p{position:static;width:100%;max-width:none;font-size:clamp(16px,1.13vw,21px);line-height:1.5;margin:0;color:#e8dfd1}
+.cockpit-composition .hub-directory{position:absolute;left:14.4%;top:29.7%;width:20.6%;height:32.8%;display:flex;flex-direction:column;padding:0;border:0;border-radius:0;background:none;box-shadow:none;pointer-events:auto}
+.cockpit-composition .hub-directory h2{display:flex;align-items:center;flex:0 0 14%;font-size:clamp(14px,1.05vw,19px);line-height:1.2;margin:0;padding:0 clamp(12px,1vw,19px) 4px;color:#ffefd7}
+.cockpit-composition .hub-directory a span{min-width:0;overflow-wrap:break-word}
+.cockpit-composition .hub-directory a{flex:1;min-height:0;gap:clamp(10px,1.1vw,20px);padding:4px clamp(4px,.55vw,10px);font-size:clamp(14px,1vw,18px);line-height:1.2;border-color:#f3ddb51c;border-radius:0;color:#f5ecdf;transition:background .18s,color .18s,box-shadow .18s}
+.cockpit-composition .hub-directory a:hover,.cockpit-composition .hub-directory a:focus-visible{color:#fff2cf;background:#eab46a12;box-shadow:inset 3px 0 #dba55b;border-radius:4px}
+.cockpit-composition .hub-directory a:focus-visible{outline:1px solid #e4b66b;outline-offset:1px}
+.cockpit-composition .hub-directory svg{width:clamp(20px,1.4vw,26px);height:clamp(20px,1.4vw,26px);stroke:#e8b361}
+.cockpit-composition .hub-directory .directory-chevron{width:15px;height:15px}
+.cockpit-composition .arrival-view{z-index:8}
+@media(min-width:901px){
+ /* Keep copy within the painted wall, with clearance before the window trim. */
+ .navmock .cockpit-composition .selection-copy p{width:90%;font-size:clamp(14px,1.05vw,20px);line-height:1.4;overflow-wrap:break-word}
+}
+@media(min-width:901px) and (max-height:780px){
+ .navmock .cockpit-composition .selection-copy h1{font-size:clamp(24px,2.5vw,40px)}
+ .navmock .cockpit-composition .selection-copy p{font-size:clamp(14px,1.05vw,18px);line-height:1.35}
+}
+@media(max-width:900px){
+ .navmock .cockpit-composition{--cabin-panel:max(600px,120vw);height:auto;min-height:0;padding-block:0}
+ .cabin-art{display:none}
+ .cabin-mobile-art{display:block;position:relative;z-index:1;pointer-events:none}
+ .cabin-mobile-upper{position:relative;height:var(--cabin-panel);overflow:hidden}
+ .cabin-mobile-upper img{display:block;position:absolute;inset:0;width:100%;height:185.1852%;object-fit:fill}
+ .cabin-mobile-window{position:relative;width:100%;aspect-ratio:841/860;overflow:hidden}
+ .cabin-mobile-window img{display:block;position:absolute;left:0;top:-117.4419%;width:100%;height:217.4419%;object-fit:fill}
+ .navmock .cockpit-composition .selection-copy{position:absolute;inset:0;margin:0;width:100%;padding:0;border:0;border-radius:0;background:none;box-shadow:none}
+ .cockpit-composition .cabin-intro{position:absolute;left:12%;top:calc(var(--cabin-panel) * .1963);width:78%;margin:0}
+ .navmock .cockpit-composition .selection-copy h1{font-size:clamp(22px,5.8vw,38px);margin-bottom:12px;line-height:1.15}
+ .navmock .cockpit-composition .selection-copy p{font-size:clamp(16px,3.7vw,22px);line-height:1.45}
+ .cockpit-composition .hub-directory{position:absolute;left:15%;top:calc(var(--cabin-panel) * .4444);width:71%;height:calc(var(--cabin-panel) * .4852);padding:0;border:0;border-radius:0;background:none}
+ .cockpit-composition .hub-directory h2{flex:0 0 15%;min-height:40px;padding:0 5px 6px;font-size:clamp(16px,3.8vw,23px)}
+ .cockpit-composition .hub-directory a{flex:1;min-height:44px;padding:5px;gap:10px;font-size:clamp(16px,3.7vw,22px)}
+ .cockpit-composition .hub-directory svg{width:clamp(22px,4.8vw,30px);height:clamp(22px,4.8vw,30px)}
+ .cockpit-composition .selection-moon,.cockpit-composition .selection-earth{display:none}
+ .navmock .cockpit-composition .choice-quickstart{left:56%;top:calc(var(--cabin-panel) + 35vw);width:110%!important;max-width:700px!important}
+ .cockpit-composition .choice-quickstart .quickstart-station{width:100%;mask-image:url('../img/space-hub/quickstart-portrait-mask.svg');mask-size:100% 100%;mask-repeat:no-repeat}
+ .cockpit-composition .arrival-view{position:fixed;height:100dvh;overflow-y:auto;overscroll-behavior:contain;z-index:9}
+ .cockpit-composition .arrival-copy,.cockpit-composition .arrival-view[data-destination="help"] .arrival-copy{top:110px;left:8%;width:84%}
+ .cockpit-composition .arrival-copy .arrival-kicker{font-size:11px}
+ .navmock .cockpit-composition .arrival-copy h2{font-size:clamp(30px,6vw,44px);margin:8px 0}
+ .cockpit-composition .arrival-copy p{font-size:17px;margin-bottom:14px}
+ .cockpit-composition .arrival-art,.cockpit-composition .arrival-view[data-destination="help"] .arrival-art{top:360px;left:8%;width:84%;height:320px}
+ .cockpit-composition .arrival-sun{display:none}
+ .cockpit-composition .return-to-hub{min-height:44px}
+}
+@media(prefers-reduced-motion:reduce){.cockpit-composition .hub-directory a{transition:none}}
+
+
+
+/* ---------------------------------------- tablet portrait, 601-900 wide ---
+   The whole sub-900 composition hangs off --cabin-panel: the intro sits at
+   .1963 of it, the menu at .4444, the destination a further 35vw below it. At
+   max(600px,120vw) that panel is 921px on a 768 tablet, which is what put the
+   menu at y=467 and the destination near y=1190 -- the phone composition scaled
+   up by width, exactly as it was written to be.
+
+   Binding the panel to the shorter of a cap and the viewport compacts the whole
+   arrangement in proportion, so the artwork keeps its internal relationships and
+   only the framing tightens. No positions are restated here; one value moves and
+   the composition follows. */
+@media (min-width: 601px) and (max-width: 900px) and (orientation: portrait) {
+  .navmock .cockpit-composition { --cabin-panel: min(620px, 78vw); }
+  .navmock .cockpit-composition .choice-quickstart { top: calc(var(--cabin-panel) + 22vw); }
+}
+
+/* ------------------------------------------- short landscape, <=500 tall ---
+   Sideways there is width to spare and no height at all, so stacking cannot
+   work: at 844x390 the panel came out 1012px and the destination landed at
+   y=1307, nearly five screens down.
+
+   The copy and menu take the left half, the destination the right, and both sit
+   inside the first screen. Keyed on height so it follows the shape of the
+   viewport rather than guessing at a device. */
+@media (max-width: 900px) and (max-height: 500px) {
+  /* The art is a column of two fixed-ratio panels, and at this width the lower
+     one alone resolves to ~860px -- which is what left the stage three screens
+     tall even once the content fitted in the first one. Splitting one screen
+     between them keeps both on screen and removes the scroll entirely, so
+     landscape has no competing scroll to own. */
+  .navmock .cockpit-composition { --cabin-panel: 58svh; }
+  .cabin-mobile-window { aspect-ratio: auto; height: 42svh; }
+
+  .cockpit-composition .cabin-intro { left: 4%; top: 58px; width: 44%; }
+  .navmock .cockpit-composition .selection-copy h1 { font-size: clamp(19px, 5vh, 26px); margin-bottom: 4px; }
+  .navmock .cockpit-composition .selection-copy p { display: none; }
+
+  .cockpit-composition .hub-directory {
+    left: 4%;
+    top: 34svh;
+    width: 44%;
+    height: auto;
+  }
+  /* 44 stays the floor; the rows give up padding, not reach. */
+  .cockpit-composition .hub-directory a { min-height: 44px; padding: 3px 6px; font-size: clamp(14px, 2.2vw, 17px); }
+  .cockpit-composition .hub-directory h2 { flex: 0 0 auto; min-height: 0; font-size: 15px; padding-bottom: 2px; }
+
+  .navmock .cockpit-composition .choice-quickstart {
+    left: 74%;
+    top: 46svh;
+    width: 46% !important;
+    max-width: 420px !important;
+  }
+}
+
+/* ------------------------------------------------- phone portrait, <=600 ---
+   The destination sat a few pixels past the fold: the panel resolves to its
+   600px floor here, and the +35vw offset below it pushed the station's visible
+   bottom to 853 in an 844 viewport. Close enough that it read as cut off rather
+   than as something to scroll for. Tightening the offset alone brings it inside
+   the first screen; nothing else about the phone composition changes. */
+@media (max-width: 600px) and (orientation: portrait) {
+  .navmock .cockpit-composition .choice-quickstart { top: calc(var(--cabin-panel) + 20vw); }
+}

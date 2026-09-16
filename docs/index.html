@@ -26,9 +26,18 @@
   <link rel="icon" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css?v=bcffd7793727" rel="stylesheet">
-  <link href="assets/css/style.css?v=bcffd7793727" rel="stylesheet">
-  <link href="assets/css/site-refresh.css?v=bcffd7793727" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css?v=f764e5b2d7c4" rel="stylesheet">
+  <link href="assets/css/style.css?v=f764e5b2d7c4" rel="stylesheet">
+  <link href="assets/css/site-refresh.css?v=f764e5b2d7c4" rel="stylesheet">
+  <link href="assets/css/cockpit-journey.css?v=f764e5b2d7c4" rel="stylesheet">
+  <link href="assets/css/cutscenes-toggle.css?v=f764e5b2d7c4" rel="stylesheet">
+  <!-- Not deferred: it decides whether this visit belongs on the launch route
+       instead, and that has to happen before the cockpit paints. -->
+  <script src="assets/js/home-entrance.js?v=f764e5b2d7c4"></script>
+  <script defer src="assets/js/cutscenes-toggle.js?v=f764e5b2d7c4"></script>
+  <script defer src="assets/js/cockpit-menu-orbit.js?v=f764e5b2d7c4"></script>
+  <script defer src="assets/js/quickstart-opening-scene.js?v=f764e5b2d7c4"></script>
+  <script defer src="assets/js/cockpit-journey.js?v=f764e5b2d7c4"></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -51,24 +60,25 @@
       <a class="sc-skip-link" href="#main-content">Skip to main content</a>
       <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center">
-          <a class="sc-brand me-auto" href="index.html" aria-label="Self Custody home">
+          <a class="sc-brand me-auto" href="index.html#cockpit" aria-label="Self Custody home">
             <span class="sc-brand-mark" aria-hidden="true"></span>
             <span class="sc-brand-name">SELF CUSTODY</span>
             <span class="sc-brand-domain" aria-hidden="true"><span class="sc-brand-domain-text">.CA</span></span>
           </a>
           <nav id="navbar" class="navbar" aria-label="Primary navigation">
-            <ul><li><a class="active " href="index.html"><span>Home</span></a></li><li class="sc-nav-menu">
-          <button class="sc-nav-menu-toggle " type="button" aria-expanded="false" aria-haspopup="true">
-            <span>Guides</span><span class="sc-nav-menu-chevron" aria-hidden="true"></span>
+            <ul><li><a class="active " href="index.html#cockpit"><span>Home</span></a></li><li class="sc-nav-menu sc-guides-split">
+          <a class="sc-guides-page-link " href="guides.html">Guides</a>
+          <button class="sc-nav-menu-toggle " type="button" aria-expanded="false" aria-controls="guides-dropdown" aria-label="Open Guides menu">
+            <span class="sc-nav-menu-chevron" aria-hidden="true"></span>
           </button>
-          <ul class="sc-nav-submenu">
-            <li><a href="guides.html">Start here</a></li>
+          <ul class="sc-nav-submenu" id="guides-dropdown">
+            <li><a href="guides/quickstart.html">Quickstart</a></li>
             <li><a href="guides.html#devices">Devices</a></li>
             <li><a href="guides.html#software">Software</a></li>
             <li><a href="guides.html#exchanges">Exchanges</a></li>
             <li><a href="guides.html#advanced">Techniques</a></li>
             <li><a href="guides.html#concepts">Concepts</a></li>
-            <li class="sc-nav-tool-item"><a class="sc-nav-tool-link" href="entropy.html">Entropy Workshop</a></li>
+            <li class="sc-nav-tool-item"><a class="sc-nav-tool-link" href="glossary.html">Glossary</a></li>
           </ul>
         </li><li class="sc-nav-menu">
           <button class="sc-nav-menu-toggle " type="button" aria-expanded="false" aria-haspopup="true">
@@ -79,247 +89,19 @@
             <li><a class="" href="software.html">Software</a></li>
             <li><a class="" href="exchanges.html">Exchanges</a></li>
           </ul>
-        </li><li><a class=" " href="glossary.html"><span>Glossary</span></a></li><li><a class=" " href="dashboard.html"><span>Dashboard</span></a></li><li><a class=" sc-contact-link" href="contact.html"><span>Get Help</span></a></li></ul>
+        </li><li><a class=" " href="entropy.html"><span>Workshop</span></a></li><li><a class=" " href="dashboard.html"><span>Dashboard</span></a></li><li><a class=" sc-contact-link" href="contact.html"><span>Get Help</span></a></li></ul>
             <i class="bi bi-list mobile-nav-toggle" aria-label="Open navigation" role="button" tabindex="0"></i>
           </nav>
         </div>
       </header></div>
     <main id="main-content">
-
-      <section class="sc-hero has-background-media">
-
-          <figure class="sc-hero-background-media" aria-hidden="true">
-            <video autoplay muted loop playsinline preload="auto" poster="assets/img/cash-vortex/exchanges-cash-vortex.png" width="1616" height="1072">
-                  <source src="assets/img/cash-vortex/exchanges-cash-vortex-final3.mp4" type="video/mp4">
-                </video>
-          </figure>
-        <div class="container">
-
-            <div class="sc-hero-copy">
-
-      <h1><span class="sc-hero-command-line"><span class="sc-neon-sign sc-neon-sign-exit">EXIT</span><span class="sc-outlined-word sc-hero-fiat" data-text="FIAT"><span class="sc-word-fill">FIAT</span></span></span>
-           <span class="sc-hero-command-line"><span class="sc-neon-sign sc-neon-sign-enter">ENTER</span><span class="sc-outlined-word sc-hero-command-destination" data-text="BITCOIN"><span class="sc-word-fill">BITCOIN</span></span></span></h1>
-      <p class="sc-lead"><span class="sc-home-lead-statement">Your keys, your coins.</span><br class="sc-mobile-lead-break"> Learn how to buy, move, and protect<br class="sc-medium-lead-break"> your bitcoin without turning security into a full time job.</p>
-      <div class="sc-hero-actions"><a class="sc-btn sc-btn-primary" href="guides.html"><span>Explore Guides</span></a>
-           <a class="sc-btn sc-btn-ghost" href="contact.html"><span>Get Help</span></a></div></div>
-        </div>
-      </section>
-
-        <section class="sc-section sc-home-safe-path-section">
-          <div class="container">
-            <div class="row g-5 align-items-start">
-              <div class="col-lg-5">
-                <div class="sc-home-sticky-intro">
-                  <span class="sc-eyebrow">First steps</span>
-                  <h2>Learn the Basics</h2>
-                  <p>Bitcoin can feel like an endless rabbit hole. Start with our step-by-step <a href="guides/quickstart.html">Quickstart guide</a>, or dive into our recommended topic-specific guides. Learn at your own pace and go deeper when you’re ready.</p>
-                  <figure class="sc-home-path-media" aria-hidden="true"><picture><source media="(min-width: 576px) and (max-width: 991px)" srcset="assets/img/quickstart-rabbit-tablet.webp" width="1376" height="768"><img src="assets/img/quickstart-rabbit-portrait.webp" alt="" width="688" height="1024" loading="lazy" decoding="async"></picture></figure>
-                </div>
-              </div>
-              <div class="col-lg-7">
-                <div class="sc-home-linked-steps">
-                  <a class="sc-step sc-home-step-link" href="guides/choosing-your-first-setup.html"><span class="sc-step-number">1</span><div><h3>Create Your Wallet</h3><p>Choose a setup that fits your needs, then generate a new wallet from a trusted device or app.</p><span class="sc-text-link">Choose your setup <i class="bi bi-arrow-right"></i></span></div></a>
-                  <a class="sc-step sc-home-step-link" href="guides/seed-backup-metal.html"><span class="sc-step-number">2</span><div><h3>Back It Up</h3><p>Write down your recovery words offline and keep the backup separate from the device.</p><span class="sc-text-link">Protect the backup <i class="bi bi-arrow-right"></i></span></div></a>
-                  <a class="sc-step sc-home-step-link" href="guides/recovery-test-drill.html"><span class="sc-step-number">3</span><div><h3>Test Your Recovery</h3><p>Verify the backup can restore the same wallet before you trust it with bitcoin.</p><span class="sc-text-link">Run a recovery drill <i class="bi bi-arrow-right"></i></span></div></a>
-                  <div class="sc-step sc-home-step-link sc-home-step-multi"><span class="sc-step-number">4</span><div><h3>Receive Bitcoin</h3><p>Verify the receiving address, send a small test amount, and confirm it arrives.</p><div class="sc-home-step-actions"><a class="sc-text-link" href="guides/exchange-withdrawal.html">From an exchange <i class="bi bi-arrow-right"></i></a><a class="sc-text-link" href="guides/test-transaction.html">From another wallet <i class="bi bi-arrow-right"></i></a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="sc-section sc-path-section sc-home-explore-section">
-          <div class="sc-path-stars" aria-hidden="true"></div>
-          <div class="container">
-            <div class="sc-section-head sc-home-cinematic-head">
-              <span class="sc-eyebrow">Explore</span>
-              <h2>Everything in One Place</h2>
-              <p>Learn the system and check live network data when you are ready to act.</p>
-            </div>
-            <div class="row g-4 sc-home-explore-grid sc-home-explore-group sc-path-options">
-              <div class="col-md-6 col-xl-4">
-      <a class="sc-card sc-path-card-link sc-home-visual-card" href="guides.html">
-        <figure class="sc-home-card-media" aria-hidden="true">
-          <img src="assets/img/guides-library-hero.jpg" alt="" width="720" height="360" loading="lazy" decoding="async">
-        </figure>
-        <div class="sc-card-body">
-          <div class="sc-home-card-heading"><div class="sc-icon"><i class="bi bi-signpost-split"></i></div><h3>Guides</h3></div>
-          <p>Follow practical walkthroughs from first principles and first withdrawals to multisig, privacy, and inheritance.</p>
-          <span class="sc-text-link">Browse guides <i class="bi bi-arrow-right"></i></span>
-        </div>
-      </a>
-    </div>
-              <div class="col-md-6 col-xl-4">
-      <a class="sc-card sc-path-card-link sc-home-visual-card" href="glossary.html">
-        <figure class="sc-home-card-media" aria-hidden="true">
-          <img src="assets/img/glossary-hero.jpg" alt="" width="720" height="360" loading="lazy" decoding="async">
-        </figure>
-        <div class="sc-card-body">
-          <div class="sc-home-card-heading"><div class="sc-icon"><i class="bi bi-stack"></i></div><h3>Glossary</h3></div>
-          <p>Look up the language of bitcoin custody, transactions, wallets, backups, privacy, and network operation.</p>
-          <span class="sc-text-link">Search the glossary <i class="bi bi-arrow-right"></i></span>
-        </div>
-      </a>
-    </div>
-              <div class="col-md-6 col-xl-4">
-      <a class="sc-card sc-path-card-link sc-home-visual-card is-dashboard-preview" href="dashboard.html">
-        <figure class="sc-home-card-media" aria-hidden="true">
-          <img src="assets/img/dashboard-network-preview-v3.jpg" alt="" width="720" height="360" loading="lazy" decoding="async">
-        </figure>
-        <div class="sc-card-body">
-          <div class="sc-home-card-heading"><div class="sc-icon"><i class="bi bi-graph-up"></i></div><h3>Live Dashboard</h3></div>
-          <p>Check current network conditions, fees, blocks, supply, and other useful bitcoin data in one view.</p>
-          <span class="sc-text-link">Open dashboard <i class="bi bi-arrow-right"></i></span>
-        </div>
-      </a>
-    </div>
-            </div>
-            <div class="sc-home-compare-intro">
-              <span class="sc-eyebrow">Compare</span>
-              <p>Compare hardware devices, wallet software, and Canadian buying options by custody model, compatibility, privacy, workflow, and tradeoffs.</p>
-            </div>
-            <div class="row g-4 sc-home-explore-grid sc-home-compare-group sc-path-options">
-              <div class="col-md-6 col-xl-4">
-      <a class="sc-card sc-path-card-link sc-home-visual-card" href="devices.html">
-        <figure class="sc-home-card-media" aria-hidden="true">
-          <img src="assets/img/devices-hero.jpg" alt="" width="720" height="360" loading="lazy" decoding="async">
-        </figure>
-        <div class="sc-card-body">
-          <div class="sc-home-card-heading"><div class="sc-icon"><i class="bi bi-shield-lock"></i></div><h3>Hardware Devices</h3></div>
-          <p>Compare signing devices by security model, workflow, openness, recovery design, and the tradeoffs each one makes.</p>
-          <span class="sc-text-link">Compare devices <i class="bi bi-arrow-right"></i></span>
-        </div>
-      </a>
-    </div>
-              <div class="col-md-6 col-xl-4">
-      <a class="sc-card sc-path-card-link sc-home-visual-card" href="software.html">
-        <figure class="sc-home-card-media" aria-hidden="true">
-          <img src="assets/img/software-hero.jpg" alt="" width="720" height="360" loading="lazy" decoding="async">
-        </figure>
-        <div class="sc-card-body">
-          <div class="sc-home-card-heading"><div class="sc-icon"><i class="bi bi-window"></i></div><h3>Wallet Software</h3></div>
-          <p>Find mobile and desktop wallets that match your device, privacy needs, node setup, and transaction workflow.</p>
-          <span class="sc-text-link">Compare software <i class="bi bi-arrow-right"></i></span>
-        </div>
-      </a>
-    </div>
-              <div class="col-md-6 col-xl-4">
-      <a class="sc-card sc-path-card-link sc-home-visual-card" href="exchanges.html">
-        <figure class="sc-home-card-media" aria-hidden="true">
-          <img src="assets/img/exchanges-hero.jpg" alt="" width="720" height="360" loading="lazy" decoding="async">
-        </figure>
-        <div class="sc-card-body">
-          <div class="sc-home-card-heading"><div class="sc-icon"><i class="bi bi-bank"></i></div><h3>Canadian Exchanges</h3></div>
-          <p>Compare Canadian buying routes by custody model, funding methods, purchase flow, and withdrawal experience.</p>
-          <span class="sc-text-link">Compare exchanges <i class="bi bi-arrow-right"></i></span>
-        </div>
-      </a>
-    </div>
-            </div>
-          </div>
-        </section>
-
-
-    <section class="sc-section sc-home-tool-section">
-      <div class="container">
-        <div class="sc-section-head">
-          <span class="sc-eyebrow">Entropy</span>
-          <h2>Check the Dice Math</h2>
-          <p>Dice, coins or a shuffled deck &mdash; this shows you the words those events should have produced, and whether your device agrees. Experimental, and meant for checking rather than for making a wallet you intend to keep.</p>
-        </div>
-        <div class="sc-tool-band">
-          <span class="sc-die-mark" aria-hidden="true"></span>
-          <div class="sc-tool-copy">
-            <h2>Entropy Workshop</h2>
-            <p>Enter your dice rolls, coin flips or drawn cards and see the recovery words and first addresses they convert to &mdash; then compare that against what your device showed you. If the two disagree, your device uses a different conversion, which is common and worth knowing before you trust a column of rolls as a backup.</p>
-            <ul class="sc-tool-facts">
-              <li>Beta software &mdash; for testing, not for securing real bitcoin</li>
-              <li>Use it here, or save it and run it on a machine that has never been online</li>
-              <li>Generates no randomness, and has nowhere to type an existing phrase</li>
-            </ul>
-          </div>
-          <div class="sc-tool-actions">
-            <div class="sc-hero-actions">
-              <a class="sc-btn sc-btn-primary" href="entropy.html"><span>Enter Workshop</span></a>
-            </div>
-            <a class="sc-text-link" href="entropy-offline.html" download="selfcustody-entropy-check.html" data-tool-download>Download the file <i class="bi bi-arrow-down-right"></i></a>
-            <p>Enter a test sequence, not the rolls behind a wallet you use. <a href="guides/dice-entropy.html">Roll the dice</a> explains the procedure and the rules that matter more than the tool does.</p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-        <section class="sc-section sc-section-muted sc-home-trust-section">
-          <div class="container">
-            <div class="sc-home-trust-head">
-              <span class="sc-eyebrow">Our standard</span>
-              <h2>Built to Inform, Not Persuade</h2>
-              <p>Self-custody has no universal setup. We explain the options, the risks, and the tradeoffs that matter—so you can decide for yourself.</p>
-            </div>
-            <div class="row sc-home-trust-grid">
-              <div class="col-md-6 col-xl-3"><article class="sc-home-trust-card"><span>Education-first</span><h3>Understand Before Acting</h3><p>Learn the model before choosing a product or moving money.</p></article></div>
-              <div class="col-md-6 col-xl-3"><article class="sc-home-trust-card"><span>Transparent</span><h3>See the Tradeoffs</h3><p>Workflow, privacy, custody, and compatibility are shown directly.</p></article></div>
-              <div class="col-md-6 col-xl-3"><article class="sc-home-trust-card"><span>Security boundary</span><h3>Your Secrets Stay Yours</h3><p>This site never asks for your recovery words or private keys.</p></article></div>
-              <div class="col-md-6 col-xl-3"><article class="sc-home-trust-card"><span>Safer habits</span><h3>Testing and Backups</h3><p>Verify on-device, start small, and prove recovery before storing meaningful savings.</p></article></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="sc-section sc-home-help-section">
-          <div class="container">
-            <div class="sc-home-help-panel">
-              <div class="row g-0 align-items-center">
-                <div class="col-lg-6">
-                  <div class="sc-home-help-copy">
-                    <span class="sc-eyebrow">One-on-one guidance</span>
-                    <h2>Need Help?</h2>
-                    <p>Get practical guidance choosing a wallet, setting up a device, reviewing a backup, or rehearsing a transaction—while you remain in control of every step.</p>
-                    <a class="sc-btn sc-home-help-cta" href="contact.html"><span>Get Help</span></a>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="sc-home-help-topics">
-                    <h3 class="sc-home-help-label">Get help with</h3>
-                    <ul class="sc-home-help-topic-list">
-                      <li>Hardware wallet selection</li>
-                      <li>Software wallets</li>
-                      <li>Multisig planning</li>
-                      <li>Seed generation</li>
-                      <li>Guided device setup</li>
-                      <li>Address verification</li>
-                      <li>Backups</li>
-                      <li>Passphrases</li>
-                      <li>Privacy basics</li>
-                      <li>Test transactions</li>
-                      <li>Exchange withdrawals</li>
-                      <li>Recovery</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="sc-home-help-boundary">
-                <strong>Your keys, your coins.</strong>
-                <p>We guide while you operate your own devices. We never ask for your recovery words or private keys—and never hold or move bitcoin for you.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="sc-close">
-          <figure class="sc-close-glow" aria-hidden="true">
-            <img src="assets/img/cash-vortex/controlled-orbit-v2.webp" alt="" width="1717" height="916" loading="lazy" decoding="async">
-          </figure>
-          <div class="container">
-            <h2 class="sc-close-title">
-              <span class="sc-outlined-word sc-close-word" data-text="CONTROL YOUR MONEY"><span class="sc-word-fill">CONTROL YOUR MONEY</span></span>
-            </h2>
-            <p class="sc-close-lead">Follow the first steps: create a wallet, back it up, prove you can recover it, and only then receive bitcoin.</p>
-            <div class="sc-hero-actions sc-close-actions">
-              <a class="sc-btn sc-btn-primary" href="guides/quickstart.html"><span>Take the first steps</span></a>
-            </div>
-          </div>
-        </section></main>
+        <div id="scene-viewport"><iframe id="cockpit-scene" data-viewport-layout title="Quickstart cockpit" src="cockpit-scene.html?nav=1"></iframe></div>
+        <iframe id="arrival-article" title="Quickstart article" src="guides/quickstart.html" aria-hidden="true" inert></iframe>
+        <video id="jump-video" poster="assets/video/quickstart-runway-moon-v14-first.jpg" data-perspective="first-person" data-arrival="galaxy" data-source="assets/video/quickstart-runway-moon-v14.mp4" data-source4k="assets/video/quickstart-runway-moon-v14-4k-compressed-v1.mp4" muted playsinline preload="auto" aria-label="First-person flight through the Quickstart gate, past the Moon and into hyperspace"></video>
+        <aside class="video-review" hidden inert aria-hidden="true" aria-label="Transition preview controls"><div class="review-status" role="status" aria-live="polite">Preparing the sequence&hellip;</div><div class="review-buttons"><button id="sequence-play" disabled>Play shorter sequence</button><button id="sequence-reset">Reset</button><button id="sequence-skip">Skip to article</button></div><input id="sequence-time" type="range" min="0" max="6" value="0" step=".01" aria-label="Sequence preview time"></aside>
+        <button id="back-to-cockpit" type="button"><span aria-hidden="true">&larr;</span> Back to cockpit</button>
+        <a id="back-to-launch" href="launch.html"><span aria-hidden="true">&larr;</span> Back to launch</a>
+        <div id="cockpit-arrival-shade" aria-hidden="true"></div></main>
     <div id="site-footer">
     <footer class="sc-footer">
       <div class="container">
@@ -337,6 +119,7 @@
               <li><a href="software.html">Software</a></li>
               <li><a href="exchanges.html">Exchanges</a></li>
               <li><a href="glossary.html">Glossary</a></li>
+              <li><a href="entropy.html">Workshop</a></li>
               <li><a href="dashboard.html">Dashboard</a></li>
               <li><a href="contact.html">Get Help</a></li>
             </ul>
@@ -358,7 +141,7 @@
         </div>
       </div>
     </footer></div>
-  <noscript><div class="container py-4"><p><strong>JavaScript is off, so the menu button will not open.</strong> Every page:</p><ul><li><a href="index.html">Home</a></li><li><a href="guides.html">Guides</a></li><li><a href="devices.html">Devices</a></li><li><a href="software.html">Software</a></li><li><a href="exchanges.html">Exchanges</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="dashboard.html">Dashboard</a></li><li><a href="contact.html">Get Help</a></li></ul></div></noscript>
-    <script src="assets/js/site-refresh.js?v=bcffd7793727"></script>
+  <noscript><div class="container py-4"><p><strong>JavaScript is off, so the menu button will not open.</strong> Every page:</p><ul><li><a href="index.html">Home</a></li><li><a href="guides.html">Guides</a></li><li><a href="devices.html">Devices</a></li><li><a href="software.html">Software</a></li><li><a href="exchanges.html">Exchanges</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="entropy.html">Workshop</a></li><li><a href="dashboard.html">Dashboard</a></li><li><a href="contact.html">Get Help</a></li></ul></div></noscript>
+    <script src="assets/js/site-refresh.js?v=f764e5b2d7c4"></script>
 </body>
 </html>

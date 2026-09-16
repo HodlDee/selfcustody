@@ -1,0 +1,4 @@
+.flight-controls{z-index:100030}
+.rocket-jump-blink{position:absolute;width:28px;height:5px;border-radius:50%;pointer-events:none;opacity:0;background:#fff7df;box-shadow:0 0 8px 2px #ffd18c,0 0 21px 6px #fba34088;transform-origin:center}
+.rocket-jump-blink::after{content:'';position:absolute;width:3px;height:19px;left:12px;top:-7px;border-radius:50%;background:#fff6e5;box-shadow:0 0 7px #ffbf67}
+.flight-study .warp-follow-rocket .flight-exhaust{height:72%}
