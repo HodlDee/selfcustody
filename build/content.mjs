@@ -1777,6 +1777,11 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
      pages at the root, "../" for everything under docs/guides/. Pages there
      are otherwise identical, so the whole difference is threaded through here
      rather than duplicated into a second header. */
+  /* Read by assets/js/home-entrance.js. A fragment rather than a query so the
+     cockpit keeps one canonical URL, and the script clears it from the address
+     bar once it has been honoured. */
+  const COCKPIT_HASH = "#cockpit";
+
   const renderHeader = (pageKey, base = "") => {
     const links = routes.map(([key, label, href]) => {
       if (["software", "exchanges", "glossary"].includes(key)) return "";
@@ -1845,14 +1850,21 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
       }
       const active = key === pageKey ? "active" : "";
       const contactClass = key === "contact" ? "sc-contact-link" : "";
-      return `<li><a class="${active} ${contactClass}" href="${base}${href}"><span>${label}</span></a></li>`;
+      /* Home names the cockpit explicitly. Without it, the gate on index.html
+         has only the launch-seen flag to go on, and someone who arrived from a
+         search result on an inner page has never set that flag -- so their
+         first click on Home would play the launch, which is the one thing this
+         link is supposed to skip. An explicit destination does not depend on
+         where the visitor happens to have been first. */
+      const target = key === "home" ? `${base}${href}${COCKPIT_HASH}` : `${base}${href}`;
+      return `<li><a class="${active} ${contactClass}" href="${target}"><span>${label}</span></a></li>`;
     }).join("");
 
     return `
       <a class="sc-skip-link" href="#main-content">Skip to main content</a>
       <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center">
-          <a class="sc-brand me-auto" href="${base}index.html" aria-label="Self Custody home">
+          <a class="sc-brand me-auto" href="${base}index.html${COCKPIT_HASH}" aria-label="Self Custody home">
             <span class="sc-brand-mark" aria-hidden="true"></span>
             <span class="sc-brand-name">SELF CUSTODY</span>
             <span class="sc-brand-domain" aria-hidden="true"><span class="sc-brand-domain-text">.CA</span></span>

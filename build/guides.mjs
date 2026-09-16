@@ -1150,7 +1150,7 @@ const guides = [
     body: `
       <p class="sc-guide-intro">Self custody means one specific thing: the secret that authorises spending your bitcoin exists only where you put it. No company holds a copy &mdash; which is why no company can freeze it, lose it in a bankruptcy, or hand it over on request, and why nobody can help you if you destroy it. Both halves of that sentence are the job.</p>
 
-      <p>This is the foundation article for everything else on this site. It assumes nothing except that you have bought some bitcoin, or are about to. It is longer than a checklist because a checklist is easy to follow, and easy to follow into a hole &mdash; the reasoning underneath each step is what tells you what to do when the screen in front of you does not match the instructions.</p>
+      <p id="cloud-fade-anchor">This is the foundation article for everything else on this site. It assumes nothing except that you have bought some bitcoin, or are about to. It is longer than a checklist because a checklist is easy to follow, and easy to follow into a hole &mdash; the reasoning underneath each step is what tells you what to do when the screen in front of you does not match the instructions.</p>
 
       <p>There is a version of this that takes an afternoon and a version that takes six months. The difference is not intelligence or technical skill. It is whether you moved money before you understood what you were doing with it.</p>
 

@@ -296,14 +296,42 @@ if (dupes.length) {
 if (existsSync('docs/guides')) rmSync('docs/guides', { recursive: true });
 mkdirSync('docs/guides', { recursive: true });
 
+/* The Quickstart guide is where the cockpit's flight lands, so it carries the
+   galaxy arrival: a nebula behind the title, the staggered reveal of the
+   heading and opening lines, and a control to watch it again.
+
+   It is on the guide itself rather than injected by the journey, for two
+   reasons. The reveal has to survive Cutscenes being off -- that switch turns
+   off travel, not the arrival -- and the guide has to look the same reached
+   directly from a search result as it does at the end of a flight. The journey
+   still injects its own arrival stylesheet on top of this for the blend out of
+   the video; that part genuinely belongs to the transition, not the page. */
+const GALAXY_GUIDE = 'quickstart';
+
 for (const guide of publishedGuides) {
-  const html = `${guideHead(guide)}
-<body class="site-refresh" data-page="guides">
+  const galaxy = guide.slug === GALAXY_GUIDE;
+  const galaxyHead = galaxy
+    ? `
+  <link href="../assets/css/quickstart-galaxy-hero.css?v=${ASSET_VERSION}" rel="stylesheet">`
+    : '';
+  /* After site-refresh.js, and the hero script after both: it expects the
+     replay button and the fade anchor to already be in the document. */
+  const galaxyBody = galaxy
+    ? `
+  <button class="galaxy-replay" type="button">Replay arrival</button>`
+      + `
+  <div class="galaxy-arrival-shade" aria-hidden="true"></div>`
+      + `
+  <script src="../assets/js/quickstart-galaxy-hero.js?v=${ASSET_VERSION}"></script>`
+    : '';
+  const html = `${guideHead(guide).replace('</head>', `${galaxyHead}
+</head>`)}
+<body class="site-refresh" data-page="guides"${galaxy ? ' data-arrival="galaxy"' : ''}>
   <div id="site-header">${renderHeader('guides', '../')}</div>
     <main id="main-content">${renderGuideBody(guide)}</main>
     <div id="site-footer">${renderFooter('../')}</div>
   ${noscriptFor('guides', '../')}
-  <script src="../assets/js/site-refresh.js?v=${ASSET_VERSION}"></script>
+  <script src="../assets/js/site-refresh.js?v=${ASSET_VERSION}"></script>${galaxyBody}
 </body>
 </html>
 `;

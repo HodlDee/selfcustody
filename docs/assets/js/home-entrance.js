@@ -20,6 +20,19 @@
   "use strict";
   var KEY = "sc-launch-seen";
 
+  /* An explicit request for the cockpit, from the banner's Home link or the
+     brand mark. It wins outright: someone who followed a search result to a
+     guide has never set the flag below, and their first click on Home must not
+     play a launch. Clearing the fragment afterwards keeps one canonical URL in
+     the address bar and stops a refresh from looking like a different page. */
+  if (window.location.hash === "#cockpit") {
+    try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
+    try {
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    } catch (e) {}
+    return;
+  }
+
   var seen = true;
   try { seen = sessionStorage.getItem(KEY) === "1"; } catch (e) { seen = true; }
   if (seen) return;
