@@ -76,6 +76,7 @@ const toLF = text => text.replace(/\r\n/g, '\n');
    dashboard markup wrapped with block-probe.js. */
 const FILES = {
   'index.html': 'home',
+  'launch.html': 'launch',
   'guides.html': 'guides',
   'glossary.html': 'glossary',
   'devices.html': 'devices',

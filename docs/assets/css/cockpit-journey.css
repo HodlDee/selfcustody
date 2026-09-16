@@ -1,0 +1,33 @@
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050e18;color:#fff0d8}
+html.first-person-flight{scrollbar-gutter:auto}
+#site-header{position:relative;z-index:40}#header{background:#06101ae8}
+.site-refresh #header>.container{width:100%;max-width:none;padding-inline:clamp(16px,3vw,60px)}
+@media(min-width:992px){.site-refresh #header>.container{padding-left:10vw}}
+#scene-viewport{position:fixed;inset:0;overflow:hidden;background:#050e18}
+#cockpit-scene{position:absolute;left:0;top:0;width:1920px;height:1080px;border:0;transform-origin:0 0;visibility:hidden}
+#cockpit-scene.ready{visibility:visible}
+#jump-video{position:fixed;inset:0;width:100vw;height:100vh;object-fit:cover;object-position:center top;z-index:30;opacity:0;visibility:hidden;pointer-events:none;background:#050e18}
+#jump-video.active{visibility:visible}
+#jump-video[data-perspective="first-person"]{background:#000}
+#arrival-article{position:fixed;inset:0;width:100%;height:100%;border:0;background:#101010;z-index:20;visibility:hidden}
+#arrival-article.active{visibility:visible}
+body.in-flight #site-header{opacity:0;pointer-events:none;transition:opacity .22s}
+body.at-article #site-header{visibility:hidden}
+.video-review{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:60;border:1px solid #b8844160;border-radius:12px;background:#08131eee;padding:10px 14px;box-shadow:0 6px 24px #0005;max-width:calc(100vw - 24px);font:12px/1.4 system-ui,sans-serif;color:#e7e1d7}
+.review-status{margin-bottom:7px}.review-buttons{display:flex;gap:7px;white-space:nowrap}.review-buttons button{border:1px solid #b8844166;border-radius:7px;padding:7px 12px;background:#14222e;color:#fff0d8;cursor:pointer}#sequence-play{background:#ff951f;color:#16110a;font-weight:700}button:disabled{opacity:.5;cursor:wait!important}
+#sequence-time{display:block;width:100%;margin:10px 0 0;accent-color:#ff991e}
+body.at-article .video-review{left:auto;right:14px;transform:none}body.at-article .review-status,body.at-article #sequence-time,body.at-article #sequence-skip{display:none}
+@media(max-width:900px){#jump-video{object-fit:contain;object-position:center}.video-review{padding:9px;bottom:8px}.review-buttons button{padding:7px 9px;font-size:11px}body.at-article .video-review{right:8px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+#back-to-cockpit{display:none;position:fixed;left:max(16px,env(safe-area-inset-left));bottom:max(16px,env(safe-area-inset-bottom));z-index:60;align-items:center;gap:9px;border:1px solid #b88441;border-radius:9px;padding:11px 16px;background:#101820f5;color:#fff0d8;font:600 14px/1.3 system-ui,sans-serif;box-shadow:0 3px 14px #0005;cursor:pointer}
+body.at-article #back-to-cockpit{display:inline-flex}
+#back-to-cockpit:hover{background:#27313a;border-color:#ffad43}
+#back-to-cockpit:focus-visible{outline:2px solid #ffad43;outline-offset:3px}
+#back-to-launch{position:fixed;left:max(16px,env(safe-area-inset-left));bottom:max(16px,env(safe-area-inset-bottom));z-index:60;display:inline-flex;align-items:center;gap:9px;border:1px solid #b8844177;border-radius:9px;padding:11px 16px;background:#101820ed;color:#fff0d8;text-decoration:none;font:600 14px/1.3 system-ui,sans-serif;box-shadow:0 3px 14px #0004}
+#back-to-launch:hover{background:#27313a;border-color:#ffad43}
+#back-to-launch:focus-visible{outline:2px solid #ffad43;outline-offset:3px}
+body.in-flight #back-to-launch{display:none}
+#cockpit-arrival-shade{position:fixed;inset:0;z-index:70;background:#030508;pointer-events:none;opacity:1}
+
+/* Approved charcoal sky; retain the original starfield image. */
+html.first-person-flight,html.first-person-flight body,html.first-person-flight #scene-viewport{background-color:#080a0d}

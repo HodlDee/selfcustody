@@ -1,0 +1,58 @@
+/* Separate cockpit study: exterior assets retain their approved positioning. */
+.cabin-mask-defs{position:absolute;pointer-events:none}
+.cabin-art{position:absolute;inset:0;z-index:4;pointer-events:none;clip-path:url(#cabin-window-cutout)}
+.cabin-art img{display:block;width:100%;height:100%;object-fit:fill}
+.cabin-mobile-art{display:none}
+.navmock .cockpit-composition .selection-rocket{display:none!important}
+.navmock .cockpit-composition .selection-copy{inset:0;width:100%;max-width:none;z-index:5;pointer-events:none}
+.cockpit-composition .cabin-intro{position:absolute;left:10%;top:calc(max(96px,12.8%) - 5px);width:29.5%}
+.navmock .cockpit-composition .selection-copy h1{position:static;width:100%;max-width:none;font-size:clamp(24px,2.55vw,46px);line-height:1.12;white-space:normal;margin:0 0 12px;font-weight:650;background:none;-webkit-text-fill-color:initial;color:#fff0d8;text-shadow:0 2px 4px #0006}
+.navmock .cockpit-composition .selection-copy p{position:static;width:100%;max-width:none;font-size:clamp(16px,1.13vw,21px);line-height:1.5;margin:0;color:#e8dfd1}
+.cockpit-composition .hub-directory{position:absolute;left:14.4%;top:29.7%;width:20.6%;height:32.8%;display:flex;flex-direction:column;padding:0;border:0;border-radius:0;background:none;box-shadow:none;pointer-events:auto}
+.cockpit-composition .hub-directory h2{display:flex;align-items:center;flex:0 0 14%;font-size:clamp(14px,1.05vw,19px);line-height:1.2;margin:0;padding:0 clamp(12px,1vw,19px) 4px;color:#ffefd7}
+.cockpit-composition .hub-directory a span{min-width:0;overflow-wrap:break-word}
+.cockpit-composition .hub-directory a{flex:1;min-height:0;gap:clamp(10px,1.1vw,20px);padding:4px clamp(4px,.55vw,10px);font-size:clamp(14px,1vw,18px);line-height:1.2;border-color:#f3ddb51c;border-radius:0;color:#f5ecdf;transition:background .18s,color .18s,box-shadow .18s}
+.cockpit-composition .hub-directory a:hover,.cockpit-composition .hub-directory a:focus-visible{color:#fff2cf;background:#eab46a12;box-shadow:inset 3px 0 #dba55b;border-radius:4px}
+.cockpit-composition .hub-directory a:focus-visible{outline:1px solid #e4b66b;outline-offset:1px}
+.cockpit-composition .hub-directory svg{width:clamp(20px,1.4vw,26px);height:clamp(20px,1.4vw,26px);stroke:#e8b361}
+.cockpit-composition .hub-directory .directory-chevron{width:15px;height:15px}
+.cockpit-composition .arrival-view{z-index:8}
+@media(min-width:901px){
+ /* Keep copy within the painted wall, with clearance before the window trim. */
+ .navmock .cockpit-composition .selection-copy p{width:90%;font-size:clamp(14px,1.05vw,20px);line-height:1.4;overflow-wrap:break-word}
+}
+@media(min-width:901px) and (max-height:780px){
+ .navmock .cockpit-composition .selection-copy h1{font-size:clamp(24px,2.5vw,40px)}
+ .navmock .cockpit-composition .selection-copy p{font-size:clamp(14px,1.05vw,18px);line-height:1.35}
+}
+@media(max-width:900px){
+ .navmock .cockpit-composition{--cabin-panel:max(600px,120vw);height:auto;min-height:0;padding-block:0}
+ .cabin-art{display:none}
+ .cabin-mobile-art{display:block;position:relative;z-index:1;pointer-events:none}
+ .cabin-mobile-upper{position:relative;height:var(--cabin-panel);overflow:hidden}
+ .cabin-mobile-upper img{display:block;position:absolute;inset:0;width:100%;height:185.1852%;object-fit:fill}
+ .cabin-mobile-window{position:relative;width:100%;aspect-ratio:841/860;overflow:hidden}
+ .cabin-mobile-window img{display:block;position:absolute;left:0;top:-117.4419%;width:100%;height:217.4419%;object-fit:fill}
+ .navmock .cockpit-composition .selection-copy{position:absolute;inset:0;margin:0;width:100%;padding:0;border:0;border-radius:0;background:none;box-shadow:none}
+ .cockpit-composition .cabin-intro{position:absolute;left:12%;top:calc(var(--cabin-panel) * .1963);width:78%;margin:0}
+ .navmock .cockpit-composition .selection-copy h1{font-size:clamp(22px,5.8vw,38px);margin-bottom:12px;line-height:1.15}
+ .navmock .cockpit-composition .selection-copy p{font-size:clamp(16px,3.7vw,22px);line-height:1.45}
+ .cockpit-composition .hub-directory{position:absolute;left:15%;top:calc(var(--cabin-panel) * .4444);width:71%;height:calc(var(--cabin-panel) * .4852);padding:0;border:0;border-radius:0;background:none}
+ .cockpit-composition .hub-directory h2{flex:0 0 15%;min-height:40px;padding:0 5px 6px;font-size:clamp(16px,3.8vw,23px)}
+ .cockpit-composition .hub-directory a{flex:1;min-height:44px;padding:5px;gap:10px;font-size:clamp(16px,3.7vw,22px)}
+ .cockpit-composition .hub-directory svg{width:clamp(22px,4.8vw,30px);height:clamp(22px,4.8vw,30px)}
+ .cockpit-composition .selection-moon,.cockpit-composition .selection-earth{display:none}
+ .navmock .cockpit-composition .choice-quickstart{left:56%;top:calc(var(--cabin-panel) + 35vw);width:110%!important;max-width:700px!important}
+ .cockpit-composition .choice-quickstart .quickstart-station{width:100%;mask-image:url('../img/space-hub/quickstart-portrait-mask.svg');mask-size:100% 100%;mask-repeat:no-repeat}
+ .cockpit-composition .arrival-view{position:fixed;height:100dvh;overflow-y:auto;overscroll-behavior:contain;z-index:9}
+ .cockpit-composition .arrival-copy,.cockpit-composition .arrival-view[data-destination="help"] .arrival-copy{top:110px;left:8%;width:84%}
+ .cockpit-composition .arrival-copy .arrival-kicker{font-size:11px}
+ .navmock .cockpit-composition .arrival-copy h2{font-size:clamp(30px,6vw,44px);margin:8px 0}
+ .cockpit-composition .arrival-copy p{font-size:17px;margin-bottom:14px}
+ .cockpit-composition .arrival-art,.cockpit-composition .arrival-view[data-destination="help"] .arrival-art{top:360px;left:8%;width:84%;height:320px}
+ .cockpit-composition .arrival-sun{display:none}
+ .cockpit-composition .return-to-hub{min-height:44px}
+}
+@media(prefers-reduced-motion:reduce){.cockpit-composition .hub-directory a{transition:none}}
+
+

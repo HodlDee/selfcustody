@@ -1,0 +1,21 @@
+/* Keep the original article palette; add atmosphere only to the title area. */
+body.site-refresh .sc-guide-head {
+  position: relative;
+  isolation: isolate;
+}
+body.site-refresh .sc-guide-head::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .4;
+  background: url('../img/space-hub/starfield.svg') repeat;
+  mask-image: linear-gradient(transparent, #000 22%, #000 65%, transparent);
+}
+#site-header, #main-content, #site-footer {
+  opacity: var(--arrival-content, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  #site-header, #main-content, #site-footer { opacity: 1; }
+}

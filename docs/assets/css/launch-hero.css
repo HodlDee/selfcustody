@@ -1,0 +1,54 @@
+html,body{height:100%;overflow:hidden;scrollbar-gutter:auto}
+body.site-refresh{margin:0;background:#071425}
+body.site-refresh #header>.container{max-width:none;width:100%;padding-left:48px;padding-right:48px}
+#main-content{margin:0;padding:0}
+.approved-hero{position:relative;isolation:isolate;background:#071425;height:100svh;padding:0;overflow:hidden}
+.approved-stage{position:absolute;overflow:hidden}
+.approved-scene,.approved-exit img{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;user-select:none}
+/* Use the film's actual star positions, with the same opening registration as the video. */
+.approved-launch-sky{position:absolute;left:0;bottom:0;width:100%;height:auto;max-width:none;display:block;pointer-events:none;transform:scaleY(1.01025);transform-origin:50% 48.5%;mask-image:linear-gradient(to bottom,transparent,#000 5%,#000 29%,transparent 38%)}
+.approved-exit{position:absolute;inset:0;clip-path:polygon(11.7% 54.7%,29.1% 56.6%,29.1% 66.6%,11.7% 65.2%);background:#000;pointer-events:none}
+/* Reuse the live homepage's keyframes, duration and default easing. */
+.approved-exit img{animation:sc-exit-flicker 6.8s infinite}
+.mobile-launch{display:none}
+.interaction-plane{position:absolute;inset:0;pointer-events:none;z-index:3}
+/* Local patches preserve the frozen master outside the edited objects. */
+.sign-patch,.cockpit-patch,.terrain-patch{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.terrain-patch{mask-image:linear-gradient(transparent 85.6%,#000 87.2%)}
+.sign-patch{mask-image:linear-gradient(90deg,transparent 80%,#000 80.7%,#000 92.2%,transparent 92.7%),linear-gradient(180deg,transparent 75.8%,#000 76.5%,#000 91.5%,transparent 92.4%);mask-composite:intersect}
+.cockpit-patch{mask-image:radial-gradient(ellipse 2.85% 4.3% at 68.4% 64%,#000 85%,transparent 100%)}
+.launch-letter-tint{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.45;transition:opacity .22s,filter .22s}
+.interaction-plane:has(.explore-sign:hover) .launch-letter-tint,.interaction-plane:has(.explore-sign:focus-visible) .launch-letter-tint{opacity:.9;filter:drop-shadow(0 0 2px #fff0a8b3) drop-shadow(0 0 6px #ffd56b80)}
+body.site-refresh .explore-sign{position:absolute;left:81%;top:77.2%;width:11%;height:6.8%;min-height:44px;display:flex;align-items:center;justify-content:center;pointer-events:auto;cursor:pointer;border-radius:7px;text-decoration:none}
+.explore-label{--letter-depth:0 calc(1px * var(--scene-scale,1)) 0 #b9804a,0 calc(2px * var(--scene-scale,1)) 0 #87502a,0 calc(3px * var(--scene-scale,1)) 0 #5c321a,0 calc(5px * var(--scene-scale,1)) calc(3px * var(--scene-scale,1)) #170b07b3;color:#ffe0ac;font:700 calc(31px * var(--scene-scale,1))/1 Jost,sans-serif;white-space:nowrap;-webkit-text-stroke:calc(1.3px * var(--scene-scale,1)) #110b06;paint-order:stroke fill;text-shadow:var(--letter-depth);transition:color .25s,text-shadow .25s}
+.explore-sign:hover .explore-label,.explore-sign:focus-visible .explore-label{color:#fff2b5;text-shadow:0 0 3px #fff2a1b3,0 0 10px #ffe06e99,0 0 14px #ffc94a33,var(--letter-depth)}
+.explore-sign:focus-visible{outline:2px solid #ffe4b6;outline-offset:4px}
+#night-sky{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.approved-hero.motion-off .approved-exit img{animation-play-state:paused}
+@media(max-width:800px),(max-aspect-ratio:6/5){
+ .approved-launch-sky{display:none}
+ body.site-refresh #header>.container{padding-left:18px;padding-right:18px}
+ .approved-stage{z-index:2;mask-image:linear-gradient(transparent,#000 7%,#000 86%,transparent)}
+ .approved-scene,.approved-exit img{width:180%;left:-8%;top:calc(var(--stage-width) * -.6328125);height:auto;max-width:none;aspect-ratio:3/2}
+ .approved-exit{clip-path:polygon(13% 5%,45% 9%,45% 49%,13% 45%)}
+ .approved-stage .interaction-plane{display:none}
+ .mobile-launch-scene,.mobile-launch .interaction-plane{position:absolute;width:270%;left:-157%;top:calc(var(--rocket-width) * -.873);height:auto;max-width:none;aspect-ratio:3/2;right:auto;bottom:auto}
+ .mobile-launch{display:block;position:absolute;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 4%,#000 97%,transparent)}
+ .mobile-launch:before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(#071425,transparent 7%,transparent 90%,#071425)}
+}
+@media(prefers-reduced-motion:reduce){.approved-exit img{animation:none!important}.explore-label{transition:none}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Detail cores use the original video star positions; fade follows decoded playback. */
+.approved-rest-sky{opacity:var(--launch-rest-sky-opacity,1);transition:none}

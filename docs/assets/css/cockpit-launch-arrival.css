@@ -1,0 +1,14 @@
+/* Continue through the dark porthole into the existing cockpit. */
+#selection-title[tabindex="-1"]:focus{outline:none}
+html.cockpit-entering::after{content:'';position:fixed;inset:0;z-index:10000;background:#030508 url('../img/earth-launch/launch-window-end-v3.jpg') center bottom/cover no-repeat;pointer-events:none;will-change:opacity}
+html.cockpit-entering.cockpit-revealing::after{animation:launch-window-clear .5s ease-out both}
+@keyframes launch-window-clear{from{opacity:1}to{opacity:0}}
+/* The cabin and Earth retain their existing foreground stacking. */
+html.cockpit-entering .choice-quickstart{translate:var(--quickstart-entry-x,-65vw) 0;will-change:translate}
+html.cockpit-revealing .choice-quickstart{animation:quickstart-drift-in 2.6s cubic-bezier(.12,.86,.22,1) both}
+@keyframes quickstart-drift-in{from{translate:var(--quickstart-entry-x,-65vw) 0}to{translate:0 0}}
+@media(max-width:900px){
+ html.cockpit-entering .choice-quickstart{--quickstart-entry-x:-110vw}
+}
+@media(prefers-reduced-motion:reduce){html.cockpit-entering::after{display:none;animation:none}}
+

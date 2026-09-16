@@ -1,0 +1,26 @@
+.cockpit-orbit-quickstart{
+ transform:translate(-50%,-50%) translate(var(--orbit-x,0px),var(--orbit-y,0px)) scale(var(--orbit-scale,1))!important;
+ will-change:transform;
+}
+.cockpit-orbit-destination{
+ position:absolute;display:block;pointer-events:none;
+ transform:translate(-50%,-50%) translate(var(--orbit-x,0px),var(--orbit-y,0px)) scale(var(--orbit-scale,1));
+ will-change:transform;
+}
+.cockpit-orbit-destination .world-mini{display:block;position:relative;inset:auto;width:100%;height:100%;margin:0;padding:0;animation:cockpit-island-float 6.5s cubic-bezier(.37,0,.63,1) infinite}
+.cockpit-orbit-destination .hub-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;width:100%;height:100%;max-width:none;max-height:none;margin:0;filter:none}
+.cockpit-orbit-destination .hub-art>img{display:block;width:100%;height:100%;object-fit:contain}
+.cockpit-orbit-destination .entropy-scene{width:100%;max-width:none}
+.cockpit-orbit-destination .approved-destination{display:flex;align-items:center;justify-content:center}
+.cockpit-orbit-destination .approved-art{position:relative;width:100%;max-height:100%}
+.cockpit-orbit-destination .approved-art>img{display:block;width:100%;height:100%;object-fit:contain}
+.cockpit-orbit-destination .approved-art>.dashboard-signal-layer{position:absolute;inset:0;pointer-events:none}
+.cockpit-orbit-destination .approved-art>.entropy-shell-tone{position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none}
+.cockpit-composition .hub-directory a[data-select]{isolation:isolate;border-radius:4px}
+.cockpit-composition .hub-directory a[data-select]:hover,.cockpit-composition .hub-directory a[data-select]:focus-visible{background:transparent;box-shadow:none}
+.cockpit-composition .hub-directory a .orbit-hover-fill{position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:4px;background:linear-gradient(90deg,#dba55b18,#eab46a30);transform:scaleX(0);transform-origin:left center}
+.cockpit-composition .hub-directory a[data-orbit-pending]{color:#fff2cf}
+.cockpit-composition .hub-directory a[data-select][data-orbit-selected]{color:#fff2cf;background:transparent;box-shadow:inset 3px 0 #dba55b;border-radius:4px}
+.cockpit-composition .hub-directory a[data-orbit-selected] .orbit-hover-fill{transform:scaleX(1)}
+@media(prefers-reduced-motion:reduce){.cockpit-composition .hub-directory a[data-orbit-pending]{background:#eab46a12}}
+@media(prefers-reduced-motion:reduce){.cockpit-orbit-destination .world-mini{animation:none}}

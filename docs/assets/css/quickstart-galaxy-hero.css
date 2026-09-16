@@ -1,0 +1,27 @@
+/* Preview only: retain the existing article and hero text placement. */
+body.site-refresh .sc-guide-head{position:relative;isolation:isolate;overflow:visible;background:transparent}
+body.site-refresh .sc-guide-head::before{content:'';position:absolute;inset:0 0 auto;height:56.25vw;z-index:-2;background:url('../img/space-hub/quickstart-soft-nebula-hero-v4-1080p.png') center top/100% auto no-repeat;mask-image:linear-gradient(to bottom,transparent 0,rgba(0,0,0,.88) 160px,rgba(0,0,0,.88) min(40%,calc(var(--cloud-fade-end,800px)*.48)),rgba(0,0,0,.6) min(57%,calc(var(--cloud-fade-end,800px)*.65)),rgba(0,0,0,.16) min(73%,calc(var(--cloud-fade-end,800px)*.84)),transparent min(90%,var(--cloud-fade-end,800px)));transform-origin:77% 47%;pointer-events:none}
+body.site-refresh .sc-guide-head::after{content:none}
+.sc-guide-head .container{position:relative;transform-origin:25% 50%}
+/* Keep the original cloud image still. */
+/* Use the viewport width so the artwork continues beneath the scrollbar area. */
+html:has(.sc-guide-head){scrollbar-gutter:auto}
+body.site-refresh .sc-guide-head::before{clip-path:inset(0);width:100vw;right:auto}
+body.site-refresh{overflow-x:clip}
+.galaxy-replay{position:fixed;bottom:20px;right:20px;z-index:1100;background:#181a1d;color:#f5e9d5;border:1px solid #756047;border-radius:8px;padding:11px 16px;font:600 13px system-ui;box-shadow:0 4px 20px #0008}
+.galaxy-arrival-shade{position:fixed;inset:0;z-index:1090;pointer-events:none;background:#000;opacity:0}
+body.is-arriving .galaxy-arrival-shade{animation:arrival-uncover .7s ease-out both}
+body.is-arriving .sc-guide-head .container{animation:guide-text-arrive .85s .25s cubic-bezier(.16,1,.3,1) both}
+@keyframes arrival-uncover{from{opacity:1}to{opacity:0}}
+@keyframes guide-text-arrive{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
+@media(max-width:767px){body.site-refresh .sc-guide-head::before{height:720px;background-size:auto 720px;background-position:68% top;opacity:.5}}
+@media(prefers-reduced-motion:reduce){body.is-arriving .galaxy-arrival-shade{display:none}body.is-arriving .sc-guide-head::before,body.is-arriving .sc-guide-head .container{animation:none}}
+@media(prefers-reduced-motion:reduce){body.site-refresh .sc-guide-head::before{animation:none;filter:none}}
+
+/* Continue the same charcoal space around the article, with a quiet reading column. */
+body.site-refresh{--sc-paper:#080a0d;background:#080a0d}
+body.site-refresh .sc-guide-body{position:relative;isolation:isolate;background:transparent}
+body.site-refresh .sc-guide-body::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:url('../img/space-hub/quickstart-article-stars-v2.svg') repeat;background-size:520px 860px;background-position:0 0;mask-image:linear-gradient(to right,#000 0%,#000 calc(50% - 455px),transparent calc(50% - 392px),transparent calc(50% + 392px),#000 calc(50% + 455px),#000 100%)}
+@media(max-width:850px){body.site-refresh .sc-guide-body::before{mask-image:linear-gradient(to right,#000,transparent 22px,transparent calc(100% - 22px),#000);opacity:.6}}
+/* Let the clouds show through the navigation until the reader scrolls. */
+body.site-refresh #site-header #header{--galaxy-header-progress:0;background:rgb(8 10 13 / var(--galaxy-header-progress));border-bottom-color:rgb(255 255 255 / calc(var(--galaxy-header-progress)*.07));box-shadow:0 8px 24px rgb(0 0 0 / calc(var(--galaxy-header-progress)*.25));backdrop-filter:blur(calc(var(--galaxy-header-progress)*12px))}
