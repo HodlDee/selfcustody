@@ -265,6 +265,75 @@
    * top, both driven by CSS transitions on transform/opacity (see
    * .sc-hero-flip-item in site-refresh.css).
    */
+  /* ---------------------------------------------------------------------
+   * Hero background video: a pause/resume control.
+   *
+   * Reduced motion is handled without script. The <source> carries
+   * media="(prefers-reduced-motion: no-preference)", so for a reader who asked
+   * for reduced motion the browser selects no source at all -- nothing is
+   * fetched, nothing plays, and the poster stands in as a still. See the note
+   * beside the exchanges hero in build/content.mjs.
+   *
+   * What is left for here is the control itself, and the case the declarative
+   * form cannot cover: source selection happens once, at load, so a reader who
+   * turns reduced motion on while the page is open needs to be met.
+   * ------------------------------------------------------------------- */
+  const heroMedia = document.querySelector(".sc-hero-background-media video");
+  const heroMediaToggle = document.querySelector("[data-hero-media-toggle]");
+
+  if (heroMedia && heroMediaToggle) {
+    const heroMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const heroMediaLabel = heroMediaToggle.querySelector("[data-hero-media-toggle-label]");
+
+    /* The icon is drawn from this attribute and the label under it is what
+       gets announced, so both move together and cannot disagree. Each names
+       what pressing the button will do, not what the video is doing. */
+    const paintHeroMedia = playing => {
+      heroMediaToggle.dataset.playing = playing ? "true" : "false";
+      heroMediaLabel.textContent = playing
+        ? "Pause background video"
+        : "Play background video";
+    };
+
+    heroMedia.addEventListener("play", () => paintHeroMedia(true));
+    heroMedia.addEventListener("pause", () => paintHeroMedia(false));
+
+    heroMediaToggle.addEventListener("click", () => {
+      if (!heroMedia.paused) {
+        /* Pause leaves the last decoded frame up, which is what someone
+           pressing pause expects to happen. */
+        heroMedia.pause();
+        return;
+      }
+      const started = heroMedia.play();
+      if (started && typeof started.catch === "function") {
+        /* Autoplay policy can refuse even a muted video. Nothing is broken if
+           it does -- the poster stays and the button still offers to start it
+           -- but the rejection has to be handled or it surfaces as an
+           unhandled promise. */
+        started.catch(() => paintHeroMedia(false));
+      }
+    });
+
+    /* Turning reduced motion on mid-visit is the moment the request means the
+       most. Dropping the source and reloading returns the element to the state
+       it would have been in had the preference been set at load: no source
+       selected, nothing buffered, poster showing. */
+    if (typeof heroMotionQuery.addEventListener === "function") {
+      heroMotionQuery.addEventListener("change", event => {
+        if (!event.matches) return;
+        heroMedia.pause();
+        heroMedia.removeAttribute("autoplay");
+        heroMedia.load();
+        paintHeroMedia(false);
+      });
+    }
+
+    /* Autoplay has usually not started by the time this runs, so the button
+       opens saying "Play" and the play event corrects it a moment later. */
+    paintHeroMedia(!heroMedia.paused);
+  }
+
   const heroFlip = document.querySelector(".sc-hero-flip");
 
   if (heroFlip) {

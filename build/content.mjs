@@ -29,6 +29,18 @@ const currentYear = new Date().getFullYear();
   const detailFooter = (link, guideKey = "") =>
     `<div class="sc-detail-footer">${link}${productGuideLinks(guideKey)}</div>`;
 
+  /* Sits outside .sc-hero-background-media on purpose. That figure is
+     aria-hidden -- it is decoration -- and a control buried inside it would be
+     unreachable by the assistive technology most likely to need it. The label
+     is real text rather than an aria-label alone so it is translated, found by
+     in-page search, and read the same way by every tool; site-refresh.js
+     rewrites it as the state changes. */
+  const heroMediaToggle = `
+            <button class="sc-hero-media-toggle" type="button" data-hero-media-toggle>
+              <span class="sc-hero-media-toggle-icon" aria-hidden="true"></span>
+              <span class="visually-hidden" data-hero-media-toggle-label>Pause background video</span>
+            </button>`;
+
   const hero = (eyebrow, title, lead, actions = "", media = null) => {
     const backgroundMedia = Boolean(media?.background);
     const copy = `
@@ -43,7 +55,7 @@ const currentYear = new Date().getFullYear();
           <figure class="sc-hero-background-media" aria-hidden="true">
             ${media.video
               ? `<video autoplay muted loop playsinline preload="auto" poster="${media.poster}" width="${media.width}" height="${media.height}">
-                  <source src="${media.src}" type="${media.type}">
+                  <source${media.sourceMedia ? ` media="${media.sourceMedia}"` : ""} src="${media.src}" type="${media.type}">
                 </video>`
               : `<img src="${media.src}" alt="" width="${media.width}" height="${media.height}" fetchpriority="high">`}
           </figure>` : ""}
@@ -59,7 +71,7 @@ const currentYear = new Date().getFullYear();
                     </figure>
                   </div>
                 </div>`}` : copy}
-        </div>
+        </div>${media && media.toggle ? heroMediaToggle : ""}
       </section>`;
   };
 
@@ -1134,8 +1146,16 @@ const currentYear = new Date().getFullYear();
       content: `
         ${hero(
           "",
-          `<span class="sc-hero-command-line"><span class="sc-neon-sign sc-neon-sign-exit">EXIT</span><span class="sc-outlined-word sc-hero-fiat" data-text="FIAT"><span class="sc-word-fill">FIAT</span></span></span>
-           <span class="sc-hero-command-line"><span class="sc-neon-sign sc-neon-sign-enter">ENTER</span><span class="sc-outlined-word sc-hero-command-destination" data-text="BITCOIN"><span class="sc-word-fill">BITCOIN</span></span></span>`,
+          /* Each outlined word is painted three times -- ::before for the
+             cream outline, ::after for the stroke, .sc-word-fill for the
+             texture -- and both pseudo-elements draw with content:attr(),
+             which several screen readers announce. Read aloud, the heading
+             came out "EXIT FIAT FIAT FIAT ENTER BITCOIN BITCOIN BITCOIN". The
+             layers are decoration, so they are hidden outright and the
+             heading carries one plain sentence for assistive technology. */
+          `<span class="visually-hidden">Exit fiat. Enter bitcoin.</span>
+           <span class="sc-hero-command-line" aria-hidden="true"><span class="sc-neon-sign sc-neon-sign-exit">EXIT</span><span class="sc-outlined-word sc-hero-fiat" data-text="FIAT"><span class="sc-word-fill">FIAT</span></span></span>
+           <span class="sc-hero-command-line" aria-hidden="true"><span class="sc-neon-sign sc-neon-sign-enter">ENTER</span><span class="sc-outlined-word sc-hero-command-destination" data-text="BITCOIN"><span class="sc-word-fill">BITCOIN</span></span></span>`,
           "<span class=\"sc-home-lead-statement\">Compare exchanges</span> by rates, spreads, fees, custody models, and withdrawal options before taking control of your money.",
           `<a class="sc-btn sc-btn-primary" href="#exchange-compare"><span>Compare exchanges</span></a>
            <a class="sc-btn sc-btn-ghost" href="guides/exchange-withdrawal.html"><span>Withdrawal guide</span></a>`,
@@ -1147,7 +1167,22 @@ const currentYear = new Date().getFullYear();
             width: 1616,
             height: 1072,
             video: true,
-            background: true
+            background: true,
+            /* The reduced-motion guarantee is declarative rather than scripted.
+               A source whose media query does not match is never selected, so
+               a reader who asked for reduced motion gets NETWORK_NO_SOURCE:
+               the video never loads, never plays, and the poster -- the same
+               artwork held still -- is what they see. Nothing is fetched
+               either, which is the right answer for a decorative 4MB file.
+
+               Doing this from script instead would be worse twice over. The
+               browser acts on an autoplay attribute while the document is
+               parsing, so a frame or two escapes before any script can stop
+               it; and moving playback into a play() call puts it at the mercy
+               of autoplay policy, which refuses in a background tab and does
+               not retry the way the attribute does. */
+            sourceMedia: "(prefers-reduced-motion: no-preference)",
+            toggle: true
           }
         )}
 
