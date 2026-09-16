@@ -25,3 +25,26 @@ body.site-refresh .sc-guide-body::before{content:'';position:absolute;inset:0;z-
 @media(max-width:850px){body.site-refresh .sc-guide-body::before{mask-image:linear-gradient(to right,#000,transparent 22px,transparent calc(100% - 22px),#000);opacity:.6}}
 /* Let the clouds show through the navigation until the reader scrolls. */
 body.site-refresh #site-header #header{--galaxy-header-progress:0;background:rgb(8 10 13 / var(--galaxy-header-progress));border-bottom-color:rgb(255 255 255 / calc(var(--galaxy-header-progress)*.07));box-shadow:0 8px 24px rgb(0 0 0 / calc(var(--galaxy-header-progress)*.25));backdrop-filter:blur(calc(var(--galaxy-header-progress)*12px))}
+
+/* A direct visit borrows the flight's arrival -- the same staggered rows, the
+   same row offsets, the same 1150ms -- so the two entrances cannot drift apart.
+   What it does not borrow is the part of that stylesheet written for living
+   inside the journey's iframe, where the video supplies the backdrop: there the
+   page is punched transparent and the cloud artwork is suppressed because the
+   frame behind it already has clouds. Opened on its own, this page IS the
+   backdrop, so the charcoal comes back and so do the clouds.
+
+   The replay control comes back too. The arrival stylesheet hides it because
+   inside the flight there is nothing to replay. */
+html.galaxy-direct,
+html.galaxy-direct body,
+html.galaxy-direct main { background: #080a0d !important; }
+
+html.galaxy-direct main .sc-guide-head::before,
+html.galaxy-direct main .sc-guide-body::before { visibility: visible; }
+
+html.galaxy-direct .galaxy-replay { display: block; }
+
+/* The black wipe belongs to the old replay effect and has no place in the
+   approved entrance, which fades rows up over artwork that never moves. */
+html.galaxy-direct .galaxy-arrival-shade { display: none; }

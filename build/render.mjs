@@ -115,11 +115,28 @@ const VERSIONED_ASSETS = [
   'docs/assets/css/style.css',
   'docs/assets/css/site-refresh.css',
   'docs/assets/js/site-refresh.js',
+  /* The journey's own assets. Without them in the digest the ?v= they carry
+     never moves, so an edit to the cockpit or the arrival reaches nobody who
+     already holds the old copy -- which is exactly what happened while this was
+     being built: a corrected stylesheet sat on disk while the browser went on
+     using its cached one, and the fix looked broken. */
+  'docs/assets/css/cockpit-journey.css',
+  'docs/assets/css/cutscenes-toggle.css',
+  'docs/assets/css/quickstart-galaxy-arrival.css',
+  'docs/assets/css/quickstart-galaxy-hero.css',
+  'docs/assets/css/launch-hero.css',
+  'docs/assets/js/cockpit-journey.js',
+  'docs/assets/js/cockpit-menu-orbit.js',
+  'docs/assets/js/cutscenes-toggle.js',
+  'docs/assets/js/home-entrance.js',
+  'docs/assets/js/launch-sequence.js',
+  'docs/assets/js/quickstart-galaxy-hero.js',
+  'docs/assets/js/quickstart-opening-scene.js',
 ];
 
 const ASSET_VERSION = assetDigest(VERSIONED_ASSETS);
 
-const ASSET_QUERY = /(assets\/(?:vendor\/bootstrap-icons\/bootstrap-icons\.css|css\/(?:style|site-refresh)\.css|js\/site-refresh\.js)\?v=)[^"']+/g;
+const ASSET_QUERY = /(assets\/(?:vendor\/bootstrap-icons\/bootstrap-icons\.css|css\/(?:style|site-refresh|cockpit-journey|cutscenes-toggle|quickstart-galaxy-arrival|quickstart-galaxy-hero|launch-hero)\.css|js\/(?:site-refresh|cockpit-journey|cockpit-menu-orbit|cutscenes-toggle|home-entrance|launch-sequence|quickstart-galaxy-hero|quickstart-opening-scene)\.js)\?v=)[^"']+/g;
 
 /* The whole container block, anchored on the <noscript> that always follows it.
    A non-greedy match on </div> would work on the empty shell but not on an
@@ -314,8 +331,13 @@ for (const guide of publishedGuides) {
      directly, rather than by flying there, still needs the same control in the
      same place -- and it reads the same saved preference, so the state they set
      on the homepage is the state they find here. */
+  /* Arrival stylesheet first, hero second: the hero sheet carries the overrides
+     that undo the parts of the arrival written for life inside the journey's
+     iframe, and they have to come after what they are overriding. */
   const galaxyHead = galaxy
     ? `
+  <link href="../assets/css/quickstart-galaxy-arrival.css?v=${ASSET_VERSION}" rel="stylesheet">`
+      + `
   <link href="../assets/css/quickstart-galaxy-hero.css?v=${ASSET_VERSION}" rel="stylesheet">`
       + `
   <link href="../assets/css/cutscenes-toggle.css?v=${ASSET_VERSION}" rel="stylesheet">`
