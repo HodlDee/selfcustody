@@ -14262,3 +14262,37 @@ body[data-page="home"] .sc-home-help-section {
     inset 0 -5px 9px rgba(0, 0, 0, 0.5),
     0 3px 8px rgba(0, 0, 0, 0.42);
 }
+
+/* ---------------------------------------------------------------- touch ---
+   The hamburger is a 28px icon, which is a 28px target. Padding grows the box
+   to 44 and an equal negative margin gives that growth back to the layout, so
+   the icon stays exactly where the centring maths above put it -- including in
+   the open state, where `top` positions the margin edge and the two cancel.
+   The glyph is untouched; only the area that answers a thumb changes. */
+.site-refresh .mobile-nav-toggle {
+  padding: 8px;
+  margin: -8px;
+}
+
+/* Everything else in the bar already clears 44 on a phone. It is the tablet in
+   landscape that does not: it is wide enough for the desktop bar, so it gets
+   desktop's 40-42px rows and no hover to soften them.
+
+   Keyed on the pointer rather than the width, because that is the actual
+   condition -- a coarse pointer needs the bigger target whatever the viewport
+   is, and a mouse at the same width does not. The approved desktop
+   composition is a fine pointer and is not affected. */
+@media (pointer: coarse) {
+  body.site-refresh .navbar .sc-nav-submenu a,
+  body.site-refresh .navbar > ul > li > a,
+  body.site-refresh .navbar .sc-nav-menu-toggle,
+  body.site-refresh .navbar .sc-guides-page-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  body.site-refresh .navbar .sc-guides-split > .sc-nav-menu-toggle {
+    justify-content: center;
+  }
+}

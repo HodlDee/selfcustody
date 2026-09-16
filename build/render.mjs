@@ -132,11 +132,24 @@ const VERSIONED_ASSETS = [
   'docs/assets/js/launch-sequence.js',
   'docs/assets/js/quickstart-galaxy-hero.js',
   'docs/assets/js/quickstart-opening-scene.js',
+  /* The cockpit scene's own stylesheets. These carried hand-written versions
+     -- v=17, v=sun-finisher-2 -- frozen at whatever each was when last edited,
+     so a change to any of them reached nobody already holding the old copy. */
+  'docs/assets/css/cockpit-blink.css',
+  'docs/assets/css/cockpit-directory.css',
+  'docs/assets/css/cockpit-flight.css',
+  'docs/assets/css/cockpit-hub-directory.css',
+  'docs/assets/css/cockpit-hub.css',
+  'docs/assets/css/cockpit-launch-arrival.css',
+  'docs/assets/css/cockpit-navigation.css',
+  'docs/assets/css/cockpit-shell.css',
+  'docs/assets/css/cockpit-hover.css',
+  'docs/assets/js/cockpit-scene.js',
 ];
 
 const ASSET_VERSION = assetDigest(VERSIONED_ASSETS);
 
-const ASSET_QUERY = /(assets\/(?:vendor\/bootstrap-icons\/bootstrap-icons\.css|css\/(?:style|site-refresh|cockpit-journey|cutscenes-toggle|quickstart-galaxy-arrival|quickstart-galaxy-hero|launch-hero)\.css|js\/(?:site-refresh|cockpit-journey|cockpit-menu-orbit|cutscenes-toggle|home-entrance|launch-sequence|quickstart-galaxy-hero|quickstart-opening-scene)\.js)\?v=)[^"']+/g;
+const ASSET_QUERY = /(assets\/(?:vendor\/bootstrap-icons\/bootstrap-icons\.css|css\/(?:style|site-refresh|cockpit-journey|cutscenes-toggle|quickstart-galaxy-arrival|quickstart-galaxy-hero|launch-hero|cockpit-blink|cockpit-directory|cockpit-flight|cockpit-hub-directory|cockpit-hub|cockpit-launch-arrival|cockpit-navigation|cockpit-shell|cockpit-hover)\.css|js\/(?:site-refresh|cockpit-journey|cockpit-menu-orbit|cutscenes-toggle|home-entrance|launch-sequence|quickstart-galaxy-hero|quickstart-opening-scene|cockpit-scene)\.js)\?v=)[^"']+/g;
 
 /* The whole container block, anchored on the <noscript> that always follows it.
    A non-greedy match on </div> would work on the empty shell but not on an
@@ -211,6 +224,20 @@ for (const [file, key] of Object.entries(FILES)) {
   }
   console.log(`  ${file.padEnd(16)} ${Math.round(out.length / 1024)} KB`);
 }
+/* cockpit-scene.html carries no shell -- the journey frames it, so it has no
+   header or footer of its own and is not in FILES. It does reference versioned
+   assets, and nothing rewrote them, so its ?v= sat frozen at whatever was typed
+   by hand. Stamp it here rather than giving it a shell it does not want. */
+for (const bare of ['docs/cockpit-scene.html']) {
+  if (!existsSync(bare)) continue;
+  const before = readFileSync(bare, 'utf8');
+  const after = before.replace(ASSET_QUERY, `$1${ASSET_VERSION}`);
+  if (after !== before) {
+    writeFileSync(bare, after);
+    console.log(`  ${bare.replace('docs/', '').padEnd(16)} asset versions stamped`);
+  }
+}
+
 console.log(`\n${changed} file(s) written`);
 
 /* ---- guide pages --------------------------------------------------------

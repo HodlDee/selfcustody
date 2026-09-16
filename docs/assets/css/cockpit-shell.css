@@ -56,3 +56,68 @@
 @media(prefers-reduced-motion:reduce){.cockpit-composition .hub-directory a{transition:none}}
 
 
+
+/* ---------------------------------------- tablet portrait, 601-900 wide ---
+   The whole sub-900 composition hangs off --cabin-panel: the intro sits at
+   .1963 of it, the menu at .4444, the destination a further 35vw below it. At
+   max(600px,120vw) that panel is 921px on a 768 tablet, which is what put the
+   menu at y=467 and the destination near y=1190 -- the phone composition scaled
+   up by width, exactly as it was written to be.
+
+   Binding the panel to the shorter of a cap and the viewport compacts the whole
+   arrangement in proportion, so the artwork keeps its internal relationships and
+   only the framing tightens. No positions are restated here; one value moves and
+   the composition follows. */
+@media (min-width: 601px) and (max-width: 900px) and (orientation: portrait) {
+  .navmock .cockpit-composition { --cabin-panel: min(620px, 78vw); }
+  .navmock .cockpit-composition .choice-quickstart { top: calc(var(--cabin-panel) + 22vw); }
+}
+
+/* ------------------------------------------- short landscape, <=500 tall ---
+   Sideways there is width to spare and no height at all, so stacking cannot
+   work: at 844x390 the panel came out 1012px and the destination landed at
+   y=1307, nearly five screens down.
+
+   The copy and menu take the left half, the destination the right, and both sit
+   inside the first screen. Keyed on height so it follows the shape of the
+   viewport rather than guessing at a device. */
+@media (max-width: 900px) and (max-height: 500px) {
+  /* The art is a column of two fixed-ratio panels, and at this width the lower
+     one alone resolves to ~860px -- which is what left the stage three screens
+     tall even once the content fitted in the first one. Splitting one screen
+     between them keeps both on screen and removes the scroll entirely, so
+     landscape has no competing scroll to own. */
+  .navmock .cockpit-composition { --cabin-panel: 58svh; }
+  .cabin-mobile-window { aspect-ratio: auto; height: 42svh; }
+
+  .cockpit-composition .cabin-intro { left: 4%; top: 58px; width: 44%; }
+  .navmock .cockpit-composition .selection-copy h1 { font-size: clamp(19px, 5vh, 26px); margin-bottom: 4px; }
+  .navmock .cockpit-composition .selection-copy p { display: none; }
+
+  .cockpit-composition .hub-directory {
+    left: 4%;
+    top: 34svh;
+    width: 44%;
+    height: auto;
+  }
+  /* 44 stays the floor; the rows give up padding, not reach. */
+  .cockpit-composition .hub-directory a { min-height: 44px; padding: 3px 6px; font-size: clamp(14px, 2.2vw, 17px); }
+  .cockpit-composition .hub-directory h2 { flex: 0 0 auto; min-height: 0; font-size: 15px; padding-bottom: 2px; }
+
+  .navmock .cockpit-composition .choice-quickstart {
+    left: 74%;
+    top: 46svh;
+    width: 46% !important;
+    max-width: 420px !important;
+  }
+}
+
+/* ------------------------------------------------- phone portrait, <=600 ---
+   The destination sat a few pixels past the fold: the panel resolves to its
+   600px floor here, and the +35vw offset below it pushed the station's visible
+   bottom to 853 in an 844 viewport. Close enough that it read as cut off rather
+   than as something to scroll for. Tightening the offset alone brings it inside
+   the first screen; nothing else about the phone composition changes. */
+@media (max-width: 600px) and (orientation: portrait) {
+  .navmock .cockpit-composition .choice-quickstart { top: calc(var(--cabin-panel) + 20vw); }
+}

@@ -19,11 +19,11 @@ body.at-article #site-header{visibility:hidden}
 body.at-article .video-review{left:auto;right:14px;transform:none}body.at-article .review-status,body.at-article #sequence-time,body.at-article #sequence-skip{display:none}
 @media(max-width:900px){#jump-video{object-fit:contain;object-position:center}.video-review{padding:9px;bottom:8px}.review-buttons button{padding:7px 9px;font-size:11px}body.at-article .video-review{right:8px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
-#back-to-cockpit{display:none;position:fixed;left:max(16px,env(safe-area-inset-left));bottom:max(16px,env(safe-area-inset-bottom));z-index:60;align-items:center;gap:9px;border:1px solid #b88441;border-radius:9px;padding:11px 16px;background:#101820f5;color:#fff0d8;font:600 14px/1.3 system-ui,sans-serif;box-shadow:0 3px 14px #0005;cursor:pointer}
+#back-to-cockpit{display:none;position:fixed;left:calc(env(safe-area-inset-left, 0px) + 16px);bottom:calc(env(safe-area-inset-bottom, 0px) + 16px);z-index:60;align-items:center;gap:9px;border:1px solid #b88441;border-radius:9px;padding:11px 16px;background:#101820f5;color:#fff0d8;font:600 14px/1.3 system-ui,sans-serif;box-shadow:0 3px 14px #0005;cursor:pointer}
 body.at-article #back-to-cockpit{display:inline-flex}
 #back-to-cockpit:hover{background:#27313a;border-color:#ffad43}
 #back-to-cockpit:focus-visible{outline:2px solid #ffad43;outline-offset:3px}
-#back-to-launch{position:fixed;left:max(16px,env(safe-area-inset-left));bottom:max(16px,env(safe-area-inset-bottom));z-index:60;display:inline-flex;align-items:center;gap:9px;border:1px solid #b8844177;border-radius:9px;padding:11px 16px;background:#101820ed;color:#fff0d8;text-decoration:none;font:600 14px/1.3 system-ui,sans-serif;box-shadow:0 3px 14px #0004}
+#back-to-launch{position:fixed;left:calc(env(safe-area-inset-left, 0px) + 16px);bottom:calc(env(safe-area-inset-bottom, 0px) + 16px);z-index:60;display:inline-flex;align-items:center;gap:9px;border:1px solid #b8844177;border-radius:9px;padding:11px 16px;background:#101820ed;color:#fff0d8;text-decoration:none;font:600 14px/1.3 system-ui,sans-serif;box-shadow:0 3px 14px #0004}
 #back-to-launch:hover{background:#27313a;border-color:#ffad43}
 #back-to-launch:focus-visible{outline:2px solid #ffad43;outline-offset:3px}
 body.in-flight #back-to-launch{display:none}
