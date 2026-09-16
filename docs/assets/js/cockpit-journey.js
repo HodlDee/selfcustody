@@ -92,7 +92,25 @@
   const observer=new w.ResizeObserver(update);for(const {source} of layers)observer.observe(source);
   w.addEventListener('resize',update);update();
  }
- article.addEventListener('load',async()=>{try{const d=article.contentDocument,l=d.createElement('link');l.rel='stylesheet';l.href=galaxyArrival?'../assets/css/quickstart-galaxy-arrival.css?v=9':'../assets/css/quickstart-arrival.css?v=4';await new Promise(r=>{l.onload=r;l.onerror=r;d.head.append(l)});await d.fonts.ready;if(galaxyArrival){d.documentElement.classList.add('quickstart-arrival-layer');prepareArrivalBackground(d);article.style.background='transparent';article.style.zIndex='32';d.documentElement.style.setProperty('--arrival-background',state==='article'?'1':'0')}d.documentElement.style.setProperty('--arrival-content',state==='article'?'1':'0');articleReady=true}catch{}});
+ article.addEventListener('load',async()=>{try{const d=article.contentDocument;
+  /* The guide ships the galaxy arrival stylesheet in its own head now, with
+     the build's version on it. Injecting a second copy here under a
+     hand-written ?v=9 fetched the same rules twice and pinned one of them to
+     a version that stops moving when the file changes -- so the frame could
+     end up styled by a stale copy the rest of the site had already replaced.
+     Reuse whatever the document already carries; only inject when it carries
+     nothing, which is the non-galaxy arrival that has no generated link.
+
+     Cascade order is already right and deliberately so: the hero sheet sits
+     after the arrival sheet because the two collide at equal specificity on
+     the cloud artwork, and the later one has to be the hero's. Appending here
+     would put the arrival last and hide the clouds on a direct visit. */
+  const wanted=galaxyArrival?'quickstart-galaxy-arrival.css':'quickstart-arrival.css';
+  const existing=d.querySelector(`link[rel="stylesheet"][href*="${wanted}"]`);
+  if(!existing){
+   const l=d.createElement('link');l.rel='stylesheet';l.href='../assets/css/'+wanted;
+   await new Promise(r=>{l.onload=r;l.onerror=r;d.head.append(l)});
+  }await d.fonts.ready;if(galaxyArrival){d.documentElement.classList.add('quickstart-arrival-layer');prepareArrivalBackground(d);article.style.background='transparent';article.style.zIndex='32';d.documentElement.style.setProperty('--arrival-background',state==='article'?'1':'0')}d.documentElement.style.setProperty('--arrival-content',state==='article'?'1':'0');articleReady=true}catch{}});
  // Loading a local blob makes replay and frame seeking reliable on the simple preview server.
  const standardSource=video.dataset.source||'assets/video/quickstart-runway-moon-v14.mp4';
  const connection=navigator.connection,constrained=connection?.saveData||/^(slow-2g|2g|3g)$/.test(connection?.effectiveType||'');
