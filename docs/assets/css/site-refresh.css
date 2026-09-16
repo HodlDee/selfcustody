@@ -1187,10 +1187,19 @@ body[data-page="exchanges"] .sc-section-dark {
    block) and the overlap would eat the copy instead of empty space, so it
    goes to zero there and the padding carries the spacing alone -- exactly
    how the homepage steps down through the same breakpoints. */
+/* One value, two rules. The band below the hero is pulled up by it, and the
+   media control has to stay clear of it -- they were written independently at
+   -100px and 24px, and the control ended up inside the overlap, where it was
+   painted over and could not be clicked. Naming it once means they cannot
+   drift apart again. */
+body[data-page="exchanges"] {
+  --sc-hero-overlap: 100px;
+}
+
 body[data-page="exchanges"] .sc-hero + .sc-section {
   position: relative;
   z-index: 1;
-  margin-top: -100px;
+  margin-top: calc(-1 * var(--sc-hero-overlap));
   padding-top: 70px;
 }
 
@@ -1202,11 +1211,18 @@ body[data-page="exchanges"] .sc-hero + .sc-section {
    44px square is the minimum comfortable touch target, and the glass matches
    the action capsule above it so it reads as part of the hero rather than a
    browser affordance that leaked through. */
+/* Clears the overlapping band rather than trying to out-stack it. The z-index
+   here cannot win that fight: .sc-hero sets isolation:isolate, so this button
+   is confined to the hero's own stacking context while the section below is a
+   sibling of the hero in the root one. Raising the hero instead would put its
+   opaque background over the band it is supposed to sit behind. Sitting above
+   the overlap is the fix; the z-index below only orders it against the hero's
+   own layers. */
 .sc-hero-media-toggle {
   position: absolute;
   z-index: 2;
   right: 24px;
-  bottom: 24px;
+  bottom: calc(var(--sc-hero-overlap, 0px) + 24px);
   display: inline-flex;
   width: 44px;
   height: 44px;
@@ -1282,7 +1298,7 @@ body[data-page="exchanges"] .sc-hero + .sc-section {
 @media (max-width: 575px) {
   .sc-hero-media-toggle {
     right: 12px;
-    bottom: 12px;
+    bottom: calc(var(--sc-hero-overlap, 0px) + 12px);
   }
 }
 
@@ -5653,6 +5669,12 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
      lands mid-gradient and reads as a hard line. Desktop can afford -148px
      precisely because its art is already masked out by that point. Starting
      the section at the hero's bottom lets the mask finish first. */
+  /* The overlap goes to zero here, which also releases the media control back
+     to the hero's bottom edge -- see --sc-hero-overlap above. */
+  body[data-page="exchanges"] {
+    --sc-hero-overlap: 0px;
+  }
+
   body[data-page="home"] .sc-hero + .sc-section,
   body[data-page="exchanges"] .sc-hero + .sc-section {
     margin-top: 0;

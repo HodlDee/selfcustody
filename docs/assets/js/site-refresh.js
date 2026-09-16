@@ -315,13 +315,26 @@
       }
     });
 
-    /* Turning reduced motion on mid-visit is the moment the request means the
-       most. Dropping the source and reloading returns the element to the state
-       it would have been in had the preference been set at load: no source
-       selected, nothing buffered, poster showing. */
+    /* Source selection runs once, when the element loads, so the preference
+       that was in force at that moment is the one baked in. Either direction
+       of a later change therefore needs the selection re-run, and load() is
+       what re-runs it.
+       
+       Turning reduced motion ON: the source stops matching, so the reload
+       leaves the element with nothing selected -- the state it would have been
+       in had the preference been set before the page opened.
+       
+       Turning it OFF: the source starts matching, and without this reload the
+       element stays at NETWORK_NO_SOURCE for the rest of the visit. The
+       control comes back out of hiding at the same moment, and pressing it
+       would have done nothing at all.
+       
+       The autoplay attribute is dropped either way, so the reload never starts
+       the video by itself. Someone who has just left reduced motion has said
+       they can tolerate movement, not that they want it to begin unasked --
+       they can press play. */
     if (typeof heroMotionQuery.addEventListener === "function") {
-      heroMotionQuery.addEventListener("change", event => {
-        if (!event.matches) return;
+      heroMotionQuery.addEventListener("change", () => {
         heroMedia.pause();
         heroMedia.removeAttribute("autoplay");
         heroMedia.load();
