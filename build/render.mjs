@@ -310,9 +310,15 @@ const GALAXY_GUIDE = 'quickstart';
 
 for (const guide of publishedGuides) {
   const galaxy = guide.slug === GALAXY_GUIDE;
+  /* The cutscenes switch travels with the guide. Someone who reaches it
+     directly, rather than by flying there, still needs the same control in the
+     same place -- and it reads the same saved preference, so the state they set
+     on the homepage is the state they find here. */
   const galaxyHead = galaxy
     ? `
   <link href="../assets/css/quickstart-galaxy-hero.css?v=${ASSET_VERSION}" rel="stylesheet">`
+      + `
+  <link href="../assets/css/cutscenes-toggle.css?v=${ASSET_VERSION}" rel="stylesheet">`
     : '';
   /* After site-refresh.js, and the hero script after both: it expects the
      replay button and the fade anchor to already be in the document. */
@@ -323,6 +329,8 @@ for (const guide of publishedGuides) {
   <div class="galaxy-arrival-shade" aria-hidden="true"></div>`
       + `
   <script src="../assets/js/quickstart-galaxy-hero.js?v=${ASSET_VERSION}"></script>`
+      + `
+  <script src="../assets/js/cutscenes-toggle.js?v=${ASSET_VERSION}"></script>`
     : '';
   const html = `${guideHead(guide).replace('</head>', `${galaxyHead}
 </head>`)}

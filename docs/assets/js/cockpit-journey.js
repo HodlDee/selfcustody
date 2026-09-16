@@ -24,7 +24,7 @@
  const clamp=v=>Math.max(0,Math.min(1,v)),smooth=v=>{v=clamp(v);return v*v*(3-2*v)};
  const duration=()=>Number.isFinite(video.duration)?video.duration:6.041667;
  const ending=()=>videoOffset+duration();
- const cockpitReady=()=>sceneReady&&(!firstPerson||!!openingFrame||failed);
+ const cockpitReady=()=>sceneReady&&(!firstPerson||!!openingFrame||failed||!travelAllowed());/* openingFrame is traced from the video's first frame so the departure registers against it. With travel switched off there is no departure to register, and waiting for a frame from a video that is deliberately never fetched would leave the cockpit permanently mid-arrival. */
  function layout(){const params=new URLSearchParams(location.search),captureWidth=Number(params.get('width')),captureHeight=Number(params.get('height'));if(captureFrame&&captureWidth>=320&&captureWidth<=3840&&captureHeight>=240&&captureHeight<=2160){const scale=Math.min(innerWidth/captureWidth,innerHeight/captureHeight);scene.style.width=captureWidth+'px';scene.style.height=captureHeight+'px';scene.style.transform=`translate(${(innerWidth-captureWidth*scale)/2}px,${(innerHeight-captureHeight*scale)/2}px) scale(${scale})`;return}const responsive=scene.hasAttribute('data-viewport-layout')||innerWidth<=900,w=responsive?innerWidth:1920,h=responsive?innerHeight:1080,s=responsive?1:Math.max(innerWidth/w,innerHeight/h);scene.style.width=w+'px';scene.style.height=h+'px';scene.style.transform=`translate(${(innerWidth-w*s)/2}px,0) scale(${s})`}
  layout();addEventListener('resize',()=>{resetDeparture();restingPose?.clear();restingPose=null;layout();rocketPose=null;if(openingLead&&sceneReady&&state==='idle')restingPose=window.createQuickstartRestingPose(scene,openingLead)});
  function ready(){play.disabled=!cockpitReady();if(sceneReady)status.textContent=videoReady?'Ready — click Quickstart or Play.':failed?'Video unavailable. You can still open the article.':'Preparing the video…';scrub.max=ending();if(cockpitReady()&&!arrivalStarted){arrivalStarted=true;arriveCockpit()}}
@@ -111,7 +111,34 @@
   if(selectedSource!==standardSource){videoReady=false;loadVideo(standardSource);return}
   failed=true;videoReady=false;ready();if(state==='video')revealArticle();
  }
- loadVideo(selectedSource);
+ /* The flight video is 15MB, and it used to be fetched the moment the cockpit
+    loaded -- before anyone had asked to fly, and regardless of whether the
+    journey was ever going to play it. Someone with reduced motion set, or
+    cutscenes switched off, paid for a download of something they had already
+    said they did not want to see.
+
+    Nothing is fetched now until travel is both allowed and wanted. Flip the
+    switch back on and the fetch happens then; leave it off and it never does.
+    The poster carries the scene in the meantime, which is what a skipped
+    flight shows anyway. */
+ let videoRequested=false;
+ function travelAllowed(){
+  try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return false}catch{}
+  /* Read straight from storage rather than through window.cutscenesEnabled.
+     Both scripts are deferred and this one is earlier in the document, so the
+     helper does not exist yet when this first runs -- and `undefined !== false`
+     reads as "allowed", which is how a switched-off visit still fetched 15MB.
+     The key is the one cutscenes-toggle.js writes. */
+  try{return localStorage.getItem('sc-cutscenes-enabled')!=='false'}catch{}
+  return window.cutscenesEnabled?.()!==false;
+ }
+ function ensureVideo(){
+  if(videoRequested||!travelAllowed())return;
+  videoRequested=true;
+  loadVideo(selectedSource);
+ }
+ window.addEventListener('sc-cutscenes-change',event=>{if(event.detail?.enabled)ensureVideo()});
+ ensureVideo();
  video.addEventListener('loadeddata',()=>{
   videoReady=true;
   // Keep the approved registration coordinates independent of decode resolution.
@@ -312,7 +339,7 @@
   // Accept an early click, but finish the entrance before departure to avoid snapping home.
   if(state==='entering'){const arrivalId=runId;try{await Promise.all(arrivalAnimations.map(a=>a.finished))}catch{return}if(arrivalId!==runId)return}
   const ringAppearance=openingLead&&state==='idle'?[...scene.contentDocument.querySelectorAll('.ring-rest,.ring-powered')].map(el=>({el,opacity:scene.contentWindow.getComputedStyle(el).opacity})):null;
-  resetAll();departureRingAppearance=ringAppearance;if(matchMedia('(prefers-reduced-motion: reduce)').matches||failed){revealArticle();return}state='loading';const id=runId;status.textContent='Preparing the sequence…';const timeout=performance.now()+12000;while(!videoReady&&performance.now()<timeout&&!failed){await new Promise(r=>setTimeout(r,60));if(id!==runId)return}if(id!==runId)return;if(!videoReady){revealArticle();return}
+  resetAll();departureRingAppearance=ringAppearance;if(!travelAllowed()||failed){revealArticle();return}/* Was reduced-motion only. Cutscenes off left this to fall through to the 12-second wait below for a video that is no longer being fetched, so choosing to skip the flight meant staring at 'Preparing the sequence'. */state='loading';const id=runId;status.textContent='Preparing the sequence…';const timeout=performance.now()+12000;while(!videoReady&&performance.now()<timeout&&!failed){await new Promise(r=>setTimeout(r,60));if(id!==runId)return}if(id!==runId)return;if(!videoReady){revealArticle();return}
   if(video.seeking)await new Promise(resolve=>video.addEventListener('seeked',resolve,{once:true}));if(id!==runId)return;
   if(firstPerson){
    prepareDeparture();idleRings(false);scene.inert=true;document.body.classList.add('in-flight');state='video';video.classList.add('active');video.style.opacity='0';
