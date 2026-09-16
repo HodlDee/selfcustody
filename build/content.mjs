@@ -1133,15 +1133,20 @@ const currentYear = new Date().getFullYear();
       description: "Compare Canadian bitcoin purchase routes by custody model, CAD funding, trading tools, withdrawal workflow, and fit for self-custody.",
       content: `
         ${hero(
-          "Canadian exchanges",
-          `From <span class="sc-outlined-word sc-hero-fiat" data-text="FIAT"><span class="sc-word-fill">FIAT</span></span> IOUs<br><em>to true <span class="sc-outlined-word sc-hero-command-destination" data-text="BITCOIN"><span class="sc-word-fill">BITCOIN</span></span> ownership.</em>`,
-          "Compare Canadian exchanges by rates, spreads, fees, custody models, and withdrawal options before taking control of your money.",
-          `<a class="sc-btn sc-btn-primary" href="#exchange-compare">Compare exchanges</a>
-           <a class="sc-btn sc-btn-ghost" href="guides/exchange-withdrawal.html">Withdrawal guide</a>`,
+          "",
+          `<span class="sc-hero-command-line"><span class="sc-neon-sign sc-neon-sign-exit">EXIT</span><span class="sc-outlined-word sc-hero-fiat" data-text="FIAT"><span class="sc-word-fill">FIAT</span></span></span>
+           <span class="sc-hero-command-line"><span class="sc-neon-sign sc-neon-sign-enter">ENTER</span><span class="sc-outlined-word sc-hero-command-destination" data-text="BITCOIN"><span class="sc-word-fill">BITCOIN</span></span></span>`,
+          "<span class=\"sc-home-lead-statement\">Compare exchanges</span> by rates, spreads, fees, custody models, and withdrawal options before taking control of your money.",
+          `<a class="sc-btn sc-btn-primary" href="#exchange-compare"><span>Compare exchanges</span></a>
+           <a class="sc-btn sc-btn-ghost" href="guides/exchange-withdrawal.html"><span>Withdrawal guide</span></a>`,
           {
-            src: "assets/img/exchanges-hero.jpg",
-            width: 1584,
-            height: 672,
+            src: "assets/img/cash-vortex/exchanges-cash-vortex-final3.mp4",
+            type: "video/mp4",
+            poster: "assets/img/cash-vortex/exchanges-cash-vortex.png",
+            alt: "",
+            width: 1616,
+            height: 1072,
+            video: true,
             background: true
           }
         )}
