@@ -6072,14 +6072,53 @@ body.site-refresh .navbar .sc-nav-submenu::before {
    transform: none, but this selector outranks that rule (0,0,5,1 vs
    0,0,3,1), so leaving it unscoped dragged the open submenu half its own
    width off to the left instead of dropping it under the label. */
+/* :hover and :focus-within used to open a submenu on their own, alongside
+   .is-open from script. Two sources of truth for one piece of state is what
+   made Guides and Compare overlap: clicking Guides set .is-open, hovering
+   Compare opened it as well, and the clicked one then stayed open with the
+   pointer nowhere near it. Only .is-open opens a menu now, and site-refresh.js
+   sets it from pointer, focus and keyboard alike, so whatever opens a menu
+   closes every other one on the way. */
 @media (min-width: 992px) {
-  body.site-refresh .navbar .sc-nav-menu:hover > .sc-nav-submenu,
-  body.site-refresh .navbar .sc-nav-menu:focus-within > .sc-nav-submenu,
   body.site-refresh .navbar .sc-nav-menu.is-open > .sc-nav-submenu {
     visibility: visible;
     opacity: 1;
     transform: translateX(-50%);
     pointer-events: auto;
+  }
+}
+
+/* Guides is the one menu whose label is also a destination, so it is a grid of
+   link plus arrow rather than a single button. The arrow is 28px on desktop and
+   a full 44px target on touch, where there is no hover to fall back on. */
+body.site-refresh .navbar .sc-guides-split {
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto 28px;
+}
+
+body.site-refresh .navbar .sc-guides-split > .sc-guides-page-link {
+  padding-right: 1px;
+}
+
+body.site-refresh .navbar .sc-guides-split > .sc-nav-menu-toggle {
+  width: 28px;
+  min-height: 44px;
+  justify-content: center;
+  padding: 11px 8px;
+}
+
+body.site-refresh .navbar .sc-guides-split > .sc-nav-submenu {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 991px) {
+  body.site-refresh .navbar .sc-guides-split {
+    grid-template-columns: 1fr 44px;
+  }
+
+  body.site-refresh .navbar .sc-guides-split > .sc-nav-menu-toggle {
+    width: 44px;
   }
 }
 

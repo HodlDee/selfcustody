@@ -16,6 +16,7 @@ const currentYear = new Date().getFullYear();
     ["software", "Software", "software.html"],
     ["exchanges", "Exchanges", "exchanges.html"],
     ["glossary", "Glossary", "glossary.html"],
+    ["entropy", "Workshop", "entropy.html"],
     ["dashboard", "Dashboard", "dashboard.html"],
     ["contact", "Get Help", "contact.html"]
   ];
@@ -1864,17 +1865,20 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
      rather than duplicated into a second header. */
   const renderHeader = (pageKey, base = "") => {
     const links = routes.map(([key, label, href]) => {
-      if (["software", "exchanges"].includes(key)) return "";
+      if (["software", "exchanges", "glossary"].includes(key)) return "";
       if (key === "guides") {
         const menuActive = pageKey === "guides" ? "active" : "";
         const items = guideCategories
           .map(cat => {
-            /* "Start here" is the hub's first section, so everything above
-               it -- the hero and the finder -- is part of starting. It gets
-               the top of the page rather than a jump past them; the rest
-               stay jump links to their own section. */
-            const target = cat.key === "fundamentals" ? `${base}guides.html` : `${base}guides.html#${cat.key}`;
-            return `<li><a href="${target}">${cat.label}</a></li>`;
+            /* The first row used to be "Start here", pointing at the top of
+               the hub -- which is where the label above now goes, so the row
+               duplicated its own parent. It is Quickstart instead, going
+               straight to the guide that starts someone off. The rest stay
+               jump links to their own section. */
+            if (cat.key === "fundamentals") {
+              return `<li><a href="${base}guides/quickstart.html">Quickstart</a></li>`;
+            }
+            return `<li><a href="${base}guides.html#${cat.key}">${cat.label}</a></li>`;
           })
           .join("\n            ");
         /* The two entropy tools are not guide categories -- the items above are
@@ -1887,17 +1891,23 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
            guides.html that promotes them. From anywhere else on the site,
            following that band would mean landing on the hub and scrolling past
            six sections to reach a link to the real page. */
-        const entropyGroup = `<li class="sc-nav-tool-item"><a class="sc-nav-tool-link" href="${base}entropy.html">Entropy Workshop</a></li>`;
-        /* Same shape as Compare: the label only opens the list. The hub
-           itself is still one click away as "Start here", the first item
-           in the list, so nothing needs the label to be a link too. */
-        return `<li class="sc-nav-menu">
-          <button class="sc-nav-menu-toggle ${menuActive}" type="button" aria-expanded="false" aria-haspopup="true">
-            <span>Guides</span><span class="sc-nav-menu-chevron" aria-hidden="true"></span>
+        const glossaryGroup = `<li class="sc-nav-tool-item"><a class="sc-nav-tool-link" href="${base}glossary.html">Glossary</a></li>`;
+        /* Split, unlike Compare: the label is a link to the hub and only the
+           arrow opens the list. Compare has no page of its own to land on, so
+           its label can be the opener; Guides does, and making the label open a
+           menu instead put the hub two clicks from every page on the site.
+
+           The arrow is a real button with its own accessible name, so the two
+           targets are distinguishable to a screen reader rather than one
+           control that behaves differently depending on where it is clicked. */
+        return `<li class="sc-nav-menu sc-guides-split">
+          <a class="sc-guides-page-link ${menuActive}" href="${base}guides.html">Guides</a>
+          <button class="sc-nav-menu-toggle ${menuActive}" type="button" aria-expanded="false" aria-controls="guides-dropdown" aria-label="Open Guides menu">
+            <span class="sc-nav-menu-chevron" aria-hidden="true"></span>
           </button>
-          <ul class="sc-nav-submenu">
+          <ul class="sc-nav-submenu" id="guides-dropdown">
             ${items}
-            ${entropyGroup}
+            ${glossaryGroup}
           </ul>
         </li>`;
       }
