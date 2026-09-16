@@ -713,14 +713,16 @@ body[data-page="software"] .sc-hero.has-background-media .sc-hero-copy :is(h1, .
 }
 
 /* The homepage uses the animated cash vortex as its hero environment. */
-body[data-page="home"] .sc-hero.has-background-media {
+body[data-page="home"] .sc-hero.has-background-media,
+body[data-page="exchanges"] .sc-hero.has-background-media {
   min-height: clamp(980px, calc(66.667vw + 193px), 1115px);
   padding-bottom: 120px;
   isolation: isolate;
   background: #08090b;
 }
 
-body[data-page="home"] .sc-hero-background-media {
+body[data-page="home"] .sc-hero-background-media,
+body[data-page="exchanges"] .sc-hero-background-media {
   position: absolute;
   z-index: -2;
   top: 0;
@@ -744,7 +746,8 @@ body[data-page="home"] .sc-hero-background-media {
   mask-image: linear-gradient(180deg, #000 0%, #000 68%, rgba(0, 0, 0, 0.82) 78%, rgba(0, 0, 0, 0.45) 88%, rgba(0, 0, 0, 0.14) 95%, transparent 100%);
 }
 
-body[data-page="home"] .sc-hero-background-media :is(img, video) {
+body[data-page="home"] .sc-hero-background-media :is(img, video),
+body[data-page="exchanges"] .sc-hero-background-media :is(img, video) {
   display: block;
   width: 100%;
   height: 100%;
@@ -752,7 +755,8 @@ body[data-page="home"] .sc-hero-background-media :is(img, video) {
   object-position: center;
 }
 
-body[data-page="home"] .sc-hero-background-media::after {
+body[data-page="home"] .sc-hero-background-media::after,
+body[data-page="exchanges"] .sc-hero-background-media::after {
   position: absolute;
   inset: -1px;
   background:
@@ -762,7 +766,8 @@ body[data-page="home"] .sc-hero-background-media::after {
   pointer-events: none;
 }
 
-body[data-page="home"] .sc-hero.has-background-media::after {
+body[data-page="home"] .sc-hero.has-background-media::after,
+body[data-page="exchanges"] .sc-hero.has-background-media::after {
   position: absolute;
   z-index: -1;
   right: 0;
@@ -782,7 +787,8 @@ body[data-page="home"] .sc-hero.has-background-media::after {
   pointer-events: none;
 }
 
-body[data-page="home"] .sc-hero.has-background-media .sc-hero-copy {
+body[data-page="home"] .sc-hero.has-background-media .sc-hero-copy,
+body[data-page="exchanges"] .sc-hero.has-background-media .sc-hero-copy {
   max-width: 730px;
   transform: translateY(-44px);
 }
@@ -1107,8 +1113,7 @@ body[data-page="home"] .sc-sequence-section {
 /* Height, padding and bottom fade are all deliberately identical to the
    software hero, so the three photo-backed compare pages read as one set.
    Any change here should be made there too, or the set breaks. */
-body[data-page="devices"] .sc-hero.has-background-media,
-body[data-page="exchanges"] .sc-hero.has-background-media {
+body[data-page="devices"] .sc-hero.has-background-media {
   display: flex;
   align-items: center;
   min-height: clamp(560px, 56vw, 780px);
@@ -1120,8 +1125,7 @@ body[data-page="exchanges"] .sc-hero.has-background-media {
 /* Starts at the header's own height, not inset:0 -- the header is fixed and
    so out of flow, meaning the hero begins at the true top of the page and
    the opaque header bar would otherwise cover the figure's first 78px. */
-body[data-page="devices"] .sc-hero-background-media,
-body[data-page="exchanges"] .sc-hero-background-media {
+body[data-page="devices"] .sc-hero-background-media {
   position: absolute;
   z-index: -2;
   top: 78px;
@@ -1140,8 +1144,7 @@ body[data-page="exchanges"] .sc-hero-background-media {
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 92%, transparent 100%);
 }
 
-body[data-page="devices"] .sc-hero-background-media img,
-body[data-page="exchanges"] .sc-hero-background-media img {
+body[data-page="devices"] .sc-hero-background-media img {
   display: block;
   width: 100%;
   height: 100%;
@@ -1149,8 +1152,7 @@ body[data-page="exchanges"] .sc-hero-background-media img {
   object-position: center;
 }
 
-body[data-page="devices"] .sc-hero-background-media::after,
-body[data-page="exchanges"] .sc-hero-background-media::after {
+body[data-page="devices"] .sc-hero-background-media::after {
   position: absolute;
   inset: 0;
   background:
@@ -1159,80 +1161,154 @@ body[data-page="exchanges"] .sc-hero-background-media::after {
   pointer-events: none;
 }
 
-/* The exchange photograph has a natural pool of darkness on the left. Extend
-   it into a soft, angled scrim so the copy feels embedded in the room instead
-   of sitting over a hard-edged overlay. The warm bloom keeps the counter and
-   coins alive while the lower fade joins the next section. */
-body[data-page="exchanges"] .sc-hero-background-media img {
-  object-position: center;
-  filter: saturate(1.035) contrast(1.02);
-}
-
-/* The photograph's bottom mask dissolves it to nothing over the hero's last
-   ~7%, revealing whatever the hero itself is painted. Left as flat paper
-   that meant the picture faded into #1a1918 and then stepped to #121211 at
-   the section boundary -- a visible line right where the fade was supposed
-   to disappear. Landing the hero's own bottom on the Two models colour
-   instead means the photograph dissolves straight into that band. The stop
-   starts at 90%, just above the mask's 92%, so the two overlap rather than
-   meet. Everything above is untouched paper grey. */
-body[data-page="exchanges"] .sc-hero.has-background-media {
-  background:
-    linear-gradient(180deg, transparent 90%, #121211 100%),
-    var(--sc-paper);
-}
-
-/* Between the page grey (--sc-paper, #1a1918) and the near-black tried
-   earlier (--sc-dash-black, #0b0a09) -- roughly their midpoint by
-   luminance, 18 against 25 and 10. It is deliberately the same #121211 the
-   hero scrim's dense end already uses, so this band reads as a continuation
-   of the hero's shadowed side rather than a new tone. Scoped to exchanges;
-   the guides page's own .sc-section-dark is untouched. */
+/* This band's top tone exists to continue whatever the hero's bottom is, so
+   that the join reads as one surface rather than two. It was #121211, chosen
+   to match the bank-counter photograph's shadowed side; the vortex hero that
+   replaced it ends on #08090b, the same value the homepage uses, so that is
+   what this band starts from now. The orange bloom and the dissolve into the
+   paper section below are unchanged. Scoped to exchanges; the guides page's
+   own .sc-section-dark is untouched. */
 body[data-page="exchanges"] .sc-section-dark {
   background:
     radial-gradient(ellipse at 50% 52%, rgba(242, 138, 0, 0.065), transparent 58%),
     /* Flat at the top -- the hero's own bottom already fades to this exact
        value, so that join is seamless and a second fade would undo it. Only
        the bottom edge needs dissolving, into the paper section below. */
-    linear-gradient(180deg, #121211 0, #121211 calc(100% - 58px), var(--sc-paper) 100%);
+    linear-gradient(180deg, #08090b 0, #08090b calc(100% - 58px), var(--sc-paper) 100%);
 }
 
-body[data-page="exchanges"] .sc-hero-background-media::after {
-  background:
-    radial-gradient(circle at 76% 61%, rgba(255, 138, 0, 0.08) 0%, rgba(255, 138, 0, 0.02) 21%, transparent 37%),
-    /* Held near-opaque out to 44% rather than falling to 0.52 by 39%: the
-       headline's FIAT/BITCOIN words are outlined glyphs whose interiors are
-       a pale bill texture and an orange gradient, and those only read
-       against the near-black the homepage hero gives them. BITCOIN's right
-       edge reaches ~42% of the viewport, so the scrim has to still be dark
-       there or the words look hollow. Everything past 52% is unchanged, so
-       the counter, coins and warm bloom keep their original clarity. */
-    linear-gradient(106deg, rgba(18, 18, 17, 0.94) 0%, rgba(18, 18, 17, 0.9) 24%, rgba(18, 18, 17, 0.86) 40%, rgba(18, 18, 17, 0.52) 50%, rgba(18, 18, 17, 0.2) 60%, rgba(18, 18, 17, 0.04) 67%, transparent 74%),
-    /* Top darkening only. The bottom fade this layer used to carry is now
-       the image's own mask, shared with software -- keeping both stacked a
-       scrim fade on top of a masked photo, which read as a heavier, earlier
-       edge than the other two pages. */
-    linear-gradient(180deg, rgba(12, 12, 11, 0.08) 0%, transparent 30%);
+/* The vortex fades out over the hero's last third, so the band below has to
+   start inside that fade or the page shows a strip of empty black where the
+   video has already gone. Same device as the homepage, at this page's own
+   depth: the homepage clears a taller hero and pulls 148px, here 100px lands
+   the Two models eyebrow just under the vortex's centre.
+
+   Below 992px the hero stops being a full-bleed backdrop (see the 991px
+   block) and the overlap would eat the copy instead of empty space, so it
+   goes to zero there and the padding carries the spacing alone -- exactly
+   how the homepage steps down through the same breakpoints. */
+/* One value, two rules. The band below the hero is pulled up by it, and the
+   media control has to stay clear of it -- they were written independently at
+   -100px and 24px, and the control ended up inside the overlap, where it was
+   painted over and could not be clicked. Naming it once means they cannot
+   drift apart again. */
+body[data-page="exchanges"] {
+  --sc-hero-overlap: 100px;
 }
 
-body[data-page="exchanges"] .sc-hero.has-background-media .sc-hero-copy {
-  max-width: min(620px, 50%);
+body[data-page="exchanges"] .sc-hero + .sc-section {
+  position: relative;
+  z-index: 1;
+  margin-top: calc(-1 * var(--sc-hero-overlap));
+  padding-top: 70px;
 }
 
-body[data-page="exchanges"] .sc-hero-copy h1 {
-  max-width: 620px;
-  font-size: clamp(3.2rem, 5vw, 4.8rem);
-  line-height: 0.96;
-  letter-spacing: -0.035em;
+/* The control that starts and stops the vortex. It sits at the hero's own
+   bottom-right rather than inside .container, because the container's box ends
+   where the copy does -- roughly a third of the way down -- and a video
+   control belongs with the video.
+
+   44px square is the minimum comfortable touch target, and the glass matches
+   the action capsule above it so it reads as part of the hero rather than a
+   browser affordance that leaked through. */
+/* Clears the overlapping band rather than trying to out-stack it. The z-index
+   here cannot win that fight: .sc-hero sets isolation:isolate, so this button
+   is confined to the hero's own stacking context while the section below is a
+   sibling of the hero in the root one. Raising the hero instead would put its
+   opaque background over the band it is supposed to sit behind. Sitting above
+   the overlap is the fix; the z-index below only orders it against the hero's
+   own layers. */
+.sc-hero-media-toggle {
+  position: absolute;
+  z-index: 2;
+  right: 24px;
+  bottom: calc(var(--sc-hero-overlap, 0px) + 24px);
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background: rgba(8, 9, 11, 0.62);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
 }
 
-body[data-page="exchanges"] .sc-hero-copy h1 em {
-  display: inline-block;
-  margin-top: 0.08em;
+.sc-hero-media-toggle:hover {
+  border-color: rgba(255, 255, 255, 0.34);
+  background: rgba(8, 9, 11, 0.8);
 }
 
-body[data-page="exchanges"] .sc-hero-copy .sc-lead {
-  max-width: 570px;
+/* :focus-visible alone would leave keyboard users on browsers without it with
+   no ring at all, and this is the one control on the page that a mouse user
+   never needs to see focused. */
+.sc-hero-media-toggle:focus-visible {
+  outline: 2px solid #ff940f;
+  outline-offset: 3px;
+}
+
+/* One element drawn two ways. Playing shows the pause bars, paused shows the
+   play triangle -- the icon reports what pressing it will do, matching the
+   label that site-refresh.js keeps in step. */
+.sc-hero-media-toggle-icon {
+  position: relative;
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.sc-hero-media-toggle[data-playing="true"] .sc-hero-media-toggle-icon::before,
+.sc-hero-media-toggle[data-playing="true"] .sc-hero-media-toggle-icon::after {
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 14px;
+  border-radius: 1px;
+  background: rgba(255, 248, 229, 0.95);
+  content: "";
+}
+
+.sc-hero-media-toggle[data-playing="true"] .sc-hero-media-toggle-icon::before {
+  left: 1px;
+}
+
+.sc-hero-media-toggle[data-playing="true"] .sc-hero-media-toggle-icon::after {
+  right: 1px;
+}
+
+.sc-hero-media-toggle[data-playing="false"] .sc-hero-media-toggle-icon::before {
+  position: absolute;
+  top: 0;
+  left: 3px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 12px solid rgba(255, 248, 229, 0.95);
+  content: "";
+}
+
+@media (max-width: 575px) {
+  .sc-hero-media-toggle {
+    right: 12px;
+    bottom: calc(var(--sc-hero-overlap, 0px) + 12px);
+  }
+}
+
+/* With no source selected there is nothing to start, so the control has
+   nothing to offer and would be a button that does not work. The hero is a
+   still image in this mode, and reads as one. */
+@media (prefers-reduced-motion: reduce) {
+  .sc-hero-media-toggle {
+    display: none;
+  }
 }
 
 /* Exchange pricing changes too quickly for a normal evergreen callout. This
@@ -1494,8 +1570,7 @@ body[data-page="devices"] .sc-hero.has-background-media .sc-hero-copy {
   }
 }
 
-body[data-page="devices"] .sc-hero.has-background-media .sc-hero-copy :is(h1, .sc-lead, .sc-eyebrow),
-body[data-page="exchanges"] .sc-hero.has-background-media .sc-hero-copy :is(h1, .sc-lead, .sc-eyebrow) {
+body[data-page="devices"] .sc-hero.has-background-media .sc-hero-copy :is(h1, .sc-lead, .sc-eyebrow) {
   text-shadow:
     0 1px 3px rgba(0, 0, 0, 0.6),
     0 2px 14px rgba(0, 0, 0, 0.5);
@@ -1510,48 +1585,31 @@ body[data-page="exchanges"] .sc-hero.has-background-media .sc-hero-copy :is(h1, 
    on ::before and the glow/stroke on ::after, both of which declare their
    own text-shadow and so are unaffected by this reset. */
 body[data-page="devices"] .sc-hero-copy .sc-outlined-word,
-body[data-page="exchanges"] .sc-hero-copy .sc-outlined-word,
 body[data-page="glossary"] .sc-hero-copy .sc-outlined-word,
 body[data-page="devices"] .sc-hero-copy .sc-outlined-word .sc-word-fill,
-body[data-page="exchanges"] .sc-hero-copy .sc-outlined-word .sc-word-fill,
 body[data-page="glossary"] .sc-hero-copy .sc-outlined-word .sc-word-fill {
   text-shadow: none;
 }
 
 @media (max-width: 991px) {
-  body[data-page="devices"] .sc-hero.has-background-media,
-  body[data-page="exchanges"] .sc-hero.has-background-media {
+  body[data-page="devices"] .sc-hero.has-background-media {
     display: block;
     min-height: 0;
     padding: 70px 0 44px;
   }
 
-  body[data-page="devices"] .sc-hero-background-media,
-  body[data-page="exchanges"] .sc-hero-background-media {
+  body[data-page="devices"] .sc-hero-background-media {
     position: relative;
     inset: auto;
     height: clamp(180px, 34vw, 260px);
     margin-bottom: 30px;
   }
 
-  body[data-page="devices"] .sc-hero-background-media::after,
-  body[data-page="exchanges"] .sc-hero-background-media::after {
+  body[data-page="devices"] .sc-hero-background-media::after {
     background: linear-gradient(180deg, rgba(26, 25, 24, 0.55) 0%, transparent 34%, transparent 62%, rgba(26, 25, 24, 0.9) 94%, var(--sc-paper) 100%);
   }
 
-  body[data-page="exchanges"] .sc-hero-background-media::after {
-    background:
-      radial-gradient(circle at 72% 58%, rgba(255, 138, 0, 0.1), transparent 38%),
-      linear-gradient(180deg, rgba(26, 25, 24, 0.48) 0%, transparent 32%, transparent 58%, rgba(26, 25, 24, 0.88) 92%, var(--sc-paper) 100%);
-  }
-
-  body[data-page="exchanges"] .sc-hero-copy h1 {
-    max-width: 680px;
-    font-size: clamp(2.75rem, 8vw, 4.2rem);
-  }
-
-  body[data-page="devices"] .sc-hero.has-background-media .sc-hero-copy,
-  body[data-page="exchanges"] .sc-hero.has-background-media .sc-hero-copy {
+  body[data-page="devices"] .sc-hero.has-background-media .sc-hero-copy {
     max-width: none;
   }
 }
@@ -1668,7 +1726,8 @@ body[data-page="home"] .sc-hero .sc-eyebrow {
   line-height: 1;
 }
 
-body[data-page="home"] .sc-hero h1 {
+body[data-page="home"] .sc-hero h1,
+body[data-page="exchanges"] .sc-hero h1 {
   font-size: clamp(2rem, 4.5vw, 4.35rem);
 }
 
@@ -1996,7 +2055,8 @@ body[data-page="devices"] .sc-hero-flip {
   font-size: clamp(1.03rem, 2vw, 1.25rem);
 }
 
-body[data-page="home"] .sc-hero .sc-lead {
+body[data-page="home"] .sc-hero .sc-lead,
+body[data-page="exchanges"] .sc-hero .sc-lead {
   color: rgba(255, 255, 255, 1);
   text-shadow: 0 2px 7px rgba(0, 0, 0, 0.88);
 }
@@ -2011,7 +2071,8 @@ body[data-page="home"] .sc-hero .sc-lead {
 }
 
 @media (min-width: 992px) and (max-width: 1100px) {
-  body[data-page="home"] .sc-hero-background-media {
+  body[data-page="home"] .sc-hero-background-media,
+  body[data-page="exchanges"] .sc-hero-background-media {
     top: 72px;
   }
 }
@@ -2141,7 +2202,6 @@ body[data-page="guides"] .sc-guide-nav + .sc-section[hidden] + .sc-section {
    than tighten the page. It also sets where the first eyebrow lands, which
    is matched across the three pages. */
 body[data-page="devices"] .sc-hero + .sc-section,
-body[data-page="exchanges"] .sc-hero + .sc-section,
 body[data-page="software"] .sc-hero + .sc-section {
   padding-top: 62px;
 }
@@ -5494,12 +5554,14 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
      So: tighten the lead into a block (1.45, giving 24-29px), then clear that
      on both sides. The 575px block overrides all three again for phones,
      where the lead wraps furthest. */
-  body[data-page="home"] .sc-hero .sc-lead {
+  body[data-page="home"] .sc-hero .sc-lead,
+  body[data-page="exchanges"] .sc-hero .sc-lead {
     margin-top: 30px;
     line-height: 1.45;
   }
 
-  body[data-page="home"] .sc-hero-actions {
+  body[data-page="home"] .sc-hero-actions,
+  body[data-page="exchanges"] .sc-hero-actions {
     gap: 8px;
     margin-top: 38px;
   }
@@ -5547,7 +5609,8 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
                            the bottom-left corner.
      Left stays at 0 -- the spiral core is hard against the footage's left
      edge, so any negative offset cuts the focal point off. */
-  body[data-page="home"] .sc-hero.has-background-media {
+  body[data-page="home"] .sc-hero.has-background-media,
+  body[data-page="exchanges"] .sc-hero.has-background-media {
     /* These two govern 768-991px only -- the 767px block overrides them below.
 
        Unlike the phone block, min-height here is NOT tied to the art's height.
@@ -5567,7 +5630,8 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
     padding-bottom: 0;
   }
 
-  body[data-page="home"] .sc-hero-background-media {
+  body[data-page="home"] .sc-hero-background-media,
+  body[data-page="exchanges"] .sc-hero-background-media {
     left: 0;
     top: auto;
     bottom: 0;
@@ -5592,7 +5656,8 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
     mask-image: linear-gradient(180deg, #000 0%, #000 84%, rgba(0, 0, 0, 0.78) 89%, rgba(0, 0, 0, 0.42) 94%, rgba(0, 0, 0, 0.12) 97.5%, transparent 100%);
   }
 
-  body[data-page="home"] .sc-hero.has-background-media::after {
+  body[data-page="home"] .sc-hero.has-background-media::after,
+  body[data-page="exchanges"] .sc-hero.has-background-media::after {
     height: 130px;
     background: linear-gradient(180deg, rgba(8, 9, 11, 0) 0%, rgba(8, 9, 11, 0.16) 35%, rgba(8, 9, 11, 0.55) 65%, #08090b 100%);
   }
@@ -5604,16 +5669,25 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
      lands mid-gradient and reads as a hard line. Desktop can afford -148px
      precisely because its art is already masked out by that point. Starting
      the section at the hero's bottom lets the mask finish first. */
-  body[data-page="home"] .sc-hero + .sc-section {
+  /* The overlap goes to zero here, which also releases the media control back
+     to the hero's bottom edge -- see --sc-hero-overlap above. */
+  body[data-page="exchanges"] {
+    --sc-hero-overlap: 0px;
+  }
+
+  body[data-page="home"] .sc-hero + .sc-section,
+  body[data-page="exchanges"] .sc-hero + .sc-section {
     margin-top: 0;
     padding-top: 34px;
   }
 
-  body[data-page="home"] .sc-hero.has-background-media .sc-hero-copy {
+  body[data-page="home"] .sc-hero.has-background-media .sc-hero-copy,
+  body[data-page="exchanges"] .sc-hero.has-background-media .sc-hero-copy {
     transform: translateY(-20px);
   }
 
-  body[data-page="home"] .sc-hero-background-media :is(img, video) {
+  body[data-page="home"] .sc-hero-background-media :is(img, video),
+  body[data-page="exchanges"] .sc-hero-background-media :is(img, video) {
     object-fit: contain;
     object-position: left bottom;
     filter: none;
@@ -5633,7 +5707,8 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
      block further down the file, and that block must keep governing 992-1100
      so desktop is left alone. Matching its selector would lose on source
      order; one extra class wins without widening the range. */
-  body.site-refresh[data-page="home"] .sc-hero.has-background-media h1 {
+  body.site-refresh[data-page="home"] .sc-hero.has-background-media h1,
+  body.site-refresh[data-page="exchanges"] .sc-hero.has-background-media h1 {
     font-size: clamp(3.35rem, 7vw, 3.8rem);
   }
 
@@ -5643,7 +5718,8 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
      scaling. Next to a 45.6px h1 on a 768px-wide screen that reads thin.
      This scoped bump lets it grow across the band without touching phones
      (below 768) or desktop (992+). */
-  body[data-page="home"] .sc-hero .sc-lead {
+  body[data-page="home"] .sc-hero .sc-lead,
+  body[data-page="exchanges"] .sc-hero .sc-lead {
     font-size: clamp(1.13rem, 2.35vw, 1.25rem);
   }
 }
@@ -5653,12 +5729,14 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
    quietly overriding the 38px that block sets, which is what keeps the lead
    from colliding with the action row. Tablet now owns 768-991 outright. */
 @media (min-width: 992px) and (max-width: 1100px) {
-  body.site-refresh[data-page="home"] .sc-hero h1 {
+  body.site-refresh[data-page="home"] .sc-hero h1,
+  body.site-refresh[data-page="exchanges"] .sc-hero h1 {
     width: max-content;
     max-width: 100%;
   }
 
-  body.site-refresh[data-page="home"] .sc-hero-actions {
+  body.site-refresh[data-page="home"] .sc-hero-actions,
+  body.site-refresh[data-page="exchanges"] .sc-hero-actions {
     margin-top: 24px;
   }
 }
@@ -5672,7 +5750,8 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
    4.05rem (64.8px) at 1440 -- exactly what the base clamp gives at 1441, so
    there is no step there either. Above 1440 nothing changed. */
 @media (min-width: 992px) and (max-width: 1440px) {
-  body.site-refresh[data-page="home"] .sc-hero h1 {
+  body.site-refresh[data-page="home"] .sc-hero h1,
+  body.site-refresh[data-page="exchanges"] .sc-hero h1 {
     font-size: clamp(3.8rem, 4.5vw, 4.05rem);
   }
 }
@@ -5699,18 +5778,21 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
      side is cropped away to keep the vortex reading at a usable size in the
      bottom-left corner. The composition and the rules that build it come from
      the 991px block above -- only these two numbers change here. */
-  body[data-page="home"] .sc-hero.has-background-media {
+  body[data-page="home"] .sc-hero.has-background-media,
+  body[data-page="exchanges"] .sc-hero.has-background-media {
     --sc-hero-media-w: 195vw;
     min-height: calc(130vw + 175px);
     padding-bottom: 0;
   }
 
-  body[data-page="home"] .sc-hero.has-background-media::after {
+  body[data-page="home"] .sc-hero.has-background-media::after,
+  body[data-page="exchanges"] .sc-hero.has-background-media::after {
     height: 110px;
     background: linear-gradient(180deg, rgba(8, 9, 11, 0) 0%, rgba(8, 9, 11, 0.16) 35%, rgba(8, 9, 11, 0.55) 65%, #08090b 100%);
   }
 
-  body[data-page="home"] .sc-hero + .sc-section {
+  body[data-page="home"] .sc-hero + .sc-section,
+  body[data-page="exchanges"] .sc-hero + .sc-section {
     margin-top: 0;
     padding-top: 30px;
   }
@@ -5720,7 +5802,8 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
     background: #08090b;
   }
 
-  body[data-page="home"] .sc-hero.has-background-media .sc-hero-copy {
+  body[data-page="home"] .sc-hero.has-background-media .sc-hero-copy,
+  body[data-page="exchanges"] .sc-hero.has-background-media .sc-hero-copy {
     transform: translateY(-14px);
   }
 
@@ -6322,7 +6405,8 @@ body.site-refresh .sc-hero-actions .sc-btn-ghost:hover {
      about 10px clear of the navbar. Dropping the pull lets it breathe. The
      media no longer needs a matching shift: it is anchored at the hero's top
      edge like desktop, rather than offset to sit below the title. */
-  body.site-refresh[data-page="home"] .sc-hero.has-background-media .sc-hero-copy {
+  body.site-refresh[data-page="home"] .sc-hero.has-background-media .sc-hero-copy,
+  body.site-refresh[data-page="exchanges"] .sc-hero.has-background-media .sc-hero-copy {
     transform: none;
     margin-right: auto;
     margin-left: auto;
@@ -6334,25 +6418,29 @@ body.site-refresh .sc-hero-actions .sc-btn-ghost:hover {
      to the h1's max-content width (set by the longer "ENTER BITCOIN"), so the
      shorter "EXIT FIAT" needs justify-content to sit centred under it rather
      than flush left. */
-  body.site-refresh[data-page="home"] .sc-hero h1 {
+  body.site-refresh[data-page="home"] .sc-hero h1,
+  body.site-refresh[data-page="exchanges"] .sc-hero h1 {
     margin-right: auto;
     margin-left: auto;
   }
 
-  body.site-refresh[data-page="home"] .sc-hero-command-line {
+  body.site-refresh[data-page="home"] .sc-hero-command-line,
+  body.site-refresh[data-page="exchanges"] .sc-hero-command-line {
     justify-content: center;
   }
 
   /* Trimmed from the 108px the ≤767px rule sets, tightening the navbar-to-
      title gap to 26px. Scoped to the home page so other heroes keep theirs. */
-  body.site-refresh[data-page="home"] .sc-hero {
+  body.site-refresh[data-page="home"] .sc-hero,
+  body.site-refresh[data-page="exchanges"] .sc-hero {
     padding-top: 96px;
   }
 
   /* The vw term carries the increase, not the floor: at 320px the two lines
      already sit within ~2px of the container, so raising the minimum would
      overflow the narrowest phones. Growth starts once there is room for it. */
-  body.site-refresh[data-page="home"] .sc-hero h1 {
+  body.site-refresh[data-page="home"] .sc-hero h1,
+  body.site-refresh[data-page="exchanges"] .sc-hero h1 {
     width: max-content;
     max-width: 100%;
     font-size: clamp(2.3rem, 11.2vw, 2.95rem);
@@ -6362,7 +6450,8 @@ body.site-refresh .sc-hero-actions .sc-btn-ghost:hover {
      keeps the signs clear of each other on its own, so this inherits the
      same 0.18em desktop uses. */
 
-  body.site-refresh[data-page="home"] .sc-hero .sc-lead {
+  body.site-refresh[data-page="home"] .sc-hero .sc-lead,
+  body.site-refresh[data-page="exchanges"] .sc-hero .sc-lead {
     max-width: 340px;
     /* The lead sits directly under the title again, over the art rather than
        below it -- the old rule pushed it past a full media height because the
@@ -6391,7 +6480,8 @@ body.site-refresh .sc-hero-actions .sc-btn-ghost:hover {
     display: block;
   }
 
-  body.site-refresh[data-page="home"] .sc-home-lead-statement {
+  body.site-refresh[data-page="home"] .sc-home-lead-statement,
+  body.site-refresh[data-page="exchanges"] .sc-home-lead-statement {
     display: inline-block;
     margin-bottom: 2px;
   }
@@ -6443,18 +6533,49 @@ body.site-refresh .sc-hero-actions .sc-btn-ghost:hover {
     letter-spacing: 0.02em;
   }
 
+  /* Exchanges keeps the capsule but not the side-by-side row above, because
+     the measurement that rule relies on is of the homepage's labels. "Explore
+     Guides" and "Get Help" fit a phone two-up; "Compare exchanges" and
+     "Withdrawal guide" do not -- each wrapped to two lines, turning the pair
+     into an 83px slab that read as hanging below the copy rather than
+     belonging to it. So this page takes the site-wide phone default the
+     homepage is the exception to: one button per row, full width.
+
+     30px above matches the gap between the title and the lead, so the three
+     blocks of hero copy sit on one rhythm instead of the buttons drifting
+     low. Measured at the tightest case (320px): both labels hold one line. */
+  body.site-refresh[data-page="exchanges"] .sc-hero-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    margin: 30px auto 16px;
+    padding: 6px;
+  }
+
+  body.site-refresh[data-page="exchanges"] .sc-hero-actions .sc-btn {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 18px;
+    font-size: 0.9rem;
+    font-weight: 650;
+    letter-spacing: 0.02em;
+  }
+
   /* Phones crop hardest -- roughly the left 60% of the art -- so the vortex
      still reads at size in the bottom-left corner. Composition is inherited
      from the 991px block; these are the same two numbers at a phone scale.
      The +150px keeps the art running up behind the title rather than starting
      below it, so the copy sits over the art the way it does on desktop. */
-  body.site-refresh[data-page="home"] .sc-hero.has-background-media {
+  body.site-refresh[data-page="home"] .sc-hero.has-background-media,
+  body.site-refresh[data-page="exchanges"] .sc-hero.has-background-media {
     --sc-hero-media-w: 217vw;
     min-height: calc(144.67vw + 195px);
     padding-bottom: 0;
   }
 
-  body.site-refresh[data-page="home"] .sc-hero + .sc-section {
+  body.site-refresh[data-page="home"] .sc-hero + .sc-section,
+  body.site-refresh[data-page="exchanges"] .sc-hero + .sc-section {
     margin-top: 0;
     padding-top: 24px;
   }
