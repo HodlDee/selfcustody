@@ -713,7 +713,6 @@ body[data-page="software"] .sc-hero.has-background-media .sc-hero-copy :is(h1, .
 }
 
 /* The homepage uses the animated cash vortex as its hero environment. */
-body[data-page="home"] .sc-hero.has-background-media,
 body[data-page="exchanges"] .sc-hero.has-background-media {
   min-height: clamp(980px, calc(66.667vw + 193px), 1115px);
   padding-bottom: 120px;
@@ -721,7 +720,6 @@ body[data-page="exchanges"] .sc-hero.has-background-media {
   background: #08090b;
 }
 
-body[data-page="home"] .sc-hero-background-media,
 body[data-page="exchanges"] .sc-hero-background-media {
   position: absolute;
   z-index: -2;
@@ -746,7 +744,6 @@ body[data-page="exchanges"] .sc-hero-background-media {
   mask-image: linear-gradient(180deg, #000 0%, #000 68%, rgba(0, 0, 0, 0.82) 78%, rgba(0, 0, 0, 0.45) 88%, rgba(0, 0, 0, 0.14) 95%, transparent 100%);
 }
 
-body[data-page="home"] .sc-hero-background-media :is(img, video),
 body[data-page="exchanges"] .sc-hero-background-media :is(img, video) {
   display: block;
   width: 100%;
@@ -755,7 +752,6 @@ body[data-page="exchanges"] .sc-hero-background-media :is(img, video) {
   object-position: center;
 }
 
-body[data-page="home"] .sc-hero-background-media::after,
 body[data-page="exchanges"] .sc-hero-background-media::after {
   position: absolute;
   inset: -1px;
@@ -766,7 +762,6 @@ body[data-page="exchanges"] .sc-hero-background-media::after {
   pointer-events: none;
 }
 
-body[data-page="home"] .sc-hero.has-background-media::after,
 body[data-page="exchanges"] .sc-hero.has-background-media::after {
   position: absolute;
   z-index: -1;
@@ -787,26 +782,12 @@ body[data-page="exchanges"] .sc-hero.has-background-media::after {
   pointer-events: none;
 }
 
-body[data-page="home"] .sc-hero.has-background-media .sc-hero-copy,
 body[data-page="exchanges"] .sc-hero.has-background-media .sc-hero-copy {
   max-width: 730px;
   transform: translateY(-44px);
 }
 
-body[data-page="home"] .sc-hero + .sc-section {
-  position: relative;
-  z-index: 1;
-  margin-top: -148px;
-  padding-top: 42px;
-  background: #08090b;
-}
 
-body[data-page="home"] .sc-hero + .sc-section.sc-path-section {
-  overflow: hidden;
-  isolation: isolate;
-  padding-bottom: 64px;
-  background: #08090b;
-}
 
 body[data-page="home"] .sc-mission-section {
   background: #08090b;
@@ -1687,10 +1668,6 @@ body[data-page="glossary"] .sc-hero-copy .sc-outlined-word .sc-word-fill {
   color: var(--sc-link);
 }
 
-body[data-page="home"] .sc-hero .sc-eyebrow {
-  margin-bottom: 44px;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
-}
 
 .sc-eyebrow::before {
   width: 30px;
@@ -1713,20 +1690,7 @@ body[data-page="home"] .sc-hero .sc-eyebrow {
   font-style: normal;
 }
 
-.site-refresh[data-page="home"] .sc-hero h1 em {
-  display: inline-block;
-  padding: 0 0.13em 0.04em;
-  color: #d8292f;
-  background: rgba(216, 41, 47, 0.1);
-  border: 2px solid currentColor;
-  border-radius: 0.14em;
-  box-shadow:
-    0 0 5px rgba(216, 41, 47, 0.4),
-    0 0 24px rgba(216, 41, 47, 0.34);
-  line-height: 1;
-}
 
-body[data-page="home"] .sc-hero h1,
 body[data-page="exchanges"] .sc-hero h1 {
   font-size: clamp(2rem, 4.5vw, 4.35rem);
 }
@@ -2055,7 +2019,6 @@ body[data-page="devices"] .sc-hero-flip {
   font-size: clamp(1.03rem, 2vw, 1.25rem);
 }
 
-body[data-page="home"] .sc-hero .sc-lead,
 body[data-page="exchanges"] .sc-hero .sc-lead {
   color: rgba(255, 255, 255, 1);
   text-shadow: 0 2px 7px rgba(0, 0, 0, 0.88);
@@ -2071,7 +2034,6 @@ body[data-page="exchanges"] .sc-hero .sc-lead {
 }
 
 @media (min-width: 992px) and (max-width: 1100px) {
-  body[data-page="home"] .sc-hero-background-media,
   body[data-page="exchanges"] .sc-hero-background-media {
     top: 72px;
   }
@@ -5494,9 +5456,6 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
      this shared rule would otherwise pull tablet down with it -- lock
      tablet at its existing value (phone still gets its own override
      below). */
-  body[data-page="home"] .sc-hero .sc-eyebrow {
-    margin-bottom: 56px;
-  }
 
   .sc-outlined-word {
     letter-spacing: 0.12em;
@@ -5554,13 +5513,11 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
      So: tighten the lead into a block (1.45, giving 24-29px), then clear that
      on both sides. The 575px block overrides all three again for phones,
      where the lead wraps furthest. */
-  body[data-page="home"] .sc-hero .sc-lead,
   body[data-page="exchanges"] .sc-hero .sc-lead {
     margin-top: 30px;
     line-height: 1.45;
   }
 
-  body[data-page="home"] .sc-hero-actions,
   body[data-page="exchanges"] .sc-hero-actions {
     gap: 8px;
     margin-top: 38px;
@@ -5609,7 +5566,6 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
                            the bottom-left corner.
      Left stays at 0 -- the spiral core is hard against the footage's left
      edge, so any negative offset cuts the focal point off. */
-  body[data-page="home"] .sc-hero.has-background-media,
   body[data-page="exchanges"] .sc-hero.has-background-media {
     /* These two govern 768-991px only -- the 767px block overrides them below.
 
@@ -5630,7 +5586,6 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
     padding-bottom: 0;
   }
 
-  body[data-page="home"] .sc-hero-background-media,
   body[data-page="exchanges"] .sc-hero-background-media {
     left: 0;
     top: auto;
@@ -5656,7 +5611,6 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
     mask-image: linear-gradient(180deg, #000 0%, #000 84%, rgba(0, 0, 0, 0.78) 89%, rgba(0, 0, 0, 0.42) 94%, rgba(0, 0, 0, 0.12) 97.5%, transparent 100%);
   }
 
-  body[data-page="home"] .sc-hero.has-background-media::after,
   body[data-page="exchanges"] .sc-hero.has-background-media::after {
     height: 130px;
     background: linear-gradient(180deg, rgba(8, 9, 11, 0) 0%, rgba(8, 9, 11, 0.16) 35%, rgba(8, 9, 11, 0.55) 65%, #08090b 100%);
@@ -5675,18 +5629,15 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
     --sc-hero-overlap: 0px;
   }
 
-  body[data-page="home"] .sc-hero + .sc-section,
   body[data-page="exchanges"] .sc-hero + .sc-section {
     margin-top: 0;
     padding-top: 34px;
   }
 
-  body[data-page="home"] .sc-hero.has-background-media .sc-hero-copy,
   body[data-page="exchanges"] .sc-hero.has-background-media .sc-hero-copy {
     transform: translateY(-20px);
   }
 
-  body[data-page="home"] .sc-hero-background-media :is(img, video),
   body[data-page="exchanges"] .sc-hero-background-media :is(img, video) {
     object-fit: contain;
     object-position: left bottom;
@@ -5707,7 +5658,6 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
      block further down the file, and that block must keep governing 992-1100
      so desktop is left alone. Matching its selector would lose on source
      order; one extra class wins without widening the range. */
-  body.site-refresh[data-page="home"] .sc-hero.has-background-media h1,
   body.site-refresh[data-page="exchanges"] .sc-hero.has-background-media h1 {
     font-size: clamp(3.35rem, 7vw, 3.8rem);
   }
@@ -5718,7 +5668,6 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
      scaling. Next to a 45.6px h1 on a 768px-wide screen that reads thin.
      This scoped bump lets it grow across the band without touching phones
      (below 768) or desktop (992+). */
-  body[data-page="home"] .sc-hero .sc-lead,
   body[data-page="exchanges"] .sc-hero .sc-lead {
     font-size: clamp(1.13rem, 2.35vw, 1.25rem);
   }
@@ -5729,13 +5678,11 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
    quietly overriding the 38px that block sets, which is what keeps the lead
    from colliding with the action row. Tablet now owns 768-991 outright. */
 @media (min-width: 992px) and (max-width: 1100px) {
-  body.site-refresh[data-page="home"] .sc-hero h1,
   body.site-refresh[data-page="exchanges"] .sc-hero h1 {
     width: max-content;
     max-width: 100%;
   }
 
-  body.site-refresh[data-page="home"] .sc-hero-actions,
   body.site-refresh[data-page="exchanges"] .sc-hero-actions {
     margin-top: 24px;
   }
@@ -5750,7 +5697,6 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
    4.05rem (64.8px) at 1440 -- exactly what the base clamp gives at 1441, so
    there is no step there either. Above 1440 nothing changed. */
 @media (min-width: 992px) and (max-width: 1440px) {
-  body.site-refresh[data-page="home"] .sc-hero h1,
   body.site-refresh[data-page="exchanges"] .sc-hero h1 {
     font-size: clamp(3.8rem, 4.5vw, 4.05rem);
   }
@@ -5764,9 +5710,6 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
     padding-top: 108px;
   }
 
-  body[data-page="home"] .sc-hero .sc-eyebrow {
-    margin-bottom: 32px;
-  }
 
   /* No band-specific spacing here any more. This range once had the tightest
      gaps on the site (12px/16px, derived from its 32px h1 -- the smallest
@@ -5778,31 +5721,23 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
      side is cropped away to keep the vortex reading at a usable size in the
      bottom-left corner. The composition and the rules that build it come from
      the 991px block above -- only these two numbers change here. */
-  body[data-page="home"] .sc-hero.has-background-media,
   body[data-page="exchanges"] .sc-hero.has-background-media {
     --sc-hero-media-w: 195vw;
     min-height: calc(130vw + 175px);
     padding-bottom: 0;
   }
 
-  body[data-page="home"] .sc-hero.has-background-media::after,
   body[data-page="exchanges"] .sc-hero.has-background-media::after {
     height: 110px;
     background: linear-gradient(180deg, rgba(8, 9, 11, 0) 0%, rgba(8, 9, 11, 0.16) 35%, rgba(8, 9, 11, 0.55) 65%, #08090b 100%);
   }
 
-  body[data-page="home"] .sc-hero + .sc-section,
   body[data-page="exchanges"] .sc-hero + .sc-section {
     margin-top: 0;
     padding-top: 30px;
   }
 
-  body[data-page="home"] .sc-hero + .sc-section.sc-path-section {
-    padding-bottom: 125px;
-    background: #08090b;
-  }
 
-  body[data-page="home"] .sc-hero.has-background-media .sc-hero-copy,
   body[data-page="exchanges"] .sc-hero.has-background-media .sc-hero-copy {
     transform: translateY(-14px);
   }
@@ -6444,7 +6379,6 @@ body.site-refresh .sc-hero-actions .sc-btn-ghost:hover {
      about 10px clear of the navbar. Dropping the pull lets it breathe. The
      media no longer needs a matching shift: it is anchored at the hero's top
      edge like desktop, rather than offset to sit below the title. */
-  body.site-refresh[data-page="home"] .sc-hero.has-background-media .sc-hero-copy,
   body.site-refresh[data-page="exchanges"] .sc-hero.has-background-media .sc-hero-copy {
     transform: none;
     margin-right: auto;
@@ -6457,20 +6391,17 @@ body.site-refresh .sc-hero-actions .sc-btn-ghost:hover {
      to the h1's max-content width (set by the longer "ENTER BITCOIN"), so the
      shorter "EXIT FIAT" needs justify-content to sit centred under it rather
      than flush left. */
-  body.site-refresh[data-page="home"] .sc-hero h1,
   body.site-refresh[data-page="exchanges"] .sc-hero h1 {
     margin-right: auto;
     margin-left: auto;
   }
 
-  body.site-refresh[data-page="home"] .sc-hero-command-line,
   body.site-refresh[data-page="exchanges"] .sc-hero-command-line {
     justify-content: center;
   }
 
   /* Trimmed from the 108px the ≤767px rule sets, tightening the navbar-to-
      title gap to 26px. Scoped to the home page so other heroes keep theirs. */
-  body.site-refresh[data-page="home"] .sc-hero,
   body.site-refresh[data-page="exchanges"] .sc-hero {
     padding-top: 96px;
   }
@@ -6478,7 +6409,6 @@ body.site-refresh .sc-hero-actions .sc-btn-ghost:hover {
   /* The vw term carries the increase, not the floor: at 320px the two lines
      already sit within ~2px of the container, so raising the minimum would
      overflow the narrowest phones. Growth starts once there is room for it. */
-  body.site-refresh[data-page="home"] .sc-hero h1,
   body.site-refresh[data-page="exchanges"] .sc-hero h1 {
     width: max-content;
     max-width: 100%;
@@ -6489,7 +6419,6 @@ body.site-refresh .sc-hero-actions .sc-btn-ghost:hover {
      keeps the signs clear of each other on its own, so this inherits the
      same 0.18em desktop uses. */
 
-  body.site-refresh[data-page="home"] .sc-hero .sc-lead,
   body.site-refresh[data-page="exchanges"] .sc-hero .sc-lead {
     max-width: 340px;
     /* The lead sits directly under the title again, over the art rather than
@@ -6515,11 +6444,7 @@ body.site-refresh .sc-hero-actions .sc-btn-ghost:hover {
     text-align: center;
   }
 
-  body.site-refresh[data-page="home"] .sc-mobile-lead-break {
-    display: block;
-  }
 
-  body.site-refresh[data-page="home"] .sc-home-lead-statement,
   body.site-refresh[data-page="exchanges"] .sc-home-lead-statement {
     display: inline-block;
     margin-bottom: 2px;
@@ -6545,32 +6470,12 @@ body.site-refresh .sc-hero-actions .sc-btn-ghost:hover {
      its padding is the inset between the buttons and a *visible* border, not
      part of the gap above it. Zeroing three sides of it pushed the buttons
      flush against that border. The margin alone is the gap. */
-  body.site-refresh[data-page="home"] .sc-hero-actions {
-    width: max-content;
-    max-width: 100%;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin: clamp(33px, 9.9vw, 42px) auto 16px;
-    padding: 6px;
-  }
 
   /* Was 40px tall at 0.78rem -- under the 44px minimum touch target, and small
      enough that the pair read as a caption rather than the hero's actions.
      48px clears the guideline with room; the type and padding move with it.
      Measured against the tightest case (320px viewport): the two buttons come
      to ~252px inside a ~282px capsule, so it still fits without wrapping. */
-  body.site-refresh[data-page="home"] .sc-hero-actions .sc-btn {
-    width: auto;
-    min-width: 0;
-    min-height: 48px;
-    padding: 10px 18px;
-    font-size: 0.86rem;
-    font-weight: 650;
-    letter-spacing: 0.02em;
-  }
 
   /* Exchanges keeps the capsule but not the side-by-side row above, because
      the measurement that rule relies on is of the homepage's labels. "Explore
@@ -6606,14 +6511,12 @@ body.site-refresh .sc-hero-actions .sc-btn-ghost:hover {
      from the 991px block; these are the same two numbers at a phone scale.
      The +150px keeps the art running up behind the title rather than starting
      below it, so the copy sits over the art the way it does on desktop. */
-  body.site-refresh[data-page="home"] .sc-hero.has-background-media,
   body.site-refresh[data-page="exchanges"] .sc-hero.has-background-media {
     --sc-hero-media-w: 217vw;
     min-height: calc(144.67vw + 195px);
     padding-bottom: 0;
   }
 
-  body.site-refresh[data-page="home"] .sc-hero + .sc-section,
   body.site-refresh[data-page="exchanges"] .sc-hero + .sc-section {
     margin-top: 0;
     padding-top: 24px;
@@ -12987,7 +12890,6 @@ body[data-page="home"] .sc-home-compare-card .sc-text-link {
 /* Homepage integration pass: carry the cinematic hero language through the
    new overview sections instead of dropping into the site's generic card UI. */
 body[data-page="home"] .sc-home-explore-section,
-body[data-page="home"] .sc-home-safe-path-section,
 body[data-page="home"] .sc-home-featured-section,
 body[data-page="home"] .sc-home-tool-section,
 body[data-page="home"] .sc-home-trust-section {
@@ -13019,10 +12921,6 @@ body[data-page="home"] .sc-home-tool-section {
 
 /* .sc-section-dark centres this wrapper; keep that here rather than inherit a
    start-aligned button from .sc-tool-actions. */
-body[data-page="home"] .sc-home-tool-section .sc-hero-actions {
-  margin-right: auto;
-  margin-left: auto;
-}
 
 .sc-home-section-word {
   position: absolute;
@@ -13173,25 +13071,8 @@ body[data-page="home"] .sc-home-tool-section .sc-hero-actions {
 
 /* Keep the photograph confined to the First steps column, as a portrait
    emerging softly from the section's dark field. */
-body[data-page="home"] .sc-home-safe-path-section {
-  padding-top: 48px;
-  padding-bottom: 8px;
-  background: linear-gradient(180deg, #08090b, #10100f 52%, #08090b);
-}
 
-body[data-page="home"] .sc-hero + .sc-home-safe-path-section {
-  padding-top: 48px;
-  background: linear-gradient(180deg, #08090b, #10100f 52%, #08090b);
-}
 
-body[data-page="home"] .sc-home-safe-path-section::before {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background: repeating-linear-gradient(122deg, transparent 0 110px, rgba(255, 138, 0, 0.028) 111px, transparent 112px 225px);
-  content: "";
-  pointer-events: none;
-}
 
 .sc-home-sticky-intro p {
   color: rgba(255, 255, 255, 0.7);
@@ -13217,11 +13098,6 @@ body[data-page="home"] .sc-home-safe-path-section::before {
 }
 
 @media (min-width: 992px) {
-  body[data-page="home"] .sc-home-safe-path-section,
-  body[data-page="home"] .sc-hero + .sc-home-safe-path-section {
-    overflow: visible;
-    padding-top: 24px;
-  }
 
   .sc-home-safe-path-section .row {
     align-items: stretch !important;
@@ -13850,7 +13726,6 @@ body[data-page="home"] .sc-home-help-section {
 
 @media (max-width: 991px) {
   body[data-page="home"] .sc-home-explore-section,
-  body[data-page="home"] .sc-home-safe-path-section,
   body[data-page="home"] .sc-home-compare-section,
   body[data-page="home"] .sc-home-featured-section,
   body[data-page="home"] .sc-home-tool-section,
@@ -13859,9 +13734,6 @@ body[data-page="home"] .sc-home-help-section {
     padding-bottom: 68px;
   }
 
-  body[data-page="home"] .sc-home-safe-path-section {
-    padding-bottom: 16px;
-  }
 
   body[data-page="home"] .sc-home-explore-section {
     padding-top: 40px;
@@ -13912,9 +13784,6 @@ body[data-page="home"] .sc-home-help-section {
     border-bottom: 1px solid rgba(255, 255, 255, 0.075);
   }
 
-  body[data-page="home"] .sc-hero + .sc-section.sc-path-section {
-    padding-bottom: 12px;
-  }
 
   .sc-home-section-word {
     top: 28px;
