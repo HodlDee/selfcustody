@@ -3171,7 +3171,7 @@
     if (homeStepPanel) revealWhenSeen(homeStepPanel);
 
     const revealTargets = document.querySelectorAll(
-      "#main-content .sc-card, #main-content .sc-detail, #main-content .sc-step:not(.sc-home-step-link), " +
+      "#main-content .sc-card:not(.sc-dash-tile), #main-content .sc-detail, #main-content .sc-step:not(.sc-home-step-link), " +
       "#main-content .sc-callout, #main-content .sc-section-head, #main-content .sc-table-wrap"
     );
 
