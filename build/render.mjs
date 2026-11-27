@@ -76,6 +76,7 @@ const toLF = text => text.replace(/\r\n/g, '\n');
    dashboard markup wrapped with block-probe.js. */
 const FILES = {
   'index.html': 'home',
+  'launch.html': 'launch',
   'guides.html': 'guides',
   'glossary.html': 'glossary',
   'devices.html': 'devices',
@@ -88,7 +89,7 @@ const FILES = {
   'block-demo.html': 'dashboard',
 };
 
-const SITE = 'https://selfcustody.ca';
+const SITE = 'https://selfcustody.io';
 
 /* The cache key stamped onto every versioned asset link, derived from the
    bytes of the assets themselves.
@@ -114,11 +115,44 @@ const VERSIONED_ASSETS = [
   'docs/assets/css/style.css',
   'docs/assets/css/site-refresh.css',
   'docs/assets/js/site-refresh.js',
+  'docs/assets/js/page-transitions.js',
+  /* The journey's own assets. Without them in the digest the ?v= they carry
+     never moves, so an edit to the cockpit or the arrival reaches nobody who
+     already holds the old copy -- which is exactly what happened while this was
+     being built: a corrected stylesheet sat on disk while the browser went on
+     using its cached one, and the fix looked broken. */
+  'docs/assets/css/cockpit-journey.css',
+  'docs/assets/css/cutscenes-toggle.css',
+  'docs/assets/css/quickstart-galaxy-arrival.css',
+  'docs/assets/css/quickstart-galaxy-hero.css',
+  'docs/assets/css/launch-hero.css',
+  'docs/assets/css/rocket-launch-transition.css',
+  'docs/assets/js/launch-hero.js',
+  'docs/assets/js/cockpit-journey.js',
+  'docs/assets/js/cockpit-menu-orbit.js',
+  'docs/assets/js/cutscenes-toggle.js',
+  'docs/assets/js/home-entrance.js',
+  'docs/assets/js/launch-sequence.js',
+  'docs/assets/js/quickstart-galaxy-hero.js',
+  'docs/assets/js/quickstart-opening-scene.js',
+  /* The cockpit scene's own stylesheets. These carried hand-written versions
+     -- v=17, v=sun-finisher-2 -- frozen at whatever each was when last edited,
+     so a change to any of them reached nobody already holding the old copy. */
+  'docs/assets/css/cockpit-blink.css',
+  'docs/assets/css/cockpit-directory.css',
+  'docs/assets/css/cockpit-flight.css',
+  'docs/assets/css/cockpit-hub-directory.css',
+  'docs/assets/css/cockpit-hub.css',
+  'docs/assets/css/cockpit-launch-arrival.css',
+  'docs/assets/css/cockpit-navigation.css',
+  'docs/assets/css/cockpit-shell.css',
+  'docs/assets/css/cockpit-hover.css',
+  'docs/assets/js/cockpit-scene.js',
 ];
 
 const ASSET_VERSION = assetDigest(VERSIONED_ASSETS);
 
-const ASSET_QUERY = /(assets\/(?:vendor\/bootstrap-icons\/bootstrap-icons\.css|css\/(?:style|site-refresh)\.css|js\/site-refresh\.js)\?v=)[^"']+/g;
+const ASSET_QUERY = /(assets\/(?:vendor\/bootstrap-icons\/bootstrap-icons\.css|css\/(?:style|site-refresh|cockpit-journey|cutscenes-toggle|quickstart-galaxy-arrival|quickstart-galaxy-hero|launch-hero|rocket-launch-transition|cockpit-blink|cockpit-directory|cockpit-flight|cockpit-hub-directory|cockpit-hub|cockpit-launch-arrival|cockpit-navigation|cockpit-shell|cockpit-hover)\.css|js\/(?:page-transitions|site-refresh|cockpit-journey|cockpit-menu-orbit|cutscenes-toggle|home-entrance|launch-sequence|launch-hero|quickstart-galaxy-hero|quickstart-opening-scene|cockpit-scene)\.js)\?v=)[^"']+/g;
 
 /* The whole container block, anchored on the <noscript> that always follows it.
    A non-greedy match on </div> would work on the empty shell but not on an
@@ -136,6 +170,9 @@ const ASSET_QUERY = /(assets\/(?:vendor\/bootstrap-icons\/bootstrap-icons\.css|c
    written separately and deliberately untouched: its bytes are published as a
    SHA-256 and signed by an attestation, so "harmless formatting" is exactly
    the kind of change that must not reach it. */
+const withPageTransitions = (html, base = '') => html
+  .replace(/[ \t]*<script src="(?:\.\.\/)?assets\/js\/page-transitions\.js[^"]*"><\/script>\r?\n?/g, '')
+  .replace('</head>', `  <script src="${base}assets/js/page-transitions.js?v=${ASSET_VERSION}"></script>\n</head>`);
 const tidy = html => html.replace(/[ \t]+$/gm, '');
 
 const SHELL = /<div id="site-header">[\s\S]*<\/div>(?=\s*<noscript)/;
@@ -185,14 +222,31 @@ for (const [file, key] of Object.entries(FILES)) {
     `    <div id="site-footer">${renderFooter()}</div>`;
 
   let out = html.replace(SHELL, () => filled);
+  // Reload the scene document with its styles, including when reverting a layout.
+  out = out.replace(/src="cockpit-scene\.html(?:\?[^"]*)?"/g,
+    `src="cockpit-scene.html?nav=1&v=${ASSET_VERSION}"`);
   if (NOSCRIPT.test(out)) out = out.replace(NOSCRIPT, () => noscriptFor(key));
-  out = tidy(out);
+  out = tidy(withPageTransitions(out));
   if (out !== source) {
     writeFileSync(path, out);
     changed++;
   }
   console.log(`  ${file.padEnd(16)} ${Math.round(out.length / 1024)} KB`);
 }
+/* cockpit-scene.html carries no shell -- the journey frames it, so it has no
+   header or footer of its own and is not in FILES. It does reference versioned
+   assets, and nothing rewrote them, so its ?v= sat frozen at whatever was typed
+   by hand. Stamp it here rather than giving it a shell it does not want. */
+for (const bare of ['docs/cockpit-scene.html']) {
+  if (!existsSync(bare)) continue;
+  const before = readFileSync(bare, 'utf8');
+  const after = before.replace(ASSET_QUERY, `$1${ASSET_VERSION}`);
+  if (after !== before) {
+    writeFileSync(bare, after);
+    console.log(`  ${bare.replace('docs/', '').padEnd(16)} asset versions stamped`);
+  }
+}
+
 console.log(`\n${changed} file(s) written`);
 
 /* ---- guide pages --------------------------------------------------------
@@ -207,7 +261,7 @@ const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
 
 const guideHead = guide => {
   const url = `${SITE}/guides/${guide.slug}.html`;
-  const title = `${esc(guide.title)} | SelfCustody.ca`;
+  const title = `${esc(guide.title)} | SelfCustody.io`;
   const desc = esc(guide.summary);
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -218,7 +272,7 @@ const guideHead = guide => {
     datePublished: guide.updated,
     dateModified: guide.updated,
     inLanguage: 'en-CA',
-    publisher: { '@type': 'Organization', name: 'SelfCustody.ca', url: `${SITE}/` },
+    publisher: { '@type': 'Organization', name: 'SelfCustody.io', url: `${SITE}/` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': url }
   };
 
@@ -233,7 +287,7 @@ const guideHead = guide => {
   <link rel="canonical" href="${url}">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="en_CA">
-  <meta property="og:site_name" content="SelfCustody.ca">
+  <meta property="og:site_name" content="SelfCustody.io">
   <meta property="og:title" content="${title}">
   <meta property="og:description" content="${desc}">
   <meta property="og:url" content="${url}">
@@ -241,10 +295,10 @@ const guideHead = guide => {
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1406">
   <meta property="og:image:height" content="703">
-  <meta property="og:image:alt" content="SelfCustody.ca beside an open bank vault on a dark brick wall">
+  <meta property="og:image:alt" content="SelfCustody.io beside an open bank vault on a dark brick wall">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="${SITE}/assets/img/social-preview.jpg?v=5">
-  <meta name="twitter:image:alt" content="SelfCustody.ca beside an open bank vault on a dark brick wall">
+  <meta name="twitter:image:alt" content="SelfCustody.io beside an open bank vault on a dark brick wall">
   <link rel="icon" type="image/svg+xml" href="../assets/img/self-custody-favicon.svg">
   <link rel="icon" href="../assets/img/favicon.png">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
@@ -295,18 +349,59 @@ if (dupes.length) {
 if (existsSync('docs/guides')) rmSync('docs/guides', { recursive: true });
 mkdirSync('docs/guides', { recursive: true });
 
+/* The Quickstart guide is where the cockpit's flight lands, so it carries the
+   galaxy arrival: a nebula behind the title, the staggered reveal of the
+   heading and opening lines, and a control to watch it again.
+
+   It is on the guide itself rather than injected by the journey, for two
+   reasons. The reveal has to survive Cutscenes being off -- that switch turns
+   off travel, not the arrival -- and the guide has to look the same reached
+   directly from a search result as it does at the end of a flight. The journey
+   still injects its own arrival stylesheet on top of this for the blend out of
+   the video; that part genuinely belongs to the transition, not the page. */
+const GALAXY_GUIDE = 'quickstart';
+
 for (const guide of publishedGuides) {
-  const html = `${guideHead(guide)}
-<body class="site-refresh" data-page="guides">
+  const galaxy = guide.slug === GALAXY_GUIDE;
+  /* The cutscenes switch travels with the guide. Someone who reaches it
+     directly, rather than by flying there, still needs the same control in the
+     same place -- and it reads the same saved preference, so the state they set
+     on the homepage is the state they find here. */
+  /* Arrival stylesheet first, hero second: the hero sheet carries the overrides
+     that undo the parts of the arrival written for life inside the journey's
+     iframe, and they have to come after what they are overriding. */
+  const galaxyHead = galaxy
+    ? `
+  <link href="../assets/css/quickstart-galaxy-arrival.css?v=${ASSET_VERSION}" rel="stylesheet">`
+      + `
+  <link href="../assets/css/quickstart-galaxy-hero.css?v=${ASSET_VERSION}" rel="stylesheet">`
+      + `
+  <link href="../assets/css/cutscenes-toggle.css?v=${ASSET_VERSION}" rel="stylesheet">`
+    : '';
+  /* After site-refresh.js, and the hero script after both: it expects the
+     replay button and the fade anchor to already be in the document. */
+  const galaxyBody = galaxy
+    ? `
+  <button class="galaxy-replay" type="button">Replay arrival</button>`
+      + `
+  <div class="galaxy-arrival-shade" aria-hidden="true"></div>`
+      + `
+  <script src="../assets/js/quickstart-galaxy-hero.js?v=${ASSET_VERSION}"></script>`
+      + `
+  <script src="../assets/js/cutscenes-toggle.js?v=${ASSET_VERSION}"></script>`
+    : '';
+  const html = `${guideHead(guide).replace('</head>', `${galaxyHead}
+</head>`)}
+<body class="site-refresh" data-page="guides"${galaxy ? ' data-arrival="galaxy"' : ''}>
   <div id="site-header">${renderHeader('guides', '../')}</div>
     <main id="main-content">${renderGuideBody(guide)}</main>
     <div id="site-footer">${renderFooter('../')}</div>
   ${noscriptFor('guides', '../')}
-  <script src="../assets/js/site-refresh.js?v=${ASSET_VERSION}"></script>
+  <script src="../assets/js/site-refresh.js?v=${ASSET_VERSION}"></script>${galaxyBody}
 </body>
 </html>
 `;
-  writeFileSync(`docs/guides/${guide.slug}.html`, tidy(html));
+  writeFileSync(`docs/guides/${guide.slug}.html`, tidy(withPageTransitions(html, '../')));
   console.log(`  guides/${guide.slug}.html`.padEnd(46) + `${Math.round(html.length / 1024)} KB`);
 }
 
@@ -323,7 +418,7 @@ for (const guide of publishedGuides) {
 <head>
   <meta charset="utf-8">
   <title>Moved: ${guide.title}</title>
-  <link rel="canonical" href="https://selfcustody.ca/guides/${guide.slug}.html">
+  <link rel="canonical" href="https://selfcustody.io/guides/${guide.slug}.html">
   <meta name="robots" content="noindex, follow">
   <meta http-equiv="refresh" content="0; url=${guide.slug}.html">
 </head>
@@ -412,13 +507,13 @@ const entropySite = `<!DOCTYPE html>
   <meta http-equiv="x-dns-prefetch-control" content="off">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Turn dice rolls, coin flips or a shuffled deck into the recovery words, addresses and account key they produce, and check them against your device. Experimental, and meant for testing rather than for securing real bitcoin.">
-  <title>Entropy Workshop | SelfCustody.ca</title>
+  <title>Entropy Workshop | SelfCustody.io</title>
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="${SITE}/entropy.html">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_CA">
-  <meta property="og:site_name" content="SelfCustody.ca">
-  <meta property="og:title" content="Entropy Workshop | SelfCustody.ca">
+  <meta property="og:site_name" content="SelfCustody.io">
+  <meta property="og:title" content="Entropy Workshop | SelfCustody.io">
   <meta property="og:description" content="Turn dice rolls, coin flips or a shuffled deck into the recovery words, addresses and account key they produce, and check them against your device. Experimental, and meant for testing rather than for securing real bitcoin.">
   <meta property="og:url" content="${SITE}/entropy.html">
   <meta property="og:image" content="${SITE}/assets/img/social-preview.jpg?v=5">
@@ -443,7 +538,7 @@ ${embed.scripts}
 </body>
 </html>
 `;
-writeFileSync('docs/entropy.html', toLF(entropySite));
+writeFileSync('docs/entropy.html', toLF(withPageTransitions(entropySite)));
 
 console.log(`
 entropy-offline.html           ${Math.round(entropyOffline.length / 1024)} KB`);

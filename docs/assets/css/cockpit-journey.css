@@ -1,0 +1,316 @@
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050e18;color:#fff0d8}
+html.first-person-flight{scrollbar-gutter:auto}
+#site-header{position:relative;z-index:40}#header{background:#06101ae8}
+.site-refresh #header>.container{width:100%;max-width:none;padding-inline:clamp(16px,3vw,60px)}
+@media(min-width:992px){.site-refresh #header>.container{padding-left:10vw}}
+#scene-viewport{position:fixed;inset:0;overflow:hidden;background:#050e18}
+#cockpit-scene{position:absolute;left:0;top:0;width:1920px;height:1080px;border:0;transform-origin:0 0;visibility:hidden}
+#cockpit-scene.ready{visibility:visible}
+#jump-video{position:fixed;inset:0;width:100vw;height:100vh;object-fit:cover;object-position:center top;z-index:30;opacity:0;visibility:hidden;pointer-events:none;background:#050e18}
+#jump-video.active{visibility:visible}
+#jump-video[data-perspective="first-person"]{background:#000}
+#arrival-article{position:fixed;inset:0;width:100%;height:100%;border:0;background:#101010;z-index:20;visibility:hidden}
+#arrival-article.active{visibility:visible}
+body.in-flight #site-header{opacity:0;pointer-events:none;transition:opacity .22s}
+body.at-article #site-header{visibility:hidden}
+.video-review{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:60;border:1px solid #b8844160;border-radius:12px;background:#08131eee;padding:10px 14px;box-shadow:0 6px 24px #0005;max-width:calc(100vw - 24px);font:12px/1.4 system-ui,sans-serif;color:#e7e1d7}
+.review-status{margin-bottom:7px}.review-buttons{display:flex;gap:7px;white-space:nowrap}.review-buttons button{border:1px solid #b8844166;border-radius:7px;padding:7px 12px;background:#14222e;color:#fff0d8;cursor:pointer}#sequence-play{background:#ff951f;color:#16110a;font-weight:700}button:disabled{opacity:.5;cursor:wait!important}
+#sequence-time{display:block;width:100%;margin:10px 0 0;accent-color:#ff991e}
+body.at-article .video-review{left:auto;right:14px;transform:none}body.at-article .review-status,body.at-article #sequence-time,body.at-article #sequence-skip{display:none}
+@media(max-width:900px){#jump-video{object-fit:contain;object-position:center}.video-review{padding:9px;bottom:8px}.review-buttons button{padding:7px 9px;font-size:11px}body.at-article .video-review{right:8px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+#back-to-cockpit{display:none;position:fixed;left:calc(env(safe-area-inset-left, 0px) + 16px);bottom:calc(env(safe-area-inset-bottom, 0px) + 16px);z-index:60;align-items:center;gap:9px;border:1px solid #b88441;border-radius:9px;padding:11px 16px;background:#101820f5;color:#fff0d8;font:600 14px/1.3 system-ui,sans-serif;box-shadow:0 3px 14px #0005;cursor:pointer}
+body.at-article #back-to-cockpit{display:inline-flex}
+#back-to-cockpit:hover{background:#27313a;border-color:#ffad43}
+#back-to-cockpit:focus-visible{outline:2px solid #ffad43;outline-offset:3px}
+#back-to-launch{position:fixed;left:calc(env(safe-area-inset-left, 0px) + 16px);bottom:calc(env(safe-area-inset-bottom, 0px) + 16px);z-index:60;display:inline-flex;align-items:center;gap:9px;border:1px solid #b8844177;border-radius:9px;padding:11px 16px;background:#101820ed;color:#fff0d8;text-decoration:none;font:600 14px/1.3 system-ui,sans-serif;box-shadow:0 3px 14px #0004}
+#back-to-launch:hover{background:#27313a;border-color:#ffad43}
+#back-to-launch:focus-visible{outline:2px solid #ffad43;outline-offset:3px}
+body.in-flight #back-to-launch{display:none}
+#cockpit-arrival-shade{position:fixed;inset:0;z-index:70;background:#030508;pointer-events:none;opacity:1}
+
+/* Approved charcoal sky; retain the original starfield image. */
+html.first-person-flight,html.first-person-flight body,html.first-person-flight #scene-viewport{background-color:#080a0d}
+
+/* Landscape controls share the window side, clear of the five menu rows. */
+@media(max-width:1100px) and (max-height:500px) and (orientation:landscape){
+ #back-to-launch{left:calc(50% + 12px);bottom:calc(env(safe-area-inset-bottom,0px) + 12px);font-size:12px;padding:11px 10px}
+}
+
+@media(max-width:1100px) and (max-height:500px) and (orientation:landscape){
+ #back-to-launch{min-height:44px}
+}
+@media(max-width:1100px) and (max-height:500px) and (orientation:landscape) and (max-aspect-ratio:19/10){
+ #back-to-launch{left:calc(55% + 8px);width:112px;padding-inline:8px;font-size:11px;justify-content:center}
+}
+@media(max-width:359px){
+ .site-refresh #header .sc-brand{font-size:17px}
+ .site-refresh #header .sc-brand-mark{width:58px;height:24px}
+ .site-refresh #header .sc-brand-name{margin-left:7px;letter-spacing:.7px}
+ .site-refresh #header .sc-brand-domain{margin-left:4px}
+}
+
+/* Center the mobile brand within the cockpit's upper plaque. */
+@media(max-width:991px) and (max-aspect-ratio:6/5){
+ .site-refresh #header .sc-brand{position:absolute;left:50%;transform:translateX(-50%);margin-right:0!important}
+ .site-refresh #header #navbar{margin-left:auto}
+}
+@media(max-width:359px) and (max-aspect-ratio:6/5){
+ .site-refresh #header .sc-brand{font-size:15px}
+ .site-refresh #header .sc-brand-mark{width:52px}
+}
+
+@media(max-width:900px) and (max-aspect-ratio:6/5){
+ #back-to-launch{min-height:44px;font-size:11px;padding:8px 10px;border-color:#b8844138;background:#111519b8;box-shadow:none;color:#ded7cb;bottom:calc(env(safe-area-inset-bottom,0px) + 8px)}
+ body #cutscenes-toggle{font-size:11px;padding:8px 10px;gap:6px;border-color:#b8844144;background:#111519d9;box-shadow:none;bottom:calc(env(safe-area-inset-bottom,0px) + 8px)}
+}
+
+@media(max-width:900px){
+ .site-refresh .mobile-nav-toggle{color:#fff}
+}
+
+body.sc-nav-open #back-to-launch,body.sc-nav-open #back-to-cockpit{visibility:hidden;pointer-events:none}
+
+/* A short-chain sign sits in front of the original, unchanged cockpit art. */
+.site-refresh #header .sc-brand{
+ position:relative;isolation:isolate;align-self:flex-start;margin-top:22px;
+ padding:10px 14px 11px;border:0;background:none;box-shadow:none;
+ font-size:30px;line-height:1;white-space:nowrap;
+}
+.site-refresh #header .sc-brand::before{
+ content:"";position:absolute;inset:-2px -5px -5px;z-index:-1;pointer-events:none;
+ background:url("../img/space-hub/cabin-chain-sign-frame-v2.svg") center / 100% 100% no-repeat;
+ filter:drop-shadow(0 6px 5px #0009);
+}
+.site-refresh #header .sc-brand::after{
+ content:"";position:absolute;left:0;right:0;top:-36px;height:38px;z-index:-2;pointer-events:none;
+ background:url("../img/space-hub/cabin-chain-sign-support-v2.svg") 10% top / 20px 40px no-repeat,url("../img/space-hub/cabin-chain-sign-support-v2.svg") 90% top / 20px 40px no-repeat;
+ filter:drop-shadow(2px 2px 1px #0008);
+}
+.site-refresh #header .sc-brand-mark{width:80px;height:28px}
+.site-refresh #header .sc-brand-name{margin-left:9px;letter-spacing:.8px;color:#fff0d8;text-shadow:0 1px 1px #000c}
+.site-refresh #header .sc-brand-domain{align-self:center;height:19px;margin:2px 0 0 6px;padding:0 5px 0 3px;font-size:12px;border-radius:4px;box-shadow:0 2px 2px #0007,inset 0 1px 0 #ffadad66}
+.site-refresh #header .sc-brand:focus-visible{outline:2px solid #ffe0a4;outline-offset:9px}
+
+@media(min-width:992px) and (max-width:1199px){
+ .site-refresh #header .sc-brand{font-size:26px;padding-inline:12px}
+ .site-refresh #header .sc-brand-mark{width:70px;height:26px}
+}
+@media(max-width:991px) and (max-aspect-ratio:6/5){
+ .site-refresh #header .sc-brand{position:absolute;top:20px;margin-top:0}
+}
+@media(max-width:575px) and (max-aspect-ratio:6/5){
+ .site-refresh #header .sc-brand{top:18px;font-size:20px;padding:8px 10px 9px}
+ .site-refresh #header .sc-brand-mark{width:58px;height:22px}
+ .site-refresh #header .sc-brand-name{margin-left:7px;letter-spacing:.6px}
+ .site-refresh #header .sc-brand-domain{height:14px;margin-left:5px;font-size:10px;padding-inline:3px}
+ .site-refresh #header .sc-brand::after{top:-32px;height:34px;background-size:18px 36px,18px 36px}
+}
+@media(max-width:374px) and (max-aspect-ratio:6/5){
+ .site-refresh #header .sc-brand{font-size:18px}
+ .site-refresh #header .sc-brand-mark{width:50px;height:20px}
+}
+@media(max-width:339px) and (max-aspect-ratio:6/5){
+ .site-refresh #header .sc-brand{font-size:16px}
+ .site-refresh #header .sc-brand-mark{width:44px;height:18px}
+}
+@media(max-width:1100px) and (max-height:500px) and (orientation:landscape){
+ body.site-refresh:has(#scene-viewport) #header .sc-brand{margin-top:14px;padding:5px 10px 6px;font-size:22px}
+ body.site-refresh:has(#scene-viewport) #header .sc-brand-mark{width:60px;height:24px}
+ body.site-refresh:has(#scene-viewport) #header .sc-brand-name{margin-left:7px}
+ body.site-refresh:has(#scene-viewport) #header .sc-brand-domain{height:15px;font-size:10px;margin-bottom:0}
+}
+
+/* Step 1: header layout follows the stacked cockpit composition. */
+@media(min-width:992px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .site-refresh #header{height:70px}
+ .site-refresh #header .sc-brand{position:absolute;left:50%;top:20px;transform:translateX(-50%);margin:0!important}
+ .site-refresh #header #navbar{margin-left:auto}
+ .site-refresh #navbar:not(.navbar-mobile)>ul{display:none}
+ .site-refresh #navbar .mobile-nav-toggle{display:block;color:#fff}
+ .site-refresh #navbar.navbar-mobile{width:100vw;height:100dvh;background:rgba(25,25,25,.98)}
+ .site-refresh #navbar.navbar-mobile>ul{display:flex;flex-direction:column;align-items:stretch;height:auto;padding:6px 0 0;background:var(--sc-surface)}
+ .site-refresh #navbar.navbar-mobile>ul>li+li{border-top:1px solid #ffffff12}
+ .site-refresh #navbar.navbar-mobile>ul>li:has(>.sc-contact-link){margin-top:auto;border-top:0}
+ .site-refresh #navbar.navbar-mobile a,.site-refresh #navbar.navbar-mobile a:focus{padding:15px 22px;color:var(--sc-ink);font-size:21px;font-weight:600;letter-spacing:-.01em}
+ .site-refresh #navbar.navbar-mobile .sc-contact-link{justify-content:center;margin:20px 16px 16px;padding:15px 22px;font-size:18px}
+ .site-refresh #navbar.navbar-mobile .mobile-nav-toggle{top:calc((70px - 1px - 1em)/2);right:clamp(16px,3vw,60px)}
+ .site-refresh #navbar.navbar-mobile .sc-guides-split{grid-template-columns:1fr 44px}
+ .site-refresh #navbar.navbar-mobile .sc-nav-menu-toggle{width:100%;justify-content:space-between;padding:15px 22px;color:var(--sc-ink);font-size:21px;font-weight:600;letter-spacing:-.01em}
+ .site-refresh #navbar.navbar-mobile .sc-guides-split>.sc-nav-menu-toggle{width:44px;justify-content:center;padding:11px 8px}
+ .site-refresh #navbar.navbar-mobile .sc-nav-menu-chevron{width:9px;height:9px}
+ .site-refresh #navbar.navbar-mobile .sc-nav-submenu{position:static;display:none;min-width:0;margin:0 22px 12px;padding:2px 0 2px 16px;visibility:visible;opacity:1;background:none;border:0;border-left:2px solid #f28a0066;border-radius:0;box-shadow:none;transform:none;pointer-events:auto}
+ .site-refresh #navbar.navbar-mobile .sc-nav-submenu::before{content:none}
+ .site-refresh #navbar.navbar-mobile .sc-nav-menu.is-open>.sc-nav-submenu{display:block}
+ .site-refresh #navbar.navbar-mobile .sc-nav-submenu a{padding:11px 12px;color:#ffffffc7;font-size:16px;font-weight:500;letter-spacing:normal}
+ .site-refresh #navbar.navbar-mobile .sc-nav-tool-item{margin-top:4px;padding-top:8px;border-top:1px solid #ffffff1a}
+ .site-refresh #navbar.navbar-mobile .sc-nav-tool-item.is-paired{margin-top:0;padding-top:0;border-top:0}
+ .site-refresh #navbar.navbar-mobile .sc-nav-submenu a.sc-nav-tool-link{color:#ffc07f}
+}
+
+/* Blend the narrow desktop header into the laptop header, rather than
+   changing the wordmark and navigation spacing at exactly 1200px. */
+@media(min-width:992px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ .site-refresh #header .sc-brand{font-size:clamp(26px,calc(5vw - 34px),30px);padding-inline:clamp(12px,calc(2.5vw - 18px),14px)}
+ .site-refresh #header .sc-brand-mark{width:clamp(70px,calc(12.5vw - 80px),80px);height:clamp(26px,calc(2.5vw - 4px),28px)}
+ .site-refresh #navbar:not(.navbar-mobile) a,.site-refresh #navbar:not(.navbar-mobile) .sc-nav-menu-toggle{font-size:clamp(13px,calc(1.25vw - 2px),14px)}
+ .site-refresh #navbar:not(.navbar-mobile) a:not(.sc-contact-link):not(.sc-guides-page-link),.site-refresh #navbar:not(.navbar-mobile) .sc-nav-menu-toggle:not(.sc-guides-split>.sc-nav-menu-toggle){padding-inline:clamp(9px,calc(3.75vw - 36px),12px)}
+}
+
+/* Match the original .CA tile's footprint with optically sized lowercase .io. */
+body.site-refresh:has(#scene-viewport) #header .sc-brand-domain{width:29.11px;min-width:29.11px;padding:0}
+body.site-refresh:has(#scene-viewport) #header .sc-brand-domain-text{position:static;font-size:1.25em;line-height:1}
+@media(max-width:575px),(max-width:1100px) and (max-height:500px) and (orientation:landscape){
+ body.site-refresh:has(#scene-viewport) #header .sc-brand-domain{width:23.59px;min-width:23.59px}
+}
+
+/* Center the desktop sign on the same painted wall as the headline.
+   Em dimensions keep the approved badge, frame and supports proportional
+   as the wordmark grows smoothly from 30px at 1440 to 36px at 1920. */
+@media(min-width:1280px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ body.site-refresh:has(#scene-viewport) #header{--sign-cabin-width:max(100vw,160svh)}
+ body.site-refresh:has(#scene-viewport) #header .sc-brand{
+  position:absolute;left:calc((100vw - var(--sign-cabin-width)) * .4 + var(--sign-cabin-width) * .247);top:22px;
+  margin-top:0;transform:translateX(-50%);font-size:clamp(30px,calc(1.25vw + 12px),36px);
+  padding:.333333em .466667em .366667em;
+ }
+ body.site-refresh:has(#scene-viewport) #header #navbar{margin-left:auto}
+ body.site-refresh:has(#scene-viewport) #header .sc-brand-mark{width:2.666667em;height:.933333em}
+ body.site-refresh:has(#scene-viewport) #header .sc-brand-name{margin-left:.3em;letter-spacing:.026667em}
+ body.site-refresh:has(#scene-viewport) #header .sc-brand-domain{
+  font-size:.4em;width:2.425833em;min-width:2.425833em;height:1.583333em;
+  margin:.166667em 0 0 .5em;border-radius:.333333em;
+ }
+ body.site-refresh:has(#scene-viewport) #header .sc-brand::before{inset:-.066667em -.166667em -.166667em;filter:drop-shadow(0 .2em .166667em #0009)}
+ body.site-refresh:has(#scene-viewport) #header .sc-brand::after{top:-1.2em;height:1.266667em;background-size:.666667em 1.333333em,.666667em 1.333333em}
+}
+
+/* Keep compact desktop signs centered over their cabin introduction. */
+@media(min-width:992px) and (max-width:1279px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ body.site-refresh:has(#scene-viewport) #header{--sign-cabin-width:max(100vw,160svh)}
+ body.site-refresh:has(#scene-viewport) #header .sc-brand{
+  position:absolute;left:calc((100vw - var(--sign-cabin-width)) * .4 + var(--sign-cabin-width) * .247);top:22px;
+  margin-top:0;transform:translateX(-50%);
+ }
+ body.site-refresh:has(#scene-viewport) #header #navbar{margin-left:auto}
+}
+
+/* Keep the hanging sign on the shifted compact cabin's centerline. */
+@media(min-width:992px) and (max-width:1279px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ :root{--compact-cabin-offset:clamp(-10px,calc(3.90625vw - 50px),0px)}
+ body.site-refresh:has(#scene-viewport) #header .sc-brand{
+  left:calc((100vw - var(--sign-cabin-width)) * .4 + var(--sign-cabin-width) * .247 + var(--compact-cabin-offset));
+ }
+}
+
+/* Register the landscape sign to the console and introduction's painted center. */
+@media(max-width:1100px) and (max-height:500px) and (min-aspect-ratio:6/5), (max-width:900px) and (max-height:700px) and (min-aspect-ratio:6/5){
+ body.site-refresh:has(#scene-viewport) #header{
+  --landscape-sign-art-width:max(100vw,calc(100svh * 1897 / 829));
+  --landscape-sign-art-left:calc((100vw - var(--landscape-sign-art-width)) / 2);
+ }
+ body.site-refresh:has(#scene-viewport) #header .sc-brand{
+  position:absolute;left:calc(var(--landscape-sign-art-left) + var(--landscape-sign-art-width) * 482.5 / 1897);
+  top:22px;margin-top:0;transform:translateX(-50%);
+ }
+ body.site-refresh:has(#scene-viewport) #header #navbar{margin-left:auto}
+}
+@media(max-width:1100px) and (max-height:500px) and (min-aspect-ratio:6/5){
+ body.site-refresh:has(#scene-viewport) #header .sc-brand{top:14px}
+}
+/* Match the landscape artwork's left-aligned crop at less-wide aspect ratios. */
+@media(max-width:1100px) and (max-height:500px) and (min-aspect-ratio:6/5) and (max-aspect-ratio:19/10), (max-width:900px) and (max-height:700px) and (min-aspect-ratio:6/5) and (max-aspect-ratio:19/10){
+ body.site-refresh:has(#scene-viewport) #header{--landscape-sign-art-left:0px}
+}
+
+/* Keep the cockpit's two lower controls on one readable, quiet scale. */
+body.site-refresh:has(#scene-viewport) #back-to-launch,
+body.site-refresh:has(#scene-viewport) #cutscenes-toggle{
+ box-sizing:border-box;height:44px;min-height:44px;padding:8px 12px;gap:8px;
+ font:600 13px/1.2 system-ui,sans-serif;white-space:nowrap;
+}
+@media(max-width:600px), (max-width:1100px) and (max-height:500px) and (orientation:landscape){
+ body.site-refresh:has(#scene-viewport) #back-to-launch,
+ body.site-refresh:has(#scene-viewport) #cutscenes-toggle{font-size:12px;padding:8px 10px;gap:6px}
+}
+@media(max-width:600px) and (orientation:portrait){
+ body.site-refresh:has(#scene-viewport) #back-to-launch{left:calc(env(safe-area-inset-left,0px) + 12px)}
+}
+@media(max-width:1100px) and (max-height:500px) and (orientation:landscape){
+ body.site-refresh:has(#scene-viewport) #back-to-launch,
+ body.site-refresh:has(#scene-viewport) #cutscenes-toggle{bottom:calc(env(safe-area-inset-bottom,0px) + 12px)}
+}
+@media(max-width:1100px) and (max-height:500px) and (orientation:landscape) and (max-aspect-ratio:19/10){
+ body.site-refresh:has(#scene-viewport) #back-to-launch{padding-inline:6px;gap:4px}
+}
+
+/* Keep Back to launch at the lower-right edge on the narrowest landscape view. */
+@media(max-width:1100px) and (min-height:300px) and (max-height:344px) and (min-aspect-ratio:6/5){
+ body.site-refresh:has(#scene-viewport) #back-to-launch{
+  --tiny-footer-art-width:calc(100svh * 1897 / 829);
+  --tiny-footer-art-left:calc((100vw - var(--tiny-footer-art-width)) / 2);
+  left:calc(var(--tiny-footer-art-left) + var(--tiny-footer-art-width) * 865 / 1897 + 16px);
+  width:112px;padding-inline:6px;gap:4px;
+ }
+}
+@media(max-width:700px) and (min-height:300px) and (max-height:344px) and (min-aspect-ratio:6/5) and (max-aspect-ratio:19/10){
+ body.site-refresh:has(#scene-viewport) #back-to-launch{
+  left:auto;right:calc(env(safe-area-inset-right,0px) + 12px);
+  bottom:calc(env(safe-area-inset-bottom,0px) + 12px);
+ }
+ body.site-refresh:has(#scene-viewport) #cutscenes-toggle{
+  left:calc(100svh * 865 / 829 + 16px);right:auto;
+  top:calc(env(safe-area-inset-top,0px) + 4px);bottom:auto;padding-inline:6px;
+ }
+}
+
+/* A shallow arrow control leaves the window clear, with an expanded touch area. */
+@media(max-width:700px) and (min-height:300px) and (max-height:344px) and (min-aspect-ratio:6/5) and (max-aspect-ratio:19/10){
+ body.site-refresh:has(#scene-viewport) #back-to-launch{width:42px;height:34px;min-height:34px;padding:0;gap:0;justify-content:center;border-radius:7px}
+ body.site-refresh:has(#scene-viewport) #back-to-launch .back-to-launch-label{display:none}
+ body.site-refresh:has(#scene-viewport) #back-to-launch>span[aria-hidden]{display:flex;align-items:center;justify-content:center;font-size:0;line-height:0}
+}
+
+.back-to-launch-arrow{display:none}
+@media(max-width:700px) and (min-height:300px) and (max-height:344px) and (min-aspect-ratio:6/5) and (max-aspect-ratio:19/10){
+ body.site-refresh:has(#scene-viewport) #back-to-launch .back-to-launch-arrow{display:block}
+ body.site-refresh:has(#scene-viewport) #back-to-launch::after{content:"";position:absolute;inset:-5px -1px}
+}
+
+/* The narrow desktop sign shares the cabin intro's centerline, just as the
+   adjacent laptop sign does. Preserve its existing artwork and chain design. */
+@media(min-width:901px) and (max-width:991px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ body.site-refresh:has(#scene-viewport) #header{--sign-cabin-width:max(100vw,160svh)}
+ body.site-refresh:has(#scene-viewport) #header .sc-brand{
+  position:absolute;left:calc((100vw - var(--sign-cabin-width)) * .4 + var(--sign-cabin-width) * .247);
+  top:22px;margin-top:0;transform:translateX(-50%);
+ }
+ body.site-refresh:has(#scene-viewport) #header #navbar{margin-left:auto}
+}
+/* Scale only the short-window sign; each part reaches its original size by
+   600px high, avoiding another height breakpoint in the accepted layouts. */
+@media(min-width:901px) and (max-width:1279px) and (min-height:501px) and (max-height:599px) and (min-aspect-ratio:6/5){
+ body.site-refresh:has(#scene-viewport) #header{
+  --short-sign-font:30px;--short-sign-mark:80px;--short-sign-mark-height:28px;--short-sign-padding:14px;
+ }
+ body.site-refresh:has(#scene-viewport) #header .sc-brand{
+  font-size:min(var(--short-sign-font),clamp(22px,calc(8svh - 18px),30px));
+  padding:min(10px,max(6px,calc(4svh - 14px))) min(var(--short-sign-padding),clamp(10px,calc(4svh - 10px),14px)) min(11px,max(7px,calc(4svh - 13px)));
+ }
+ body.site-refresh:has(#scene-viewport) #header .sc-brand-mark{
+  width:min(var(--short-sign-mark),clamp(60px,calc(20svh - 40px),80px));
+  height:min(var(--short-sign-mark-height),clamp(22px,calc(6svh - 8px),28px));
+ }
+ body.site-refresh:has(#scene-viewport) #header .sc-brand-name{margin-left:clamp(7px,calc(2svh - 3px),9px)}
+ body.site-refresh:has(#scene-viewport) #header .sc-brand-domain{
+  font-size:clamp(10px,2svh,12px);width:2.425833em;min-width:2.425833em;height:1.583333em;
+ }
+}
+@media(min-width:992px) and (max-width:1279px) and (min-height:501px) and (max-height:599px) and (min-aspect-ratio:6/5){
+ body.site-refresh:has(#scene-viewport) #header{
+  --short-sign-font:clamp(26px,calc(5vw - 34px),30px);
+  --short-sign-mark:clamp(70px,calc(12.5vw - 80px),80px);
+  --short-sign-mark-height:clamp(26px,calc(2.5vw - 4px),28px);
+  --short-sign-padding:clamp(12px,calc(2.5vw - 18px),14px);
+ }
+}

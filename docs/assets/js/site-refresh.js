@@ -123,15 +123,23 @@
   const toggle = document.querySelector(".mobile-nav-toggle");
   const navMenus = [...(nav?.querySelectorAll(".sc-nav-menu") || [])];
 
-  /* Both menus open the same way: neither Guides nor Compare is a page of
-     its own, so the whole .sc-nav-menu-toggle is a button that only ever
-     opens the list. Their destinations live in the list itself. */
+  /* Guides is now a split control -- a link to the hub plus an arrow that
+     opens the list -- while Compare, which has no page of its own, is still a
+     single button. Either way the opener is the .sc-nav-menu-toggle; on Guides
+     it is just the arrow rather than the whole label. */
   const menuOpener = menu => menu?.querySelector(".sc-nav-menu-toggle");
+  const cockpitHeader = Boolean(document.getElementById("scene-viewport"));
+  const navDesktop = window.matchMedia(cockpitHeader
+    ? "(min-width: 1200px), (min-width: 992px) and (min-aspect-ratio: 6/5)"
+    : "(min-width: 992px)");
+  let navHoverCloseTimer;
+  const clickedNavMenus = new WeakSet();
 
   const setNavMenu = (menu, open) => {
     const menuToggle = menuOpener(menu);
     if (!menu || !menuToggle) return;
     menu.classList.toggle("is-open", open);
+    if (!open) clickedNavMenus.delete(menu);
     menuToggle.setAttribute("aria-expanded", String(open));
   };
 
@@ -141,14 +149,47 @@
     });
   };
 
+  /* Opening one menu closes the rest. The stylesheet no longer opens anything
+     on :hover, so this is the only thing that puts a menu on screen -- which is
+     what stops two from being open at once. */
+  const showNavMenu = menu => {
+    clearTimeout(navHoverCloseTimer);
+    navMenus.forEach(other => setNavMenu(other, other === menu));
+  };
+
   navMenus.forEach(menu => {
     const menuToggle = menuOpener(menu);
 
     menuToggle?.addEventListener("click", event => {
       event.preventDefault();
-      const open = !menu.classList.contains("is-open");
+      // Pointer hover or keyboard focus may have just opened the menu.
+      // The first click keeps it open; a second deliberate click closes it.
+      const open = !menu.classList.contains("is-open") || !clickedNavMenus.has(menu);
       closeAllNavMenus(menu);
       setNavMenu(menu, open);
+      if (open) clickedNavMenus.add(menu);
+    });
+
+    /* Hover used to be the stylesheet's job. Doing it here instead means a
+       hover can close the menu a click left open. Touch is excluded: a tap
+       fires pointerenter too, which would open the menu and then immediately
+       have the click toggle it shut again. */
+    menu.addEventListener("pointerenter", event => {
+      if (navDesktop.matches && event.pointerType !== "touch") showNavMenu(menu);
+    });
+
+    /* The delay covers the gap between the label and the panel below it --
+       without it, crossing that gap closes the menu the pointer is heading for. */
+    menu.addEventListener("pointerleave", () => {
+      if (!navDesktop.matches) return;
+      clearTimeout(navHoverCloseTimer);
+      navHoverCloseTimer = setTimeout(() => setNavMenu(menu, false), 160);
+    });
+
+    /* :focus-visible only, so a mouse click on the toggle does not also open
+       the menu through focus and fight the click handler above. */
+    menu.addEventListener("focusin", event => {
+      if (navDesktop.matches && event.target.matches(":focus-visible")) showNavMenu(menu);
     });
 
     menu.addEventListener("focusout", () => {
@@ -161,6 +202,14 @@
       if (event.key === "Escape") {
         setNavMenu(menu, false);
         menuToggle?.focus();
+        return;
+      }
+      /* Down arrow from the arrow button walks into the list, which is the
+         behaviour a menu button is expected to have. */
+      if (event.key === "ArrowDown" && event.target === menuToggle) {
+        event.preventDefault();
+        showNavMenu(menu);
+        menu.querySelector(".sc-nav-submenu a")?.focus();
       }
     });
   });
@@ -170,6 +219,11 @@
       if (!menu.contains(event.target)) setNavMenu(menu, false);
     });
   });
+
+  /* A menu left open when the pointer leaves the window, or when the layout
+     crosses the desktop breakpoint, is the other way one gets stuck. */
+  window.addEventListener("blur", () => closeAllNavMenus());
+  navDesktop.addEventListener("change", () => closeAllNavMenus());
 
   /**
    * Three classes, not two -- .navbar-mobile (structure), .sc-nav-animating
@@ -231,6 +285,10 @@
     }, NAV_TRANSITION_MS);
   };
 
+  // A rotated cockpit tablet returns to desktop navigation without a stale sheet.
+  navDesktop.addEventListener("change", event => {
+    if (cockpitHeader && event.matches && nav.classList.contains("navbar-mobile")) closeNav();
+  });
   const toggleNav = () => {
     if (nav.classList.contains("sc-nav-visible")) {
       closeNav();
@@ -1667,7 +1725,7 @@
         clearTimeout(reset);
         if (taps >= 5) {
           taps = 0;
-          window.location.href = "block-demo.html";
+          window.pageTransition.navigate("block-demo.html");
           return;
         }
         reset = setTimeout(() => { taps = 0; }, 1000);

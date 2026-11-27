@@ -31,3 +31,15 @@ docs/_contact-preview.html
 # Local agent tooling (preview server config), not project config.
 .claude/
 secp256k1-wasm/target/
+
+# Local cockpit mockup and superseded artwork.
+/docs/cockpit-mobile-layout-mockup.html
+/docs/assets/js/cockpit-layout-concept.js
+/docs/assets/img/space-hub/cabin-chain-sign-frame-v1.svg
+/docs/assets/img/space-hub/cabin-chain-sign-support-v1.svg
+/docs/assets/img/space-hub/cabin-chain-sign-support-v3.svg
+/docs/assets/img/space-hub/cabin-chain-sign-support-v4.svg
+/docs/assets/img/space-hub/cabin-mobile-portrait-window-mask.svg
+/docs/assets/img/space-hub/cabin-right-trim-repair-v1.png
+/docs/assets/img/space-hub/cabin-short-wall-mask-v1.svg
+/docs/assets/img/space-hub/quickstart-portrait-rock-outline-v2.svg

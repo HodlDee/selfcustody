@@ -1,0 +1,8 @@
+/* Confine the new artwork and moving pilot to the existing porthole. */
+.porthole-detail{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.pilot-duck{transform:translateY(0);transition:transform .48s cubic-bezier(.4,0,.25,1)}
+.interaction-plane:has(.rocket-window-hover:hover) .pilot-duck,
+.interaction-plane:has(.rocket-window-hover:focus) .pilot-duck{transform:translateY(44px)}
+.rocket-window-hover{position:absolute;left:61%;top:49.5%;width:15%;height:39.5%;pointer-events:auto;border-radius:48% 48% 15% 15%;outline:none}
+.rocket-window-hover:focus-visible{outline:1px solid #ffdba880;outline-offset:5px}
+@media(prefers-reduced-motion:reduce){.pilot-duck{transition:none}}

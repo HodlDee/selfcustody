@@ -1,0 +1,40 @@
+/* Preserve the approved cloud artwork while the guide text arrives. */
+html.quickstart-arrival-layer { background: transparent; }
+html.quickstart-arrival-layer body,
+html.quickstart-arrival-layer main { background: transparent !important; }
+html.quickstart-arrival-layer body { isolation: isolate; }
+html.quickstart-arrival-layer main { position: relative; z-index: 1; }
+html.quickstart-arrival-layer #site-footer { position: relative; z-index: 1; }
+html.quickstart-arrival-layer main .sc-guide-head::before,
+html.quickstart-arrival-layer main .sc-guide-body::before { visibility: hidden; }
+.quickstart-arrival-background { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: #080a0d; opacity: var(--arrival-background, 0); }
+#site-header, #site-footer, .sc-guide-head .container, .sc-guide-body {
+  opacity: var(--arrival-content, 0);
+}
+.sc-guide-head .container {
+  transform: translateY(calc((1 - var(--arrival-content, 0)) * 12px));
+}
+html.quickstart-arrival-layer .sc-guide-head .container { opacity: 1; transform: none; }
+html.quickstart-arrival-layer .sc-guide-body {
+  opacity: var(--arrival-content, 0);
+  transform: translateY(calc((1 - var(--arrival-content, 0)) * 16px));
+}
+html.quickstart-arrival-layer .sc-guide-head .container > * {
+  --row-linear: clamp(0, calc((var(--arrival-title, var(--arrival-content, 0)) - var(--row-start, 0)) / .76), 1);
+  --row-progress: calc(var(--row-linear) * var(--row-linear) * (3 - 2 * var(--row-linear)));
+  opacity: var(--row-progress);
+  transform: translateY(calc((1 - var(--row-progress)) * 18px));
+}
+html.quickstart-arrival-layer .sc-guide-head .container > :nth-child(2) { --row-start: .048; }
+html.quickstart-arrival-layer .sc-guide-head .container > :nth-child(3) { --row-start: .096; }
+html.quickstart-arrival-layer .sc-guide-head .container > :nth-child(4) { --row-start: .144; }
+html.quickstart-arrival-layer .sc-guide-head .container > :nth-child(5) { --row-start: .192; }
+html.quickstart-arrival-layer .sc-guide-head .container > :nth-child(6) { --row-start: .24; }
+.galaxy-replay, .galaxy-arrival-shade { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  #site-header, #site-footer, .sc-guide-head .container, .sc-guide-body { opacity: 1; }
+  .sc-guide-head .container,
+  html.quickstart-arrival-layer .sc-guide-head .container,
+  html.quickstart-arrival-layer .sc-guide-body { transform: none; }
+  html.quickstart-arrival-layer .sc-guide-head .container > * { opacity: 1; transform: none; }
+}
