@@ -64,7 +64,6 @@ body.site-refresh .explore-sign{position:absolute;left:81%;top:77.2%;width:11%;h
 
  .mobile-launch-title .mobile-launch-lead{max-width:min(330px,calc(100% - 40px));margin:8px auto 0;color:#e8dfd1;font:400 clamp(15px,4vw,17px)/1.5 Jost,sans-serif;text-align:center;text-wrap:pretty}
  .mobile-launch-lead strong{font-weight:650;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
- .mobile-launch-title.launch-sky-banner{z-index:1}
 }
 
 @media(max-width:600px) and (max-aspect-ratio:6/5) and (max-height:750px){

@@ -1,5 +1,5 @@
 (() => {
- window.installCockpitMenuOrbit=async function(d,available){
+ window.installCockpitMenuOrbit=async function(d,available,nav,destinationForUrl){
   const w=d.defaultView,stage=d.querySelector('.cockpit-composition'),gate=d.querySelector('.choice-quickstart'),menu=d.querySelector('.hub-directory');
   const style=d.createElement('link');style.rel='stylesheet';style.href='assets/css/cockpit-menu-orbit.css?v=8';
   await new Promise(resolve=>{style.onload=resolve;style.onerror=resolve;d.head.append(style)});
@@ -75,7 +75,7 @@
   // Warm the existing artwork before the first hover, including the workshop's separate pieces.
   await Promise.all([...entries.values()].flatMap(({el})=>[...el.querySelectorAll('img')].map(img=>img.decode().catch(()=>{}))));
   let selected='quickstart',wanted='quickstart',frame=0,timer=0,hovered=null,geometry,pendingLink=null,pendingFill=null;
-  let departing=false;
+  let departing=false,navHovered=null;
   const fills=new Map();
   for(const link of menu.querySelectorAll('[data-select]')){
    const fill=d.createElement('span');fill.className='orbit-hover-fill';fill.setAttribute('aria-hidden','true');link.prepend(fill);fills.set(link,fill);
@@ -178,8 +178,9 @@
   function schedule(){
    if(departing)return;
    w.clearTimeout(timer);clearPending();
-   const focused=menu.querySelector('[data-select]:focus-visible');
-   const key=hovered||focused?.dataset.select||'quickstart';
+   const focused=d.hasFocus()?menu.querySelector('[data-select]:focus-visible'):null;
+   const navFocused=nav?.querySelector('a:focus-visible,button:focus-visible');
+   const key=navHovered||hovered||navDestination(navFocused)||focused?.dataset.select||'quickstart';
    const delay=key==='quickstart'?350:190;
    if(available()&&entries.has(key)&&key!==selected){
     pendingLink=menu.querySelector(`[data-select="${key}"]`);
@@ -199,10 +200,31 @@
    link.addEventListener('pointerleave',()=>{link.removeAttribute('data-menu-hover');hovered=null;schedule()});
    link.addEventListener('focus',schedule);link.addEventListener('blur',schedule);
   }
+  function navDestination(target){
+   const link=target?.closest('a[href]');
+   if(link)return destinationForUrl(link.href)||'quickstart';
+   const group=target?.closest('.sc-nav-menu');
+   if(group)return group.classList.contains('sc-guides-split')?'guides':'compare';
+   return null;
+  }
+  const setNavHovered=key=>{
+   if(navHovered===key)return;
+   navHovered=key;schedule();
+  };
+  const previewNav=event=>{
+   if(event.pointerType!=='touch')setNavHovered(navDestination(event.target));
+  };
+  nav?.addEventListener('pointerover',previewNav);
+  nav?.addEventListener('pointermove',previewNav);
+  nav?.addEventListener('pointerleave',()=>setNavHovered(null));
+  nav?.addEventListener('focusin',schedule);
+  nav?.addEventListener('focusout',()=>w.requestAnimationFrame(schedule));
+  window.addEventListener('blur',()=>setNavHovered(null));
+
   function reset(){
    departing=false;
    clearPending();
-   w.cancelAnimationFrame(frame);w.clearTimeout(timer);frame=0;timer=0;hovered=null;selected=wanted='quickstart';
+   w.cancelAnimationFrame(frame);w.clearTimeout(timer);frame=0;timer=0;hovered=navHovered=null;selected=wanted='quickstart';
    for(const link of menu.querySelectorAll('[data-select]')){link.removeAttribute('data-orbit-selected');link.removeAttribute('data-menu-hover')}
    stage.dataset.orbitSelection=selected;settle();
   }
