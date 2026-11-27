@@ -326,9 +326,14 @@ body.site-refresh:has(#scene-viewport) #cutscenes-toggle{
 .cockpit-roof{position:absolute;inset:0 0 auto;width:100%;z-index:1;pointer-events:none;display:none}
 .phone-cockpit .cockpit-roof{display:block}
 .phone-cockpit #cockpit-scene[data-viewport-layout],
-.phone-cockpit #jump-video,.phone-cockpit #arrival-article{
+.phone-cockpit #arrival-article{
  top:var(--cockpit-safe-top);
  height:calc(100% - var(--cockpit-safe-top) - var(--cockpit-safe-bottom))!important;
+}
+.phone-cockpit #jump-video{
+ top:0;
+ height:calc(100% - var(--cockpit-safe-top) - var(--cockpit-safe-bottom));
+ translate:0 var(--cockpit-safe-top);
 }
 .phone-cockpit #header{top:var(--cockpit-safe-top)}
 /* The header establishes the fixed menu's containing block. */

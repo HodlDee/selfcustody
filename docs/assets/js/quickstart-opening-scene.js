@@ -116,7 +116,8 @@ window.createQuickstartOpeningScene=function(scene,video,lead,firstFrame,ringApp
  const nearLayers=[...cabins,header].filter(Boolean).map(el=>{
   const r=el.getBoundingClientRect();if(!r.width)return null;
   remember(el);const localScale=r.width/el.offsetWidth||1;
-  return {el,origin:{x:(cameraFocus.x-r.x)/localScale,y:(cameraFocus.y-r.y)/localScale}};
+  const sceneTop=el===header?scene.getBoundingClientRect().top:0;
+  return {el,origin:{x:(cameraFocus.x-r.x)/localScale,y:(cameraFocus.y+sceneTop-r.y)/localScale}};
  }).filter(Boolean);
  // Keep the near cockpit opaque and in front of the space bridge.
  for(const {el} of nearLayers)if(el!==header)el.style.zIndex='40';

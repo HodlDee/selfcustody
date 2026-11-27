@@ -32,7 +32,7 @@
   const active=viewportActive&&phone.matches;
   if(active===!!roofTint)return;
   if(active){
-   viewportMeta.content=originalViewport+', viewport-fit=cover';
+   if(!originalViewport.includes('viewport-fit=cover'))viewportMeta.content=originalViewport+', viewport-fit=cover';
    roofTint=viewportOwner.document.createElement('meta');
    roofTint.name='theme-color';roofTint.content='#17120f';
    viewportOwner.document.head.append(roofTint);
@@ -485,14 +485,16 @@
    arrivalCanvas.style.cssText='position:fixed;inset:0;width:100%;height:100%;z-index:31;pointer-events:none;display:none';
    document.getElementById('main-content').append(arrivalCanvas);arrivalContext=arrivalCanvas.getContext('2d',{alpha:false});
   }
-  const w=innerWidth,h=innerHeight,dpr=Math.min(devicePixelRatio,2),compact=w<=900;
-  if(arrivalCanvas.width!==Math.round(w*dpr)||arrivalCanvas.height!==Math.round(h*dpr)){arrivalCanvas.width=Math.round(w*dpr);arrivalCanvas.height=Math.round(h*dpr)}
+  const sceneBox=scene.getBoundingClientRect();
+  const w=innerWidth,h=scene.clientHeight,top=sceneBox.top,dpr=Math.min(devicePixelRatio,2),compact=w<=900;
+  if(arrivalCanvas.width!==Math.round(w*dpr)||arrivalCanvas.height!==Math.round(innerHeight*dpr)){arrivalCanvas.width=Math.round(w*dpr);arrivalCanvas.height=Math.round(innerHeight*dpr)}
   const from=compact?Math.min(w/1920,h/1080):Math.max(w/1920,h/1080);
   // The cloud hero uses viewport-width artwork; match that before dissolving.
   const p=smooth((t-4.85)/.70),scale=from+(w/1920-from)*p;
   const y=(compact?(h-1080*from)/2:0)*(1-p);
   const frame=w<1200?window.quickstartResponsiveFrame(t,w,h):{x:(w-1920*scale)/2,y,scale};
-  arrivalContext.setTransform(dpr,0,0,dpr,0,0);arrivalContext.fillStyle='#080a0d';arrivalContext.fillRect(0,0,w,h);
+  arrivalContext.setTransform(dpr,0,0,dpr,0,0);arrivalContext.fillStyle='#080a0d';arrivalContext.fillRect(0,0,w,innerHeight);
+  arrivalContext.translate(0,top);
   arrivalContext.drawImage(video,frame.x,frame.y,1920*frame.scale,1080*frame.scale);
   const bottom=frame.y+1080*frame.scale;
   if(bottom<h){const feather=80*scale,fade=arrivalContext.createLinearGradient(0,bottom-feather,0,bottom);fade.addColorStop(0,'#080a0d00');fade.addColorStop(1,'#080a0d');arrivalContext.fillStyle=fade;arrivalContext.fillRect(0,bottom-feather,w,feather+1)}

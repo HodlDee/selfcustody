@@ -2,7 +2,23 @@ html,body{height:100%;overflow:clip;scrollbar-gutter:auto}
 body.site-refresh{margin:0;background:#071425}
 body.site-refresh #header>.container{max-width:none;width:100%;padding-left:48px;padding-right:48px}
 #main-content{margin:0;padding:0}
-.approved-hero{position:relative;isolation:isolate;background:#071425;height:100svh;padding:0;overflow:clip}
+body.site-refresh:has(#launchpad) #header{top:env(safe-area-inset-top,0px)}
+body.site-refresh:has(#launchpad) #header>.container{
+ padding-left:max(clamp(18px,3vw,48px),calc(env(safe-area-inset-left,0px) + 12px));
+ padding-right:max(clamp(18px,3vw,48px),calc(env(safe-area-inset-right,0px) + 12px));
+}
+body.site-refresh:has(#launchpad) #navbar.navbar-mobile{
+ height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
+}
+body.site-refresh:has(#launchpad) #navbar.navbar-mobile>ul{
+ left:max(15px,calc(env(safe-area-inset-left,0px) + 12px));
+ right:max(15px,calc(env(safe-area-inset-right,0px) + 12px));
+}
+#launchpad{--launch-safe-bottom:env(safe-area-inset-bottom,0px)}
+@media(max-width:600px) and (orientation:portrait){
+ .approved-hero .mobile-launch-title{padding-inline:8px}
+}
+.approved-hero{position:relative;isolation:isolate;background:#071425;height:100dvh;padding:0;overflow:clip}
 .approved-stage{position:absolute;overflow:clip}
 .approved-scene,.approved-exit img{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;user-select:none}
 /* Use the film's actual star positions, with the same opening registration as the video. */

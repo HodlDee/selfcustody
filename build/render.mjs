@@ -53,7 +53,7 @@ import { copyFileSync } from 'node:fs';
    licence has to be reachable from the same place rather than only from the
    repository the reader never sees. The offline build solves the same problem
    differently, by inlining the text -- see build/tools/entropy-page.mjs. */
-const FONTS = ['jost-latin.woff2', 'open-sans-latin.woff2', 'OFL-Jost.txt', 'OFL-OpenSans.txt'];
+const FONTS = ['jost-latin.woff2', 'open-sans-latin.woff2', 'OFL-Jost.txt', 'OFL-OpenSans.txt', 'caveat-latin-600.woff2', 'OFL-Caveat.txt'];
 
 /* Every generated file is written LF-only, on every platform.
 

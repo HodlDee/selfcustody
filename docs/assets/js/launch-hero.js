@@ -9,11 +9,13 @@ let nextMeteor=5,meteor=null;
 let seed=5917;const random=()=>{seed=seed*16807%2147483647;return(seed-1)/2147483646;};
 const stars=Array.from({length:90},()=>({x:random(),y:random(),r:.4+random()*.7,phase:random()*6.28,speed:.3+random()*.5}));
 function resize(){
- width=hero.clientWidth;height=hero.clientHeight;mobile=portraitLayout.matches;headerHeight=document.getElementById('header').getBoundingClientRect().height;
+ width=hero.clientWidth;height=hero.clientHeight;mobile=portraitLayout.matches;headerHeight=document.getElementById('header').getBoundingClientRect().bottom;
 
  if(mobile){
   const compactTablet=width>600&&height<=850;
-  launchTitle.style.top=(headerHeight+(compactTablet?32:height<=750?12:36))+'px';
+  const safeBottom=parseFloat(getComputedStyle(hero).getPropertyValue('--launch-safe-bottom'))||0;
+  const compactPhone=width<=600&&height-(headerHeight-70)-safeBottom<=750;
+  launchTitle.style.top=(headerHeight+(width>600?(compactTablet?32:36):compactPhone?13:23))+'px';
   if(width>600){
    // Fit source rows 505..950 (nose through launchpad) below the welcome copy.
    const copyBottom=launchTitle.offsetTop+launchTitle.offsetHeight;
@@ -30,9 +32,14 @@ function resize(){
    mobileScene.style.setProperty('--tablet-art-top',(rocketTop-505*scale-windowTop)+'px');
    mobileScene.style.setProperty('--scene-scale',String(scale));
   }else{
-   // Keep the approved phone crop, covering the movie with 32px spare below.
-   const rw=(height+32)/1.51875,headroom=80;
-   const sceneHeight=rw*.94+headroom,sceneTop=height+32-rw*.927-headroom;
+   // Fit the nose and pad between the caption and the bottom controls.
+   const captionBottom=launchTitle.offsetTop+launchTitle.offsetHeight;
+   const subjectTop=captionBottom+24,subjectBottom=height-safeBottom-28;
+   const scale=Math.min(width/405,Math.max(1,subjectBottom-subjectTop)/445);
+   const rocketTop=subjectTop+(subjectBottom-subjectTop-445*scale)*.65;
+   const rw=1536*scale/2.7,headroom=80;
+   const sceneTop=rocketTop-505*scale+rw*.873-headroom;
+   const sceneHeight=height-sceneTop;
    mobileScene.style.setProperty('--phone-art-headroom',headroom+'px');
    Object.assign(mobileScene.style,{width:rw+'px',height:sceneHeight+'px',left:(width-rw)/2+'px',top:sceneTop+'px'});
    mobileScene.style.setProperty('--rocket-width',rw+'px');

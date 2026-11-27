@@ -172,6 +172,14 @@ body.site-refresh[data-page="contact"] #site-footer {
   text-align: center;
 }
 
+@font-face {
+  font-family: "Caveat";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(../fonts/caveat-latin-600.woff2) format("woff2");
+}
+
 .sc-coming-soon h1 {
   margin: 0;
   color: #fff;

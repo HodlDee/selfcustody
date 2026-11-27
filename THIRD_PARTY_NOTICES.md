@@ -16,7 +16,7 @@ arrangements rather than one:
   notices sit at the top of the stylesheets the site serves, where the CSS they
   cover is. `npm run build` fails if either is removed.
 - **A file beside the asset.** The fonts are also served as `woff2` binaries,
-  which cannot carry a comment, so `OFL-Jost.txt` and `OFL-OpenSans.txt` sit in
+  which cannot carry a comment, so `OFL-Jost.txt`, `OFL-OpenSans.txt` and `OFL-Caveat.txt` sit in
   `docs/assets/fonts/` next to the files they license.
 
 Full texts are vendored in this repository at the paths given, so they survive
@@ -37,6 +37,7 @@ the Workshop page **`docs/entropy.html`**, and the standalone
 | EntropyLab wallet export | `build/tools/sqlite-writer.js`, `build/tools/wallet-dat.js` | `entropy.html`, `entropy-offline.html` | MIT, © 2026 Mr.Hodl and Wicked | [`build/vendor/entropylab-wallet-export/LICENSE`](build/vendor/entropylab-wallet-export/LICENSE) |
 | LifeHash | `build/tools/lifehash.js` | `entropy.html`, `entropy-offline.html` | MIT, © 2022 Andreas Gassmann **and** BSD-2-Clause-Patent, © 2019 Blockchain Commons, LLC | [`build/vendor/lifehash/LICENSE-MIT-lifehash-ts.txt`](build/vendor/lifehash/LICENSE-MIT-lifehash-ts.txt), [`build/vendor/lifehash/LICENSE.md`](build/vendor/lifehash/LICENSE.md) |
 | Jost, Open Sans | `build/vendor/fonts/`, served from `docs/assets/fonts/` | site pages (as `woff2`), `entropy.html`, `entropy-offline.html` (embedded) | SIL OFL 1.1 | [`build/vendor/fonts/OFL-Jost.txt`](build/vendor/fonts/OFL-Jost.txt), [`build/vendor/fonts/OFL-OpenSans.txt`](build/vendor/fonts/OFL-OpenSans.txt) |
+| Caveat | `build/vendor/fonts/`, served from `docs/assets/fonts/` | Coming soon headings on site pages | SIL OFL 1.1 | [`build/vendor/fonts/OFL-Caveat.txt`](build/vendor/fonts/OFL-Caveat.txt) |
 | Bootstrap 5.2.3 (CSS subset) | `build/vendor/bootstrap/`, served from `docs/assets/vendor/bootstrap/css/` | site pages **only** | MIT, © 2011–2022 Twitter, Inc. and The Bootstrap Authors | [`build/vendor/bootstrap/LICENSE`](build/vendor/bootstrap/LICENSE) |
 | Bootstrap Icons 1.10.2/1.10.3 | `build/vendor/bootstrap-icons/`, subset to `docs/assets/vendor/bootstrap-icons/` | site pages **only** | MIT, © 2019–2021 The Bootstrap Authors | [`build/vendor/bootstrap-icons/LICENSE.md`](build/vendor/bootstrap-icons/LICENSE.md) |
 | libsecp256k1 (C sources) | compiled into `build/tools/secp256k1-wasm-b64.js` | `entropy.html`, `entropy-offline.html` | MIT, © 2013 Pieter Wuille | [`build/vendor/libsecp256k1/COPYING`](build/vendor/libsecp256k1/COPYING) |
