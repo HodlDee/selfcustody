@@ -9,7 +9,7 @@
  const cockpit=links[0].getAttribute('href')||'index.html';
  const launchTitle=document.title;
  const launchCopy=document.querySelector('.mobile-launch-title');
- let cockpitFrame=null,cockpitPrepared=false,cockpitVisible=false,skyBanner=null,captionWipe=null;
+ let cockpitFrame=null,cockpitPrepared=false,cockpitVisible=false,captionLayer=null,captionWipe=null;
  let busy=false,leaving=false,warmed=false,deadline=0,framing=0,portraitStart=null;
  function videoSource(){
   const connection=navigator.connection;
@@ -155,7 +155,7 @@
   cockpitVisible=false;cockpitPrepared=false;
   cockpitFrame?.contentWindow.quickstartVideo?.setViewportActive(false);
   if(cockpitFrame){cockpitFrame.classList.remove('is-prepared','is-presented');cockpitFrame.inert=true;cockpitFrame.setAttribute('aria-hidden','true');cockpitFrame.contentWindow.quickstartVideo?.reset()}
-  captionWipe?.cancel();captionWipe=null;skyBanner?.remove();skyBanner=null;launchCopy.style.opacity='';portraitStart=null;video.style.opacity='';video.style.maskImage='';video.style.webkitMaskImage='';video.style.clipPath='';video.style.filter='';document.body.style.removeProperty('--launch-rest-sky-opacity');layer.classList.remove('is-playing');document.title=launchTitle;
+  captionWipe?.cancel();captionWipe=null;captionLayer?.remove();captionLayer=null;launchCopy.style.opacity='';portraitStart=null;video.style.opacity='';video.style.maskImage='';video.style.webkitMaskImage='';video.style.clipPath='';video.style.filter='';document.body.style.removeProperty('--launch-rest-sky-opacity');layer.classList.remove('is-playing');document.title=launchTitle;
   document.querySelector('main').inert=false;document.getElementById('launchpad').inert=false;document.getElementById('site-header').inert=false;
   document.body.classList.remove('launch-in-progress');
  }
@@ -186,10 +186,11 @@
   // A stalled download must not turn a short launch into a waiting screen.
   deadline=setTimeout(()=>enter(false),9000);
   video.currentTime=0;portraitStart=null;
-  skyBanner?.remove();skyBanner=null;
+  captionLayer?.remove();captionLayer=null;
   // Keep the caption above the crossfade so only its moving edge controls the exit.
-  skyBanner=launchCopy.cloneNode(true);skyBanner.classList.add('launch-sky-banner');
-  skyBanner.setAttribute('aria-hidden','true');layer.append(skyBanner);launchCopy.style.opacity='0';
+  captionLayer=document.createElement('div');captionLayer.className='launch-caption-wipe';
+  captionLayer.setAttribute('aria-hidden','true');
+  captionLayer.append(launchCopy.cloneNode(true));layer.append(captionLayer);launchCopy.style.opacity='0';
   frameRocket();
   playLaunchVideo();
  }
@@ -197,11 +198,15 @@
   const reveal=()=>{
    if(!busy||leaving)return;
    layer.classList.add('is-playing');
-   if(!skyBanner||captionWipe)return;
-   // Start on the first decoded frame, then move one fixed feather continuously.
-   const end=skyBanner.offsetHeight+184;
-   captionWipe=skyBanner.animate(
-    [{maskPosition:'center -40px'},{maskPosition:`center -${end}px`}],
+   if(!captionLayer||captionWipe)return;
+   // The bounds include the portrait neon lines, which sit above the text box.
+   const banner=captionLayer.firstElementChild;
+   const bounds=banner.getBoundingClientRect();
+   const top=Math.min(bounds.top,...[...banner.children].filter(el=>el.getClientRects().length).map(el=>el.getBoundingClientRect().top));
+   const height=captionLayer.clientHeight;
+   captionLayer.classList.add('is-fading');
+   captionWipe=captionLayer.animate(
+    [{maskPosition:`center ${bounds.bottom+64-height}px`},{maskPosition:`center ${top-48-height}px`}],
     {duration:1100,fill:'forwards'}
    );
   };
