@@ -1031,7 +1031,7 @@ const currentYear = new Date().getFullYear();
            <span class="sc-hero-command-line" aria-hidden="true"><span class="sc-neon-sign sc-neon-sign-exit">EXIT</span><span class="sc-outlined-word sc-hero-fiat" data-text="FIAT"><span class="sc-word-fill">FIAT</span></span></span>
            <span class="sc-hero-command-line" aria-hidden="true"><span class="sc-neon-sign sc-neon-sign-enter">ENTER</span><span class="sc-outlined-word sc-hero-command-destination" data-text="BITCOIN"><span class="sc-word-fill">BITCOIN</span></span></span>`,
           "<span class=\"sc-home-lead-statement\">Compare exchanges</span> by rates, spreads, fees, custody models, and withdrawal options before taking control of your money.",
-          `<a class="sc-btn sc-btn-primary" href="#exchange-compare"><span>Compare exchanges</span></a>
+          `<a class="sc-btn sc-btn-primary" href="#exchange-compare" aria-label="Compare exchanges"><span>Compare</span></a>
            <a class="sc-btn sc-btn-ghost" href="guides/exchange-withdrawal.html"><span>Withdrawal guide</span></a>`,
           {
             src: "assets/img/cash-vortex/exchanges-cash-vortex-final3.mp4",
