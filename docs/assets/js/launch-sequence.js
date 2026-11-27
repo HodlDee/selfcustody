@@ -9,7 +9,7 @@
  const cockpit=links[0].getAttribute('href')||'index.html';
  const launchTitle=document.title;
  const launchCopy=document.querySelector('.mobile-launch-title');
- let cockpitFrame=null,cockpitPrepared=false,cockpitVisible=false,skyBanner=null;
+ let cockpitFrame=null,cockpitPrepared=false,cockpitVisible=false,skyBanner=null,captionWipe=null;
  let busy=false,leaving=false,warmed=false,deadline=0,framing=0,portraitStart=null;
  function videoSource(){
   const connection=navigator.connection;
@@ -32,12 +32,6 @@
   return true;
  }
  function frameRocket(){
-  // Move one soft edge through the caption, finishing during ignition.
-  const captionProgress=Math.max(0,Math.min(1,(video.currentTime-.02)/1.1));
-  if(skyBanner){
-   skyBanner.style.setProperty('--launch-welcome-edge', `${128-156*captionProgress}%`);
-   skyBanner.style.visibility=captionProgress===1?'hidden':'';
-  }
   // Manually fade the porthole approach and cut the remaining tail at full black.
   const end=Number.isFinite(video.duration)?video.duration:6.04;
   const handoff=end-.24;
@@ -161,7 +155,7 @@
   cockpitVisible=false;cockpitPrepared=false;
   cockpitFrame?.contentWindow.quickstartVideo?.setViewportActive(false);
   if(cockpitFrame){cockpitFrame.classList.remove('is-prepared','is-presented');cockpitFrame.inert=true;cockpitFrame.setAttribute('aria-hidden','true');cockpitFrame.contentWindow.quickstartVideo?.reset()}
-  skyBanner?.remove();skyBanner=null;launchCopy.style.opacity='';portraitStart=null;video.style.opacity='';video.style.maskImage='';video.style.webkitMaskImage='';video.style.clipPath='';video.style.filter='';document.body.style.removeProperty('--launch-rest-sky-opacity');layer.classList.remove('is-playing');document.title=launchTitle;
+  captionWipe?.cancel();captionWipe=null;skyBanner?.remove();skyBanner=null;launchCopy.style.opacity='';portraitStart=null;video.style.opacity='';video.style.maskImage='';video.style.webkitMaskImage='';video.style.clipPath='';video.style.filter='';document.body.style.removeProperty('--launch-rest-sky-opacity');layer.classList.remove('is-playing');document.title=launchTitle;
   document.querySelector('main').inert=false;document.getElementById('launchpad').inert=false;document.getElementById('site-header').inert=false;
   document.body.classList.remove('launch-in-progress');
  }
@@ -200,7 +194,17 @@
   playLaunchVideo();
  }
  video.addEventListener('playing',()=>{
-  const reveal=()=>{if(busy&&!leaving)layer.classList.add('is-playing')};
+  const reveal=()=>{
+   if(!busy||leaving)return;
+   layer.classList.add('is-playing');
+   if(!skyBanner||captionWipe)return;
+   // Start on the first decoded frame, then move one fixed feather continuously.
+   const end=skyBanner.offsetHeight+184;
+   captionWipe=skyBanner.animate(
+    [{maskPosition:'center -40px'},{maskPosition:`center -${end}px`}],
+    {duration:1100,fill:'forwards'}
+   );
+  };
   if(video.requestVideoFrameCallback)video.requestVideoFrameCallback(reveal);else requestAnimationFrame(reveal);
  });
  links.forEach(link=>{link.addEventListener('click',launch);link.addEventListener('pointerenter',warm,{once:true});link.addEventListener('focus',warm,{once:true});});

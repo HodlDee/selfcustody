@@ -6,9 +6,10 @@
 .launch-transition.is-playing video{opacity:1}
 .launch-transition .launch-sky-banner {
  z-index:1;
- mask-image:linear-gradient(to bottom,#000 calc(var(--launch-welcome-edge,128%) - 28%),transparent var(--launch-welcome-edge,128%));
- mask-size:calc(100% + 96px) calc(100% + 72px);
- mask-position:center;
+ /* Leave room for the neon glow outside the caption before the wipe starts. */
+ mask-image:linear-gradient(to bottom,#000 calc(100% - 56px),transparent);
+ mask-size:calc(100% + 96px) calc(100% + 144px);
+ mask-position:center -40px;
  mask-repeat:no-repeat;
  mask-clip:no-clip;
 }
