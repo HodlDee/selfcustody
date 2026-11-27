@@ -85,7 +85,6 @@ const FILES = {
   'dashboard.html': 'dashboard',
   'merch.html': 'merch',
   'contact.html': 'contact',
-  'coinkite.html': 'coinkite',
   'block-demo.html': 'dashboard',
 };
 
@@ -556,7 +555,6 @@ const ROOT_URLS = [
   ['/guides.html', 'weekly', '0.9'],
   ['/glossary.html', 'monthly', '0.8'],
   ['/devices.html', 'monthly', '0.9'],
-  ['/coinkite.html', 'monthly', '0.8'],
   ['/software.html', 'monthly', '0.8'],
   ['/exchanges.html', 'monthly', '0.8'],
   ['/dashboard.html', 'daily', '0.8'],

@@ -102,8 +102,8 @@ const guideProducts = [
   { key: "krux", label: "Krux", category: "devices", href: "devices.html#krux", image: "assets/img/device-logos/krux.png" },
   { key: "ledger", label: "Ledger", category: "devices", href: "devices.html#ledger", image: "assets/img/device-logos/ledger.svg" },
   { key: "bitkey", label: "Bitkey", category: "devices", href: "devices.html#bitkey-device", image: "assets/img/device-logos/bitkey.svg" },
-  { key: "tapsigner", label: "TAPSIGNER", category: "devices", href: "coinkite.html#tapsigner", image: "assets/img/device-logos/tapsigner.svg" },
-  { key: "satscard", label: "SATSCARD", category: "devices", href: "coinkite.html#satscard", image: "assets/img/device-logos/satscard.svg" },
+  { key: "tapsigner", label: "TAPSIGNER", category: "devices", image: "assets/img/device-logos/tapsigner.svg" },
+  { key: "satscard", label: "SATSCARD", category: "devices", image: "assets/img/device-logos/satscard.svg" },
 
   { key: "sparrow", label: "Sparrow", category: "software", href: "software.html#sparrow", image: "assets/img/software/sparrow.png" },
   { key: "nunchuk", label: "Nunchuk", category: "software", href: "software.html#nunchuk", image: "assets/img/software/nunchuk.png" },
@@ -10567,8 +10567,9 @@ const renderGuideBody = guide => {
     .map(slug => guideBySlug.get(slug))
     .filter(g => g && g.slug !== guide.slug);
 
-  const productLinks = products.length
-    ? `<p class="sc-guide-product-links">${products
+  const linkedProducts = products.filter(product => product.href);
+  const productLinks = linkedProducts.length
+    ? `<p class="sc-guide-product-links">${linkedProducts
         .map(p => `<a class="sc-text-link" href="${p.external ? p.href : `../${p.href}`}"${p.external ? ' target="_blank" rel="noopener"' : ""}>About ${p.label} <i class="bi ${p.external ? "bi-arrow-up-right" : "bi-arrow-right"}"></i></a>`)
         .join("")}</p>`
     : "";
