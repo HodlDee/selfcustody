@@ -4,6 +4,15 @@
 .launch-transition{position:fixed;inset:0;z-index:10000;overflow:hidden;isolation:isolate}
 .launch-transition video{position:absolute;top:0;left:0;right:auto;bottom:auto;display:block;width:100%;height:auto;max-width:none;max-height:none;object-fit:cover;object-position:center bottom;opacity:0;transition:opacity .7s ease-in-out;will-change:opacity}
 .launch-transition.is-playing video{opacity:1}
+.launch-caption-wipe{
+ position:absolute;inset:0;z-index:1;pointer-events:none;
+}
+/* Mask the screen-sized layer so the neon glow outside the text box fades too. */
+.launch-caption-wipe.is-fading{
+ mask-image:linear-gradient(to bottom,#000 calc(100% - 56px),transparent);
+ mask-size:100% 100%;
+ mask-repeat:no-repeat;
+}
 body:has(.launch-transition) #site-header{transition:opacity .3s ease}
 body.launch-in-progress #site-header{opacity:0}
 .launch-skip{position:absolute;top:max(20px,env(safe-area-inset-top));right:max(24px,env(safe-area-inset-right));z-index:2;padding:9px 15px;border:1px solid #e8c79966;border-radius:24px;color:#fff0dc;background:#081320d9;font:500 14px/1.2 system-ui,sans-serif;cursor:pointer}

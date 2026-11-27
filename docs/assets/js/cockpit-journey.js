@@ -20,6 +20,45 @@
  const arrivalShade=document.getElementById('cockpit-arrival-shade');
  let fromLaunch=false,hostedLaunch=false;
  if(window.self===window.top){try{const stamp=Number(sessionStorage.getItem('sc-launch-arrival'));fromLaunch=stamp>0&&Date.now()-stamp<15000;sessionStorage.removeItem('sc-launch-arrival')}catch{}}
+ // Only the visible portrait cockpit opts the outer browser window into its safe areas.
+ const launchHost=window.frameElement?.classList.contains('cockpit-preloader');
+ const viewportOwner=launchHost?window.parent:window;
+ const viewportMeta=viewportOwner.document.querySelector('meta[name="viewport"]');
+ const originalViewport=viewportMeta.content;
+ const phone=viewportOwner.matchMedia('(max-width:600px) and (orientation:portrait)');
+ let viewportActive=window===window.top&&!captureFrame;
+ let insetProbe=null,insetObserver=null,roofTint=null;
+ function syncViewport(){
+  const active=viewportActive&&phone.matches;
+  if(active===!!roofTint)return;
+  if(active){
+   viewportMeta.content=originalViewport+', viewport-fit=cover';
+   roofTint=viewportOwner.document.createElement('meta');
+   roofTint.name='theme-color';roofTint.content='#17120f';
+   viewportOwner.document.head.append(roofTint);
+   // The hosted cockpit needs the outer window's insets. Frames can report zero.
+   if(launchHost){
+    insetProbe=viewportOwner.document.createElement('div');
+    insetProbe.setAttribute('aria-hidden','true');
+    insetProbe.style.cssText='position:fixed;visibility:hidden;pointer-events:none;width:env(safe-area-inset-bottom,0px);height:env(safe-area-inset-top,0px)';
+    viewportOwner.document.body.append(insetProbe);
+    const measure=()=>{
+     const box=insetProbe.getBoundingClientRect();
+     document.documentElement.style.setProperty('--cockpit-safe-top',box.height+'px');
+     document.documentElement.style.setProperty('--cockpit-safe-bottom',box.width+'px');
+    };
+    insetObserver=new ResizeObserver(measure);insetObserver.observe(insetProbe);measure();
+   }
+   document.documentElement.classList.add('phone-cockpit');
+  }else{
+   viewportMeta.content=originalViewport;roofTint.remove();roofTint=null;
+   insetObserver?.disconnect();insetProbe?.remove();insetProbe=null;
+   document.documentElement.classList.remove('phone-cockpit');
+   document.documentElement.style.removeProperty('--cockpit-safe-top');
+   document.documentElement.style.removeProperty('--cockpit-safe-bottom');
+  }
+ }
+ phone.addEventListener('change',syncViewport);syncViewport();
  let arrivalStarted=false,arrivalAnimations=[];
  let sceneReady=false,articleReady=false,videoReady=false,failed=false,raf=0,runId=0,state='idle',time=0,blobUrl;
  const clamp=v=>Math.max(0,Math.min(1,v)),smooth=v=>{v=clamp(v);return v*v*(3-2*v)};
@@ -60,6 +99,18 @@
  function wideCockpitEntrance(){
   return scene.contentWindow.matchMedia('(min-width:901px) and (min-height:421px) and (orientation:landscape)').matches;
  }
+ function destinationForUrl(href){
+  const url=new URL(href,location.href);
+  const page=url.pathname.split('/').pop();
+  if(url.pathname.endsWith('/guides/quickstart.html'))return 'quickstart';
+  if(page==='guides.html'){
+   const section=url.hash.slice(1);
+   if(section==='devices')return 'compare';
+   if(section==='software'||section==='exchanges')return section;
+   return 'guides';
+  }
+  return {'contact.html':'help','entropy.html':'workshop','devices.html':'compare','software.html':'software','dashboard.html':'dashboard','exchanges.html':'exchanges','glossary.html':'guides'}[page];
+ }
  function cockpitCamera(direction,href){
   if(direction==='enter'&&wideCockpitEntrance())return null;
   if(!sceneReady||captureFrame||!travelAllowed()||matchMedia('(prefers-reduced-motion: reduce)').matches||state==='article')return null;
@@ -78,10 +129,9 @@
   const x=compactGlass?glass.offsetLeft+glass.offsetWidth/2:gate.offsetLeft;
   const y=compactGlass?glass.offsetTop+glass.offsetHeight/2:gate.offsetTop;
   const entering=direction==='enter';
-  const page=new URL(href||document.referrer||location.href,location.href).pathname.split('/').pop();
-  const destinations={'guides.html':'guides','contact.html':'help','entropy.html':'workshop','devices.html':'compare','software.html':'software','dashboard.html':'dashboard','exchanges.html':'exchanges'};
+  const destination=destinationForUrl(href||document.referrer||location.href);
   const stackedWindow=scene.contentWindow.matchMedia('(max-width:1199px) and (max-aspect-ratio:6/5)').matches;
-  const departingIsland=!entering&&destinations[page];
+  const departingIsland=!entering&&destination;
   function holdDestination(animation){
    if(departingIsland&&menuOrbit){
     menuOrbit.depart(departingIsland);
@@ -103,7 +153,7 @@
    const motion={duration:740,easing:'cubic-bezier(.45,.04,.65,1)',fill:'forwards'};
    const slide=(el,x)=>el.animate([{translate:'0 0'},{translate:x+'px 0'}],motion);
    const cabin=[...d.querySelectorAll('.cabin-art,.cabin-mobile-art,.selection-copy'),
-    document.getElementById('site-header'),document.getElementById('back-to-launch')];
+    document.querySelector('#site-header .sc-brand'),document.getElementById('back-to-launch')];
    const layers=cabin.filter(Boolean);
    const travel=Math.ceil(Math.max(width,...layers.map(el=>el.getBoundingClientRect().right)));
    const slides=layers.map(el=>slide(el,-travel));
@@ -112,7 +162,7 @@
    departure.addEventListener('cancel',()=>slides.forEach(animation=>animation.cancel()),{once:true});
    return holdDestination(departure);
   }
-  const key=destinations[page];
+  const key=destination;
   const link=key&&d.querySelector('.hub-directory [data-select="'+key+'"]');
   let lateral=0;
   if(link){
@@ -124,12 +174,63 @@
   const pose={transformOrigin:x+'px '+y+'px',transform:'scale(1)'};
   const dx=(width/2-x)*.48-lateral*Math.min(width*.12,100);
   const approach={...pose,transform:`translate(${dx}px,${(height/2-y)*.48}px) scale(${zoom})`};
-  return stage.animate([approach,pose],{duration:850,easing:'cubic-bezier(.18,.72,.22,1)'});
+  const camera=stage.animate([approach,pose],{duration:850,easing:'cubic-bezier(.18,.72,.22,1)'});
+  if(phone.matches){
+   const controls=[...document.querySelectorAll('#header .sc-brand,#navbar .mobile-nav-toggle')];
+   const travel=Math.ceil(Math.max(0,...controls.map(el=>el.getBoundingClientRect().bottom)))+12;
+   const headerDrops=controls.map(el=>el.animate([{translate:'0 '+(-travel)+'px'},{translate:'0 0'}],
+    {duration:1000,delay:180,easing:'cubic-bezier(.37,.14,.33,1)',fill:'backwards'}));
+   if(state==='entering')arrivalAnimations.push(...headerDrops);
+   camera.addEventListener('cancel',()=>headerDrops.forEach(drop=>drop.cancel()),{once:true});
+  }
+  return camera;
  }
  function idleRings(enabled){
   const d=scene.contentDocument;d.querySelector('.cockpit-composition')?.classList.toggle('gate-hover-ready',enabled);
   d.querySelector('.cockpit-composition')?.classList.toggle('gate-floating',enabled);
   if(enabled)for(const ring of d.querySelectorAll('.ring-light')){ring.style.removeProperty('--gate-activation');ring.style.removeProperty('--ring-energy')}
+ }
+ // Extend the straight runs from source row 25, below the stray diagonal.
+ // Measure the same plate the scene paints so both sides meet it at its real scale.
+ function installPhoneRoof(art){
+  const roof=document.createElement('canvas');
+  roof.className='cockpit-roof';roof.setAttribute('aria-hidden','true');
+  scene.after(roof);
+  const row=document.createElement('canvas');
+  const join=25,leftEnd=220,rightStart=665;
+  row.width=0;row.height=1;
+  function paint(){
+   const inset=scene.offsetTop;
+   if(!inset||!phone.matches||!art.clientHeight||art.naturalHeight<=join){roof.style.height='0px';return}
+   if(row.width!==art.naturalWidth){
+    row.width=art.naturalWidth;
+    row.getContext('2d').drawImage(art,0,join,row.width,1,0,0,row.width,1);
+   }
+   const yScale=art.clientHeight/art.naturalHeight;
+   const height=inset+join*yScale;
+   const density=window.devicePixelRatio||1;
+   roof.style.height=height+'px';
+   roof.width=Math.round(scene.clientWidth*density);
+   roof.height=Math.ceil(height*density);
+   const ctx=roof.getContext('2d'),pixelsPerUnit=roof.width/row.width;
+   // Both rails are straight. Continue their individual slopes in the source
+   // image's coordinates and let the dark panel between them widen upwards.
+   for(let y=0;y<roof.height;y++){
+    const rise=(height-(y+.5)*height/roof.height)/yScale;
+    const left=-.39*rise,right=.43*rise;
+    const a=Math.round((leftEnd+left)*pixelsPerUnit);
+    const b=Math.round((rightStart+right)*pixelsPerUnit);
+    const start=Math.round(left*pixelsPerUnit),end=Math.round((row.width+right)*pixelsPerUnit);
+    ctx.drawImage(row,0,0,leftEnd,1,start,y,a-start,1);
+    ctx.drawImage(row,leftEnd,0,rightStart-leftEnd,1,a,y,b-a,1);
+    ctx.drawImage(row,rightStart,0,row.width-rightStart,1,b,y,end-b,1);
+   }
+   const shade=ctx.createLinearGradient(0,0,0,roof.height);
+   shade.addColorStop(0,'rgba(14,11,9,.35)');shade.addColorStop(1,'rgba(14,11,9,0)');
+   ctx.fillStyle=shade;ctx.fillRect(0,0,roof.width,roof.height);
+  }
+  const sizing=new ResizeObserver(paint);
+  sizing.observe(scene);sizing.observe(art);art.addEventListener('load',paint);paint();
  }
  scene.addEventListener('load',async()=>{const w=scene.contentWindow,d=scene.contentDocument;await new Promise(resolve=>{const check=()=>w.flightMockup?.articleReady?resolve():setTimeout(check,60);check()});await Promise.all([...d.images].map(i=>i.decode().catch(()=>{})));
   const skin=d.createElement('style');skin.textContent='#header,#site-header,.flight-controls{display:none!important}html,body{overflow:hidden!important}html{scrollbar-gutter:auto!important}';skin.textContent += '.choice-quickstart .quickstart-station{mask-image:url(assets/img/space-hub/quickstart-portrait-mask.svg?v=3)!important;mask-size:100% 100%!important;mask-repeat:no-repeat!important;mask-composite:add!important}';skin.textContent += '.flight-rocket-layer{z-index:3!important}';d.head.append(skin);
@@ -146,9 +247,10 @@
   hitPath.setAttribute('d',maskDocument.querySelector('path').getAttribute('d'));hitPath.setAttribute('fill','transparent');hitArea.append(hitPath);
   d.querySelector('.choice-quickstart .quickstart-station').append(hitArea);
   d.querySelector('.cockpit-composition').classList.add('gate-hit-area');
-  if(window.installCockpitMenuOrbit)menuOrbit=await window.installCockpitMenuOrbit(d,()=>state==='idle'||state==='entering');
+  if(window.installCockpitMenuOrbit)menuOrbit=await window.installCockpitMenuOrbit(d,()=>state==='idle'||state==='entering',document.getElementById('navbar'),destinationForUrl);
   // Keep the approved study intact; the embedded copy only provides the cockpit exit.
   d.addEventListener('click',e=>{if(e.target.closest('.choice-quickstart')){e.preventDefault();e.stopImmediatePropagation();start()}else if(e.target.closest('.hub-directory a')){e.preventDefault();e.stopImmediatePropagation();const routes={help:'contact.html',entropy:'entropy.html',dashboard:'dashboard.html',compare:'devices.html',guides:'guides.html',glossary:'glossary.html',devices:'devices.html',software:'software.html',exchanges:'exchanges.html'};(hostedLaunch?window.top:window).pageTransition.navigate(e.target.closest('a').dataset.route||routes[e.target.closest('a').dataset.select]||'guides.html')}},true);
+  installPhoneRoof(d.querySelector('.cabin-mobile-upper img'));
   w.flightMockup.seek(0);sceneReady=true;scene.classList.add('ready');ready();
  });
  // Fade the complete charcoal/cloud/star composition as one layer. Fading its
@@ -480,6 +582,7 @@
  document.getElementById('back-to-cockpit')?.addEventListener('click',()=>window.pageTransition.run(()=>{resetAll();cockpitCamera('enter');scene.contentDocument.querySelector('.choice-quickstart')?.focus({preventScroll:true})}));
  window.quickstartVideo={cockpitCamera,play:start,reset:resetAll,seek,skip:revealArticle,
   get canReveal(){return cockpitReady()},
+  setViewportActive(active){viewportActive=active;syncViewport()},
   prepareLaunchArrival(){if(!cockpitReady())return false;hostedLaunch=true;fromLaunch=true;arrivalShade.style.backgroundColor='#000';arrivalShade.style.opacity='1';return true},
   revealLaunchArrival(){if(!cockpitReady())return false;hostedLaunch=true;fromLaunch=true;arriveCockpit();return true},
   get ready(){return sceneReady&&videoReady&&articleReady&&state!=='entering'},get state(){return state},get time(){return time},get lead(){return videoOffset}};
