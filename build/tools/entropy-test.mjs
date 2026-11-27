@@ -110,7 +110,7 @@ function exportFor({ passphrase = '', passphraseUsed = false, extra,
    what catches a label, ordering or newline change that a structural test
    would silently bless. */
 const PRIVATE_EXPORT_12 = [
-  'SelfCustody.ca Entropy Workshop - PRIVATE RECOVERY RECORD',
+  'SelfCustody.io Entropy Workshop - PRIVATE RECOVERY RECORD',
   'KEEP SECRET. Anyone with the recovery words or private keys can spend this wallet.',
   '',
   'Recovery words (12)',
@@ -149,7 +149,7 @@ const PRIVATE_EXPORT_12 = [
 ].join('\n');
 
 const WATCH_ONLY_EXPORT_12 = [
-  'SelfCustody.ca Entropy Workshop - WATCH-ONLY WALLET RECORD',
+  'SelfCustody.io Entropy Workshop - WATCH-ONLY WALLET RECORD',
   'SHARE WITH CARE. This record cannot spend, but it reveals addresses and wallet activity.',
   '',
   'Wallet identity',

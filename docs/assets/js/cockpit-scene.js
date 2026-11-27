@@ -56,7 +56,7 @@
   const cameraDrift=-Math.min(innerWidth*.0075,15)*smooth((t-.08)/1.1);
   const ambientDrift=Math.min(innerWidth*.015,30)*.75*smooth((t-.08)/1.1)*(1-panEase);
   const cabinProgress=smooth((t-.08)/1.4);for(const cabin of cabins){cabin.style.translate=`${-g.cabinDistance*cabinProgress}px 0`;cabin.style.opacity=1}
-  
+
   [...gate.querySelectorAll('.ring-light')].forEach((ring,i)=>{ring.style.setProperty('--gate-activation',smooth((t-i*.13)/.18));ring.style.setProperty('--ring-energy',.5+.5*Math.sin(t*9-i*.8))});
   const approachTime=clamp((t-timing.start)/(timing.gate-timing.start)),u=.12*approachTime+.88*(1-Math.pow(1-approachTime,1.7)),p=bez(g.approach,u),q=bez(g.approach,Math.min(1,u+.002));
   let angle=90+Math.atan2(q.y-p.y,q.x-p.x)*180/Math.PI,scale=.95-.35*u;
@@ -136,17 +136,3 @@
  new ResizeObserver(measure).observe(stage);Promise.all([...stage.querySelectorAll('img')].map(i=>i.decode().catch(()=>{}))).then(measure);
  window.flightMockup={seek:t=>{stop();render(t)},play:run,get articleReady(){return articleReady}};
 })();
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="156" viewBox="0 0 1000 156" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="bronze" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#674525"/><stop offset=".11" stop-color="#d2b48a"/>
+      <stop offset=".2" stop-color="#96714a"/><stop offset=".45" stop-color="#6c4729"/>
+      <stop offset=".72" stop-color="#493321"/><stop offset=".88" stop-color="#b38b61"/>
+      <stop offset="1" stop-color="#6c4628"/>
+    </linearGradient>
+    <linearGradient id="depth" x2="0" y2="1">
+      <stop stop-color="#251b13"/><stop offset=".75" stop-color="#7b512b"/><stop offset="1" stop-color="#2d2119"/>
+    </linearGradient>
+    <linearGradient id="bevel" x2="0" y2="1">
+      <stop stop-color="#261e16"/><stop offset=".45" stop-color="#171712"/><stop offset="1" stop-color="#bd9d77"/>
+    </linearGradient>
+    <radialGradient id="face" cx=".5" cy="0" r="1">
+      <stop stop-color="#292b27"/><stop offset="1" stop-color="#111514"/>
+    </radialGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <clipPath id="front"><rect x="3" y="2" width="994" height="144" rx="24"/></clipPath>
+  </defs>
+  <rect x="2" y="8" width="996" height="146" rx="25" fill="url(#depth)" stroke="#251c13" stroke-width="3"/>
+  <rect x="2" y="2" width="996" height="145" rx="25" fill="url(#bronze)" stroke="#231b13" stroke-width="3"/>
+  <rect x="6" y="5" width="988" height="136" rx="22" fill="none" stroke="#d5be9b" stroke-opacity=".48" stroke-width="2"/>
+  <rect x="13" y="12" width="974" height="124" rx="16" fill="url(#bevel)"/>
+  <rect x="17" y="16" width="966" height="117" rx="13" fill="url(#face)" stroke="#070b09" stroke-width="2"/>
+  <rect x="2" y="2" width="996" height="144" filter="url(#grain)" opacity=".055" clip-path="url(#front)"/>
+  <path d="M28 7H968" stroke="#dbc7a4" stroke-opacity=".3" stroke-width="2" stroke-linecap="round"/>
+</svg>

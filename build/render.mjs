@@ -89,7 +89,7 @@ const FILES = {
   'block-demo.html': 'dashboard',
 };
 
-const SITE = 'https://selfcustody.ca';
+const SITE = 'https://selfcustody.io';
 
 /* The cache key stamped onto every versioned asset link, derived from the
    bytes of the assets themselves.
@@ -115,6 +115,7 @@ const VERSIONED_ASSETS = [
   'docs/assets/css/style.css',
   'docs/assets/css/site-refresh.css',
   'docs/assets/js/site-refresh.js',
+  'docs/assets/js/page-transitions.js',
   /* The journey's own assets. Without them in the digest the ?v= they carry
      never moves, so an edit to the cockpit or the arrival reaches nobody who
      already holds the old copy -- which is exactly what happened while this was
@@ -125,6 +126,8 @@ const VERSIONED_ASSETS = [
   'docs/assets/css/quickstart-galaxy-arrival.css',
   'docs/assets/css/quickstart-galaxy-hero.css',
   'docs/assets/css/launch-hero.css',
+  'docs/assets/css/rocket-launch-transition.css',
+  'docs/assets/js/launch-hero.js',
   'docs/assets/js/cockpit-journey.js',
   'docs/assets/js/cockpit-menu-orbit.js',
   'docs/assets/js/cutscenes-toggle.js',
@@ -149,7 +152,7 @@ const VERSIONED_ASSETS = [
 
 const ASSET_VERSION = assetDigest(VERSIONED_ASSETS);
 
-const ASSET_QUERY = /(assets\/(?:vendor\/bootstrap-icons\/bootstrap-icons\.css|css\/(?:style|site-refresh|cockpit-journey|cutscenes-toggle|quickstart-galaxy-arrival|quickstart-galaxy-hero|launch-hero|cockpit-blink|cockpit-directory|cockpit-flight|cockpit-hub-directory|cockpit-hub|cockpit-launch-arrival|cockpit-navigation|cockpit-shell|cockpit-hover)\.css|js\/(?:site-refresh|cockpit-journey|cockpit-menu-orbit|cutscenes-toggle|home-entrance|launch-sequence|quickstart-galaxy-hero|quickstart-opening-scene|cockpit-scene)\.js)\?v=)[^"']+/g;
+const ASSET_QUERY = /(assets\/(?:vendor\/bootstrap-icons\/bootstrap-icons\.css|css\/(?:style|site-refresh|cockpit-journey|cutscenes-toggle|quickstart-galaxy-arrival|quickstart-galaxy-hero|launch-hero|rocket-launch-transition|cockpit-blink|cockpit-directory|cockpit-flight|cockpit-hub-directory|cockpit-hub|cockpit-launch-arrival|cockpit-navigation|cockpit-shell|cockpit-hover)\.css|js\/(?:page-transitions|site-refresh|cockpit-journey|cockpit-menu-orbit|cutscenes-toggle|home-entrance|launch-sequence|launch-hero|quickstart-galaxy-hero|quickstart-opening-scene|cockpit-scene)\.js)\?v=)[^"']+/g;
 
 /* The whole container block, anchored on the <noscript> that always follows it.
    A non-greedy match on </div> would work on the empty shell but not on an
@@ -167,6 +170,9 @@ const ASSET_QUERY = /(assets\/(?:vendor\/bootstrap-icons\/bootstrap-icons\.css|c
    written separately and deliberately untouched: its bytes are published as a
    SHA-256 and signed by an attestation, so "harmless formatting" is exactly
    the kind of change that must not reach it. */
+const withPageTransitions = (html, base = '') => html
+  .replace(/[ \t]*<script src="(?:\.\.\/)?assets\/js\/page-transitions\.js[^"]*"><\/script>\r?\n?/g, '')
+  .replace('</head>', `  <script src="${base}assets/js/page-transitions.js?v=${ASSET_VERSION}"></script>\n</head>`);
 const tidy = html => html.replace(/[ \t]+$/gm, '');
 
 const SHELL = /<div id="site-header">[\s\S]*<\/div>(?=\s*<noscript)/;
@@ -216,8 +222,11 @@ for (const [file, key] of Object.entries(FILES)) {
     `    <div id="site-footer">${renderFooter()}</div>`;
 
   let out = html.replace(SHELL, () => filled);
+  // Reload the scene document with its styles, including when reverting a layout.
+  out = out.replace(/src="cockpit-scene\.html(?:\?[^"]*)?"/g,
+    `src="cockpit-scene.html?nav=1&v=${ASSET_VERSION}"`);
   if (NOSCRIPT.test(out)) out = out.replace(NOSCRIPT, () => noscriptFor(key));
-  out = tidy(out);
+  out = tidy(withPageTransitions(out));
   if (out !== source) {
     writeFileSync(path, out);
     changed++;
@@ -252,7 +261,7 @@ const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
 
 const guideHead = guide => {
   const url = `${SITE}/guides/${guide.slug}.html`;
-  const title = `${esc(guide.title)} | SelfCustody.ca`;
+  const title = `${esc(guide.title)} | SelfCustody.io`;
   const desc = esc(guide.summary);
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -263,7 +272,7 @@ const guideHead = guide => {
     datePublished: guide.updated,
     dateModified: guide.updated,
     inLanguage: 'en-CA',
-    publisher: { '@type': 'Organization', name: 'SelfCustody.ca', url: `${SITE}/` },
+    publisher: { '@type': 'Organization', name: 'SelfCustody.io', url: `${SITE}/` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': url }
   };
 
@@ -278,7 +287,7 @@ const guideHead = guide => {
   <link rel="canonical" href="${url}">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="en_CA">
-  <meta property="og:site_name" content="SelfCustody.ca">
+  <meta property="og:site_name" content="SelfCustody.io">
   <meta property="og:title" content="${title}">
   <meta property="og:description" content="${desc}">
   <meta property="og:url" content="${url}">
@@ -286,10 +295,10 @@ const guideHead = guide => {
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1406">
   <meta property="og:image:height" content="703">
-  <meta property="og:image:alt" content="SelfCustody.ca beside an open bank vault on a dark brick wall">
+  <meta property="og:image:alt" content="SelfCustody.io beside an open bank vault on a dark brick wall">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="${SITE}/assets/img/social-preview.jpg?v=5">
-  <meta name="twitter:image:alt" content="SelfCustody.ca beside an open bank vault on a dark brick wall">
+  <meta name="twitter:image:alt" content="SelfCustody.io beside an open bank vault on a dark brick wall">
   <link rel="icon" type="image/svg+xml" href="../assets/img/self-custody-favicon.svg">
   <link rel="icon" href="../assets/img/favicon.png">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
@@ -392,7 +401,7 @@ for (const guide of publishedGuides) {
 </body>
 </html>
 `;
-  writeFileSync(`docs/guides/${guide.slug}.html`, tidy(html));
+  writeFileSync(`docs/guides/${guide.slug}.html`, tidy(withPageTransitions(html, '../')));
   console.log(`  guides/${guide.slug}.html`.padEnd(46) + `${Math.round(html.length / 1024)} KB`);
 }
 
@@ -409,7 +418,7 @@ for (const guide of publishedGuides) {
 <head>
   <meta charset="utf-8">
   <title>Moved: ${guide.title}</title>
-  <link rel="canonical" href="https://selfcustody.ca/guides/${guide.slug}.html">
+  <link rel="canonical" href="https://selfcustody.io/guides/${guide.slug}.html">
   <meta name="robots" content="noindex, follow">
   <meta http-equiv="refresh" content="0; url=${guide.slug}.html">
 </head>
@@ -491,13 +500,13 @@ const entropySite = `<!DOCTYPE html>
   <meta http-equiv="x-dns-prefetch-control" content="off">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Turn dice rolls, coin flips or a shuffled deck into the recovery words, addresses and account key they produce, and check them against your device. Experimental, and meant for testing rather than for securing real bitcoin.">
-  <title>Entropy Workshop | SelfCustody.ca</title>
+  <title>Entropy Workshop | SelfCustody.io</title>
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="${SITE}/entropy.html">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_CA">
-  <meta property="og:site_name" content="SelfCustody.ca">
-  <meta property="og:title" content="Entropy Workshop | SelfCustody.ca">
+  <meta property="og:site_name" content="SelfCustody.io">
+  <meta property="og:title" content="Entropy Workshop | SelfCustody.io">
   <meta property="og:description" content="Turn dice rolls, coin flips or a shuffled deck into the recovery words, addresses and account key they produce, and check them against your device. Experimental, and meant for testing rather than for securing real bitcoin.">
   <meta property="og:url" content="${SITE}/entropy.html">
   <meta property="og:image" content="${SITE}/assets/img/social-preview.jpg?v=5">
@@ -522,7 +531,7 @@ ${embed.scripts}
 </body>
 </html>
 `;
-writeFileSync('docs/entropy.html', toLF(entropySite));
+writeFileSync('docs/entropy.html', toLF(withPageTransitions(entropySite)));
 
 console.log(`
 entropy-offline.html           ${Math.round(entropyOffline.length / 1024)} KB`);

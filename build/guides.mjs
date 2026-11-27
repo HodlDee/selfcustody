@@ -1,4 +1,4 @@
-/* Guide library for selfcustody.ca -- data, not markup.
+/* Guide library for selfcustody.io -- data, not markup.
 
    Everything on guides.html and every page under docs/guides/ is derived from
    the `guides` array below. Adding a guide means appending one object here;

@@ -1,4 +1,4 @@
-/* Content layer for selfcustody.ca -- the single source of truth for page
+/* Content layer for selfcustody.io -- the single source of truth for page
    markup. Consumed by build/render.mjs, which writes the static HTML in docs/.
    Extracted verbatim from site-refresh.js; the browser no longer carries it.
 
@@ -17,7 +17,7 @@ const currentYear = new Date().getFullYear();
     ["exchanges", "Exchanges", "exchanges.html"],
     ["glossary", "Glossary", "glossary.html"],
     ["entropy", "Workshop", "entropy.html"],
-    ["dashboard", "Dashboard", "dashboard.html"],
+    ["dashboard", "Metrics", "dashboard.html"],
     ["contact", "Get Help", "contact.html"]
   ];
 
@@ -187,7 +187,7 @@ const currentYear = new Date().getFullYear();
 
   const pages = {
     home: {
-      title: "SelfCustody.ca | Control Your Money",
+      title: "SelfCustody.io | Control Your Money",
       description: "Start in the cockpit: pick a destination, or fly the Quickstart route into your first self-custody guide.",
       /* The cockpit is the site's front door. The launch that precedes it is a
          separate route (launch.html) rather than markup hidden on this page,
@@ -200,7 +200,7 @@ const currentYear = new Date().getFullYear();
         <video id="jump-video" poster="assets/video/quickstart-runway-moon-v14-first.jpg" data-perspective="first-person" data-arrival="galaxy" data-source="assets/video/quickstart-runway-moon-v14.mp4" data-source4k="assets/video/quickstart-runway-moon-v14-4k-compressed-v1.mp4" muted playsinline preload="auto" aria-label="First-person flight through the Quickstart gate, past the Moon and into hyperspace"></video>
         <aside class="video-review" hidden inert aria-hidden="true" aria-label="Transition preview controls"><div class="review-status" role="status" aria-live="polite">Preparing the sequence&hellip;</div><div class="review-buttons"><button id="sequence-play" disabled>Play shorter sequence</button><button id="sequence-reset">Reset</button><button id="sequence-skip">Skip to article</button></div><input id="sequence-time" type="range" min="0" max="6" value="0" step=".01" aria-label="Sequence preview time"></aside>
         <button id="back-to-cockpit" type="button"><span aria-hidden="true">&larr;</span> Back to cockpit</button>
-        <a id="back-to-launch" href="launch.html"><span aria-hidden="true">&larr;</span> Back to launch</a>
+        <a id="back-to-launch" href="launch.html" aria-label="Back to launch" title="Back to launch"><span aria-hidden="true">&larr;<svg class="back-to-launch-arrow" width="26" height="24" viewBox="0 0 26 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H5m6-6-6 6 6 6"/></svg></span><span class="back-to-launch-label">Back to launch</span></a>
         <div id="cockpit-arrival-shade" aria-hidden="true"></div>`
     },
 
@@ -1686,7 +1686,7 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
             </article>`).join("");
 
   pages.glossary = {
-    title: "Glossary | SelfCustody.ca",
+    title: "Glossary | SelfCustody.io",
     description: "Search the Bitcoin, wallet, privacy and self-custody vocabulary these guides actually use, defined in plain language.",
     content: `
       ${hero(
@@ -1733,7 +1733,7 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
           </noscript>
 
           <footer class="sc-glossary-source">
-            <p><strong>Reference.</strong> Every definition here is written by SelfCustody.ca from primary specifications, official documentation, and public security guidance, and is published under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> along with the rest of this site's writing &mdash; reuse it, with credit. The glossary is deliberately narrow: it defines the terms these guides actually use, rather than cataloguing the whole vocabulary.</p>
+            <p><strong>Reference.</strong> Every definition here is written by SelfCustody.io from primary specifications, official documentation, and public security guidance, and is published under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> along with the rest of this site's writing &mdash; reuse it, with credit. The glossary is deliberately narrow: it defines the terms these guides actually use, rather than cataloguing the whole vocabulary.</p>
           </footer>
         </div>
       </section>`
@@ -1747,12 +1747,17 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
      Markup is the approved launchpad unchanged -- the scene, its patches, the
      porthole mask and the transition video. noindex in the <head>, because the
      page people should find is the cockpit. */
+  const launchRocketSilhouette = "M1050 507 C1038 507 1010 541 996 578 C980 619 971 676 978 735 C957 753 936 786 932 817 C928 845 933 880 942 903 C944 910 950 910 953 903 C963 881 972 854 991 845 L993 864 Q993 869 998 869 H1012 Q1004 889 997 907 Q1047 913 1098 907 Q1092 888 1083 869 H1098 Q1103 869 1104 864 L1106 845 C1121 854 1131 879 1141 903 C1144 910 1150 911 1152 903 C1160 876 1163 843 1160 817 C1156 785 1135 753 1116 735 C1121 682 1114 621 1100 579 C1087 541 1062 507 1050 507 Z";
   pages.launch = {
-    title: "Launch into Bitcoin | SelfCustody.ca",
-    description: "The launch into SelfCustody.ca.",
+    title: "Launch into Bitcoin | SelfCustody.io",
+    description: "The launch into SelfCustody.io.",
     content: `
 <section class="approved-hero" id="launchpad" aria-labelledby="launch-title">
    <h1 class="visually-hidden" id="launch-title">Exit Fiat. Enter Bitcoin.</h1>
+   <div class="mobile-launch-title"><span class="sc-hero-command-line" aria-hidden="true"><span class="sc-neon-sign sc-neon-sign-exit">EXIT</span><span class="sc-outlined-word sc-hero-fiat" data-text="FIAT"><span class="sc-word-fill">FIAT</span></span></span>
+           <span class="sc-hero-command-line" aria-hidden="true"><span class="sc-neon-sign sc-neon-sign-enter">ENTER</span><span class="sc-outlined-word sc-hero-command-destination" data-text="BITCOIN"><span class="sc-word-fill">BITCOIN</span></span></span>
+     <p class="mobile-launch-tagline"><span class="launch-welcome-label">Welcome to</span> <span class="launch-welcome-name">SelfCustody.io</span></p>
+   </div>
    <canvas id="night-sky" aria-hidden="true"></canvas>
    <div class="approved-stage">
     <img class="approved-scene" src="assets/img/earth-launch/hero-runway-master-v1.png" alt="" width="1536" height="1024" fetchpriority="high">
@@ -1763,8 +1768,8 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
      <img class="terrain-patch" src="assets/img/earth-launch/final-detail-patch-v4.png" width="1536" height="1024" alt="">
      <img class="sign-patch" src="assets/img/earth-launch/cockpit-and-clear-ground-patch-v1.png" width="1536" height="1024" alt="">
      <img class="cockpit-patch" src="assets/img/earth-launch/cockpit-and-clear-ground-patch-v1.png" width="1536" height="1024" alt="">
-     <svg class="porthole-detail" viewBox="0 0 1536 1024" aria-hidden="true"><defs><filter id="restored-rocket-edge-1"><feGaussianBlur stdDeviation="1.1"/></filter><mask id="restored-rocket-local-1" maskUnits="userSpaceOnUse" x="912" y="499" width="267" height="419"><path fill="white" filter="url(#restored-rocket-edge-1)" d="M1052 505 C1036 504 1001 546 992 575 C971 617 968 690 975 734 C942 764 921 802 927 856 Q928 883 937 900 Q920 898 914 912 L914 916 L1174 916 L1174 908 Q1169 902 1164 901 Q1175 857 1164 807 C1159 779 1146 748 1132 734 C1138 674 1131 617 1117 577 C1104 549 1071 510 1052 505 Z"/></mask></defs><image href="assets/img/earth-launch/rocket-reference-restored-no-smoke-v2.png" width="1536" height="1024" mask="url(#restored-rocket-local-1)"/></svg>
- <a class="rocket-launch-link" href="index.html" aria-label="Launch into Bitcoin — enter the cockpit"><span aria-hidden="true">Click to launch</span></a>
+     <svg class="porthole-detail" viewBox="0 0 1536 1024" aria-hidden="true"><defs><filter id="restored-rocket-edge-1"><feGaussianBlur stdDeviation="1.1"/></filter><path id="launch-rocket-edge-1" d="M1052 505 C1036 504 1001 546 992 575 C971 617 968 690 975 734 C942 764 921 802 927 856 Q928 883 937 900 Q920 898 914 912 L914 916 L1174 916 L1174 908 Q1169 902 1164 901 Q1175 857 1164 807 C1159 779 1146 748 1132 734 C1138 674 1131 617 1117 577 C1104 549 1071 510 1052 505 Z"/><mask id="restored-rocket-local-1" maskUnits="userSpaceOnUse" x="912" y="499" width="267" height="419"><use href="#launch-rocket-edge-1" fill="white" filter="url(#restored-rocket-edge-1)"/></mask></defs><image href="assets/img/earth-launch/rocket-reference-restored-no-smoke-v2.png" width="1536" height="1024" mask="url(#restored-rocket-local-1)"/><path class="launch-rocket-outline" d="${launchRocketSilhouette}"/></svg>
+ <a class="rocket-launch-link" href="index.html" aria-label="Launch into Bitcoin — enter the cockpit"></a>
     </div>
    </div>
    <div class="mobile-launch"><img class="mobile-launch-scene" src="assets/img/earth-launch/hero-runway-master-v1.png" alt="" width="1536" height="1024">
@@ -1772,8 +1777,8 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
      <img class="terrain-patch" src="assets/img/earth-launch/final-detail-patch-v4.png" width="1536" height="1024" alt="">
      <img class="sign-patch" src="assets/img/earth-launch/cockpit-and-clear-ground-patch-v1.png" width="1536" height="1024" alt="">
      <img class="cockpit-patch" src="assets/img/earth-launch/cockpit-and-clear-ground-patch-v1.png" width="1536" height="1024" alt="">
-     <svg class="porthole-detail" viewBox="0 0 1536 1024" aria-hidden="true"><defs><filter id="restored-rocket-edge-2"><feGaussianBlur stdDeviation="1.1"/></filter><mask id="restored-rocket-local-2" maskUnits="userSpaceOnUse" x="912" y="499" width="267" height="419"><path fill="white" filter="url(#restored-rocket-edge-2)" d="M1052 505 C1036 504 1001 546 992 575 C971 617 968 690 975 734 C942 764 921 802 927 856 Q928 883 937 900 Q920 898 914 912 L914 916 L1174 916 L1174 908 Q1169 902 1164 901 Q1175 857 1164 807 C1159 779 1146 748 1132 734 C1138 674 1131 617 1117 577 C1104 549 1071 510 1052 505 Z"/></mask></defs><image href="assets/img/earth-launch/rocket-reference-restored-no-smoke-v2.png" width="1536" height="1024" mask="url(#restored-rocket-local-2)"/></svg>
- <a class="rocket-launch-link" href="index.html" aria-label="Launch into Bitcoin — enter the cockpit"><span aria-hidden="true">Click to launch</span></a>
+     <svg class="porthole-detail" viewBox="0 0 1536 1024" aria-hidden="true"><defs><filter id="restored-rocket-edge-2"><feGaussianBlur stdDeviation="1.1"/></filter><path id="launch-rocket-edge-2" d="M1052 505 C1036 504 1001 546 992 575 C971 617 968 690 975 734 C942 764 921 802 927 856 Q928 883 937 900 Q920 898 914 912 L914 916 L1174 916 L1174 908 Q1169 902 1164 901 Q1175 857 1164 807 C1159 779 1146 748 1132 734 C1138 674 1131 617 1117 577 C1104 549 1071 510 1052 505 Z"/><mask id="restored-rocket-local-2" maskUnits="userSpaceOnUse" x="912" y="499" width="267" height="419"><use href="#launch-rocket-edge-2" fill="white" filter="url(#restored-rocket-edge-2)"/></mask></defs><image href="assets/img/earth-launch/rocket-reference-restored-no-smoke-v2.png" width="1536" height="1024" mask="url(#restored-rocket-local-2)"/><path class="launch-rocket-outline" d="${launchRocketSilhouette}"/></svg>
+ <a class="rocket-launch-link" href="index.html" aria-label="Launch into Bitcoin — enter the cockpit"></a>
     </div>
    </div>
   </section>
@@ -1783,8 +1788,8 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
   /* Temporary holding page. Keep the full contact-page definition above in
      place so it can be restored when booking and support are ready to open. */
   pages.contact = {
-    title: "Contact | SelfCustody.ca",
-    description: "Contact and setup support for SelfCustody.ca.",
+    title: "Contact | SelfCustody.io",
+    description: "Contact and setup support for SelfCustody.io.",
     content: `
       <section class="sc-coming-soon" aria-labelledby="coming-soon-title">
         <div class="sc-coming-soon-inner">
@@ -1800,8 +1805,8 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
      product grid when there is one -- the nav position and routes entry
      shouldn't need to change either way. noindex in the <head> until then. */
   pages.merch = {
-    title: "Merch | SelfCustody.ca",
-    description: "Merch for SelfCustody.ca.",
+    title: "Merch | SelfCustody.io",
+    description: "Merch for SelfCustody.io.",
     content: `
       <section class="sc-coming-soon" aria-labelledby="coming-soon-title">
         <div class="sc-coming-soon-inner">
@@ -1907,7 +1912,7 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
           <a class="sc-brand me-auto" href="${base}index.html${COCKPIT_HASH}" aria-label="Self Custody home">
             <span class="sc-brand-mark" aria-hidden="true"></span>
             <span class="sc-brand-name">SELF CUSTODY</span>
-            <span class="sc-brand-domain" aria-hidden="true"><span class="sc-brand-domain-text">.CA</span></span>
+            <span class="sc-brand-domain" aria-hidden="true"><span class="sc-brand-domain-text">.io</span></span>
           </a>
           <nav id="navbar" class="navbar" aria-label="Primary navigation">
             <ul>${links}</ul>
@@ -1922,7 +1927,7 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
       <div class="container">
         <div class="row g-4">
           <div class="col-lg-5">
-            <h3 class="sc-footer-brand"><img src="${base}assets/img/self-custody-favicon.svg" alt="" width="34" height="34"><span>SelfCustody.ca</span></h3>
+            <h3 class="sc-footer-brand"><img src="${base}assets/img/self-custody-favicon.svg" alt="" width="34" height="34"><span>SelfCustody.io</span></h3>
             <p>Clear, practical guidance to self custody your bitcoin. Learn the basics, test your backups, and keep control of your keys.</p>
           </div>
           <div class="col-12 col-lg-4 sc-footer-explore">
@@ -1943,8 +1948,8 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
           </div>
         </div>
         <div class="sc-footer-bottom d-flex flex-wrap justify-content-between gap-2">
-          <span>© <span data-year>${currentYear}</span> SelfCustody.ca</span>
-          <span><a href="mailto:info@selfcustody.ca">info@selfcustody.ca</a></span>
+          <span>© <span data-year>${currentYear}</span> SelfCustody.io</span>
+          <span><a href="mailto:info@selfcustody.ca">Email us</a></span>
         </div>
       </div>
     </footer>`;

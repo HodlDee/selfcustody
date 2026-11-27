@@ -2239,7 +2239,7 @@ const EntropyCore = (() => {
 
     const privateText = joinSections([
       [
-        'SelfCustody.ca Entropy Workshop - PRIVATE RECOVERY RECORD',
+        'SelfCustody.io Entropy Workshop - PRIVATE RECOVERY RECORD',
         'KEEP SECRET. Anyone with the recovery words or private keys can spend this wallet.'
       ],
       [`Recovery words (${mnemonic.length})`, ...numberedWords],
@@ -2270,7 +2270,7 @@ const EntropyCore = (() => {
     const change = [addresses.change, ...addresses.moreChange];
     const watchOnlyText = joinSections([
       [
-        'SelfCustody.ca Entropy Workshop - WATCH-ONLY WALLET RECORD',
+        'SelfCustody.io Entropy Workshop - WATCH-ONLY WALLET RECORD',
         'SHARE WITH CARE. This record cannot spend, but it reveals addresses and wallet activity.'
       ],
       [

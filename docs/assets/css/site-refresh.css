@@ -14296,3 +14296,13 @@ body[data-page="home"] .sc-home-help-section {
     justify-content: center;
   }
 }
+
+/* Launch and cockpit keep the same compact header on short landscape screens. */
+@media(max-width:1100px) and (max-height:500px) and (orientation:landscape){
+ body.site-refresh:has(#scene-viewport,#launchpad) #header{height:48px}
+ body.site-refresh:has(#scene-viewport,#launchpad) #header>.container{padding-inline:clamp(16px,3vw,32px)}
+ body.site-refresh:has(#scene-viewport,#launchpad) #header .sc-brand{font-size:22px}
+ body.site-refresh:has(#scene-viewport,#launchpad) #header .sc-brand-mark{width:64px;height:24px}
+ body.site-refresh:has(#scene-viewport,#launchpad) #header .sc-brand-name{margin-left:8px}
+ body.site-refresh:has(#scene-viewport,#launchpad) #header .sc-brand-domain{height:15px;margin-bottom:8px;font-size:10px;padding-inline:3px}
+}

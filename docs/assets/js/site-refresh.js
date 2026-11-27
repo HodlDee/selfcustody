@@ -128,13 +128,18 @@
      single button. Either way the opener is the .sc-nav-menu-toggle; on Guides
      it is just the arrow rather than the whole label. */
   const menuOpener = menu => menu?.querySelector(".sc-nav-menu-toggle");
-  const navDesktop = window.matchMedia("(min-width: 992px)");
+  const cockpitHeader = Boolean(document.getElementById("scene-viewport"));
+  const navDesktop = window.matchMedia(cockpitHeader
+    ? "(min-width: 1200px), (min-width: 992px) and (min-aspect-ratio: 6/5)"
+    : "(min-width: 992px)");
   let navHoverCloseTimer;
+  const clickedNavMenus = new WeakSet();
 
   const setNavMenu = (menu, open) => {
     const menuToggle = menuOpener(menu);
     if (!menu || !menuToggle) return;
     menu.classList.toggle("is-open", open);
+    if (!open) clickedNavMenus.delete(menu);
     menuToggle.setAttribute("aria-expanded", String(open));
   };
 
@@ -157,9 +162,12 @@
 
     menuToggle?.addEventListener("click", event => {
       event.preventDefault();
-      const open = !menu.classList.contains("is-open");
+      // Pointer hover or keyboard focus may have just opened the menu.
+      // The first click keeps it open; a second deliberate click closes it.
+      const open = !menu.classList.contains("is-open") || !clickedNavMenus.has(menu);
       closeAllNavMenus(menu);
       setNavMenu(menu, open);
+      if (open) clickedNavMenus.add(menu);
     });
 
     /* Hover used to be the stylesheet's job. Doing it here instead means a
@@ -277,6 +285,10 @@
     }, NAV_TRANSITION_MS);
   };
 
+  // A rotated cockpit tablet returns to desktop navigation without a stale sheet.
+  navDesktop.addEventListener("change", event => {
+    if (cockpitHeader && event.matches && nav.classList.contains("navbar-mobile")) closeNav();
+  });
   const toggleNav = () => {
     if (nav.classList.contains("sc-nav-visible")) {
       closeNav();
@@ -1713,7 +1725,7 @@
         clearTimeout(reset);
         if (taps >= 5) {
           taps = 0;
-          window.location.href = "block-demo.html";
+          window.pageTransition.navigate("block-demo.html");
           return;
         }
         reset = setTimeout(() => { taps = 0; }, 1000);

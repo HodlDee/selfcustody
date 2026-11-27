@@ -11,4 +11,3 @@ html.cockpit-revealing .choice-quickstart{animation:quickstart-drift-in 2.6s cub
  html.cockpit-entering .choice-quickstart{--quickstart-entry-x:-110vw}
 }
 @media(prefers-reduced-motion:reduce){html.cockpit-entering::after{display:none;animation:none}}
-

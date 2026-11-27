@@ -7,7 +7,7 @@
  transform:translate(-50%,-50%) translate(var(--orbit-x,0px),var(--orbit-y,0px)) scale(var(--orbit-scale,1));
  will-change:transform;
 }
-.cockpit-orbit-destination .world-mini{display:block;position:relative;inset:auto;width:100%;height:100%;margin:0;padding:0;animation:cockpit-island-float 6.5s cubic-bezier(.37,0,.63,1) infinite}
+.cockpit-orbit-destination .world-mini{display:block;position:relative;inset:auto;width:100%;height:100%;min-height:0;margin:0;padding:0;animation:cockpit-island-float 6.5s cubic-bezier(.37,0,.63,1) infinite}
 .cockpit-orbit-destination .hub-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;width:100%;height:100%;max-width:none;max-height:none;margin:0;filter:none}
 .cockpit-orbit-destination .hub-art>img{display:block;width:100%;height:100%;object-fit:contain}
 .cockpit-orbit-destination .entropy-scene{width:100%;max-width:none}
@@ -24,3 +24,22 @@
 .cockpit-composition .hub-directory a[data-orbit-selected] .orbit-hover-fill{transform:scaleX(1)}
 @media(prefers-reduced-motion:reduce){.cockpit-composition .hub-directory a[data-orbit-pending]{background:#eab46a12}}
 @media(prefers-reduced-motion:reduce){.cockpit-orbit-destination .world-mini{animation:none}}
+
+.cockpit-orbit-bounds{position:absolute;visibility:hidden;pointer-events:none}
+
+/* Every preview fits its orbit container, independent of the full page's minimum height. */
+
+.workshop-layers { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+ .workshop-art > img { opacity: 0; }
+ .workshop-layers { display: inline; }
+ .workshop-prop {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: workshop-prop-drift var(--period) ease-in-out var(--phase) infinite alternate;
+ }
+}
+@keyframes workshop-prop-drift {
+ from { transform: translate(0, 0) rotate(0deg); }
+ to { transform: translate(var(--dx), var(--dy)) rotate(var(--tilt)); }
+}

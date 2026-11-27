@@ -8,13 +8,14 @@
  if(captureFrame){document.title='Quickstart — first frame review';const captureStyle=document.createElement('style');captureStyle.textContent='#site-header,#back-to-launch,#back-to-cockpit,.video-review,#cockpit-arrival-shade{display:none!important}';document.head.append(captureStyle)}
  if(firstPerson)document.documentElement.classList.add('first-person-flight');
  if(new URLSearchParams(location.search).has('review-controls')){const controls=document.querySelector('.video-review');controls.hidden=false;controls.inert=false;controls.removeAttribute('aria-hidden')}
- const openingLead=firstPerson&&galaxyArrival?.4:0;
- const videoOffset=firstPerson?openingLead:introDuration;
+ let openingLead=firstPerson&&galaxyArrival?(innerWidth<1200?1.3:.4):0;
+ let videoOffset=firstPerson?openingLead:introDuration;
+ function openingTiming(){openingLead=firstPerson&&galaxyArrival?(innerWidth<1200?1.3:.4):0;videoOffset=firstPerson?openingLead:introDuration}
  let openingAlignment=null,restingPose=null;
- let departureRingAppearance=null;
+ let departureRingAppearance=null,frozenGatePose=null;
  let departureCanvas=null,departureContext=null,departureFrame=null;
  let arrivalCanvas=null,arrivalContext=null;
- let openingFrame=null,cameraLayers=[],registrationCanvas=null,registrationContext=null,registeredFrame=-1,registeredGate=null;
+ let openingFrame=null,openingNativeFrame=null,cameraLayers=[],registrationCanvas=null,registrationContext=null,registeredFrame=-1,registeredGate=null;
  let rocketPose=null,menuOrbit=null;
  const arrivalShade=document.getElementById('cockpit-arrival-shade');
  let fromLaunch=false,hostedLaunch=false;
@@ -31,32 +32,111 @@
  function arriveCockpit(returnFocus=false){
   resetAll();
   const focus=()=>{if(returnFocus)scene.contentDocument.querySelector('.choice-quickstart')?.focus({preventScroll:true})};
-  if(captureFrame||!arrivalShade||(window.self!==window.top&&!hostedLaunch)||matchMedia('(prefers-reduced-motion: reduce)').matches){focus();return}
+  if(captureFrame||window.pageTransition?.arriving||!travelAllowed()||!arrivalShade||(window.self!==window.top&&!hostedLaunch)||matchMedia('(prefers-reduced-motion: reduce)').matches){focus();return}
   // The gate enters sideways and settles in the original wide cockpit view.
   state='entering';scene.inert=false;arrivalShade.style.opacity='1';
-  const id=runId,d=scene.contentDocument,compact=scene.contentWindow.innerWidth<=900;
-  const motion={duration:1900,delay:100,easing:'cubic-bezier(.22,.65,.25,1)',fill:'both'};
-  for(const el of d.querySelectorAll('.cabin-art,.cabin-mobile-art,.selection-copy'))arrivalAnimations.push(el.animate([{translate:`${compact?-32:-110}px 0`},{translate:'0 0'}],motion));
-  const brand=document.querySelector('#site-header .sc-brand');
-  if(brand)arrivalAnimations.push(brand.animate([{translate:`${compact?-32:-110}px 0`},{translate:'0 0'}],motion));
-  const gate=d.querySelector('.choice-quickstart');
-  if(gate)arrivalAnimations.push(gate.animate([{translate:`${compact?26:95}px 0`},{translate:'0 0'}],motion));
+  const id=runId;
+  if(wideCockpitEntrance()){
+   const d=scene.contentDocument;
+   const motion={duration:1900,delay:100,easing:'cubic-bezier(.22,.65,.25,1)',fill:'both'};
+   const slide=(el,x)=>{
+    if(el)arrivalAnimations.push(el.animate([{translate:x+'px 0'},{translate:'0 0'}],motion));
+   };
+   for(const el of d.querySelectorAll('.cabin-art,.cabin-mobile-art,.selection-copy'))slide(el,-110);
+   slide(document.querySelector('#site-header .sc-brand'),-110);
+   slide(d.querySelector('.choice-quickstart'),95);
+  }else{
+   const camera=cockpitCamera('enter');
+   if(camera)arrivalAnimations.push(camera);
+  }
   // Match the outgoing black, then ease into the cockpit as soon as it is ready.
   const launchReveal=fromLaunch&&!returnFocus;
   arrivalShade.style.backgroundColor=launchReveal?'#000':'';
   arrivalAnimations.push(arrivalShade.animate([{opacity:1},{opacity:0}],{duration:launchReveal?600:650,easing:launchReveal?'cubic-bezier(.25,.1,.25,1)':'ease-out',fill:'both'}));
   Promise.all(arrivalAnimations.map(a=>a.finished)).then(()=>{if(id!==runId)return;arrivalShade.style.opacity='0';arrivalAnimations.forEach(a=>a.cancel());arrivalAnimations=[];scene.inert=false;state='idle';focus()}).catch(()=>{});
  }
+ // Aim at the resting island position supplied by the responsive cockpit layout.
+ // This places the vanishing point below the controls on phones and beside them on wide screens.
+ function wideCockpitEntrance(){
+  return scene.contentWindow.matchMedia('(min-width:901px) and (min-height:421px) and (orientation:landscape)').matches;
+ }
+ function cockpitCamera(direction,href){
+  if(direction==='enter'&&wideCockpitEntrance())return null;
+  if(!sceneReady||captureFrame||!travelAllowed()||matchMedia('(prefers-reduced-motion: reduce)').matches||state==='article')return null;
+  const d=scene.contentDocument,stage=d.querySelector('.cockpit-composition');
+  const gate=d.querySelector('.choice-quickstart'),glass=d.querySelector('.cockpit-orbit-bounds');
+  if(!stage||!gate)return null;
+  // The near-square tablet stacks the window below the board, like portrait.
+  const stackedTablet=scene.contentWindow.matchMedia('(min-width:600px) and (max-width:900px) and (min-height:600px) and (min-aspect-ratio:4/5) and (max-aspect-ratio:6/5)');
+  if(direction==='enter'&&stackedTablet.matches){
+   return gate.animate([{translate:'0 18px'},{translate:'0 0'}],
+    {duration:850,easing:'cubic-bezier(.22,.65,.25,1)'});
+  }
+  const width=stage.clientWidth,height=stage.clientHeight;
+  if(!width||!height)return null;
+  const compactGlass=glass?.offsetWidth&&glass.offsetHeight;
+  const x=compactGlass?glass.offsetLeft+glass.offsetWidth/2:gate.offsetLeft;
+  const y=compactGlass?glass.offsetTop+glass.offsetHeight/2:gate.offsetTop;
+  const entering=direction==='enter';
+  const page=new URL(href||document.referrer||location.href,location.href).pathname.split('/').pop();
+  const destinations={'guides.html':'guides','contact.html':'help','entropy.html':'workshop','devices.html':'compare','software.html':'software','dashboard.html':'dashboard','exchanges.html':'exchanges'};
+  const stackedWindow=scene.contentWindow.matchMedia('(max-width:1199px) and (max-aspect-ratio:6/5)').matches;
+  const departingIsland=!entering&&destinations[page];
+  function holdDestination(animation){
+   if(departingIsland&&menuOrbit){
+    menuOrbit.depart(departingIsland);
+    animation.addEventListener('cancel',()=>menuOrbit.reset(),{once:true});
+   }
+   return animation;
+  }
+  if(!entering&&stackedWindow){
+   const transformOrigin=x+'px '+y+'px';
+   const dx=(width/2-x)*.48;
+   const dy=Math.max(-125,(height/2-y)*.48);
+   return holdDestination(stage.animate([
+    {transformOrigin,transform:'scale(1)'},
+    {transformOrigin,transform:`translate(${dx}px,${dy}px) scale(1.55)`}
+   ],{duration:740,easing:'cubic-bezier(.45,.04,.65,1)',fill:'forwards'}));
+  }
+  if(!entering){
+   const compact=!wideCockpitEntrance();
+   const motion={duration:740,easing:'cubic-bezier(.45,.04,.65,1)',fill:'forwards'};
+   const slide=(el,x)=>el.animate([{translate:'0 0'},{translate:x+'px 0'}],motion);
+   const cabin=[...d.querySelectorAll('.cabin-art,.cabin-mobile-art,.selection-copy'),
+    document.getElementById('site-header'),document.getElementById('back-to-launch')];
+   const layers=cabin.filter(Boolean);
+   const travel=Math.ceil(Math.max(width,...layers.map(el=>el.getBoundingClientRect().right)));
+   const slides=layers.map(el=>slide(el,-travel));
+   const island=d.querySelector('[data-orbit-destination="'+(departingIsland||menuOrbit?.selected)+'"]')||gate;
+   const departure=slide(island,compact?48:95);
+   departure.addEventListener('cancel',()=>slides.forEach(animation=>animation.cancel()),{once:true});
+   return holdDestination(departure);
+  }
+  const key=destinations[page];
+  const link=key&&d.querySelector('.hub-directory [data-select="'+key+'"]');
+  let lateral=0;
+  if(link){
+   const board=link.parentElement.getBoundingClientRect(),button=link.getBoundingClientRect();
+   if(board.width)lateral=(button.left+button.width/2-board.left-board.width/2)/board.width;
+  }
+  const short=height<=420,portrait=height>width;
+  const zoom=short?1.48:portrait?1.55:1.72;
+  const pose={transformOrigin:x+'px '+y+'px',transform:'scale(1)'};
+  const dx=(width/2-x)*.48-lateral*Math.min(width*.12,100);
+  const approach={...pose,transform:`translate(${dx}px,${(height/2-y)*.48}px) scale(${zoom})`};
+  return stage.animate([approach,pose],{duration:850,easing:'cubic-bezier(.18,.72,.22,1)'});
+ }
  function idleRings(enabled){
   const d=scene.contentDocument;d.querySelector('.cockpit-composition')?.classList.toggle('gate-hover-ready',enabled);
-  d.querySelector('.cockpit-composition')?.classList.toggle('gate-floating',enabled&&!firstPerson);
+  d.querySelector('.cockpit-composition')?.classList.toggle('gate-floating',enabled);
   if(enabled)for(const ring of d.querySelectorAll('.ring-light')){ring.style.removeProperty('--gate-activation');ring.style.removeProperty('--ring-energy')}
  }
  scene.addEventListener('load',async()=>{const w=scene.contentWindow,d=scene.contentDocument;await new Promise(resolve=>{const check=()=>w.flightMockup?.articleReady?resolve():setTimeout(check,60);check()});await Promise.all([...d.images].map(i=>i.decode().catch(()=>{})));
-  const skin=d.createElement('style');skin.textContent='#header,#site-header,.flight-controls{display:none!important}@media(min-width:901px){html,body{overflow:hidden!important}html{scrollbar-gutter:auto!important}}@media(max-width:900px){html,body{overflow-x:hidden!important;overflow-y:auto!important}}';skin.textContent += '.choice-quickstart .quickstart-station{mask-image:url(assets/img/space-hub/quickstart-portrait-mask.svg?v=3)!important;mask-size:100% 100%!important;mask-repeat:no-repeat!important;mask-composite:add!important}';skin.textContent += '.flight-rocket-layer{z-index:3!important}';d.head.append(skin);
-  if(firstPerson)skin.textContent+='html,body,.navmock .selection-stage,.selection-stars{background-color:#080a0d!important}.flight-rocket-layer,.warp-follow-rocket{display:none!important}.cabin-mobile-art{z-index:4}.choice-quickstart .quickstart-station>img{filter:saturate(.9)}@media(min-width:901px){.selection-earth{bottom:calc(-6vw - 7svh + max(0px,55svh - 30.9375vw))}}';
+  const skin=d.createElement('style');skin.textContent='#header,#site-header,.flight-controls{display:none!important}html,body{overflow:hidden!important}html{scrollbar-gutter:auto!important}';skin.textContent += '.choice-quickstart .quickstart-station{mask-image:url(assets/img/space-hub/quickstart-portrait-mask.svg?v=3)!important;mask-size:100% 100%!important;mask-repeat:no-repeat!important;mask-composite:add!important}';skin.textContent += '.flight-rocket-layer{z-index:3!important}';d.head.append(skin);
+  if(firstPerson)skin.textContent+='html,body,.navmock .selection-stage,.selection-stars{background-color:#080a0d!important}.flight-rocket-layer,.warp-follow-rocket{display:none!important}.cabin-mobile-art{z-index:1}.choice-quickstart .quickstart-station>img{filter:saturate(.9)}@media(min-width:901px){.selection-earth{bottom:calc(-6vw - 7svh + max(0px,55svh - 30.9375vw))}}';
   if(captureFrame)skin.textContent+='.cabin-art,.cabin-mobile-art,.selection-copy{visibility:hidden!important}.cockpit-composition{pointer-events:none!important}';
   const hoverSkin=d.createElement('link');hoverSkin.rel='stylesheet';hoverSkin.href='assets/css/cockpit-hover.css?v=6';await new Promise(resolve=>{hoverSkin.onload=resolve;hoverSkin.onerror=resolve;d.head.append(hoverSkin)});
+  const edgeSkin=d.createElement('style');edgeSkin.textContent='@media(max-width:900px),(max-width:1199px) and (max-aspect-ratio:6/5){.choice-quickstart .quickstart-station{mask-image:url(assets/img/space-hub/quickstart-portrait-rock-outline-v3.svg)!important}}';d.head.append(edgeSkin);
   // Use the artwork's existing silhouette for pointer hits, without clipping its soft edges.
   const maskText=await fetch('assets/img/space-hub/quickstart-portrait-mask.svg?v=3').then(r=>r.text());
   const maskDocument=new DOMParser().parseFromString(maskText,'image/svg+xml');
@@ -68,7 +148,7 @@
   d.querySelector('.cockpit-composition').classList.add('gate-hit-area');
   if(window.installCockpitMenuOrbit)menuOrbit=await window.installCockpitMenuOrbit(d,()=>state==='idle'||state==='entering');
   // Keep the approved study intact; the embedded copy only provides the cockpit exit.
-  d.addEventListener('click',e=>{if(e.target.closest('.choice-quickstart')){e.preventDefault();e.stopImmediatePropagation();start()}else if(e.target.closest('.hub-directory a')){e.preventDefault();e.stopImmediatePropagation();const routes={help:'contact.html',entropy:'entropy.html',dashboard:'dashboard.html',compare:'devices.html',guides:'guides.html',glossary:'glossary.html',devices:'devices.html',software:'software.html',exchanges:'exchanges.html'};(hostedLaunch?window.top:window).location.href=routes[e.target.closest('a').dataset.select]||'guides.html'}},true);
+  d.addEventListener('click',e=>{if(e.target.closest('.choice-quickstart')){e.preventDefault();e.stopImmediatePropagation();start()}else if(e.target.closest('.hub-directory a')){e.preventDefault();e.stopImmediatePropagation();const routes={help:'contact.html',entropy:'entropy.html',dashboard:'dashboard.html',compare:'devices.html',guides:'guides.html',glossary:'glossary.html',devices:'devices.html',software:'software.html',exchanges:'exchanges.html'};(hostedLaunch?window.top:window).pageTransition.navigate(e.target.closest('a').dataset.route||routes[e.target.closest('a').dataset.select]||'guides.html')}},true);
   w.flightMockup.seek(0);sceneReady=true;scene.classList.add('ready');ready();
  });
  // Fade the complete charcoal/cloud/star composition as one layer. Fading its
@@ -160,7 +240,13 @@
  video.addEventListener('loadeddata',()=>{
   videoReady=true;
   // Keep the approved registration coordinates independent of decode resolution.
-  if(firstPerson&&!openingFrame){openingFrame=document.createElement('canvas');openingFrame.width=1920;openingFrame.height=1080;openingFrame.getContext('2d').drawImage(video,0,0,1920,1080)}
+  if(firstPerson&&!openingFrame){
+   openingFrame=document.createElement('canvas');openingFrame.width=1920;openingFrame.height=1080;openingFrame.getContext('2d').drawImage(video,0,0,1920,1080);
+   // Keep the registration frame in logical coordinates, plus the decoded
+   // detail for the desktop dissolve into the native-resolution movie.
+   openingNativeFrame=openingFrame;
+   if(video.videoWidth>1920){openingNativeFrame=document.createElement('canvas');openingNativeFrame.width=video.videoWidth;openingNativeFrame.height=video.videoHeight;openingNativeFrame.getContext('2d').drawImage(video,0,0)}
+  }
   ready();
  });video.addEventListener('error',videoFailure);
  function poseForHandoff(){
@@ -224,7 +310,7 @@
  function prepareDeparture(){
   if(!firstPerson||departureFrame)return;
   const d=scene.contentDocument,w=scene.contentWindow;
-  if(openingLead){departureFrame={gpu:true};openingAlignment=window.createQuickstartOpeningScene(scene,video,openingLead,openingFrame,departureRingAppearance);return}
+  if(openingLead){departureFrame={gpu:true};openingAlignment=window.createQuickstartOpeningScene(scene,video,openingLead,openingFrame,departureRingAppearance,openingNativeFrame);return}
   if(!departureCanvas){
    departureCanvas=d.createElement('canvas');departureCanvas.setAttribute('aria-hidden','true');
    departureCanvas.className='first-person-departure';
@@ -303,14 +389,30 @@
   // The cloud hero uses viewport-width artwork; match that before dissolving.
   const p=smooth((t-4.85)/.70),scale=from+(w/1920-from)*p;
   const y=(compact?(h-1080*from)/2:0)*(1-p);
+  const frame=w<1200?window.quickstartResponsiveFrame(t,w,h):{x:(w-1920*scale)/2,y,scale};
   arrivalContext.setTransform(dpr,0,0,dpr,0,0);arrivalContext.fillStyle='#080a0d';arrivalContext.fillRect(0,0,w,h);
-  arrivalContext.drawImage(video,(w-1920*scale)/2,y,1920*scale,1080*scale);
-  const bottom=y+1080*scale;
+  arrivalContext.drawImage(video,frame.x,frame.y,1920*frame.scale,1080*frame.scale);
+  const bottom=frame.y+1080*frame.scale;
   if(bottom<h){const feather=80*scale,fade=arrivalContext.createLinearGradient(0,bottom-feather,0,bottom);fade.addColorStop(0,'#080a0d00');fade.addColorStop(1,'#080a0d');arrivalContext.fillStyle=fade;arrivalContext.fillRect(0,bottom-feather,w,feather+1)}
   arrivalCanvas.style.display='block';arrivalCanvas.style.opacity='1';video.style.opacity='0';
  }
+ // Sample the idle bob before resetting the flight, then keep its parent still.
+ // The departure owns the station transform and measures this frozen pose.
+ function captureIdleGatePose(){
+  if(!firstPerson||!openingLead||state!=='idle')return null;
+  const d=scene.contentDocument,world=d.querySelector('.choice-quickstart .world-mini'),station=d.querySelector('.quickstart-station');
+  return {world,style:world.getAttribute('style'),transform:scene.contentWindow.getComputedStyle(world).transform,station,stationStyle:station.getAttribute('style')};
+ }
+ function freezeIdleGatePose(pose){
+  if(!pose)return;
+  frozenGatePose=pose;
+  if(pose.stationStyle===null)pose.station.removeAttribute('style');else pose.station.setAttribute('style',pose.stationStyle);
+  pose.world.style.setProperty('animation','none','important');
+  pose.world.style.setProperty('transform',pose.transform,'important');
+ }
  function resetDeparture(){
   openingAlignment?.destroy();openingAlignment=null;
+  if(frozenGatePose){const {world,style}=frozenGatePose;if(style===null)world.removeAttribute('style');else world.setAttribute('style',style);frozenGatePose=null}
   departureRingAppearance=null;
   if(arrivalCanvas)arrivalCanvas.style.display='none';
   if(departureCanvas)departureCanvas.style.display='none';
@@ -318,7 +420,7 @@
   cameraLayers=[];departureFrame=null;registeredFrame=-1;registeredGate=null;
  }
  function cancel(){runId++;seekId++;cancelAnimationFrame(raf);raf=0;video.pause();menuOrbit?.reset();arrivalAnimations.forEach(a=>a.cancel());arrivalAnimations=[];if(arrivalShade)arrivalShade.style.opacity='0'}
- function resetAll(){cancel();resetDeparture();restingPose?.clear();restingPose=null;state='idle';time=0;play.textContent='Play sequence';video.classList.remove('active');video.style.opacity=0;article.classList.remove('active');article.inert=true;article.setAttribute('aria-hidden','true');scene.inert=false;document.body.classList.remove('in-flight','at-article');if(videoReady)video.currentTime=0;if(sceneReady){exterior(0);scene.contentWindow.flightMockup.seek(0);if(openingLead)restingPose=window.createQuickstartRestingPose(scene,openingLead);idleRings(true);}if(articleReady){article.contentDocument.documentElement.style.setProperty('--arrival-background','0');article.contentDocument.documentElement.style.setProperty('--arrival-title','0');article.contentDocument.documentElement.style.setProperty('--arrival-content','0');article.contentWindow.scrollTo(0,0)}scrub.value=0;ready()}
+ function resetAll(){cancel();openingTiming();resetDeparture();restingPose?.clear();restingPose=null;state='idle';time=0;play.textContent='Play sequence';video.classList.remove('active');video.style.opacity=0;article.classList.remove('active');article.inert=true;article.setAttribute('aria-hidden','true');scene.inert=false;document.body.classList.remove('in-flight','at-article');if(videoReady)video.currentTime=0;if(sceneReady){exterior(0);scene.contentWindow.flightMockup.seek(0);if(openingLead)restingPose=window.createQuickstartRestingPose(scene,openingLead);idleRings(true);}if(articleReady){article.contentDocument.documentElement.style.setProperty('--arrival-background','0');article.contentDocument.documentElement.style.setProperty('--arrival-title','0');article.contentDocument.documentElement.style.setProperty('--arrival-content','0');article.contentWindow.scrollTo(0,0)}scrub.value=0;ready()}
  function showArticle(progress,contentProgress,titleProgress){
   article.classList.add('active');article.inert=progress<1;article.setAttribute('aria-hidden',String(progress<1));
   if(articleReady){
@@ -332,18 +434,18 @@
   video.style.opacity=framed?'0':String(alpha);if(arrivalCanvas)arrivalCanvas.style.opacity=String(alpha);
   if(progress>=1){state='article';document.body.classList.add('at-article');video.classList.remove('active');if(arrivalCanvas)arrivalCanvas.style.display='none';video.pause();status.textContent='Quickstart article';play.textContent='Replay sequence'}
  }
- function revealArticle(){cancel();resetDeparture();state='arriving';scene.inert=true;document.body.classList.add('in-flight');if(window.cutscenesEnabled?.()===false){
-   const id=runId,root=articleReady?article.contentDocument.documentElement:null;
-   const titleFrom=clamp(Number(root?.style.getPropertyValue('--arrival-title'))||0),contentFrom=clamp(Number(root?.style.getPropertyValue('--arrival-content'))||0);
-   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-   showArticle(1,reduced?1:contentFrom,reduced?1:titleFrom);
-   if(reduced)return;
-   let began=null;
-   const revealText=now=>{if(id!==runId)return;if(!articleReady){raf=requestAnimationFrame(revealText);return}if(began===null)began=now;
-    const elapsed=now-began,title=clamp(titleFrom+elapsed/1150),copy=contentFrom+(1-contentFrom)*smooth((elapsed-(contentFrom>0?0:Math.max(0,570-titleFrom*1150)))/1000);
-    showArticle(1,copy,title);if(title<1||copy<1)raf=requestAnimationFrame(revealText);
-   };raf=requestAnimationFrame(revealText);return;
-  }const id=runId,start=performance.now();const step=now=>{if(id!==runId)return;showArticle(smooth((now-start)/650));if(state!=='article')raf=requestAnimationFrame(step)};raf=requestAnimationFrame(step)}
+ async function revealArticle(){
+  if(state==='fading'||state==='article')return;
+  // Freeze the outgoing view until it is covered, including a skipped video.
+  cancelAnimationFrame(raf);video.pause();state='fading';
+  await window.pageTransition.run(async()=>{
+   cancel();resetDeparture();scene.inert=true;document.body.classList.add('in-flight');
+   const deadline=performance.now()+8000;
+   while(!articleReady&&performance.now()<deadline)await new Promise(resolve=>setTimeout(resolve,40));
+   if(!articleReady){location.assign(article.src);return}
+   showArticle(1,1,1);
+  });
+ }
  function renderVideo(){time=videoOffset+video.currentTime;scrub.value=time;
   if(firstPerson)renderDeparture(video.currentTime);
   if(galaxyArrival)renderArrivalFraming(video.currentTime);
@@ -356,8 +458,9 @@
  async function start(){if(!cockpitReady())return;if(window.cutscenesEnabled?.()===false){revealArticle();return;}
   // Accept an early click, but finish the entrance before departure to avoid snapping home.
   if(state==='entering'){const arrivalId=runId;try{await Promise.all(arrivalAnimations.map(a=>a.finished))}catch{return}if(arrivalId!==runId)return}
+  const gatePose=captureIdleGatePose();
   const ringAppearance=openingLead&&state==='idle'?[...scene.contentDocument.querySelectorAll('.ring-rest,.ring-powered')].map(el=>({el,opacity:scene.contentWindow.getComputedStyle(el).opacity})):null;
-  resetAll();departureRingAppearance=ringAppearance;if(!travelAllowed()||failed){revealArticle();return}/* Was reduced-motion only. Cutscenes off left this to fall through to the 12-second wait below for a video that is no longer being fetched, so choosing to skip the flight meant staring at 'Preparing the sequence'. */state='loading';const id=runId;status.textContent='Preparing the sequence…';const timeout=performance.now()+12000;while(!videoReady&&performance.now()<timeout&&!failed){await new Promise(r=>setTimeout(r,60));if(id!==runId)return}if(id!==runId)return;if(!videoReady){revealArticle();return}
+  resetAll();freezeIdleGatePose(gatePose);departureRingAppearance=ringAppearance;if(!travelAllowed()||failed){revealArticle();return}/* Was reduced-motion only. Cutscenes off left this to fall through to the 12-second wait below for a video that is no longer being fetched, so choosing to skip the flight meant staring at 'Preparing the sequence'. */state='loading';const id=runId;status.textContent='Preparing the sequence…';const timeout=performance.now()+12000;while(!videoReady&&performance.now()<timeout&&!failed){await new Promise(r=>setTimeout(r,60));if(id!==runId)return}if(id!==runId)return;if(!videoReady){revealArticle();return}
   if(video.seeking)await new Promise(resolve=>video.addEventListener('seeked',resolve,{once:true}));if(id!==runId)return;
   if(firstPerson){
    prepareDeparture();idleRings(false);scene.inert=true;document.body.classList.add('in-flight');state='video';video.classList.add('active');video.style.opacity='0';
@@ -374,10 +477,10 @@
  async function seek(t){cancel();const id=++seekId;time=t;scrub.value=t;document.body.classList.remove('at-article');article.classList.remove('active');article.inert=true;article.setAttribute('aria-hidden','true');if(t<videoOffset){state='paused';document.body.classList.toggle('in-flight',t>0);video.classList.toggle('active',!!openingLead&&t>0);if(openingLead){prepareDeparture();idleRings(false);scene.inert=t>0;renderAlignedDeparture(0,t)}else exterior(t);return}if(!videoReady)return;state='paused';scene.inert=true;document.body.classList.toggle('in-flight',t>0);if(firstPerson){prepareDeparture();idleRings(false)}else exterior(introDuration);video.classList.add('active');const target=Math.max(0,Math.min(duration()-.001,t-videoOffset+.0001));if(Math.abs(video.currentTime-target)>.005)await new Promise(r=>{video.addEventListener('seeked',r,{once:true});video.currentTime=target});if(id!==seekId)return;renderVideo();if(t>=ending()-.06)showArticle(1)}
  play.addEventListener('click',start);reset.addEventListener('click',resetAll);skip.addEventListener('click',revealArticle);scrub.addEventListener('input',()=>seek(Number(scrub.value)));addEventListener('keydown',e=>{if(e.key==='Escape'&&state!=='idle'&&state!=='article')revealArticle()});
  addEventListener('pagehide',()=>{cancel();if(blobUrl)URL.revokeObjectURL(blobUrl)});
- document.getElementById('back-to-cockpit')?.addEventListener('click',()=>arriveCockpit(true));
- window.quickstartVideo={play:start,reset:resetAll,seek,skip:revealArticle,
+ document.getElementById('back-to-cockpit')?.addEventListener('click',()=>window.pageTransition.run(()=>{resetAll();cockpitCamera('enter');scene.contentDocument.querySelector('.choice-quickstart')?.focus({preventScroll:true})}));
+ window.quickstartVideo={cockpitCamera,play:start,reset:resetAll,seek,skip:revealArticle,
   get canReveal(){return cockpitReady()},
   prepareLaunchArrival(){if(!cockpitReady())return false;hostedLaunch=true;fromLaunch=true;arrivalShade.style.backgroundColor='#000';arrivalShade.style.opacity='1';return true},
   revealLaunchArrival(){if(!cockpitReady())return false;hostedLaunch=true;fromLaunch=true;arriveCockpit();return true},
-  get ready(){return sceneReady&&videoReady&&articleReady&&state!=='entering'},get state(){return state},get time(){return time}};
+  get ready(){return sceneReady&&videoReady&&articleReady&&state!=='entering'},get state(){return state},get time(){return time},get lead(){return videoOffset}};
 })();

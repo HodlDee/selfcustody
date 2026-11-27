@@ -1,7 +1,8 @@
 (()=>{
- /* Inside the journey's arrival frame the parent already shows this control,
-    and a second copy would sit on top of the first. */
- if(window.self!==window.top)return;
+ /* The hosted cockpit owns its control after the launch parent hides its copy.
+    Arrival articles still use their journey parent's control. */
+ const hostedCockpit=window.self!==window.top&&window.frameElement?.classList.contains('cockpit-preloader');
+ if(window.self!==window.top&&!hostedCockpit)return;
  const key='sc-cutscenes-enabled';let memory=true;
  window.cutscenesEnabled=()=>{try{return localStorage.getItem(key)!=='false'}catch{return memory}};
  const button=document.createElement('button');button.id='cutscenes-toggle';button.type='button';button.setAttribute('role','switch');button.setAttribute('aria-label','Cutscenes');button.innerHTML='<span>Cutscenes</span><span class="cutscenes-state"></span><span class="cutscenes-track" aria-hidden="true"></span>';document.body.append(button);

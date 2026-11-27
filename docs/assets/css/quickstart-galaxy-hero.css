@@ -14,7 +14,7 @@ body.is-arriving .galaxy-arrival-shade{animation:arrival-uncover .7s ease-out bo
 body.is-arriving .sc-guide-head .container{animation:guide-text-arrive .85s .25s cubic-bezier(.16,1,.3,1) both}
 @keyframes arrival-uncover{from{opacity:1}to{opacity:0}}
 @keyframes guide-text-arrive{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
-@media(max-width:767px){body.site-refresh .sc-guide-head::before{height:720px;background-size:auto 720px;background-position:68% top;opacity:.5}}
+@media(max-width:1199px) and (max-aspect-ratio:6/5){body.site-refresh .sc-guide-head::before{height:max(720px,100svh);background-size:auto max(720px,100svh);background-position:68% top;opacity:.5}}
 @media(prefers-reduced-motion:reduce){body.is-arriving .galaxy-arrival-shade{display:none}body.is-arriving .sc-guide-head::before,body.is-arriving .sc-guide-head .container{animation:none}}
 @media(prefers-reduced-motion:reduce){body.site-refresh .sc-guide-head::before{animation:none;filter:none}}
 
