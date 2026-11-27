@@ -455,6 +455,13 @@ for (const font of FONTS) {
   copyFileSync(`build/vendor/fonts/${font}`, `docs/assets/fonts/${font}`);
 }
 
+/* SECURITY.md lives at the repository root (GitHub's conventional place for
+   the security policy and the private-reporting form link). GitHub Pages
+   publishes docs/, so readers hitting https://selfcustody.ca/SECURITY.md
+   would 404 without a copy here. Keep the root file as the source of truth
+   and refresh the published bytes on every build. */
+copyFileSync('SECURITY.md', 'docs/SECURITY.md');
+
 if (existsSync('docs/tools')) rmSync('docs/tools', { recursive: true });
 
 /* Same reasoning, one level down. entropy.html used to be the downloadable
