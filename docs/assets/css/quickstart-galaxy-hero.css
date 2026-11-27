@@ -6,6 +6,7 @@ body.site-refresh .sc-guide-head::after{content:none}
 /* Keep the original cloud image still. */
 /* Use the viewport width so the artwork continues beneath the scrollbar area. */
 html:has(.sc-guide-head){scrollbar-gutter:auto}
+html:has(body[data-arrival="galaxy"]){color-scheme:dark;scrollbar-color:#757575 #151515}
 body.site-refresh .sc-guide-head::before{clip-path:inset(0);width:100vw;right:auto}
 body.site-refresh{overflow-x:clip}
 .galaxy-replay{position:fixed;bottom:20px;right:20px;z-index:1100;background:#181a1d;color:#f5e9d5;border:1px solid #756047;border-radius:8px;padding:11px 16px;font:600 13px system-ui;box-shadow:0 4px 20px #0008}

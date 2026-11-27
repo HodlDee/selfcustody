@@ -1085,7 +1085,7 @@ body[data-page="home"] .sc-sequence-section {
 @media (hover: hover) {
   .sc-path-options .sc-card:hover,
   .sc-card.sc-guide-card:hover,
-  .sc-dash-tile:hover,
+  .sc-card.sc-dash-tile:hover,
   .sc-block:hover {
     border-color: rgba(255, 237, 184, 0.88);
     box-shadow:
@@ -6822,19 +6822,10 @@ body.site-refresh .sc-hero-actions .sc-btn-ghost:hover {
   background: var(--sc-dash-black);
 }
 
-/* Where the black stage hands off to the ordinary page: fade up out of black
-   across the top of this section, then the existing settle into the wash at
-   the bottom. */
 body[data-page="dashboard"] .sc-dash-hero + .sc-section {
   padding-top: 32px;
   padding-bottom: 52px;
-  background: linear-gradient(
-    180deg,
-    var(--sc-dash-black) 0%,
-    var(--sc-paper) 190px,
-    var(--sc-paper) calc(100% - 140px),
-    var(--sc-wash) 100%
-  );
+  background: var(--sc-dash-black);
 }
 
 body[data-page="dashboard"] .sc-dash-hero + .sc-section + .sc-section {
@@ -7504,17 +7495,28 @@ body[data-page="dashboard"] .sc-dash-hero + .sc-section + .sc-section {
   .sc-dash-gears i { animation: none; }
 }
 
-/* Replaces .sc-card's blanket 0.22s all-property transition with the same
-   named list and easing the shortlist cards use, so the lift reads
-   identically on both pages. transform stays in the list because
-   .sc-card:hover still supplies its own -5px. */
 .sc-dash-tile {
-  transition:
-    transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
-    translate 240ms cubic-bezier(0.22, 1, 0.36, 1),
-    scale 240ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: border-color 240ms ease, box-shadow 240ms ease;
+}
+
+.sc-dash-metrics-grid .sc-dash-tile:hover,
+.sc-dash-metrics-grid .sc-dash-tile:has(:focus-visible) {
+  transform: none;
+  translate: none;
+}
+@media (hover: hover) {
+  .sc-dash-metrics-grid .sc-dash-tile:hover {
+    box-shadow:
+      0 8px 20px rgba(0, 0, 0, 0.30),
+      0 0 9px rgba(255, 250, 224, 0.25),
+      0 0 25px rgba(255, 231, 166, 0.27),
+      inset 0 0 20px rgba(255, 244, 211, 0.045);
+  }
+}
+
+:where(.sc-dash-metrics-grid) .sc-dash-tile {
+  background: linear-gradient(150deg, #242424, #171717 72%);
+  border-color: #686868;
 }
 
 .sc-dash-tile .sc-card-body { display: flex; flex-direction: column; height: 100%; }
