@@ -160,9 +160,7 @@ body.site-refresh[data-page="contact"] #site-footer {
   place-items: center;
   padding: 118px 24px 54px;
   color: #fff;
-  background:
-    radial-gradient(circle at 50% 55%, rgba(255, 153, 0, 0.035), transparent 30%),
-    #050506;
+  background: #050506;
 }
 
 .sc-coming-soon-inner {
@@ -197,33 +195,13 @@ body.site-refresh[data-page="contact"] #site-footer {
   margin: 24px auto 0;
 }
 
-.sc-coming-soon-mark::before {
-  position: absolute;
-  inset: 18% 4%;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(255, 153, 0, 0.3), rgba(255, 255, 255, 0.08) 42%, transparent 72%);
-  content: "";
-  filter: blur(24px);
-  opacity: 0.58;
-  animation: sc-coming-glow 3.617s ease-in-out infinite;
-}
-
 .sc-coming-soon-mark img {
   position: relative;
   z-index: 1;
   display: block;
   width: 100%;
   height: auto;
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.12)) drop-shadow(0 0 22px rgba(255, 153, 0, 0.16));
-}
-
-@keyframes sc-coming-glow {
-  0%, 100% { opacity: 0.48; transform: scale(0.94); }
-  50% { opacity: 0.88; transform: scale(1.08); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sc-coming-soon-mark::before { animation: none; }
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.12));
 }
 
 @media (max-width: 575px) {

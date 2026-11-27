@@ -609,7 +609,7 @@ const currentYear = new Date().getFullYear();
             <article id="coldcard" class="sc-detail">
               <div class="row g-5 align-items-center">
                 <div class="col-lg-5"><div class="sc-detail-media"><img src="assets/img/devices/coldcard-q-mk5.png" alt="COLDCARD Q and Mk5 hardware wallets" width="836" height="762" loading="lazy"></div></div>
-                <div class="col-lg-7"><h2>COLDCARD Q / Mk5</h2><p>COLDCARD Q and Mk5 are Bitcoin-only signers with dual secure elements from different vendors, publicly reviewable and reproducible firmware, and some of the deepest transaction-policy controls available on a consumer signer, while still working for someone building their first air-gapped setup.</p><h3>Strong fit</h3><ul class="sc-check-list"><li>People who want one device that scales from a first air-gapped wallet to advanced multisig and policy rules.</li><li>Users who value dual, independently-sourced secure elements and open, reproducible firmware.</li><li>Anyone who wants microSD, NFC, and (on the Q) QR/camera air-gap options in a single signer.</li></ul><h3>Consider</h3><ul class="sc-caution-list"><li>Read the docs to get the most out of its more advanced features.</li><li>Choosing between Q and Mk5 comes down to keyboard-and-camera versus a smaller, simpler form factor.</li></ul><div class="sc-hero-actions"><a class="sc-btn sc-btn-primary" href="coinkite.html"><span>Explore Coinkite products</span></a></div></div>
+                <div class="col-lg-7"><h2>COLDCARD Q / Mk5</h2><p>COLDCARD Q and Mk5 are Bitcoin-only signers with dual secure elements from different vendors, publicly reviewable and reproducible firmware, and some of the deepest transaction-policy controls available on a consumer signer, while still working for someone building their first air-gapped setup.</p><h3>Strong fit</h3><ul class="sc-check-list"><li>People who want one device that scales from a first air-gapped wallet to advanced multisig and policy rules.</li><li>Users who value dual, independently-sourced secure elements and open, reproducible firmware.</li><li>Anyone who wants microSD, NFC, and (on the Q) QR/camera air-gap options in a single signer.</li></ul><h3>Consider</h3><ul class="sc-caution-list"><li>Read the docs to get the most out of its more advanced features.</li><li>Choosing between Q and Mk5 comes down to keyboard-and-camera versus a smaller, simpler form factor.</li></ul></div>
               </div>
             ${detailFooter(externalLink("https://coldcard.com/"), "coldcard")}</article>
 
@@ -651,119 +651,6 @@ const currentYear = new Date().getFullYear();
               ["SeedSigner", "https://seedsigner.com/"],
               ["Foundation", "https://foundation.xyz/passport"],
               ["Ledger", "https://www.ledger.com/"]
-            ])}
-          </div>
-        </section>`
-    },
-
-    coinkite: {
-      title: "Coinkite Product Guide | Self Custody Canada",
-      description: "A focused guide to Coinkite products including COLDCARD Q, Mk5, TAPSIGNER, SATSCARD, OPENDIME, and SEEDPLATE.",
-      content: `
-        ${hero(
-          "Coinkite product family",
-          "Canadian-built tools for<br><em>keys, signing, and physical bitcoin.</em>",
-          "COLDCARD, TAPSIGNER, and SATSCARD may sit in the same store, but they do very different jobs. This page separates the models clearly.",
-          `<a class="sc-btn sc-btn-primary" href="#compare-coinkite">Compare products</a>
-           <a class="sc-btn sc-btn-ghost" href="devices.html">All device brands</a>`,
-          {
-            /* Replaces a photograph whose provenance could not be established.
-               This one is by Alexandre Debiève, from Unsplash under the
-               Unsplash Licence -- see LICENSING-AUDIT.md for the photograph,
-               the photographer and the date it was verified. */
-            src: "assets/img/coinkite-circuit-board.jpg",
-            alt: "Macro photograph of a circuit board, its chips and capacitors in sharp relief",
-            width: 1600,
-            height: 1067
-          }
-        )}
-
-        <section class="sc-section">
-          <div class="container">
-            <div class="sc-section-head"><span class="sc-eyebrow">The key distinction</span><h2>Signer, card, or bearer instrument?</h2><p>Start with the role—not the form factor.</p></div>
-            <div class="row g-4">
-              ${card("bi-calculator", "COLDCARD Q / Mk5", "Display-equipped Bitcoin hardware signers. They create or hold wallet keys and independently show transaction details before signing.", "#coldcard", "Compare COLDCARD")}
-              ${card("bi-wifi", "TAPSIGNER", "A reusable NFC signing key that stays with one owner. The companion wallet displays transaction details because the card has no screen.", "#tapsigner", "Understand TAPSIGNER")}
-              ${card("bi-credit-card-2-front", "SATSCARD", "A physical bearer Bitcoin card with ten independent slots. The funded card itself can change owners.", "#satscard", "Understand SATSCARD")}
-              ${card("bi-usb-drive", "OPENDIME & backups", "Physical bearer USB tools, steel seed backups, and accessories that support a wider custody plan.", "#related", "See related tools")}
-            </div>
-          </div>
-        </section>
-
-        <section id="compare-coinkite" class="sc-section sc-section-muted">
-          <div class="container">
-            <div class="sc-section-head"><span class="sc-eyebrow">Compare</span><h2>Products that should not be confused</h2></div>
-            <div class="sc-table-wrap">
-              <table class="table sc-table">
-                <thead><tr><th>Product</th><th>Job</th><th>Where you review</th><th>Backup / exit</th><th>Changes owner?</th></tr></thead>
-                <tbody>
-                  <tr><td><strong>COLDCARD Q</strong></td><td>Full-featured Bitcoin signer</td><td>Large device screen</td><td>Recovery words, encrypted backup, documented export options</td><td>No</td></tr>
-                  <tr><td><strong>COLDCARD Mk5</strong></td><td>Compact Bitcoin signer</td><td>Device screen</td><td>Recovery words and encrypted microSD backup</td><td>No</td></tr>
-                  <tr><td><strong>TAPSIGNER</strong></td><td>Reusable NFC signing key</td><td>Companion wallet; card has no screen</td><td>Encrypted backup file + separate printed key + wallet configuration</td><td>No</td></tr>
-                  <tr><td><strong>SATSCARD</strong></td><td>Physical bearer bitcoin</td><td>Compatible app verifies card state and funding</td><td>Unseal current slot and sweep; ten independent slots</td><td>Yes</td></tr>
-                  <tr><td><strong>OPENDIME</strong></td><td>USB bearer bitcoin</td><td>Computer verifies address and balance</td><td>Break physical seal to expose key and sweep</td><td>Yes</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-        <section class="sc-section">
-          <div class="container">
-            <article id="coldcard" class="sc-detail">
-              <div class="row g-5 align-items-center">
-                <div class="col-lg-5"><div class="sc-detail-media"><img src="assets/img/devices/coldcard-q-mk5.png" alt="COLDCARD Q and Mk5 side by side" width="836" height="762" loading="lazy"></div></div>
-                <div class="col-lg-7">
-                  <span class="sc-eyebrow">Bitcoin hardware signers</span><h2>COLDCARD Q and Mk5</h2>
-                  <p>Both models are Bitcoin-only signers built around dual secure elements, verifiable firmware, extensive PIN controls, PSBT workflows, microSD, NFC, and USB-C. They are designed to keep private keys on the device while letting you choose how transaction data moves.</p>
-                  <h3>Choose Q when</h3><ul class="sc-check-list"><li>You want a 3.2-inch display, full QWERTY keyboard, built-in QR scanner, dual microSD slots, and AAA battery operation.</li><li>You use long BIP39 passphrases or frequent QR-based workflows.</li><li>You want the clearest COLDCARD interface for advanced multisig and policy work.</li></ul>
-                  <h3>Choose Mk5 when</h3><ul class="sc-check-list"><li>You want the same core security philosophy in a pocketable form.</li><li>microSD and NFC signing fit your workflow and a QR camera is not required.</li><li>You prefer a compact keypad device with fewer physical extras.</li></ul>
-                  <div class="sc-tags">${["Dual secure elements", "Bitcoin only", "MicroSD", "NFC", "Reproducible firmware"].map(tag => renderGlossaryTag(tag)).join("")}</div>
-                </div>
-              </div>
-            ${detailFooter(externalLink("https://coldcard.com/", "Official COLDCARD comparison"), "coldcard")}</article>
-
-            <article id="tapsigner" class="sc-detail">
-              <div class="row g-5 align-items-center">
-                <div class="col-lg-5"><div class="sc-detail-media"><img src="assets/img/devices/tapsigner.svg" alt="TAPSIGNER NFC Bitcoin hardware signer" width="571" height="360" loading="lazy"></div></div>
-                <div class="col-lg-7">
-                  <span class="sc-eyebrow">Reusable NFC signer</span><h2>TAPSIGNER</h2>
-                  <p>TAPSIGNER keeps one BIP32 private key on a credit-card-sized NFC card. A compatible wallet constructs and displays the transaction; you tap the card and enter its PIN to authorize a signature.</p>
-                  <h3>What it improves</h3><ul class="sc-check-list"><li>The phone does not normally hold the unencrypted master private key.</li><li>No battery, cable, or seed-word entry is required for routine signing.</li><li>Works as a single-signature key or one key in a multisig setup with compatible wallets.</li></ul>
-                  <h3>The honest trade-off</h3><ul class="sc-caution-list"><li>There is no display on the card. You must trust your companion wallet to show the correct amount, destination, fee, inputs, and change.</li><li>Recovery requires the encrypted backup file, the separate printed key, and the wallet configuration. Plan and test this before funding.</li></ul>
-                </div>
-              </div>
-            ${detailFooter(externalLink("https://tapsigner.com/"), "tapsigner")}</article>
-
-            <article id="satscard" class="sc-detail">
-              <div class="row g-5 align-items-center">
-                <div class="col-lg-5"><div class="sc-detail-media"><img src="assets/img/devices/satscard.png" alt="SATSCARD physical bearer Bitcoin card" width="2015" height="532" loading="lazy"></div></div>
-                <div class="col-lg-7">
-                  <span class="sc-eyebrow">Physical bearer bitcoin</span><h2>SATSCARD</h2>
-                  <p>SATSCARD has ten independent slots. You verify and fund the current sealed slot, then the card can be handed to another person without an on-chain transfer. The recipient can keep it sealed, pass it again, or unseal the slot and sweep the bitcoin into a normal wallet.</p>
-                  <h3>Good use cases</h3><ul class="sc-check-list"><li>Giving actual bitcoin before the recipient has chosen a wallet.</li><li>Teaching the difference between possession, a sealed key, and an on-chain transaction.</li><li>Small, deliberate physical transfers after the recipient verifies the card and funding.</li></ul>
-                  <h3>Do not mistake it for</h3><ul class="sc-caution-list"><li>A debit card, Lightning tap-to-pay card, exchange account, or recommended vault for large savings.</li><li>A TAPSIGNER: SATSCARD is meant to change owners; TAPSIGNER is a reusable signing key that stays with one owner.</li><li>A reusable address after unsealing. Sweep the full balance and never fund an exposed slot again.</li></ul>
-                </div>
-              </div>
-            ${detailFooter(externalLink("https://satscard.com/"), "satscard")}</article>
-
-            <article id="related" class="sc-detail">
-              <span class="sc-eyebrow">Related tools</span><h2>OPENDIME, SEEDPLATE, COLDPOWER, and BLOCKCLOCK</h2>
-              <div class="row g-4 mt-1">
-                <div class="col-md-6"><h3>OPENDIME</h3><p>A small USB bearer instrument. Fund it and pass it physically while sealed; break the seal to reveal the private key and sweep. Treat possession as control.</p></div>
-                <div class="col-md-6"><h3>SEEDPLATE</h3><p>A steel recovery-word backup. It improves fire and water resistance, but it does not solve theft, passphrase loss, poor storage, or an untested recovery plan.</p></div>
-                <div class="col-md-6"><h3>COLDPOWER</h3><p>A 9-volt battery adapter that provides power without USB data—useful when operating a signer away from a computer port.</p></div>
-                <div class="col-md-6"><h3>BLOCKCLOCK</h3><p>A Bitcoin data display for block height, price, and related network information. It is a display product, not a custody device.</p></div>
-              </div>
-              ${detailFooter(externalLink("https://coinkite.com/", "Official Coinkite product guide"))}
-            </article>
-
-            <div class="sc-callout mt-4"><h3>Supply-chain rule</h3><p>Coinkite recommends buying from its store or an authorized reseller and inspecting security products for tampering. A discount is not worth uncertainty about who handled a signing device.</p></div>
-            ${sourceNote([
-              ["Coinkite", "https://coinkite.com/"],
-              ["COLDCARD", "https://coldcard.com/"],
-              ["TAPSIGNER", "https://tapsigner.com/"],
-              ["SATSCARD", "https://satscard.com/"]
             ])}
           </div>
         </section>`

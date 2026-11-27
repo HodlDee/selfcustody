@@ -105,7 +105,7 @@ build, and CI catches the divergence anyway.
 **Partly generated — edit with care.** The root pages listed in the `FILES` map
 in `build/render.mjs` — `index.html`, `guides.html`, `glossary.html`,
 `devices.html`, `software.html`, `exchanges.html`, `dashboard.html`,
-`merch.html`, `contact.html`, `coinkite.html`, `block-demo.html` — are
+`merch.html`, `contact.html`, `block-demo.html` — are
 hand-maintained shells. The renderer reads each one and replaces only three
 containers — `#site-header`, `#main-content`, `#site-footer` — plus the
 asset-version query strings. **Everything else in those files, including the
