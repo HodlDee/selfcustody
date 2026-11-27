@@ -60,7 +60,7 @@ body.site-refresh .explore-sign{position:absolute;left:81%;top:77.2%;width:11%;h
  .mobile-launch:before{background:linear-gradient(#071425,transparent 7%,transparent 88%,#071425)}
  .mobile-launch-title{display:block;position:absolute;left:0;width:100%;z-index:2;margin:0;color:#fff;font-family:Jost,sans-serif;font-size:clamp(2.3rem,11.2vw,2.95rem);font-weight:750;line-height:1.04;pointer-events:none}
  .mobile-launch-title .sc-hero-command-line{justify-content:center;transform:translateY(-20px)}
- .mobile-launch-title .mobile-launch-tagline{margin-top:20px;font-size:clamp(26px,7.6vw,37px)}
+ .mobile-launch-title .mobile-launch-tagline{margin-top:15px;font-size:clamp(31px,9.2vw,42px)}
 
  .mobile-launch-title .mobile-launch-lead{max-width:min(330px,calc(100% - 40px));margin:8px auto 0;color:#e8dfd1;font:400 clamp(15px,4vw,17px)/1.5 Jost,sans-serif;text-align:center;text-wrap:pretty}
  .mobile-launch-lead strong{font-weight:650;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
@@ -68,7 +68,7 @@ body.site-refresh .explore-sign{position:absolute;left:81%;top:77.2%;width:11%;h
 
 @media(max-width:600px) and (max-aspect-ratio:6/5) and (max-height:750px){
  .mobile-launch-title{font-size:clamp(1.9rem,9.6vw,2.25rem)}
- .mobile-launch-title .mobile-launch-tagline{margin-top:12px;font-size:clamp(24px,7.2vw,29px)}
+ .mobile-launch-title .mobile-launch-tagline{margin-top:10px;font-size:clamp(28px,8.5vw,35px)}
  .mobile-launch-title .mobile-launch-lead{margin-top:6px;font-size:13px;line-height:1.35}
 }
 
