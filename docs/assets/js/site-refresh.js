@@ -11,7 +11,7 @@
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
   const header = document.getElementById("header");
-  if ((pageKey === "home" || pageKey === "dashboard") && header) {
+  if ((pageKey === "home" || pageKey === "exchanges" || pageKey === "dashboard") && header) {
     let headerFadeFrame = 0;
     const updateHeaderFade = () => {
       const fadeDistance = pageKey === "dashboard" ? 100 : 160;

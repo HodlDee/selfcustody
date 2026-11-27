@@ -118,6 +118,7 @@ body.site-refresh.sc-nav-open {
 }
 
 body.site-refresh[data-page="home"] #header,
+body.site-refresh[data-page="exchanges"] #header,
 body.site-refresh[data-page="dashboard"] #header {
   --sc-header-progress: 0;
   background: rgb(20 20 21 / calc(var(--sc-header-progress) * 0.96));
@@ -130,7 +131,7 @@ body.site-refresh[data-page="dashboard"] #header {
   transition-duration: 0.28s;
 }
 
-body.site-refresh:not([data-page="home"]):not([data-page="dashboard"]) #header {
+body.site-refresh:not([data-page="home"]):not([data-page="dashboard"]):not([data-page="exchanges"]) #header {
   background: rgba(20, 20, 21, 0.985);
   border-bottom-color: rgba(255, 255, 255, 0.055);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
@@ -712,7 +713,7 @@ body[data-page="software"] .sc-hero.has-background-media .sc-hero-copy :is(h1, .
   }
 }
 
-/* The homepage uses the animated cash vortex as its hero environment. */
+/* Exchanges uses the original homepage cash vortex and its responsive framing. */
 body[data-page="exchanges"] .sc-hero.has-background-media {
   min-height: clamp(980px, calc(66.667vw + 193px), 1115px);
   padding-bottom: 120px;
@@ -1158,30 +1159,17 @@ body[data-page="exchanges"] .sc-section-dark {
     linear-gradient(180deg, #08090b 0, #08090b calc(100% - 58px), var(--sc-paper) 100%);
 }
 
-/* The vortex fades out over the hero's last third, so the band below has to
-   start inside that fade or the page shows a strip of empty black where the
-   video has already gone. Same device as the homepage, at this page's own
-   depth: the homepage clears a taller hero and pulls 148px, here 100px lands
-   the Two models eyebrow just under the vortex's centre.
-
-   Below 992px the hero stops being a full-bleed backdrop (see the 991px
-   block) and the overlap would eat the copy instead of empty space, so it
-   goes to zero there and the padding carries the spacing alone -- exactly
-   how the homepage steps down through the same breakpoints. */
-/* One value, two rules. The band below the hero is pulled up by it, and the
-   media control has to stay clear of it -- they were written independently at
-   -100px and 24px, and the control ended up inside the overlap, where it was
-   painted over and could not be clicked. Naming it once means they cannot
-   drift apart again. */
+/* Match the original homepage's desktop overlap. The media control uses
+   the same value to stay above the following section. */
 body[data-page="exchanges"] {
-  --sc-hero-overlap: 100px;
+  --sc-hero-overlap: 148px;
 }
 
 body[data-page="exchanges"] .sc-hero + .sc-section {
   position: relative;
   z-index: 1;
   margin-top: calc(-1 * var(--sc-hero-overlap));
-  padding-top: 70px;
+  padding-top: 24px;
 }
 
 /* The control that starts and stops the vortex. It sits at the hero's own
@@ -5631,7 +5619,7 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
 
   body[data-page="exchanges"] .sc-hero + .sc-section {
     margin-top: 0;
-    padding-top: 34px;
+    padding-top: 48px;
   }
 
   body[data-page="exchanges"] .sc-hero.has-background-media .sc-hero-copy {
@@ -5731,12 +5719,6 @@ body.site-refresh[data-page="home"] .sc-close .sc-close-actions {
     height: 110px;
     background: linear-gradient(180deg, rgba(8, 9, 11, 0) 0%, rgba(8, 9, 11, 0.16) 35%, rgba(8, 9, 11, 0.55) 65%, #08090b 100%);
   }
-
-  body[data-page="exchanges"] .sc-hero + .sc-section {
-    margin-top: 0;
-    padding-top: 30px;
-  }
-
 
   body[data-page="exchanges"] .sc-hero.has-background-media .sc-hero-copy {
     transform: translateY(-14px);
@@ -6460,48 +6442,25 @@ body.site-refresh .sc-hero-actions .sc-btn-ghost:hover {
     width: 100%;
   }
 
-  /* Same ratio treatment as the lead above, at desktop's lead-to-buttons
-     0.492 (32px against a 65px h1). 0.492 x 11.2vw is 5.51vw, bounded by the
-     same factor applied to the h1 clamp's ends.
-
-     padding stays symmetric at 6px, matching the base rule. This element is
-     not a bare flex row -- it is the glass capsule (1px border, 14px radius,
-     translucent background, backdrop-filter) that both buttons sit inside, so
-     its padding is the inset between the buttons and a *visible* border, not
-     part of the gap above it. Zeroing three sides of it pushed the buttons
-     flush against that border. The margin alone is the gap. */
-
-  /* Was 40px tall at 0.78rem -- under the 44px minimum touch target, and small
-     enough that the pair read as a caption rather than the hero's actions.
-     48px clears the guideline with room; the type and padding move with it.
-     Measured against the tightest case (320px viewport): the two buttons come
-     to ~252px inside a ~282px capsule, so it still fits without wrapping. */
-
-  /* Exchanges keeps the capsule but not the side-by-side row above, because
-     the measurement that rule relies on is of the homepage's labels. "Explore
-     Guides" and "Get Help" fit a phone two-up; "Compare exchanges" and
-     "Withdrawal guide" do not -- each wrapped to two lines, turning the pair
-     into an 83px slab that read as hanging below the copy rather than
-     belonging to it. So this page takes the site-wide phone default the
-     homepage is the exception to: one button per row, full width.
-
-     30px above matches the gap between the title and the lead, so the three
-     blocks of hero copy sit on one rhythm instead of the buttons drifting
-     low. Measured at the tightest case (320px): both labels hold one line. */
+  /* The original homepage used a centered two-button capsule on phones. */
   body.site-refresh[data-page="exchanges"] .sc-hero-actions {
-    width: 100%;
-    flex-direction: column;
-    align-items: stretch;
+    width: max-content;
+    max-width: 100%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
     gap: 8px;
-    margin: 30px auto 16px;
+    margin: clamp(33px, 9.9vw, 42px) auto 16px;
     padding: 6px;
   }
 
   body.site-refresh[data-page="exchanges"] .sc-hero-actions .sc-btn {
-    width: 100%;
+    width: auto;
+    min-width: 0;
     min-height: 48px;
-    padding: 12px 18px;
-    font-size: 0.9rem;
+    padding: 10px 12px;
+    font-size: 0.86rem;
     font-weight: 650;
     letter-spacing: 0.02em;
   }
