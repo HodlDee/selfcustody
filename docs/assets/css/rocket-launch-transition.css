@@ -1,0 +1,44 @@
+/* Hit areas follow the same source coordinates as the approved artwork. */
+.rocket-launch-link{position:absolute;left:60.3%;top:49%;width:16%;height:40.5%;display:block;pointer-events:auto;border-radius:48% 48% 15% 15%;cursor:pointer;text-decoration:none;outline:none;-webkit-tap-highlight-color:transparent}
+.launch-transition[hidden]{display:none}
+.launch-transition{position:fixed;inset:0;z-index:10000;overflow:hidden;isolation:isolate}
+.launch-transition video{position:absolute;top:0;left:0;right:auto;bottom:auto;display:block;width:100%;height:auto;max-width:none;max-height:none;object-fit:cover;object-position:center bottom;opacity:0;transition:opacity .7s ease-in-out;will-change:opacity}
+.launch-transition.is-playing video{opacity:1}
+body:has(.launch-transition) #site-header{transition:opacity .3s ease}
+body.launch-in-progress #site-header{opacity:0}
+.launch-skip{position:absolute;top:max(20px,env(safe-area-inset-top));right:max(24px,env(safe-area-inset-right));z-index:2;padding:9px 15px;border:1px solid #e8c79966;border-radius:24px;color:#fff0dc;background:#081320d9;font:500 14px/1.2 system-ui,sans-serif;cursor:pointer}
+.launch-skip:hover,.launch-skip:focus-visible{background:#172331;border-color:#ffcf85;outline:2px solid #ffcf85;outline-offset:3px}
+.cockpit-preloader{position:fixed;left:-200vw;top:0;width:100vw;height:100vh;border:0;visibility:hidden;pointer-events:none}
+.cockpit-preloader.is-prepared{left:0;visibility:visible;z-index:9999;background:#000}
+.cockpit-preloader.is-presented{pointer-events:auto}
+@media(max-aspect-ratio:6/5){
+ .launch-transition video{object-position:var(--launch-focus-x,68.4%) bottom;transition:none}
+ .launch-skip{top:16px;right:16px}
+}
+
+/* The outline uses the artwork coordinates in both launch layouts. */
+.launch-rocket-outline {
+ fill:none;
+ stroke:#ffe0a0;
+ stroke-width:3px;
+ vector-effect:non-scaling-stroke;
+ stroke-linejoin:round;
+ opacity:0;
+ filter:drop-shadow(0 0 3px #ff9b38) drop-shadow(0 0 7px #ff7924);
+ pointer-events:none;
+ transition:opacity .18s ease-out;
+}
+.interaction-plane:has(.rocket-launch-link:is(:focus-visible,:active)) .launch-rocket-outline {
+ opacity:1;
+}
+@media (hover:hover) {
+ .interaction-plane:has(.rocket-launch-link:hover) .launch-rocket-outline {opacity:1}
+}
+@media (prefers-reduced-motion:reduce) {
+ .launch-rocket-outline {transition:none}
+}
+@media (forced-colors:active) {
+ .rocket-launch-link:focus-visible {outline:2px solid Highlight;outline-offset:4px}
+}
+
+.launch-skip-blackout{position:absolute;inset:0;z-index:10;background:#000}

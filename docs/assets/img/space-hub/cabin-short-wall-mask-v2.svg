@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 930 640" preserveAspectRatio="none">
+ <defs><filter id="soft-edge" x="-2%" y="-2%" width="104%" height="104%" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="1"/></filter></defs>
+ <!-- Only the upper-right shoulder rises into the narrow gap under the header.
+      The left edge and lower board curves retain their previous placement. -->
+ <path fill="white" filter="url(#soft-edge)" d="M12 6H800Q816 6 825 0H930C820 4 785 112 785 210V608Q785 640 753 640H32Q0 640 0 608V18Q0 6 12 6Z"/>
+</svg>

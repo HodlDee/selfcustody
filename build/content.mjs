@@ -1,4 +1,4 @@
-/* Content layer for selfcustody.ca -- the single source of truth for page
+/* Content layer for selfcustody.io -- the single source of truth for page
    markup. Consumed by build/render.mjs, which writes the static HTML in docs/.
    Extracted verbatim from site-refresh.js; the browser no longer carries it.
 
@@ -16,7 +16,8 @@ const currentYear = new Date().getFullYear();
     ["software", "Software", "software.html"],
     ["exchanges", "Exchanges", "exchanges.html"],
     ["glossary", "Glossary", "glossary.html"],
-    ["dashboard", "Dashboard", "dashboard.html"],
+    ["entropy", "Workshop", "entropy.html"],
+    ["dashboard", "Metrics", "dashboard.html"],
     ["contact", "Get Help", "contact.html"]
   ];
 
@@ -186,148 +187,21 @@ const currentYear = new Date().getFullYear();
 
   const pages = {
     home: {
-      title: "SelfCustody.ca | Control Your Money",
-      description: "Clear, practical guidance for learning how to buy bitcoin, choose a wallet, protect recovery material, and withdraw to self custody.",
+      title: "SelfCustody.io | Control Your Money",
+      description: "Start in the cockpit: pick a destination, or fly the Quickstart route into your first self-custody guide.",
+      /* The cockpit is the site's front door. The launch that precedes it is a
+         separate route (launch.html) rather than markup hidden on this page,
+         so the approved entrance keeps its own timing and this page stays the
+         thing you come back to. assets/js/home-entrance.js decides which of the
+         two a visit lands on. */
       content: `
-        ${hero(
-          "",
-          `<span class="sc-hero-command-line"><span class="sc-neon-sign sc-neon-sign-exit">EXIT</span><span class="sc-outlined-word sc-hero-fiat" data-text="FIAT"><span class="sc-word-fill">FIAT</span></span></span>
-           <span class="sc-hero-command-line"><span class="sc-neon-sign sc-neon-sign-enter">ENTER</span><span class="sc-outlined-word sc-hero-command-destination" data-text="BITCOIN"><span class="sc-word-fill">BITCOIN</span></span></span>`,
-          "<span class=\"sc-home-lead-statement\">Your keys, your coins.</span><br class=\"sc-mobile-lead-break\"> Learn how to buy, move, and protect<br class=\"sc-medium-lead-break\"> your bitcoin without turning security into a full time job.",
-          `<a class="sc-btn sc-btn-primary" href="guides.html"><span>Explore Guides</span></a>
-           <a class="sc-btn sc-btn-ghost" href="contact.html"><span>Get Help</span></a>`,
-          {
-            src: "assets/img/cash-vortex/exchanges-cash-vortex-final3.mp4",
-            type: "video/mp4",
-            poster: "assets/img/cash-vortex/exchanges-cash-vortex.png",
-            alt: "",
-            width: 1616,
-            height: 1072,
-            video: true,
-            background: true
-          }
-        )}
-
-        <section class="sc-section sc-home-safe-path-section">
-          <div class="container">
-            <div class="row g-5 align-items-start">
-              <div class="col-lg-5">
-                <div class="sc-home-sticky-intro">
-                  <span class="sc-eyebrow">First steps</span>
-                  <h2>Learn the Basics</h2>
-                  <p>Bitcoin can feel like an endless rabbit hole. Start with our step-by-step <a href="guides/quickstart.html">Quickstart guide</a>, or dive into our recommended topic-specific guides. Learn at your own pace and go deeper when you’re ready.</p>
-                  <figure class="sc-home-path-media" aria-hidden="true"><picture><source media="(min-width: 576px) and (max-width: 991px)" srcset="assets/img/quickstart-rabbit-tablet.webp" width="1376" height="768"><img src="assets/img/quickstart-rabbit-portrait.webp" alt="" width="688" height="1024" loading="lazy" decoding="async"></picture></figure>
-                </div>
-              </div>
-              <div class="col-lg-7">
-                <div class="sc-home-linked-steps">
-                  <a class="sc-step sc-home-step-link" href="guides/choosing-your-first-setup.html"><span class="sc-step-number">1</span><div><h3>Create Your Wallet</h3><p>Choose a setup that fits your needs, then generate a new wallet from a trusted device or app.</p><span class="sc-text-link">Choose your setup <i class="bi bi-arrow-right"></i></span></div></a>
-                  <a class="sc-step sc-home-step-link" href="guides/seed-backup-metal.html"><span class="sc-step-number">2</span><div><h3>Back It Up</h3><p>Write down your recovery words offline and keep the backup separate from the device.</p><span class="sc-text-link">Protect the backup <i class="bi bi-arrow-right"></i></span></div></a>
-                  <a class="sc-step sc-home-step-link" href="guides/recovery-test-drill.html"><span class="sc-step-number">3</span><div><h3>Test Your Recovery</h3><p>Verify the backup can restore the same wallet before you trust it with bitcoin.</p><span class="sc-text-link">Run a recovery drill <i class="bi bi-arrow-right"></i></span></div></a>
-                  <div class="sc-step sc-home-step-link sc-home-step-multi"><span class="sc-step-number">4</span><div><h3>Receive Bitcoin</h3><p>Verify the receiving address, send a small test amount, and confirm it arrives.</p><div class="sc-home-step-actions"><a class="sc-text-link" href="guides/exchange-withdrawal.html">From an exchange <i class="bi bi-arrow-right"></i></a><a class="sc-text-link" href="guides/test-transaction.html">From another wallet <i class="bi bi-arrow-right"></i></a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="sc-section sc-path-section sc-home-explore-section">
-          <div class="sc-path-stars" aria-hidden="true"></div>
-          <div class="container">
-            <div class="sc-section-head sc-home-cinematic-head">
-              <span class="sc-eyebrow">Explore</span>
-              <h2>Everything in One Place</h2>
-              <p>Learn the system and check live network data when you are ready to act.</p>
-            </div>
-            <div class="row g-4 sc-home-explore-grid sc-home-explore-group sc-path-options">
-              ${homeExploreCard({ icon: "bi-signpost-split", title: "Guides", text: "Follow practical walkthroughs from first principles and first withdrawals to multisig, privacy, and inheritance.", href: "guides.html", linkText: "Browse guides", image: "assets/img/guides-library-hero.jpg" }).trim()}
-              ${homeExploreCard({ icon: "bi-stack", title: "Glossary", text: "Look up the language of bitcoin custody, transactions, wallets, backups, privacy, and network operation.", href: "glossary.html", linkText: "Search the glossary", image: "assets/img/glossary-hero.jpg" }).trim()}
-              ${homeExploreCard({ icon: "bi-graph-up", title: "Live Dashboard", text: "Check current network conditions, fees, blocks, supply, and other useful bitcoin data in one view.", href: "dashboard.html", linkText: "Open dashboard", image: "assets/img/dashboard-network-preview-v3.jpg" }).trim()}
-            </div>
-            <div class="sc-home-compare-intro">
-              <span class="sc-eyebrow">Compare</span>
-              <p>Compare hardware devices, wallet software, and Canadian buying options by custody model, compatibility, privacy, workflow, and tradeoffs.</p>
-            </div>
-            <div class="row g-4 sc-home-explore-grid sc-home-compare-group sc-path-options">
-              ${homeExploreCard({ icon: "bi-shield-lock", title: "Hardware Devices", text: "Compare signing devices by security model, workflow, openness, recovery design, and the tradeoffs each one makes.", href: "devices.html", linkText: "Compare devices", image: "assets/img/devices-hero.jpg" }).trim()}
-              ${homeExploreCard({ icon: "bi-window", title: "Wallet Software", text: "Find mobile and desktop wallets that match your device, privacy needs, node setup, and transaction workflow.", href: "software.html", linkText: "Compare software", image: "assets/img/software-hero.jpg" }).trim()}
-              ${homeExploreCard({ icon: "bi-bank", title: "Canadian Exchanges", text: "Compare Canadian buying routes by custody model, funding methods, purchase flow, and withdrawal experience.", href: "exchanges.html", linkText: "Compare exchanges", image: "assets/img/exchanges-hero.jpg" }).trim()}
-            </div>
-          </div>
-        </section>
-
-        ${renderToolsBand({ home: true })}
-
-        <section class="sc-section sc-section-muted sc-home-trust-section">
-          <div class="container">
-            <div class="sc-home-trust-head">
-              <span class="sc-eyebrow">Our standard</span>
-              <h2>Built to Inform, Not Persuade</h2>
-              <p>Self-custody has no universal setup. We explain the options, the risks, and the tradeoffs that matter—so you can decide for yourself.</p>
-            </div>
-            <div class="row sc-home-trust-grid">
-              <div class="col-md-6 col-xl-3"><article class="sc-home-trust-card"><span>Education-first</span><h3>Understand Before Acting</h3><p>Learn the model before choosing a product or moving money.</p></article></div>
-              <div class="col-md-6 col-xl-3"><article class="sc-home-trust-card"><span>Transparent</span><h3>See the Tradeoffs</h3><p>Workflow, privacy, custody, and compatibility are shown directly.</p></article></div>
-              <div class="col-md-6 col-xl-3"><article class="sc-home-trust-card"><span>Security boundary</span><h3>Your Secrets Stay Yours</h3><p>This site never asks for your recovery words or private keys.</p></article></div>
-              <div class="col-md-6 col-xl-3"><article class="sc-home-trust-card"><span>Safer habits</span><h3>Testing and Backups</h3><p>Verify on-device, start small, and prove recovery before storing meaningful savings.</p></article></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="sc-section sc-home-help-section">
-          <div class="container">
-            <div class="sc-home-help-panel">
-              <div class="row g-0 align-items-center">
-                <div class="col-lg-6">
-                  <div class="sc-home-help-copy">
-                    <span class="sc-eyebrow">One-on-one guidance</span>
-                    <h2>Need Help?</h2>
-                    <p>Get practical guidance choosing a wallet, setting up a device, reviewing a backup, or rehearsing a transaction—while you remain in control of every step.</p>
-                    <a class="sc-btn sc-home-help-cta" href="contact.html"><span>Get Help</span></a>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="sc-home-help-topics">
-                    <h3 class="sc-home-help-label">Get help with</h3>
-                    <ul class="sc-home-help-topic-list">
-                      <li>Hardware wallet selection</li>
-                      <li>Software wallets</li>
-                      <li>Multisig planning</li>
-                      <li>Seed generation</li>
-                      <li>Guided device setup</li>
-                      <li>Address verification</li>
-                      <li>Backups</li>
-                      <li>Passphrases</li>
-                      <li>Privacy basics</li>
-                      <li>Test transactions</li>
-                      <li>Exchange withdrawals</li>
-                      <li>Recovery</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="sc-home-help-boundary">
-                <strong>Your keys, your coins.</strong>
-                <p>We guide while you operate your own devices. We never ask for your recovery words or private keys—and never hold or move bitcoin for you.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="sc-close">
-          <figure class="sc-close-glow" aria-hidden="true">
-            <img src="assets/img/cash-vortex/controlled-orbit-v2.webp" alt="" width="1717" height="916" loading="lazy" decoding="async">
-          </figure>
-          <div class="container">
-            <h2 class="sc-close-title">
-              <span class="sc-outlined-word sc-close-word" data-text="CONTROL YOUR MONEY"><span class="sc-word-fill">CONTROL YOUR MONEY</span></span>
-            </h2>
-            <p class="sc-close-lead">Follow the first steps: create a wallet, back it up, prove you can recover it, and only then receive bitcoin.</p>
-            <div class="sc-hero-actions sc-close-actions">
-              <a class="sc-btn sc-btn-primary" href="guides/quickstart.html"><span>Take the first steps</span></a>
-            </div>
-          </div>
-        </section>`
+        <div id="scene-viewport"><iframe id="cockpit-scene" data-viewport-layout title="Quickstart cockpit" src="cockpit-scene.html?nav=1"></iframe></div>
+        <iframe id="arrival-article" title="Quickstart article" src="guides/quickstart.html" aria-hidden="true" inert></iframe>
+        <video id="jump-video" poster="assets/video/quickstart-runway-moon-v14-first.jpg" data-perspective="first-person" data-arrival="galaxy" data-source="assets/video/quickstart-runway-moon-v14.mp4" data-source4k="assets/video/quickstart-runway-moon-v14-4k-compressed-v1.mp4" muted playsinline preload="auto" aria-label="First-person flight through the Quickstart gate, past the Moon and into hyperspace"></video>
+        <aside class="video-review" hidden inert aria-hidden="true" aria-label="Transition preview controls"><div class="review-status" role="status" aria-live="polite">Preparing the sequence&hellip;</div><div class="review-buttons"><button id="sequence-play" disabled>Play shorter sequence</button><button id="sequence-reset">Reset</button><button id="sequence-skip">Skip to article</button></div><input id="sequence-time" type="range" min="0" max="6" value="0" step=".01" aria-label="Sequence preview time"></aside>
+        <button id="back-to-cockpit" type="button"><span aria-hidden="true">&larr;</span> Back to cockpit</button>
+        <a id="back-to-launch" href="launch.html" aria-label="Back to launch" title="Back to launch"><span aria-hidden="true">&larr;<svg class="back-to-launch-arrow" width="26" height="24" viewBox="0 0 26 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H5m6-6-6 6 6 6"/></svg></span><span class="back-to-launch-label">Back to launch</span></a>
+        <div id="cockpit-arrival-shade" aria-hidden="true"></div>`
     },
 
     guides: {
@@ -1812,7 +1686,7 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
             </article>`).join("");
 
   pages.glossary = {
-    title: "Glossary | SelfCustody.ca",
+    title: "Glossary | SelfCustody.io",
     description: "Search the Bitcoin, wallet, privacy and self-custody vocabulary these guides actually use, defined in plain language.",
     content: `
       ${hero(
@@ -1859,17 +1733,63 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
           </noscript>
 
           <footer class="sc-glossary-source">
-            <p><strong>Reference.</strong> Every definition here is written by SelfCustody.ca from primary specifications, official documentation, and public security guidance, and is published under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> along with the rest of this site's writing &mdash; reuse it, with credit. The glossary is deliberately narrow: it defines the terms these guides actually use, rather than cataloguing the whole vocabulary.</p>
+            <p><strong>Reference.</strong> Every definition here is written by SelfCustody.io from primary specifications, official documentation, and public security guidance, and is published under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> along with the rest of this site's writing &mdash; reuse it, with credit. The glossary is deliberately narrow: it defines the terms these guides actually use, rather than cataloguing the whole vocabulary.</p>
           </footer>
         </div>
       </section>`
   };
 
+  /* The rocket entrance. A route of its own rather than markup hidden inside
+     index.html, so the approved launch keeps its own timing and the cockpit
+     stays the page people return to. assets/js/home-entrance.js sends the
+     first visit of a tab here and every later one straight to the cockpit.
+
+     Markup is the approved launchpad unchanged -- the scene, its patches, the
+     porthole mask and the transition video. noindex in the <head>, because the
+     page people should find is the cockpit. */
+  const launchRocketSilhouette = "M1050 507 C1038 507 1010 541 996 578 C980 619 971 676 978 735 C957 753 936 786 932 817 C928 845 933 880 942 903 C944 910 950 910 953 903 C963 881 972 854 991 845 L993 864 Q993 869 998 869 H1012 Q1004 889 997 907 Q1047 913 1098 907 Q1092 888 1083 869 H1098 Q1103 869 1104 864 L1106 845 C1121 854 1131 879 1141 903 C1144 910 1150 911 1152 903 C1160 876 1163 843 1160 817 C1156 785 1135 753 1116 735 C1121 682 1114 621 1100 579 C1087 541 1062 507 1050 507 Z";
+  pages.launch = {
+    title: "Launch into Bitcoin | SelfCustody.io",
+    description: "The launch into SelfCustody.io.",
+    content: `
+<section class="approved-hero" id="launchpad" aria-labelledby="launch-title">
+   <h1 class="visually-hidden" id="launch-title">Exit Fiat. Enter Bitcoin.</h1>
+   <div class="mobile-launch-title"><span class="sc-hero-command-line" aria-hidden="true"><span class="sc-neon-sign sc-neon-sign-exit">EXIT</span><span class="sc-outlined-word sc-hero-fiat" data-text="FIAT"><span class="sc-word-fill">FIAT</span></span></span>
+           <span class="sc-hero-command-line" aria-hidden="true"><span class="sc-neon-sign sc-neon-sign-enter">ENTER</span><span class="sc-outlined-word sc-hero-command-destination" data-text="BITCOIN"><span class="sc-word-fill">BITCOIN</span></span></span>
+     <p class="mobile-launch-tagline"><span class="launch-welcome-label">Welcome to</span> <span class="launch-welcome-name">SelfCustody.io</span></p>
+   </div>
+   <canvas id="night-sky" aria-hidden="true"></canvas>
+   <div class="approved-stage">
+    <img class="approved-scene" src="assets/img/earth-launch/hero-runway-master-v1.png" alt="" width="1536" height="1024" fetchpriority="high">
+    <img class="approved-launch-sky" src="assets/img/earth-launch/launch-opening-sky-v5.png" alt="" width="1920" height="1080" fetchpriority="high">
+    <img class="approved-launch-sky approved-rest-sky" src="assets/img/earth-launch/launch-star-detail-v7.svg" alt="" width="1920" height="1080" fetchpriority="high">
+    <div class="approved-exit" aria-hidden="true"><img src="assets/img/earth-launch/hero-runway-master-v1.png" alt="" width="1536" height="1024"></div>
+    <div class="interaction-plane">
+     <img class="terrain-patch" src="assets/img/earth-launch/final-detail-patch-v4.png" width="1536" height="1024" alt="">
+     <img class="sign-patch" src="assets/img/earth-launch/cockpit-and-clear-ground-patch-v1.png" width="1536" height="1024" alt="">
+     <img class="cockpit-patch" src="assets/img/earth-launch/cockpit-and-clear-ground-patch-v1.png" width="1536" height="1024" alt="">
+     <svg class="porthole-detail" viewBox="0 0 1536 1024" aria-hidden="true"><defs><filter id="restored-rocket-edge-1"><feGaussianBlur stdDeviation="1.1"/></filter><path id="launch-rocket-edge-1" d="M1052 505 C1036 504 1001 546 992 575 C971 617 968 690 975 734 C942 764 921 802 927 856 Q928 883 937 900 Q920 898 914 912 L914 916 L1174 916 L1174 908 Q1169 902 1164 901 Q1175 857 1164 807 C1159 779 1146 748 1132 734 C1138 674 1131 617 1117 577 C1104 549 1071 510 1052 505 Z"/><mask id="restored-rocket-local-1" maskUnits="userSpaceOnUse" x="912" y="499" width="267" height="419"><use href="#launch-rocket-edge-1" fill="white" filter="url(#restored-rocket-edge-1)"/></mask></defs><image href="assets/img/earth-launch/rocket-reference-restored-no-smoke-v2.png" width="1536" height="1024" mask="url(#restored-rocket-local-1)"/><path class="launch-rocket-outline" d="${launchRocketSilhouette}"/></svg>
+ <a class="rocket-launch-link" href="index.html" aria-label="Launch into Bitcoin — enter the cockpit"></a>
+    </div>
+   </div>
+   <div class="mobile-launch"><img class="mobile-launch-scene" src="assets/img/earth-launch/hero-runway-master-v1.png" alt="" width="1536" height="1024">
+    <div class="interaction-plane">
+     <img class="terrain-patch" src="assets/img/earth-launch/final-detail-patch-v4.png" width="1536" height="1024" alt="">
+     <img class="sign-patch" src="assets/img/earth-launch/cockpit-and-clear-ground-patch-v1.png" width="1536" height="1024" alt="">
+     <img class="cockpit-patch" src="assets/img/earth-launch/cockpit-and-clear-ground-patch-v1.png" width="1536" height="1024" alt="">
+     <svg class="porthole-detail" viewBox="0 0 1536 1024" aria-hidden="true"><defs><filter id="restored-rocket-edge-2"><feGaussianBlur stdDeviation="1.1"/></filter><path id="launch-rocket-edge-2" d="M1052 505 C1036 504 1001 546 992 575 C971 617 968 690 975 734 C942 764 921 802 927 856 Q928 883 937 900 Q920 898 914 912 L914 916 L1174 916 L1174 908 Q1169 902 1164 901 Q1175 857 1164 807 C1159 779 1146 748 1132 734 C1138 674 1131 617 1117 577 C1104 549 1071 510 1052 505 Z"/><mask id="restored-rocket-local-2" maskUnits="userSpaceOnUse" x="912" y="499" width="267" height="419"><use href="#launch-rocket-edge-2" fill="white" filter="url(#restored-rocket-edge-2)"/></mask></defs><image href="assets/img/earth-launch/rocket-reference-restored-no-smoke-v2.png" width="1536" height="1024" mask="url(#restored-rocket-local-2)"/><path class="launch-rocket-outline" d="${launchRocketSilhouette}"/></svg>
+ <a class="rocket-launch-link" href="index.html" aria-label="Launch into Bitcoin — enter the cockpit"></a>
+    </div>
+   </div>
+  </section>
+<div class="launch-transition" hidden role="region" aria-label="Rocket launch"><video data-src="assets/video/rocket-launch-v5.mp4" data-src4k="assets/video/rocket-launch-v5-4k-web.mp4" poster="assets/img/earth-launch/launch-video-poster-v4.jpg" preload="none" muted playsinline aria-label="Rocket launching into space"></video><button class="launch-skip" type="button">Skip launch →</button></div>`
+  };
+
   /* Temporary holding page. Keep the full contact-page definition above in
      place so it can be restored when booking and support are ready to open. */
   pages.contact = {
-    title: "Contact | SelfCustody.ca",
-    description: "Contact and setup support for SelfCustody.ca.",
+    title: "Contact | SelfCustody.io",
+    description: "Contact and setup support for SelfCustody.io.",
     content: `
       <section class="sc-coming-soon" aria-labelledby="coming-soon-title">
         <div class="sc-coming-soon-inner">
@@ -1885,8 +1805,8 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
      product grid when there is one -- the nav position and routes entry
      shouldn't need to change either way. noindex in the <head> until then. */
   pages.merch = {
-    title: "Merch | SelfCustody.ca",
-    description: "Merch for SelfCustody.ca.",
+    title: "Merch | SelfCustody.io",
+    description: "Merch for SelfCustody.io.",
     content: `
       <section class="sc-coming-soon" aria-labelledby="coming-soon-title">
         <div class="sc-coming-soon-inner">
@@ -1902,19 +1822,27 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
      pages at the root, "../" for everything under docs/guides/. Pages there
      are otherwise identical, so the whole difference is threaded through here
      rather than duplicated into a second header. */
+  /* Read by assets/js/home-entrance.js. A fragment rather than a query so the
+     cockpit keeps one canonical URL, and the script clears it from the address
+     bar once it has been honoured. */
+  const COCKPIT_HASH = "#cockpit";
+
   const renderHeader = (pageKey, base = "") => {
     const links = routes.map(([key, label, href]) => {
-      if (["software", "exchanges"].includes(key)) return "";
+      if (["software", "exchanges", "glossary"].includes(key)) return "";
       if (key === "guides") {
         const menuActive = pageKey === "guides" ? "active" : "";
         const items = guideCategories
           .map(cat => {
-            /* "Start here" is the hub's first section, so everything above
-               it -- the hero and the finder -- is part of starting. It gets
-               the top of the page rather than a jump past them; the rest
-               stay jump links to their own section. */
-            const target = cat.key === "fundamentals" ? `${base}guides.html` : `${base}guides.html#${cat.key}`;
-            return `<li><a href="${target}">${cat.label}</a></li>`;
+            /* The first row used to be "Start here", pointing at the top of
+               the hub -- which is where the label above now goes, so the row
+               duplicated its own parent. It is Quickstart instead, going
+               straight to the guide that starts someone off. The rest stay
+               jump links to their own section. */
+            if (cat.key === "fundamentals") {
+              return `<li><a href="${base}guides/quickstart.html">Quickstart</a></li>`;
+            }
+            return `<li><a href="${base}guides.html#${cat.key}">${cat.label}</a></li>`;
           })
           .join("\n            ");
         /* The two entropy tools are not guide categories -- the items above are
@@ -1927,17 +1855,23 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
            guides.html that promotes them. From anywhere else on the site,
            following that band would mean landing on the hub and scrolling past
            six sections to reach a link to the real page. */
-        const entropyGroup = `<li class="sc-nav-tool-item"><a class="sc-nav-tool-link" href="${base}entropy.html">Entropy Workshop</a></li>`;
-        /* Same shape as Compare: the label only opens the list. The hub
-           itself is still one click away as "Start here", the first item
-           in the list, so nothing needs the label to be a link too. */
-        return `<li class="sc-nav-menu">
-          <button class="sc-nav-menu-toggle ${menuActive}" type="button" aria-expanded="false" aria-haspopup="true">
-            <span>Guides</span><span class="sc-nav-menu-chevron" aria-hidden="true"></span>
+        const glossaryGroup = `<li class="sc-nav-tool-item"><a class="sc-nav-tool-link" href="${base}glossary.html">Glossary</a></li>`;
+        /* Split, unlike Compare: the label is a link to the hub and only the
+           arrow opens the list. Compare has no page of its own to land on, so
+           its label can be the opener; Guides does, and making the label open a
+           menu instead put the hub two clicks from every page on the site.
+
+           The arrow is a real button with its own accessible name, so the two
+           targets are distinguishable to a screen reader rather than one
+           control that behaves differently depending on where it is clicked. */
+        return `<li class="sc-nav-menu sc-guides-split">
+          <a class="sc-guides-page-link ${menuActive}" href="${base}guides.html">Guides</a>
+          <button class="sc-nav-menu-toggle ${menuActive}" type="button" aria-expanded="false" aria-controls="guides-dropdown" aria-label="Open Guides menu">
+            <span class="sc-nav-menu-chevron" aria-hidden="true"></span>
           </button>
-          <ul class="sc-nav-submenu">
+          <ul class="sc-nav-submenu" id="guides-dropdown">
             ${items}
-            ${entropyGroup}
+            ${glossaryGroup}
           </ul>
         </li>`;
       }
@@ -1961,17 +1895,24 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
       }
       const active = key === pageKey ? "active" : "";
       const contactClass = key === "contact" ? "sc-contact-link" : "";
-      return `<li><a class="${active} ${contactClass}" href="${base}${href}"><span>${label}</span></a></li>`;
+      /* Home names the cockpit explicitly. Without it, the gate on index.html
+         has only the launch-seen flag to go on, and someone who arrived from a
+         search result on an inner page has never set that flag -- so their
+         first click on Home would play the launch, which is the one thing this
+         link is supposed to skip. An explicit destination does not depend on
+         where the visitor happens to have been first. */
+      const target = key === "home" ? `${base}${href}${COCKPIT_HASH}` : `${base}${href}`;
+      return `<li><a class="${active} ${contactClass}" href="${target}"><span>${label}</span></a></li>`;
     }).join("");
 
     return `
       <a class="sc-skip-link" href="#main-content">Skip to main content</a>
       <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center">
-          <a class="sc-brand me-auto" href="${base}index.html" aria-label="Self Custody home">
+          <a class="sc-brand me-auto" href="${base}index.html${COCKPIT_HASH}" aria-label="Self Custody home">
             <span class="sc-brand-mark" aria-hidden="true"></span>
             <span class="sc-brand-name">SELF CUSTODY</span>
-            <span class="sc-brand-domain" aria-hidden="true"><span class="sc-brand-domain-text">.CA</span></span>
+            <span class="sc-brand-domain" aria-hidden="true"><span class="sc-brand-domain-text">.io</span></span>
           </a>
           <nav id="navbar" class="navbar" aria-label="Primary navigation">
             <ul>${links}</ul>
@@ -1986,7 +1927,7 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
       <div class="container">
         <div class="row g-4">
           <div class="col-lg-5">
-            <h3 class="sc-footer-brand"><img src="${base}assets/img/self-custody-favicon.svg" alt="" width="34" height="34"><span>SelfCustody.ca</span></h3>
+            <h3 class="sc-footer-brand"><img src="${base}assets/img/self-custody-favicon.svg" alt="" width="34" height="34"><span>SelfCustody.io</span></h3>
             <p>Clear, practical guidance to self custody your bitcoin. Learn the basics, test your backups, and keep control of your keys.</p>
           </div>
           <div class="col-12 col-lg-4 sc-footer-explore">
@@ -2007,8 +1948,8 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
           </div>
         </div>
         <div class="sc-footer-bottom d-flex flex-wrap justify-content-between gap-2">
-          <span>© <span data-year>${currentYear}</span> SelfCustody.ca</span>
-          <span><a href="mailto:info@selfcustody.ca">info@selfcustody.ca</a></span>
+          <span>© <span data-year>${currentYear}</span> SelfCustody.io</span>
+          <span><a href="mailto:info@selfcustody.ca">Email us</a></span>
         </div>
       </div>
     </footer>`;

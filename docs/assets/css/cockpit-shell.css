@@ -1,0 +1,1026 @@
+/* Separate cockpit study: exterior assets retain their approved positioning. */
+.cabin-mask-defs{position:absolute;pointer-events:none}
+.cabin-art{position:absolute;inset:0;z-index:4;pointer-events:none;clip-path:url(#cabin-window-cutout)}
+.cabin-art img{display:block;width:100%;height:100%;object-fit:fill}
+.cabin-mobile-art{display:none}
+.navmock .cockpit-composition .selection-rocket{display:none!important}
+.navmock .cockpit-composition .selection-copy{inset:0;width:100%;max-width:none;z-index:5;pointer-events:none}
+.cockpit-composition .cabin-intro{position:absolute;left:10%;top:calc(max(96px,12.8%) - 5px);width:29.5%}
+.navmock .cockpit-composition .selection-copy h1{position:static;width:100%;max-width:none;font-size:clamp(24px,2.55vw,46px);line-height:1.12;white-space:normal;margin:0 0 12px;font-weight:650;background:none;-webkit-text-fill-color:initial;color:#fff0d8;text-shadow:0 2px 4px #0006}
+.navmock .cockpit-composition .selection-copy p{position:static;width:100%;max-width:none;font-size:clamp(16px,1.13vw,21px);line-height:1.5;margin:0;color:#e8dfd1}
+.cockpit-composition .hub-directory{position:absolute;left:14.4%;top:29.7%;width:20.6%;height:32.8%;display:flex;flex-direction:column;padding:0;border:0;border-radius:0;background:none;box-shadow:none;pointer-events:auto}
+.cockpit-composition .hub-directory h2{display:flex;align-items:center;flex:0 0 14%;font-size:clamp(14px,1.05vw,19px);line-height:1.2;margin:0;padding:0 clamp(12px,1vw,19px) 4px;color:#ffefd7}
+.cockpit-composition .hub-directory a span{min-width:0;overflow-wrap:break-word}
+.cockpit-composition .hub-directory a{flex:1;min-height:0;gap:clamp(10px,1.1vw,20px);padding:4px clamp(4px,.55vw,10px);font-size:clamp(14px,1vw,18px);line-height:1.2;border-color:#f3ddb51c;border-radius:0;color:#f5ecdf;transition:background .18s,color .18s,box-shadow .18s}
+.cockpit-composition .hub-directory a:hover,.cockpit-composition .hub-directory a:focus-visible{color:#fff2cf;background:#eab46a12;box-shadow:inset 3px 0 #dba55b;border-radius:4px}
+.cockpit-composition .hub-directory a:focus-visible{outline:1px solid #e4b66b;outline-offset:1px}
+.cockpit-composition .hub-directory svg{width:clamp(20px,1.4vw,26px);height:clamp(20px,1.4vw,26px);stroke:#e8b361}
+.cockpit-composition .hub-directory .directory-chevron{width:15px;height:15px}
+.cockpit-composition .arrival-view{z-index:8}
+@media(min-width:901px) and (min-aspect-ratio:6/5), (min-width:1200px){
+ /* Keep copy within the painted wall, with clearance before the window trim. */
+ .navmock .cockpit-composition .selection-copy p{width:90%;font-size:clamp(14px,1.05vw,20px);line-height:1.4;overflow-wrap:break-word}
+}
+@media(min-width:901px) and (max-height:780px) and (min-aspect-ratio:6/5), (min-width:1200px) and (max-height:780px){
+ .navmock .cockpit-composition .selection-copy h1{font-size:clamp(24px,2.5vw,40px)}
+ .navmock .cockpit-composition .selection-copy p{font-size:clamp(14px,1.05vw,18px);line-height:1.35}
+}
+@media(max-width:900px), (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--cabin-panel:max(600px,120vw);height:auto;min-height:0;padding-block:0}
+ .cabin-art{display:none}
+ .cabin-mobile-art{display:block;position:relative;z-index:1;pointer-events:none}
+ .cabin-mobile-upper{position:relative;height:var(--cabin-panel);overflow:hidden}
+ .cabin-mobile-upper img{display:block;position:absolute;inset:0;width:100%;height:185.1852%;object-fit:fill}
+ .cabin-mobile-window{position:relative;width:100%;aspect-ratio:841/860;overflow:hidden}
+ .cabin-mobile-window img{display:block;position:absolute;left:0;top:-117.4419%;width:100%;height:217.4419%;object-fit:fill}
+ .navmock .cockpit-composition .selection-copy{position:absolute;inset:0;margin:0;width:100%;padding:0;border:0;border-radius:0;background:none;box-shadow:none}
+ .cockpit-composition .cabin-intro{position:absolute;left:12%;top:calc(var(--cabin-panel) * .1963);width:78%;margin:0}
+ .navmock .cockpit-composition .selection-copy h1{font-size:clamp(22px,5.8vw,38px);margin-bottom:12px;line-height:1.15}
+ .navmock .cockpit-composition .selection-copy p{font-size:clamp(16px,3.7vw,22px);line-height:1.45}
+ .cockpit-composition .hub-directory{position:absolute;left:15%;top:calc(var(--cabin-panel) * .4444);width:71%;height:calc(var(--cabin-panel) * .4852);padding:0;border:0;border-radius:0;background:none}
+ .cockpit-composition .hub-directory h2{flex:0 0 15%;min-height:40px;padding:0 5px 6px;font-size:clamp(16px,3.8vw,23px)}
+ .cockpit-composition .hub-directory a{flex:1;min-height:44px;padding:5px;gap:10px;font-size:clamp(16px,3.7vw,22px)}
+ .cockpit-composition .hub-directory svg{width:clamp(22px,4.8vw,30px);height:clamp(22px,4.8vw,30px)}
+ .cockpit-composition .selection-moon,.cockpit-composition .selection-earth{display:none}
+ .navmock .cockpit-composition .choice-quickstart{left:56%;top:calc(var(--cabin-panel) + 35vw);width:110%!important;max-width:700px!important}
+ .cockpit-composition .choice-quickstart .quickstart-station{width:100%;mask-image:url('../img/space-hub/quickstart-portrait-mask.svg');mask-size:100% 100%;mask-repeat:no-repeat}
+ .cockpit-composition .arrival-view{position:fixed;height:100dvh;overflow-y:auto;overscroll-behavior:contain;z-index:9}
+ .cockpit-composition .arrival-copy,.cockpit-composition .arrival-view[data-destination="help"] .arrival-copy{top:110px;left:8%;width:84%}
+ .cockpit-composition .arrival-copy .arrival-kicker{font-size:11px}
+ .navmock .cockpit-composition .arrival-copy h2{font-size:clamp(30px,6vw,44px);margin:8px 0}
+ .cockpit-composition .arrival-copy p{font-size:17px;margin-bottom:14px}
+ .cockpit-composition .arrival-art,.cockpit-composition .arrival-view[data-destination="help"] .arrival-art{top:360px;left:8%;width:84%;height:320px}
+ .cockpit-composition .arrival-sun{display:none}
+ .cockpit-composition .return-to-hub{min-height:44px}
+}
+@media(prefers-reduced-motion:reduce){.cockpit-composition .hub-directory a{transition:none}}
+
+
+
+/* Mobile plates match the desktop room. The upper wall grows for readable
+   menu rows; the lower window retains the image's natural proportions. */
+.cabin-mobile-wide{display:none}
+@media(max-width:900px), (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--cabin-panel:540px}
+ .cabin-mobile-upper img{height:253.4286%}
+ .cabin-mobile-window{aspect-ratio:887/1074}
+ .cabin-mobile-window img{top:-65.1769%;height:165.1769%}
+ .navmock .cockpit-composition .choice-quickstart{top:calc(var(--cabin-panel) + 39vw)}
+}
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--cabin-panel:clamp(540px,70vw,600px)}
+ .navmock .cockpit-composition .choice-quickstart{top:calc(var(--cabin-panel) + 31vw);width:88%!important;max-width:650px!important}
+}
+/* Short landscape uses its own wide plate instead of squashing portrait art. */
+@media(max-width:1100px) and (max-height:500px) and (min-aspect-ratio:6/5), (max-width:900px) and (max-height:700px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--wide-height:max(390px,43.7006vw,100svh);height:var(--wide-height);min-height:var(--wide-height);padding:0}
+ .cabin-art{display:none}
+ .cabin-mobile-art{display:block;position:absolute;inset:0;z-index:1;pointer-events:none}
+ .cabin-mobile-upper,.cabin-mobile-window{display:none}
+ .cabin-mobile-wide{display:block;position:absolute;inset:0;overflow:hidden}
+ .cabin-mobile-wide img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+ .navmock .cockpit-composition .selection-copy{position:absolute;inset:0;width:100%;max-width:none;padding:0;margin:0;z-index:5}
+ .cockpit-composition .cabin-intro{left:7%;top:53px;width:36%}
+ .navmock .cockpit-composition .selection-copy h1{font-size:19px;line-height:1.15;margin:0}
+ .navmock .cockpit-composition .selection-copy p{display:block}
+ .cockpit-composition .hub-directory{left:7%;top:22%;width:36%;height:63%;padding:0;background:none;border:0;box-shadow:none}
+ .cockpit-composition .hub-directory h2{flex:0 0 24px;min-height:24px;font-size:14px;padding:0 5px 4px}
+ .cockpit-composition .hub-directory a{flex:1;min-height:44px;padding:3px 5px;gap:10px;font-size:16px;line-height:1.15}
+ .cockpit-composition .hub-directory svg{width:22px;height:22px}
+ .cockpit-composition .selection-moon,.cockpit-composition .selection-earth{display:none}
+ .navmock .cockpit-composition .choice-quickstart{left:74%;top:52%;width:48%!important;max-width:650px!important}
+ .cockpit-composition .choice-quickstart .quickstart-station{width:100%;mask-image:url('../img/space-hub/quickstart-portrait-mask.svg');mask-size:100% 100%;mask-repeat:no-repeat}
+}
+
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .cockpit-composition .hub-directory{top:calc(var(--cabin-panel) * .46);height:calc(var(--cabin-panel) * .452)}
+ .cockpit-composition .hub-directory h2{flex:0 0 24px;min-height:24px;font-size:15px;padding-bottom:3px}
+ .cockpit-composition .hub-directory a{font-size:clamp(16px,2.7vw,21px);padding-block:3px}
+}
+
+@media(max-width:1100px) and (max-height:500px) and (min-aspect-ratio:6/5) and (max-aspect-ratio:19/10), (max-width:900px) and (max-height:700px) and (min-aspect-ratio:6/5) and (max-aspect-ratio:19/10){
+ .cabin-mobile-wide img{object-position:left center}
+ .cockpit-composition .cabin-intro{left:10%;width:46%}
+ .cockpit-composition .hub-directory{left:10%;width:46%}
+ .navmock .cockpit-composition .choice-quickstart{left:82%}
+}
+@media(min-width:901px) and (max-width:1199px) and (pointer:coarse) and (min-aspect-ratio:6/5){
+ .cockpit-composition .hub-directory a{min-height:44px}
+}
+
+/* Lower the resting island within the window; the flight still registers
+   against its measured position and reaches the same movie frame. */
+@media(max-width:1199px){
+ .navmock .cockpit-composition .choice-quickstart{margin-top:18px}
+}
+@media(min-width:601px) and (max-width:1199px) and (min-height:501px){
+ .navmock .cockpit-composition .choice-quickstart{margin-top:48px}
+}
+
+/* The window is transparent like desktop: planets remain separate scene
+   layers, so the departure can track them without a second painted copy. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .cabin-mobile-window img{mask-image:url('../img/space-hub/cabin-mobile-window-clean-v3.svg');mask-size:100% 100%;mask-repeat:no-repeat}
+ .cockpit-composition .selection-moon{display:block!important;position:absolute;left:74.5%;right:auto;top:calc(var(--cabin-panel) + 10.7vw);width:17%;height:auto;z-index:0;opacity:.8;transform:none!important}
+ .cockpit-composition .selection-earth{display:block!important;position:absolute;left:-40%;bottom:auto;top:calc(var(--cabin-panel) + 75vw);width:180%;z-index:0;transform:none!important}
+ .navmock .cockpit-composition .choice-quickstart{margin-top:36px}
+}
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .choice-quickstart{margin-top:64px}
+}
+
+/* Portrait cockpit: shorter console, centered copy and roomy touch tiles. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--cabin-panel:454px}
+ .cockpit-composition .cabin-intro{left:10%;top:82px;width:80%;text-align:center}
+ .navmock .cockpit-composition .selection-copy h1{font-size:clamp(20px,5.6vw,28px);line-height:1.15;margin-bottom:8px}
+ .navmock .cockpit-composition .selection-copy p{font-size:14px;line-height:1.4;text-align:center}
+ .cockpit-composition .hub-directory{left:15%;top:212px;width:71%;height:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:24px repeat(3,52px);gap:6px}
+ .cockpit-composition .hub-directory h2{grid-column:1/-1;min-height:0;justify-content:center;padding:0;font-size:14px;text-align:center}
+ .cockpit-composition .hub-directory a{min-height:52px;display:flex;justify-content:center;align-items:center;gap:7px;padding:5px 7px;border:1px solid #b9854659;border-radius:8px;background:linear-gradient(160deg,#322b24ed,#191b1dee);box-shadow:inset 0 1px #eac69616;font-size:14px;line-height:1.15;text-align:center}
+ .cockpit-composition .hub-directory a:last-child{grid-column:1/-1}
+ .cockpit-composition .hub-directory svg{width:21px;height:21px;flex-shrink:0}
+ .cockpit-composition .hub-directory .directory-chevron{display:none}
+ .cockpit-composition .hub-directory a:hover,.cockpit-composition .hub-directory a:focus-visible{border-radius:8px;background:#493720;box-shadow:inset 0 0 0 1px #e8b36166}
+}
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--cabin-panel:484px}
+ .cockpit-composition .cabin-intro{top:86px}
+ .navmock .cockpit-composition .selection-copy p{max-width:500px;margin-inline:auto;font-size:17px}
+ .cockpit-composition .hub-directory{top:228px;grid-template-rows:26px repeat(3,56px)}
+ .cockpit-composition .hub-directory a{font-size:17px}
+}
+
+/* Larger directory heading uses the breathing room above the touch grid. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .cockpit-composition .hub-directory h2{font-size:clamp(16px,4.7vw,23px);font-weight:700;line-height:1.15;overflow:visible;white-space:nowrap;transform:none}
+}
+
+/* Keep the existing portrait grid, swapping Guides with Get Help. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .cockpit-composition .hub-directory a[data-select="help"]{grid-column:1;grid-row:2}
+ .cockpit-composition .hub-directory a[data-select="guides"]{grid-column:1/-1;grid-row:4}
+}
+
+@media(max-width:900px), (max-width:1199px) and (max-aspect-ratio:6/5){
+ .cockpit-composition .hub-directory .workshop-label-prefix{display:none}
+ .cockpit-composition .hub-directory a[data-select="software"]>span{white-space:nowrap}
+}
+
+/* Portrait console buttons: tactile charcoal faces inside the existing trim. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--cabin-panel:478px}
+ .cockpit-composition .hub-directory{left:14.5%;top:226px;grid-template-rows:24px repeat(3,56px);gap:8px}
+ .navmock .cockpit-composition .hub-directory a[data-select]{min-height:56px;border:1px solid #ac7d4699;border-radius:11px;background:linear-gradient(165deg,#363330,#242526 65%,#1b1d1f);box-shadow:inset 0 1px 0 #ffe0ad30,inset 0 -2px 0 #0006,0 2px 3px #0005;color:#f5ecdf;transition:transform .12s,background .12s,border-color .12s,box-shadow .12s}
+ .navmock .cockpit-composition .hub-directory a[data-select] svg{stroke:#edba68}
+ .navmock .cockpit-composition .hub-directory a[data-select] .orbit-hover-fill{border-radius:10px}
+ .navmock .cockpit-composition .hub-directory a[data-select]:hover,.navmock .cockpit-composition .hub-directory a[data-select]:focus-visible{border-color:#e4b16a;background:linear-gradient(165deg,#443b30,#282725);box-shadow:inset 0 1px #ffe0ad40,0 0 8px #d8963b22}
+ .navmock .cockpit-composition .hub-directory a[data-select]:active{transform:translateY(2px) scale(.985);border-color:#ffd28c;background:#242321;box-shadow:inset 0 2px 5px #0009,0 0 9px #e6a54855}
+ .navmock .cockpit-composition .choice-quickstart .quickstart-start-cue{display:block;position:absolute;top:calc(100% - 12px);left:50%;transform:translateX(-50%);padding:3px 8px;border-radius:20px;background:#101215d9;color:#fff0d8;font:600 12px/1.3 system-ui,sans-serif;white-space:nowrap;text-shadow:0 1px 2px #000;pointer-events:none}
+ .navmock .cockpit-composition[data-orbit-selection]:not([data-orbit-selection="quickstart"]) .quickstart-start-cue{visibility:hidden}
+}
+.quickstart-start-cue{display:none}
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--cabin-panel:510px}
+ .cockpit-composition .hub-directory{top:242px;grid-template-rows:26px repeat(3,58px)}
+ .navmock .cockpit-composition .hub-directory a[data-select]{min-height:58px}
+}
+
+.cockpit-composition:not(.gate-hover-ready) .quickstart-start-cue{visibility:hidden}
+@media(max-width:359px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select]{font-size:13px;padding-inline:4px;gap:5px}
+}
+
+/* Keep the raised faces inside the painted console's inner edge. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--cabin-panel:490px}
+ .cockpit-composition .hub-directory{left:16%;width:68%}
+}
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--cabin-panel:522px}
+}
+
+/* Remove a blank wall strip above the console, preserving the frame geometry. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--cabin-panel-original:490px;--console-lift:28px;--cabin-panel:calc(var(--cabin-panel-original) - var(--console-lift))}
+ .cabin-mobile-upper img{height:calc(var(--cabin-panel-original) * 2.534286);clip-path:inset(0 0 calc(100% - 188px) 0)}
+ .cabin-mobile-upper::after{content:"";position:absolute;left:0;right:0;top:168px;bottom:0;background-image:url('../img/space-hub/cabin-mobile-matched-portrait-v1.webp');background-repeat:no-repeat;background-size:100% calc(var(--cabin-panel-original) * 2.534286);background-position:center calc(-168px - var(--console-lift));mask-image:linear-gradient(transparent,#000 20px)}
+ .cockpit-composition .hub-directory{top:198px}
+}
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--cabin-panel-original:522px;--console-lift:36px}
+ .cockpit-composition .hub-directory{top:206px}
+}
+
+/* Tighter portrait console: preserve the touch grid, trim the surrounding wall. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--console-lift:38px;--console-bottom-trim:22px;--cabin-panel:calc(var(--cabin-panel-original) - var(--console-lift) - var(--console-bottom-trim))}
+ .cockpit-composition .hub-directory{top:188px}
+ .cockpit-composition .hub-directory h2{font-size:clamp(15px,4.3vw,21px)}
+ .cabin-mobile-upper{height:calc(var(--cabin-panel) + var(--console-bottom-trim))}
+ .cabin-mobile-window{margin-top:calc(-1 * var(--console-bottom-trim));z-index:2}
+}
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--console-lift:46px;--console-bottom-trim:24px}
+ .cockpit-composition .hub-directory{top:196px}
+}
+
+/* Balance portrait framing against available height, not image width. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--space-window-height:clamp(380px,calc(100svh - var(--cabin-panel) + var(--cabin-menu-growth,0px)),740px)}
+ .cabin-mobile-window{height:var(--space-window-height);aspect-ratio:auto}
+ .navmock .cockpit-composition .choice-quickstart{left:50%;top:calc(var(--cabin-panel) + var(--space-window-height) * .46);margin-top:0}
+ .cockpit-composition .selection-moon{top:calc(var(--cabin-panel) + var(--space-window-height) * .13)}
+ .cockpit-composition .selection-earth{top:calc(var(--cabin-panel) + var(--space-window-height) * .73)}
+}
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .cockpit-composition .cabin-intro{top:80px}
+ .navmock .cockpit-composition .selection-copy h1{font-size:32px}
+ .navmock .cockpit-composition .selection-copy p{font-size:18px;max-width:560px;line-height:1.4}
+ .cockpit-composition .hub-directory h2{font-size:22px}
+ .navmock .cockpit-composition .hub-directory a[data-select]{font-size:18px}
+ .navmock .cockpit-composition .choice-quickstart{width:78%!important;max-width:620px!important}
+}
+
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .cockpit-composition .selection-earth{top:calc(var(--cabin-panel) + var(--space-window-height) * .58)}
+}
+
+/* Keep the horizon visible on phones and the island inside the tablet window. */
+@media(max-width:600px) and (max-aspect-ratio:6/5){
+ .cockpit-composition .selection-earth{top:calc(var(--cabin-panel) + var(--space-window-height) * .55 + 15px)}
+}
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .choice-quickstart{width:66%!important;max-width:540px!important}
+}
+
+@media(max-width:600px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .choice-quickstart{width:clamp(400px,111.5vw,462.5px)!important}
+}
+
+/* Optical balance of the visible island, rather than its padded image box. */
+@media(max-width:600px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .choice-quickstart{left:calc(50% + 14px);top:calc(var(--cabin-panel) + var(--space-window-height) * .41 - 8px)}
+ .cockpit-composition .selection-moon{left:calc(74.5% + 8px);top:calc(var(--cabin-panel) + var(--space-window-height) * .13 - 12px)}
+}
+
+/* Portrait typography and a shared icon/label alignment for every control. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .selection-copy h1{font-weight:700;letter-spacing:-.025em}
+ .navmock .cockpit-composition .selection-copy p{max-width:34ch;margin-inline:auto;color:#ddd5c9;line-height:1.45;font-weight:400}
+ .cockpit-composition .hub-directory h2{font-weight:600;letter-spacing:0;align-items:center}
+ .navmock .cockpit-composition .hub-directory a[data-select]{justify-content:flex-start;text-align:left;padding-inline:12px;gap:9px;font-size:14px;font-weight:500;border-color:#a87c465e;background:linear-gradient(165deg,#302f2d,#242526 70%,#1d1f20);box-shadow:inset 0 1px #ffe0ad1a,inset 0 -1px #0005,0 2px 3px #0003}
+ .navmock .cockpit-composition .hub-directory a[data-select]>svg:not(.directory-chevron){width:22px;height:22px;flex:0 0 22px;stroke-width:1.6}
+ .navmock .cockpit-composition .hub-directory a[data-select]>span:not(.orbit-hover-fill){white-space:nowrap}
+}
+@media(max-width:359px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select]{font-size:12px;padding-inline:6px;gap:5px}
+}
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select]{font-size:18px;padding-inline:20px;gap:12px}
+}
+
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .selection-copy p{max-width:560px}
+}
+
+/* Approved compact homepage format. */
+.compact-cockpit-copy{display:none}
+
+  @media(max-width:1199px) and (max-aspect-ratio:6/5){
+   .navmock .cockpit-composition{--cabin-panel-original:400px;--console-lift:30px;--console-bottom-trim:22px}
+   .cockpit-composition .cabin-intro{top:79px;left:10%;width:80%}
+   .navmock .cockpit-composition .selection-copy h1{font-size:clamp(20px,5.5vw,24px);white-space:nowrap;line-height:1.15;letter-spacing:-.6px;font-weight:650;margin-bottom:9px}
+   .navmock .cockpit-composition .selection-copy h1 span{color:#e9b770;-webkit-text-fill-color:#e9b770;font-weight:inherit}
+   .navmock .cockpit-composition .selection-copy p{font-size:13px;line-height:1.35;max-width:none;color:#c9c1b5}
+   .cockpit-composition .hub-directory{top:160px;left:16%;width:68%;grid-template-rows:repeat(3,48px);gap:7px}
+   .cockpit-composition .hub-directory h2{display:none;font-size:13px;font-weight:500;color:#c9c1b5;letter-spacing:.15px}
+   .navmock .cockpit-composition .hub-directory a[data-select]{min-height:48px;padding-inline:8px;gap:7px;border-radius:8px;font-size:12px;font-weight:500;background:linear-gradient(160deg,#302e2a,#222324);border-color:#aa804049;box-shadow:inset 0 1px #ffe0ad12,0 1px 2px #0003}
+   .navmock .cockpit-composition .hub-directory a[data-select]>svg:not(.directory-chevron){width:19px;height:19px;flex-basis:19px}
+   .navmock .cockpit-composition .hub-directory a[data-select="guides"]{justify-content:center;text-align:center;color:#ffe4b6;background:linear-gradient(160deg,#443829,#2d2822);border-color:#bc914c88}
+   .navmock .cockpit-composition .hub-directory a[data-select="guides"]::after{content:'\2192';margin-left:3px;font-size:18px;color:#e9b770}
+  }
+  @media(max-width:1199px) and (max-aspect-ratio:6/5){
+   .cockpit-composition .hub-directory a[data-select="help"]{grid-row:1;grid-column:1}
+   .cockpit-composition .hub-directory a[data-select="compare"]{grid-row:1;grid-column:2}
+   .cockpit-composition .hub-directory a[data-select="software"]{grid-row:2;grid-column:1}
+   .cockpit-composition .hub-directory a[data-select="dashboard"]{grid-row:2;grid-column:2}
+   .cockpit-composition .hub-directory a[data-select="guides"]{grid-row:3;grid-column:1/-1}
+  }
+  @media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+   .navmock .cockpit-composition .selection-copy h1{font-size:30px}
+   .navmock .cockpit-composition .selection-copy p{font-size:16px}
+   .cockpit-composition .hub-directory h2{font-size:16px}
+   .navmock .cockpit-composition .hub-directory a[data-select]{font-size:16px;padding-inline:18px;gap:10px}
+  }
+  @media(max-width:359px){
+   .navmock .cockpit-composition .hub-directory a[data-select]{font-size:10.5px;padding-inline:5px;gap:4px}
+  }
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .desktop-cockpit-copy{display:none}
+ .compact-cockpit-copy{display:inline}
+}
+
+/* Lead with Guides, followed by the four supporting destinations. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .cockpit-composition .hub-directory a[data-select="guides"]{grid-row:1;grid-column:1/-1}
+ .cockpit-composition .hub-directory a[data-select="help"]{grid-row:2;grid-column:1}
+ .cockpit-composition .hub-directory a[data-select="compare"]{grid-row:2;grid-column:2}
+ .cockpit-composition .hub-directory a[data-select="software"]{grid-row:3;grid-column:1}
+ .cockpit-composition .hub-directory a[data-select="dashboard"]{grid-row:3;grid-column:2}
+ .cabin-mobile-upper img{clip-path:inset(0 0 calc(100% - 144px) 0)}
+ .cabin-mobile-upper::after{top:132px;background-position:center calc(-132px - var(--console-lift));mask-image:linear-gradient(transparent,#000 12px)}
+}
+
+/* Allow the approved descriptive subtitle to wrap without touching the console. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--console-lift:4px}
+ .cockpit-composition .hub-directory{top:186px}
+}
+
+/* Equalize the painted frame's padding around the compact button grid. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--cabin-panel-original:388px;--console-lift:1px}
+}
+
+/* Keep the tablet furniture at the source artwork's natural proportions. */
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .cabin-mobile-window{container-type:inline-size}
+ .cabin-mobile-window img{height:calc((var(--space-window-height) - 40cqw) * 2.4666295884);top:calc((var(--space-window-height) - 40cqw) * -.9733036707);clip-path:inset(0 0 20% 0)}
+ .cabin-mobile-window::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:200cqw;background:url('../img/space-hub/cabin-mobile-matched-portrait-v1.webp') center bottom/100% 100% no-repeat;mask:url('../img/space-hub/cabin-mobile-window-clean-v3.svg') center/100% 100% no-repeat;clip-path:inset(calc(100% - 40cqw) 0 0 0);pointer-events:none}
+}
+
+/* Slightly stronger mobile labels, icons and Guides direction cue. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select]{font-size:13px;font-weight:550}
+ .navmock .cockpit-composition .hub-directory a[data-select]>svg:not(.directory-chevron){width:21px;height:21px;flex-basis:21px;stroke-width:1.8}
+ .navmock .cockpit-composition .hub-directory a[data-select="guides"]::after{content:"";display:block;flex:0 0 24px;width:24px;height:16px;margin-left:4px;background:#e9b770;clip-path:polygon(0 42%,72% 42%,49% 10%,59% 0,100% 50%,59% 100%,49% 90%,72% 58%,0 58%)}
+}
+@media(max-width:359px){
+ .navmock .cockpit-composition .hub-directory a[data-select]{font-size:11.5px;gap:4px}
+ .navmock .cockpit-composition .hub-directory a[data-select]>svg:not(.directory-chevron){width:20px;height:20px;flex-basis:20px}
+}
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select]{font-size:18px}
+ .navmock .cockpit-composition .hub-directory a[data-select]>svg:not(.directory-chevron){width:24px;height:24px;flex-basis:24px}
+ .navmock .cockpit-composition .hub-directory a[data-select="guides"]::after{width:28px;flex-basis:28px;height:18px}
+}
+
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select="guides"]::after{display:none;content:none}
+}
+
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--console-lift:-9px}
+ .cockpit-composition .hub-directory{top:196px}
+}
+
+/* Center each supporting icon and label together on phone and tablet. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"]){display:flex;align-items:center;justify-content:center;gap:7px;padding-inline:4px;text-align:center}
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"])>span:not(.orbit-hover-fill){flex:0 0 auto;text-align:center}
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"])>svg:not(.directory-chevron){flex:0 0 21px;width:21px;height:21px}
+}
+@media(max-width:359px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"]){gap:5px;padding-inline:3px}
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"])>svg:not(.directory-chevron){flex-basis:18px;width:18px;height:18px}
+}
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"]){gap:10px;padding-inline:12px}
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"])>svg:not(.directory-chevron){flex-basis:24px;width:24px;height:24px}
+}
+
+/* Tablet portrait: keep the island above the sill and show the Earth horizon. */
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .choice-quickstart{width:72%!important;max-width:595px!important;left:50%;top:calc(var(--cabin-panel) + var(--space-window-height) * .35 - 10px);margin-top:0}
+ .cockpit-composition .selection-earth{top:calc(var(--cabin-panel) + var(--space-window-height) * .44 + 20px)}
+}
+
+/* The opaque cockpit frame occludes exterior destinations, as on desktop. */
+@media(max-width:1100px){
+ .navmock .cockpit-composition .cabin-mobile-art{z-index:4}
+}
+
+/* More readable phone button labels; retain compact spacing on narrow phones. */
+@media(min-width:360px) and (max-width:600px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select]{font-size:14px}
+}
+@media(max-width:359px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select]{font-size:12px}
+}
+
+/* Match the phone icon increase to the larger labels. */
+@media(min-width:360px) and (max-width:600px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select]>svg:not(.directory-chevron){width:23px;height:23px;flex:0 0 23px}
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"])>svg:not(.directory-chevron){width:23px;height:23px;flex:0 0 23px}
+}
+@media(max-width:359px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select]>svg:not(.directory-chevron){width:19px;height:19px;flex:0 0 19px}
+ .navmock .cockpit-composition .hub-directory a[data-select]{gap:5px}
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"])>svg:not(.directory-chevron){width:19px;height:19px;flex:0 0 19px}
+}
+
+/* Inset the supporting copy without moving the headline or menu. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .cabin-intro p{width:88%;max-width:none;margin-inline:auto}
+}
+
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .cabin-intro p{width:78%}
+}
+
+.cockpit-composition .cabin-intro .subtitle-emphasis{font-weight:600;color:inherit;text-decoration-line:underline;text-decoration-thickness:1px;text-underline-offset:.18em;text-decoration-skip-ink:auto}
+
+/* Hardware and software glyphs use the same softened line finish. */
+.cockpit-composition .hub-directory a[data-route] > svg:not(.directory-chevron){stroke-linecap:round;stroke-linejoin:round}
+
+/* Put Devices before Get Help in the compact menu. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .cockpit-composition .hub-directory a[data-select="compare"]{grid-row:2;grid-column:1}
+ .cockpit-composition .hub-directory a[data-select="help"]{grid-row:2;grid-column:2}
+}
+
+/* Smaller laptops retain the approved Laptop L composition proportions. */
+@media(min-width:901px) and (max-width:1199px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--laptop-cabin-width:max(100vw,160svh);--laptop-cabin-height:calc(var(--laptop-cabin-width) * .625)}
+ .navmock .cockpit-composition .cabin-art,.navmock .cockpit-composition .selection-copy{inset:auto;top:0;left:calc((100% - var(--laptop-cabin-width)) * .40);width:var(--laptop-cabin-width);height:var(--laptop-cabin-height)}
+ .cockpit-composition .cabin-intro{left:15%;width:24%}
+ .navmock .cockpit-composition .choice-quickstart{left:77%;width:60%!important;max-width:700px!important;margin-top:18px}
+ .navmock .cockpit-composition .selection-earth{left:-20%;width:140%;bottom:-15svh!important}
+}
+
+/* Readable copy aligned with the smaller laptop's console. */
+@media(min-width:901px) and (max-width:1199px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ .cockpit-composition .cabin-intro{left:10.7%;width:28%;top:10%;text-align:center}
+ .navmock .cockpit-composition .selection-copy h1{font-size:26px;line-height:1.12;letter-spacing:-.4px;margin-bottom:10px;white-space:nowrap}
+ .navmock .cockpit-composition .selection-copy h1 span{display:inline;color:#e9b770;-webkit-text-fill-color:#e9b770}
+ .navmock .cockpit-composition .selection-copy p{width:100%;font-size:15px;line-height:1.4;margin-inline:auto;text-wrap:balance}
+ .cockpit-composition .hub-directory h2{justify-content:center;font-size:15px;padding:0 3px 4px;text-align:center}
+ .navmock .cockpit-composition .hub-directory a[data-select]{font-size:16px;padding-inline:12px;gap:10px}
+ .cockpit-composition .hub-directory a[data-select]>svg:not(.directory-chevron){width:22px;height:22px;flex:0 0 22px}
+}
+
+/* Laptop L: center the visible island within the open window. */
+@media(min-width:1200px) and (max-width:1599px){
+ .navmock .cockpit-composition .choice-quickstart{left:69%}
+}
+
+/* Keep Earth's rectangular lower edge below Laptop L, including tall previews. */
+@media(min-width:1200px) and (max-width:1599px){
+ .navmock .cockpit-composition .selection-earth{width:max(100%,120svh);left:calc((100% - max(100%,120svh)) / 2);bottom:-10svh!important}
+}
+
+/* The same destination buttons on desktop and mobile, with a fourth row.
+   Reserve the extra row, gap and frame padding outside the original window height. */
+.navmock .cockpit-composition .hub-directory{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(4,minmax(44px,1fr));gap:7px}
+.cockpit-composition .hub-directory h2{display:none}
+.cockpit-composition .hub-directory a[data-select="guides"]{grid-row:1;grid-column:1/-1}
+.cockpit-composition .hub-directory a[data-select="compare"]{grid-row:2;grid-column:1}
+.cockpit-composition .hub-directory a[data-select="help"]{grid-row:2;grid-column:2}
+.cockpit-composition .hub-directory a[data-select="software"]{grid-row:3;grid-column:1}
+.cockpit-composition .hub-directory a[data-select="dashboard"]{grid-row:3;grid-column:2}
+.cockpit-composition .hub-directory a[data-select="exchanges"]{grid-row:4;grid-column:1}
+.cockpit-composition .hub-directory a[data-select="workshop"]{grid-row:4;grid-column:2}
+@media(min-width:1200px), (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select]{display:flex;align-items:center;justify-content:center;min-height:44px;padding:4px;gap:7px;border:1px solid #aa804049;border-radius:8px;font-size:clamp(12px,1.05vw,16px);font-weight:550;text-align:center;background:linear-gradient(160deg,#302e2a,#222324);box-shadow:inset 0 1px #ffe0ad12,0 1px 2px #0003}
+ .navmock .cockpit-composition .hub-directory a[data-select]>span:not(.orbit-hover-fill){flex:0 0 auto;white-space:nowrap;text-align:center}
+ .navmock .cockpit-composition .hub-directory a[data-select]>svg:not(.directory-chevron){flex:0 0 20px;width:20px;height:20px;stroke-width:1.8}
+ .navmock .cockpit-composition .hub-directory .directory-chevron{display:none}
+ .navmock .cockpit-composition .hub-directory a[data-select="guides"]{color:#ffe4b6;background:linear-gradient(160deg,#443829,#2d2822);border-color:#bc914c88}
+ .hub-directory .desktop-cockpit-copy{display:none}
+ .hub-directory .compact-cockpit-copy{display:inline}
+}
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--cabin-panel-original:510px;--console-lift:56px;--cabin-menu-growth:67px}
+ .navmock .cockpit-composition .hub-directory{grid-template-rows:repeat(4,48px)}
+}
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--console-lift:46px}
+}
+
+/* Raised console keys: state comes from fresh input, not restored browser hover. */
+.navmock .cockpit-composition .hub-directory a[data-select]:is(:link,:visited,:hover,:focus,:active){
+ --key-face:linear-gradient(165deg,#3c3933 0%,#2c2c2b 48%,#232527 100%);
+ --key-edge:#a9804b70;
+ --key-shadow:inset 0 1px 0 #ffe2b638,inset 0 -2px 0 #0005,0 3px 0 #101315,0 5px 7px #0005;
+ background:var(--key-face);border:1px solid var(--key-edge);border-radius:8px;
+ box-shadow:var(--key-shadow);color:#f5ecdf;text-decoration:none;
+ transform:none;transition:transform .12s,box-shadow .12s,border-color .12s;
+}
+.navmock .cockpit-composition .hub-directory a[data-select="guides"]:is(:link,:visited,:hover,:focus,:active){--key-face:linear-gradient(165deg,#50412f,#352e25 65%,#2b2823);--key-edge:#bc914c99;color:#ffe4b6}
+.navmock .cockpit-composition .hub-directory a[data-select]:is([data-menu-hover],:focus-visible){--key-edge:#e4b16a;--key-shadow:inset 0 1px 0 #ffe2b64d,inset 0 -2px 0 #0005,0 3px 0 #101315,0 5px 9px #0006,0 0 8px #d8963b22}
+.navmock .cockpit-composition .hub-directory a[data-select]:focus-visible{outline:2px solid #e4b66b;outline-offset:3px}
+.navmock .cockpit-composition .hub-directory a[data-select]:active{transform:translateY(2px);--key-shadow:inset 0 2px 4px #0006,0 1px 0 #101315}
+.navmock .cockpit-composition .hub-directory a[data-select] .orbit-hover-fill{border-radius:7px}
+@media(min-width:901px) and (min-height:501px) and (min-aspect-ratio:6/5), (min-width:1200px){
+ .navmock .cockpit-composition .hub-directory{box-sizing:border-box;width:calc(21.2% + 2px);padding:6px 7px 13px;gap:9px}
+ .navmock .cockpit-composition .hub-directory a[data-select]{font-size:clamp(14px,1.18vw,19px);gap:6px}
+ .navmock .cockpit-composition .hub-directory a[data-select]>svg:not(.directory-chevron){width:clamp(22px,1.8vw,28px);height:clamp(22px,1.8vw,28px);flex:0 0 clamp(22px,1.8vw,28px)}
+}
+@media(prefers-reduced-motion:reduce){.navmock .cockpit-composition .hub-directory a[data-select]{transition:none}}
+
+/* Match the frame's measured inner edges: its right side is slightly shorter. */
+@media(min-width:901px) and (min-height:501px) and (min-aspect-ratio:6/5), (min-width:1200px){
+ .navmock .cockpit-composition .hub-directory{transform:perspective(calc(var(--laptop-cabin-width,100vw) * .625)) rotateY(2deg) skewY(-.1deg);transform-origin:left center}
+}
+.cockpit-composition .hub-directory a[data-select="workshop"]{grid-row:2;grid-column:2}
+.cockpit-composition .hub-directory a[data-select="help"]{grid-row:4;grid-column:2}
+
+/* The landscape plate uses cover sizing; position keys against that same plate,
+   including its left-aligned crop on narrower screens. Source inner frame:
+   x=123..842, y=163..710 in the 1897 by 829 artwork. */
+@media(max-width:1100px) and (max-height:500px) and (min-aspect-ratio:6/5), (max-width:900px) and (max-height:700px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--wide-art-width:max(100vw,calc(var(--wide-height) * 1897 / 829));--wide-art-left:calc((100% - var(--wide-art-width)) / 2);--wide-menu-inset:10px}
+ .navmock .cockpit-composition .hub-directory{left:calc(var(--wide-art-left) + var(--wide-art-width) * 123 / 1897 + var(--wide-menu-inset));top:calc(var(--wide-height) * 163 / 829 + var(--wide-menu-inset));width:calc(var(--wide-art-width) * 719 / 1897 - var(--wide-menu-inset) * 2);height:calc(var(--wide-height) * 547 / 829 - var(--wide-menu-inset) * 2 - 3px);padding:0;transform:none;gap:8px}
+ .navmock .cockpit-composition .hub-directory a[data-select]{font-size:14px}
+}
+@media(max-width:1100px) and (max-height:500px) and (min-aspect-ratio:6/5) and (max-aspect-ratio:19/10), (max-width:900px) and (max-height:700px) and (min-aspect-ratio:6/5) and (max-aspect-ratio:19/10){
+ .navmock .cockpit-composition{--wide-art-left:0px}
+}
+@media(min-width:901px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .cabin-mobile-art{z-index:4}
+ .cabin-fascia-aligned{display:none}
+}
+
+/* Align supporting labels on a shared rail within each button column. */
+.navmock .cockpit-composition .hub-directory a[data-select]:is(:link,:visited){
+ font-weight:600;line-height:1.2;letter-spacing:0;
+}
+.navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"]){
+ display:grid;grid-template-columns:max(18px,1.3em) 5.5em;
+ align-content:center;align-items:center;justify-content:center;column-gap:.45em;
+ padding-inline:3px;text-align:left;
+}
+.navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"])>span:not(.orbit-hover-fill){
+ display:block;width:100%;text-align:left;line-height:1.2;white-space:nowrap;
+}
+.navmock .cockpit-composition .hub-directory a[data-select]:is(:link,:visited)>svg:not(.directory-chevron){
+ display:block;width:max(18px,1.3em);height:max(18px,1.3em);flex:0 0 max(18px,1.3em);
+ stroke-width:1.8;
+}
+.navmock .cockpit-composition .hub-directory a[data-select="guides"]{gap:.45em}
+
+/* Portrait phones and tablets share an open window without furniture.
+   Crop source rows 700..1340, before the chair and tabletop enter the artwork. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .cabin-mobile-window img{top:-109.375%;height:277.1875%;clip-path:none}
+}
+
+/* Reuse the furniture-free upper rim upside down as a slim portrait window sill. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .cabin-mobile-window::after{
+  content:"";position:absolute;width:auto;height:auto;inset:calc(-1 * var(--phone-floor-height)) 0 var(--phone-floor-height);pointer-events:none;
+  background:url('../img/space-hub/cabin-mobile-matched-portrait-v1.webp') center calc(var(--space-window-height) * -1.09375)/100% 277.1875% no-repeat;
+  mask:url('../img/space-hub/cabin-mobile-window-clean-v3.svg') center calc(var(--space-window-height) * -1.09375)/100% 277.1875% no-repeat;
+  --phone-rim-height:clamp(70px,calc(var(--space-window-height) * .32),160px);
+  mask-image:url('../img/space-hub/cabin-mobile-window-clean-v3.svg'),linear-gradient(to bottom,#000 calc(var(--phone-rim-height) - 24px),transparent var(--phone-rim-height));
+  mask-size:100% 277.1875%,100% 100%;
+  mask-position:center calc(var(--space-window-height) * -1.09375),center;
+  mask-repeat:no-repeat;mask-composite:intersect;
+  transform:scaleY(-1);clip-path:inset(0 0 calc(100% - var(--phone-rim-height)) 0);
+ }
+}
+
+/* Keep phones and tablets within a single screen, including the sill and floor. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ html,body{height:100%;overflow:hidden!important;scrollbar-gutter:auto!important}
+ .navmock .cockpit-composition{height:100svh;min-height:0;--space-window-height:calc(100svh - var(--cabin-panel))}
+}
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--phone-floor-height:clamp(24px,5svh,44px)}
+ .cabin-mobile-window::before{
+  content:"";position:absolute;inset:auto 0 0;height:var(--phone-floor-height);z-index:1;pointer-events:none;
+  background:url('../img/space-hub/cabin-mobile-matched-portrait-v1.webp') 63% bottom/500% 1705.7692% no-repeat;
+ }
+ .cabin-mobile-window::after{z-index:2}
+ .navmock .cockpit-composition .choice-quickstart{width:min(98.16vw,calc((var(--space-window-height) - var(--phone-floor-height)) * 1.334))!important;max-width:415px!important;left:50%;top:calc(var(--cabin-panel) + (var(--space-window-height) - var(--phone-floor-height)) * .51)}
+ .cockpit-composition .selection-earth{top:calc(var(--cabin-panel) + (var(--space-window-height) - var(--phone-floor-height)) * .71)}
+}
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .choice-quickstart{width:min(64.8vw,calc((var(--space-window-height) - var(--phone-floor-height)) * 1.6137))!important;max-width:535.5px!important;top:calc(var(--cabin-panel) + (var(--space-window-height) - var(--phone-floor-height)) * .51 + 6px)}
+ .cockpit-composition .selection-earth{top:calc(var(--cabin-panel) + (var(--space-window-height) - var(--phone-floor-height)) * .62 - 6px)}
+}
+@media(max-width:1100px) and (max-height:500px) and (min-aspect-ratio:6/5), (max-width:900px) and (max-height:700px) and (min-aspect-ratio:6/5){
+ html,body{height:100%;overflow:hidden!important;scrollbar-gutter:auto!important}
+ .navmock .cockpit-composition{--wide-height:100svh}
+}
+
+/* Leave room above the ring for its 10px idle float on short phones. */
+@media(max-width:600px) and (max-height:750px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .choice-quickstart{width:min(98.16vw,calc((var(--space-window-height) - var(--phone-floor-height)) * 1.196))!important;top:calc(var(--cabin-panel) + (var(--space-window-height) - var(--phone-floor-height)) * .55)}
+}
+
+/* The landscape plate has an opaque window: put live destinations above it. */
+@media(max-width:1100px) and (max-height:500px) and (min-aspect-ratio:6/5), (max-width:900px) and (max-height:700px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .cabin-mobile-art{z-index:1}
+ .cockpit-composition .destination-menu{clip-path:inset(60px 8px 56px 49%)}
+}
+
+/* Short landscape retains the other views' hierarchy: a separate centered
+   introduction above the console. Reuse only the approved plate's console
+   region here; the window and the rest of the room keep their original crop. */
+@media(max-width:1100px) and (max-height:500px) and (min-aspect-ratio:6/5), (max-width:900px) and (max-height:700px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--wide-console-top:clamp(128px,calc(100svh - 244px),146px);--wide-console-height:calc(100svh - var(--wide-console-top) - 20px);--wide-wall-edge:calc(var(--wide-art-left) + var(--wide-art-width) * 865 / 1897 + 8px)}
+ .cabin-mobile-wide::before{content:'';position:absolute;top:48px;bottom:20px;left:calc(var(--wide-art-left) + var(--wide-art-width) * 80 / 1897);width:calc(var(--wide-art-width) * 810 / 1897);z-index:1;background:linear-gradient(90deg,transparent,#17191b 12px,#17191b calc(100% - 14px),transparent);pointer-events:none}
+ .cabin-mobile-wide::after{content:'';position:absolute;z-index:2;left:calc(var(--wide-art-left) + var(--wide-art-width) * 94 / 1897);top:var(--wide-console-top);width:calc(var(--wide-art-width) * 771 / 1897);height:var(--wide-console-height);background:url('../img/space-hub/cabin-mobile-matched-landscape-v1.webp') calc(var(--wide-art-width) * -94 / 1897) calc(var(--wide-console-height) * -140 / 610)/var(--wide-art-width) calc(var(--wide-console-height) * 829 / 610) no-repeat;border-radius:18px;mask-image:linear-gradient(90deg,transparent,#000 5px,#000 calc(100% - 5px),transparent),linear-gradient(transparent,#000 5px,#000 calc(100% - 5px),transparent);mask-composite:intersect;pointer-events:none}
+ .cockpit-composition .cabin-intro{left:calc(var(--wide-art-left) + var(--wide-art-width) * 123 / 1897 + 6px);top:64px;width:calc(var(--wide-art-width) * 719 / 1897 - 12px);text-align:center}
+ .navmock .cockpit-composition .selection-copy h1{font-size:22px;line-height:1.15;margin:0}
+ .navmock .cockpit-composition .selection-copy p{display:block;width:100%;max-width:none;margin-top:6px;font-size:13px;line-height:1.35}
+ .navmock .cockpit-composition .hub-directory{left:calc(var(--wide-art-left) + var(--wide-art-width) * 123 / 1897 + 6px);top:calc(var(--wide-console-top) + 16px);width:calc(var(--wide-art-width) * 719 / 1897 - 12px);height:auto;grid-template-rows:repeat(4,44px);gap:4px}
+}
+
+@media(max-width:900px) and (max-height:380px) and (min-aspect-ratio:6/5){
+ .cockpit-composition .cabin-intro{top:60px}
+ .navmock .cockpit-composition .selection-copy h1{font-size:20px}
+ .navmock .cockpit-composition .selection-copy p{font-size:12px}
+}
+
+/* Short tablet windows use a compact console and leave a float margin around Quickstart. */
+@media(min-width:601px) and (max-width:1199px) and (max-height:850px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--cabin-panel-original:494px}
+ .navmock .cockpit-composition .hub-directory{grid-template-rows:repeat(4,44px)}
+ .navmock .cockpit-composition .hub-directory a[data-select]{min-height:44px;font-size:16px}
+ .navmock .cockpit-composition .hub-directory a[data-select]>svg:not(.directory-chevron){width:22px;height:22px;flex-basis:22px}
+ .navmock .cockpit-composition .choice-quickstart{width:min(60vw,calc((var(--space-window-height) - var(--phone-floor-height)) * 1.35))!important;max-width:480px!important}
+}
+
+/* The upper plate ends on source row 700. Start the window on that same
+   row instead of overlapping its differently scaled rim over the wall. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--console-bottom-trim:0px}
+}
+
+/* Build the window from the same upper and reflected lower crop. Source
+   row 1100 has straight side rails: place it at the usable window midpoint.
+   Cross the crops over 16px, then remove the underlying original outline. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .cabin-mobile-window{--window-frame-half:calc((var(--space-window-height) - var(--phone-floor-height)) / 2);--window-frame-image-height:calc((var(--space-window-height) - var(--phone-floor-height)) * 1774 / 800);--window-frame-image-top:calc((var(--space-window-height) - var(--phone-floor-height)) * -700 / 800)}
+ .cabin-mobile-window>picture{display:block;position:absolute;inset:0;clip-path:inset(0 0 calc(100% - var(--window-frame-half) - 8px) 0)}
+ .cabin-mobile-window img{height:var(--window-frame-image-height);top:var(--window-frame-image-top)}
+ .cabin-mobile-window::after{--phone-rim-height:var(--window-frame-half);background-size:100% var(--window-frame-image-height);background-position:center var(--window-frame-image-top);mask-image:url('../img/space-hub/cabin-mobile-window-clean-v3.svg'),linear-gradient(to bottom,#000 calc(var(--window-frame-half) - 8px),transparent calc(var(--window-frame-half) + 8px));mask-size:100% var(--window-frame-image-height),100% 100%;mask-position:center var(--window-frame-image-top),center;mask-repeat:no-repeat;mask-composite:intersect;clip-path:inset(0 0 calc(100% - var(--window-frame-half) - 8px) 0)}
+}
+
+/* Use one projection for the entire upper wall. The old shifted crossfade
+   cut through the left lamp and displaced the right-hand structural trim.
+   Source rows 0..700 now fill the wall, meeting the window on row 700. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .cabin-mobile-upper img{top:0;height:calc(var(--cabin-panel) * 1774 / 700);clip-path:none}
+ .cabin-mobile-upper::after{content:none;display:none}
+ .cockpit-composition .cabin-intro{top:calc((70px + var(--cabin-panel) * 312 / 700) / 2);transform:translateY(-50%)}
+ .navmock .cockpit-composition .hub-directory{top:calc(var(--cabin-panel) * 330 / 700);height:auto;grid-template-rows:repeat(4,44px);gap:7px}
+ .navmock .cockpit-composition .hub-directory a[data-select]{min-height:44px}
+}
+
+/* Local artwork repair: only source x=840..872, y=512..656 is overlaid.
+   Match the upper plate's projection exactly and retain all surrounding art. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .cabin-mobile-upper::before{content:'';position:absolute;z-index:1;pointer-events:none;left:calc(100% * 840 / 887);top:calc(var(--cabin-panel) * 512 / 700);width:calc(100% * 32 / 887);height:calc(var(--cabin-panel) * 144 / 700);background:url('../img/space-hub/cabin-right-trim-repair-v2.svg') 0 0/100% 100% no-repeat;mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent),linear-gradient(transparent,#000 8%,#000 92%,transparent);mask-composite:intersect;mask-repeat:no-repeat}
+}
+
+/* Fit the grid to the painted inner face, with one consistent inset. The
+   console is also the clipping boundary for raised-key shadows and focus rings. */
+@media(max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory{left:calc(100% * 124 / 887);top:calc(var(--cabin-panel) * 326 / 700);width:calc(100% * 638 / 887);height:calc(var(--cabin-panel) * 312 / 700);box-sizing:border-box;padding:5px;grid-template-rows:repeat(4,minmax(44px,1fr));gap:4px;overflow:hidden;border-radius:clamp(5px,1vw,10px)}
+}
+@media(max-width:1100px) and (max-height:500px) and (min-aspect-ratio:6/5), (max-width:900px) and (max-height:700px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory{left:calc(var(--wide-art-left) + var(--wide-art-width) * 123 / 1897);top:calc(var(--wide-console-top) + var(--wide-console-height) * 24 / 610);width:calc(var(--wide-art-width) * 719 / 1897);height:calc(var(--wide-console-height) * 545 / 610);box-sizing:border-box;padding:6px;grid-template-rows:repeat(4,minmax(44px,1fr));gap:4px;overflow:hidden;border-radius:8px}
+}
+
+/* Keep the mobile heading accent at every cockpit size. */
+.navmock .cockpit-composition .selection-copy h1 span{color:#e9b770;-webkit-text-fill-color:#e9b770;font-weight:inherit}
+
+/* Balance the introduction in the wall area between the header and console. */
+@media(min-width:901px) and (max-width:1199px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ .cockpit-composition .cabin-intro{--cabin-header-space:78px;top:calc((var(--cabin-header-space) + var(--laptop-cabin-height) * .28) / 2);transform:translateY(-50%)}
+}
+@media(min-width:901px) and (max-width:991px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ .cockpit-composition .cabin-intro{--cabin-header-space:70px}
+}
+
+
+/* Step 1: use one cabin registration and centered introduction on both
+   sides of 1200px. Artwork files and bronze console bounds are retained. */
+@media(min-width:901px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--laptop-cabin-width:max(100vw,160svh);--laptop-cabin-height:100svh}
+ .navmock .cockpit-composition .cabin-art,.navmock .cockpit-composition .selection-copy{inset:auto;top:0;left:calc((100% - var(--laptop-cabin-width)) * .40);width:var(--laptop-cabin-width);height:var(--laptop-cabin-height)}
+ .cockpit-composition .cabin-intro{left:10.7%;width:28%;--cabin-header-space:78px;top:calc((var(--cabin-header-space) + 28%) / 2);transform:translateY(-50%);text-align:center}
+ .navmock .cockpit-composition .selection-copy h1{font-size:clamp(26px,2.5vw,46px);line-height:1.12;letter-spacing:-.4px;white-space:normal;margin-bottom:12px}
+ .navmock .cockpit-composition .selection-copy p{width:100%;max-width:none;font-size:clamp(14px,1.05vw,20px);line-height:1.4;margin-inline:auto;text-wrap:balance}
+}
+@media(min-width:901px) and (max-width:991px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ .cockpit-composition .cabin-intro{--cabin-header-space:70px}
+}
+
+/* Blend the existing narrow-laptop island pose into Laptop L without a
+   one-pixel jump in its center, width or vertical margin. */
+@media(min-width:901px) and (max-width:1279px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .choice-quickstart{left:clamp(69%,calc(13% + 716.8px),77%);width:clamp(49vw,calc(1209.6px - 45.5vw),min(60vw,700px))!important;max-width:700px!important;margin-top:clamp(0px,calc(144px - 11.25vw),18px)}
+ .navmock .cockpit-composition .choice-quickstart .quickstart-station{width:110%}
+}
+@media(min-width:901px) and (max-width:1599px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .selection-earth{--transition-earth-width:clamp(100vw,calc(3584px - 180vw),140vw);width:var(--transition-earth-width);left:calc((100% - var(--transition-earth-width)) / 2);bottom:clamp(-15svh,calc(24vw - 50svh),-10svh)!important}
+}
+
+/* Step 3: increase description readability without changing the title or keys. */
+@media(max-width:600px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .selection-copy p{font-size:14px}
+}
+@media(max-width:1100px) and (min-height:381px) and (max-height:500px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .selection-copy p{font-size:14px}
+}
+@media(min-width:901px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .selection-copy p{font-size:clamp(16px,1.05vw,20px)}
+}
+
+/* Give the compact desktop headline more emphasis and inset its description.
+   Blend back into the existing laptop type and width by 1280px. */
+@media(min-width:901px) and (max-width:1279px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .selection-copy h1{font-size:clamp(28px,2.5vw,32px)}
+ .navmock .cockpit-composition .selection-copy p{
+  font-size:clamp(15px,calc(.390625vw + 11px),16px);
+  box-sizing:border-box;padding-inline:clamp(0px,calc(40px - 3.125vw),8px);
+ }
+}
+
+/* Move the compact cabin artwork and its live controls as one registered group. */
+@media(min-width:992px) and (max-width:1279px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ :root{--compact-cabin-offset:clamp(-10px,calc(3.90625vw - 50px),0px)}
+ .navmock .cockpit-composition .cabin-art,.navmock .cockpit-composition .selection-copy{
+  left:calc((100% - var(--laptop-cabin-width)) * .40 + var(--compact-cabin-offset));
+ }
+}
+
+/* Add two pixels of emphasis to the portrait-phone heading. */
+@media(max-width:600px) and (orientation:portrait){
+ .navmock .cockpit-composition .selection-copy h1{font-size:clamp(22px,calc(5.5vw + 2px),26px)}
+}
+
+/* Make the smallest portrait-phone keys easier to read within their frame. */
+@media(max-width:359px) and (orientation:portrait){
+ .navmock .cockpit-composition .hub-directory a[data-select]{font-size:13px}
+}
+
+/* Align icons and label starts within each narrow-phone button column. */
+@media(max-width:359px) and (orientation:portrait){
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"]){
+  display:grid;grid-template-columns:18px minmax(0,1fr);justify-content:stretch;
+  column-gap:6px;padding-inline:8px;text-align:left;
+ }
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"])>span:not(.orbit-hover-fill){
+  width:100%;text-align:left;
+ }
+}
+
+/* Keep Devices/Software, Workshop/Metrics and Exchanges/Get Help on portrait phones. */
+@media(max-width:600px) and (orientation:portrait){
+ .navmock .cockpit-composition .hub-directory a[data-select="software"]{grid-row:2;grid-column:2}
+ .navmock .cockpit-composition .hub-directory a[data-select="workshop"]{grid-row:3;grid-column:1}
+}
+
+/* Carry the accepted icon/text columns into wider portrait-phone keys. */
+@media(min-width:360px) and (max-width:600px) and (orientation:portrait){
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"]){
+  display:grid;grid-template-columns:max(18px,1.3em) minmax(0,1fr);justify-content:stretch;
+  column-gap:6px;padding-inline:clamp(8px,calc(5vw - 10px),12px);text-align:left;
+ }
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"])>span:not(.orbit-hover-fill){
+  width:100%;text-align:left;
+ }
+}
+
+/* Keep the accepted destination pairs and aligned content in stacked tablets. */
+@media(min-width:601px) and (max-width:1199px) and (max-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select="software"]{grid-row:2;grid-column:2}
+ .navmock .cockpit-composition .hub-directory a[data-select="workshop"]{grid-row:3;grid-column:1}
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"]){
+  display:grid;grid-template-columns:max(18px,1.3em) 5em;justify-content:center;
+  column-gap:.5em;padding-inline:12px;text-align:left;
+ }
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"])>span:not(.orbit-hover-fill){
+  width:100%;text-align:left;
+ }
+}
+
+/* Carry the accepted destination pairs and aligned columns into landscape phones. */
+@media(max-width:1100px) and (max-height:500px) and (min-aspect-ratio:6/5), (max-width:900px) and (max-height:700px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select="software"]{grid-row:2;grid-column:2}
+ .navmock .cockpit-composition .hub-directory a[data-select="workshop"]{grid-row:3;grid-column:1}
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"]){
+  display:grid;grid-template-columns:max(18px,1.3em) 5em;justify-content:center;
+  column-gap:.5em;padding-inline:8px;text-align:left;
+ }
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"])>span:not(.orbit-hover-fill){
+  width:100%;text-align:left;
+ }
+}
+
+/* Give compact desktop keys a clearer label without enlarging the console. */
+@media(min-width:901px) and (max-width:1399px) and (min-height:501px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select]{font-size:clamp(15px,1.18vw,19px)}
+ .navmock .cockpit-composition .hub-directory a[data-select="software"]{grid-row:2;grid-column:2}
+ .navmock .cockpit-composition .hub-directory a[data-select="workshop"]{grid-row:3;grid-column:1}
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"]){
+  display:grid;grid-template-columns:max(18px,1.3em) 5em;justify-content:center;
+  column-gap:.5em;padding-inline:6px;text-align:left;
+ }
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"])>span:not(.orbit-hover-fill){
+  width:100%;text-align:left;
+ }
+}
+
+/* Keep laptop type continuous, then fill the larger desktop keys more clearly. */
+@media(min-width:1400px){
+ .navmock .cockpit-composition .hub-directory a[data-select]{
+  font-size:calc(clamp(15px,1.18vw,19px) + clamp(0px,calc(.9375vw - 15px),5px));
+ }
+ .navmock .cockpit-composition .hub-directory a[data-select="software"]{grid-row:2;grid-column:2}
+ .navmock .cockpit-composition .hub-directory a[data-select="workshop"]{grid-row:3;grid-column:1}
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"]){
+  display:grid;grid-template-columns:min(1.3em,30px) 5em;justify-content:center;
+  column-gap:.5em;padding-inline:6px;text-align:left;
+ }
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"])>span:not(.orbit-hover-fill){
+  width:100%;text-align:left;
+ }
+ .navmock .cockpit-composition .hub-directory a[data-select]:is(:link,:visited)>svg:not(.directory-chevron){
+  width:min(1.3em,30px);height:min(1.3em,30px);flex:0 0 min(1.3em,30px);
+ }
+}
+/* Keep visual placement consistent with the accepted reading and keyboard order. */
+.navmock .cockpit-composition .hub-directory a[data-select="guides"]{grid-row:1;grid-column:1/-1}
+.navmock .cockpit-composition .hub-directory a[data-select="compare"]{grid-row:2;grid-column:1}
+.navmock .cockpit-composition .hub-directory a[data-select="software"]{grid-row:2;grid-column:2}
+.navmock .cockpit-composition .hub-directory a[data-select="workshop"]{grid-row:3;grid-column:1}
+.navmock .cockpit-composition .hub-directory a[data-select="dashboard"]{grid-row:3;grid-column:2}
+.navmock .cockpit-composition .hub-directory a[data-select="exchanges"]{grid-row:4;grid-column:1}
+.navmock .cockpit-composition .hub-directory a[data-select="help"]{grid-row:4;grid-column:2}
+
+/* Reserve four complete touch rows inside the short landscape console. */
+@media(max-width:1100px) and (min-height:345px) and (max-height:374px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory{
+  --short-grid-spare:calc(var(--wide-console-height) * 545 / 610 - 176px);
+  --short-grid-padding:clamp(0px,calc(var(--short-grid-spare) / 2),4px);
+  padding-block:var(--short-grid-padding);
+  row-gap:clamp(0px,calc((var(--short-grid-spare) - var(--short-grid-padding) * 2) / 3),4px);
+  grid-template-rows:repeat(4,44px);align-content:center;
+ }
+ .navmock .cockpit-composition .hub-directory a[data-select]:focus-visible{outline-offset:-3px}
+}
+
+/* Give the short three-row board breathing room above and below its keys. */
+@media(max-width:1100px) and (min-height:300px) and (max-height:344px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory{
+  --tiny-grid-spare:calc(var(--wide-console-height) * 545 / 610 - 126px);
+  --tiny-grid-padding:clamp(0px,calc((var(--tiny-grid-spare) - 6px) / 2),6px);
+  grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(42px,1fr));column-gap:5px;
+  padding-block:var(--tiny-grid-padding);row-gap:3px;
+  overflow:hidden;
+ }
+ .navmock .cockpit-composition .hub-directory a[data-select]{min-height:42px;font-size:13px}
+ .navmock .cockpit-composition .hub-directory a[data-select="compare"]{grid-row:2;grid-column:1}
+ .navmock .cockpit-composition .hub-directory a[data-select="software"]{grid-row:2;grid-column:2}
+ .navmock .cockpit-composition .hub-directory a[data-select="workshop"]{grid-row:2;grid-column:3}
+ .navmock .cockpit-composition .hub-directory a[data-select="dashboard"]{grid-row:3;grid-column:1}
+ .navmock .cockpit-composition .hub-directory a[data-select="exchanges"]{grid-row:3;grid-column:2}
+ .navmock .cockpit-composition .hub-directory a[data-select="help"]{grid-row:3;grid-column:3}
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"]){
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;padding:2px;line-height:1.15;text-align:center;
+ }
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"])>span:not(.orbit-hover-fill){width:auto;text-align:center}
+ .navmock .cockpit-composition .hub-directory a[data-select]:focus-visible{outline-offset:-3px}
+ .cockpit-composition .destination-menu{clip-path:inset(60px 8px 56px var(--wide-wall-edge))}
+ .cockpit-orbit-bounds{left:var(--wide-wall-edge);right:8px;top:60px;bottom:56px}
+}
+/* Center the visible island silhouette, compensating for its transparent right margin. */
+@media(max-width:700px) and (min-height:300px) and (max-height:344px) and (min-aspect-ratio:6/5) and (max-aspect-ratio:19/10){
+ .navmock .cockpit-composition .choice-quickstart{left:calc((var(--wide-wall-edge) + 100% - 8px) / 2 + 48vw * 62 / 1536 + var(--tiny-quickstart-nudge,0px))!important}
+}
+
+/* A small optical nudge for the 568–600px windows; retain the 740px reference. */
+@media(max-width:600px) and (min-height:300px) and (max-height:344px) and (min-aspect-ratio:6/5) and (max-aspect-ratio:19/10){
+ .cockpit-composition{--tiny-quickstart-nudge:8px}
+ .cockpit-composition .cockpit-orbit-destination{translate:4px 0}
+}
+
+/* Keep the console as a framed board on the cockpit wall. Reserve a wall
+   strip under its rim, and stop the repair backing at the board, above the floor. */
+@media(max-width:1100px) and (min-height:300px) and (max-height:344px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--wide-console-top:clamp(118px,calc(100svh - 182px),128px);--wide-console-height:max(160px,calc(100svh - var(--wide-console-top) - 28px))}
+ .cabin-mobile-wide::before{
+  /* Carry the lower wall corners below the board rim, above the cockpit sill. */
+  bottom:calc(100svh - var(--wide-console-top) - var(--wide-console-height) + 2px);
+  /* The shoulder reaches source x1010; its straight side returns to x865. */
+  width:calc(var(--wide-art-width) * 930 / 1897);
+  background:linear-gradient(90deg,transparent,#17191b 12px);
+  top:46px; /* Overlap the upper-right pinched seam; the mask insets the left edge. */
+  mask-image:url('../img/space-hub/cabin-short-wall-mask-v2.svg');
+  mask-size:100% 100%;mask-repeat:no-repeat;
+ }
+}
+
+/* Keep landscape bronze thickness and wall corners independent of image stretch. */
+@media(max-width:1100px) and (max-height:500px) and (min-aspect-ratio:6/5), (max-width:900px) and (max-height:700px) and (min-aspect-ratio:6/5){
+ .cabin-mobile-wide.console-trim-ready::before{
+  inset:0;width:auto;height:auto;background:var(--console-wall-art,none) 0 0/100% 100% no-repeat;mask:none;
+ }
+ .cabin-mobile-wide.console-trim-ready::after{
+  left:calc(var(--wide-art-left) + var(--wide-art-width) * 111 / 1897);
+  top:calc(var(--wide-console-top) + var(--wide-console-height) * 10 / 610);
+  width:calc(var(--wide-art-width) * 743 / 1897);height:calc(var(--wide-console-height) * 574 / 610);
+  box-sizing:border-box;border:clamp(3px,calc(3px + (100svh - 300px) * .08),6px) solid transparent;
+  --landscape-board-radius:clamp(10px,calc(100svh * 28 / 829),14px);
+  border-radius:var(--landscape-board-radius);
+  border-image-source:url('../img/space-hub/cockpit-board-original-bronze.svg');
+  border-image-slice:32 fill;border-image-width:calc(var(--landscape-board-radius) * 8 / 7);border-image-repeat:stretch;
+  background:none;box-shadow:none;mask:none;
+ }
+}
+
+/* Give the shortest landscape description the board's full width for two lines. */
+@media(max-width:1100px) and (min-height:300px) and (max-height:315px) and (min-aspect-ratio:6/5){
+ .cockpit-composition .cabin-intro{top:clamp(56px,calc(100svh - 244px),60px)}
+ .navmock .cockpit-composition .cabin-intro p{width:calc(100% + 12px);max-width:none;margin-inline:-6px}
+}
+
+/* BEGIN text-breathing-room trial: remove this block to restore the checkpoint. */
+@media(max-width:1100px) and (min-height:300px) and (max-height:344px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory{
+  --tiny-grid-spare:calc(var(--wide-console-height) * 545 / 610 - 128px);
+  --tiny-grid-padding:clamp(0px,calc((var(--tiny-grid-spare) - 6px) / 2),5px);
+  top:calc(var(--wide-console-top) + var(--wide-console-height) * 24 / 610 + 2px);
+  height:calc(var(--wide-console-height) * 545 / 610 - 2px);
+ }
+ .cabin-mobile-wide.console-trim-ready::after{
+  top:calc(var(--wide-console-top) + var(--wide-console-height) * 10 / 610 + 2px);
+  height:calc(var(--wide-console-height) * 574 / 610 - 2px);
+ }
+}
+/* END text-breathing-room trial. */
+
+/* Match the compact board proportions with labels and symbols a second pixel smaller. */
+@media(max-width:1100px) and (min-height:300px) and (max-height:344px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .hub-directory a[data-select]{font-size:11px}
+ .navmock .cockpit-composition .hub-directory a[data-select]:is(:link,:visited)>svg:not(.directory-chevron){width:16px;height:16px;flex:0 0 16px}
+}
+
+/* Give the compact introduction a little more room above the board. */
+@media(max-width:900px) and (min-height:300px) and (max-height:344px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .selection-copy h1{font-size:19px}
+ .navmock .cockpit-composition .selection-copy p{font-size:11px}
+}
+@media(min-width:901px) and (max-width:1100px) and (min-height:300px) and (max-height:344px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .selection-copy h1{font-size:21px}
+ .navmock .cockpit-composition .selection-copy p{font-size:12px}
+}
+
+/* Preserve the four-row spacing while clearing the actual lower light bar. */
+@media(max-width:1100px) and (min-height:345px) and (max-height:374px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition{--wide-console-top:calc(clamp(128px,calc(100svh - 244px),146px) - 6px);--wide-console-height:calc(100svh - var(--wide-console-top) - 26px)}
+}
+
+/* Keep the four-row laptop console inside its painted frame when height is
+   limited. Height caps meet the accepted type and gaps before 760px. */
+@media(min-width:901px) and (max-width:1399px) and (min-height:501px) and (max-height:759px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .selection-copy h1{
+  font-size:min(clamp(28px,2.5vw,46px),clamp(22px,calc(10svh - 36px),46px));
+  margin-bottom:min(12px,max(6px,calc(4svh - 17px)));
+ }
+ .navmock .cockpit-composition .selection-copy p{
+  font-size:min(clamp(15px,calc(.390625vw + 11px),16px),clamp(12px,calc(3svh - 5px),20px),clamp(11px,calc(1.25vw + 3svh - 18px),20px));
+ }
+ .navmock .cockpit-composition .hub-directory{
+  grid-template-rows:repeat(4,minmax(0,1fr));
+  gap:min(9px,max(4px,calc(2svh - 6px)));
+ }
+ .navmock .cockpit-composition .hub-directory a[data-select]{
+  min-height:0;
+  font-size:min(clamp(15px,1.18vw,19px),clamp(11px,calc(3svh - 5px),19px));
+ }
+ .navmock .cockpit-composition .hub-directory a[data-select]:not([data-select="guides"]){
+  grid-template-columns:1.3em minmax(0,5em);
+  padding-inline:min(6px,max(4px,calc(2svh - 8px)));
+ }
+ .navmock .cockpit-composition .hub-directory a[data-select]>svg:not(.directory-chevron){
+  width:1.3em;height:1.3em;flex-basis:1.3em;
+ }
+}
+
+/* Short desktop scenes retain a 720px backdrop. Anchor destinations to the
+   visible window height instead, and keep them in front of Earth's surface.
+   The viewport and backdrop positions meet exactly at 720px high. */
+@media(min-width:901px) and (min-height:501px) and (max-height:719px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .choice-quickstart{top:calc(51svh - 30px + max(0px,(720px - 100svh) * .11))}
+ .cockpit-composition .destination-menu{z-index:3}
+}
+
+/* A small optical correction centers the visible island, whose artwork has
+   unequal transparent margins, while keeping it clear of the moon. */
+@media(min-width:901px) and (max-width:1279px) and (min-height:501px) and (max-height:719px) and (min-aspect-ratio:6/5){
+ .navmock .cockpit-composition .choice-quickstart{
+  left:calc(clamp(69%,calc(13% + 716.8px),77%) - clamp(0px,(720px - 100svh) * .08,18px));
+ }
+}
+
+/* Keep the short closing phrase readable on narrow phones. */
+.cockpit-composition .cabin-intro .full-time-job{white-space:nowrap}

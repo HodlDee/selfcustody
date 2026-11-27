@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="1024" viewBox="0 0 1536 1024" fill="none">
+ <defs>
+  <linearGradient id="copper-signal" x1="1080" y1="80" x2="1230" y2="310" gradientUnits="userSpaceOnUse"><stop stop-color="#ffdb76"/><stop offset=".3" stop-color="#ff9a18"/><stop offset=".7" stop-color="#ff7300"/><stop offset="1" stop-color="#ffb124"/></linearGradient>
+  <filter id="signal-glow" x="-35%" y="-35%" width="170%" height="170%"><feGaussianBlur stdDeviation="7"/></filter>
+ </defs>
+ <g stroke-linecap="round">
+  <g stroke="#ff8800" stroke-width="20" opacity=".35" filter="url(#signal-glow)"><path d="M1057 196 A100 100 0 0 1 1125 286"/><path d="M1077 134 A165 165 0 0 1 1190 284"/><path d="M1097 72 A230 230 0 0 1 1255 282"/></g>
+  <g stroke="#9e480a" stroke-width="19"><path d="M1057 196 A100 100 0 0 1 1125 286"/><path d="M1077 134 A165 165 0 0 1 1190 284"/><path d="M1097 72 A230 230 0 0 1 1255 282"/></g>
+  <g stroke="url(#copper-signal)" stroke-width="15"><path d="M1057 196 A100 100 0 0 1 1125 286"/><path d="M1077 134 A165 165 0 0 1 1190 284"/><path d="M1097 72 A230 230 0 0 1 1255 282"/></g>
+  <g stroke="#ffe4a0" stroke-width="3" opacity=".85" transform="translate(-2 -3)"><path d="M1057 196 A100 100 0 0 1 1125 286"/><path d="M1077 134 A165 165 0 0 1 1190 284"/><path d="M1097 72 A230 230 0 0 1 1255 282"/></g>
+ </g>
+</svg>

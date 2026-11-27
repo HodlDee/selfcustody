@@ -19,25 +19,25 @@
   <meta http-equiv="x-dns-prefetch-control" content="off">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Turn dice rolls, coin flips or a shuffled deck into the recovery words, addresses and account key they produce, and check them against your device. Experimental, and meant for testing rather than for securing real bitcoin.">
-  <title>Entropy Workshop | SelfCustody.ca</title>
+  <title>Entropy Workshop | SelfCustody.io</title>
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://selfcustody.ca/entropy.html">
+  <link rel="canonical" href="https://selfcustody.io/entropy.html">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_CA">
-  <meta property="og:site_name" content="SelfCustody.ca">
-  <meta property="og:title" content="Entropy Workshop | SelfCustody.ca">
+  <meta property="og:site_name" content="SelfCustody.io">
+  <meta property="og:title" content="Entropy Workshop | SelfCustody.io">
   <meta property="og:description" content="Turn dice rolls, coin flips or a shuffled deck into the recovery words, addresses and account key they produce, and check them against your device. Experimental, and meant for testing rather than for securing real bitcoin.">
-  <meta property="og:url" content="https://selfcustody.ca/entropy.html">
-  <meta property="og:image" content="https://selfcustody.ca/assets/img/social-preview.jpg?v=5">
+  <meta property="og:url" content="https://selfcustody.io/entropy.html">
+  <meta property="og:image" content="https://selfcustody.io/assets/img/social-preview.jpg?v=5">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://selfcustody.ca/assets/img/social-preview.jpg?v=5">
+  <meta name="twitter:image" content="https://selfcustody.io/assets/img/social-preview.jpg?v=5">
   <link rel="icon" type="image/svg+xml" href="assets/img/self-custody-favicon.svg">
   <link rel="icon" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css?v=bcffd7793727" rel="stylesheet">
-  <link href="assets/css/style.css?v=bcffd7793727" rel="stylesheet">
-  <link href="assets/css/site-refresh.css?v=bcffd7793727" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css?v=1f6b8692d930" rel="stylesheet">
+  <link href="assets/css/style.css?v=1f6b8692d930" rel="stylesheet">
+  <link href="assets/css/site-refresh.css?v=1f6b8692d930" rel="stylesheet">
   <style>
 
 /* ------------------------------------------------------------------------
@@ -2262,30 +2262,32 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     .sc-workshop .seg button{ min-width: 0; }
   }
 </style>
+  <script src="assets/js/page-transitions.js?v=1f6b8692d930"></script>
 </head>
 <body class="site-refresh" data-page="entropy">
   <div id="site-header">
       <a class="sc-skip-link" href="#main-content">Skip to main content</a>
       <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center">
-          <a class="sc-brand me-auto" href="index.html" aria-label="Self Custody home">
+          <a class="sc-brand me-auto" href="index.html#cockpit" aria-label="Self Custody home">
             <span class="sc-brand-mark" aria-hidden="true"></span>
             <span class="sc-brand-name">SELF CUSTODY</span>
-            <span class="sc-brand-domain" aria-hidden="true"><span class="sc-brand-domain-text">.CA</span></span>
+            <span class="sc-brand-domain" aria-hidden="true"><span class="sc-brand-domain-text">.io</span></span>
           </a>
           <nav id="navbar" class="navbar" aria-label="Primary navigation">
-            <ul><li><a class=" " href="index.html"><span>Home</span></a></li><li class="sc-nav-menu">
-          <button class="sc-nav-menu-toggle " type="button" aria-expanded="false" aria-haspopup="true">
-            <span>Guides</span><span class="sc-nav-menu-chevron" aria-hidden="true"></span>
+            <ul><li><a class=" " href="index.html#cockpit"><span>Home</span></a></li><li class="sc-nav-menu sc-guides-split">
+          <a class="sc-guides-page-link " href="guides.html">Guides</a>
+          <button class="sc-nav-menu-toggle " type="button" aria-expanded="false" aria-controls="guides-dropdown" aria-label="Open Guides menu">
+            <span class="sc-nav-menu-chevron" aria-hidden="true"></span>
           </button>
-          <ul class="sc-nav-submenu">
-            <li><a href="guides.html">Start here</a></li>
+          <ul class="sc-nav-submenu" id="guides-dropdown">
+            <li><a href="guides/quickstart.html">Quickstart</a></li>
             <li><a href="guides.html#devices">Devices</a></li>
             <li><a href="guides.html#software">Software</a></li>
             <li><a href="guides.html#exchanges">Exchanges</a></li>
             <li><a href="guides.html#advanced">Techniques</a></li>
             <li><a href="guides.html#concepts">Concepts</a></li>
-            <li class="sc-nav-tool-item"><a class="sc-nav-tool-link" href="entropy.html">Entropy Workshop</a></li>
+            <li class="sc-nav-tool-item"><a class="sc-nav-tool-link" href="glossary.html">Glossary</a></li>
           </ul>
         </li><li class="sc-nav-menu">
           <button class="sc-nav-menu-toggle " type="button" aria-expanded="false" aria-haspopup="true">
@@ -2296,7 +2298,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
             <li><a class="" href="software.html">Software</a></li>
             <li><a class="" href="exchanges.html">Exchanges</a></li>
           </ul>
-        </li><li><a class=" " href="glossary.html"><span>Glossary</span></a></li><li><a class=" " href="dashboard.html"><span>Dashboard</span></a></li><li><a class=" sc-contact-link" href="contact.html"><span>Get Help</span></a></li></ul>
+        </li><li><a class="active " href="entropy.html"><span>Workshop</span></a></li><li><a class=" " href="dashboard.html"><span>Metrics</span></a></li><li><a class=" sc-contact-link" href="contact.html"><span>Get Help</span></a></li></ul>
             <i class="bi bi-list mobile-nav-toggle" aria-label="Open navigation" role="button" tabindex="0"></i>
           </nav>
         </div>
@@ -2463,7 +2465,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <code>shasum -a 256 entropy-offline.html</code><span>macOS, Linux</span>
       
         <p class="verify" id="dl-hash-served">Compare that against <a href="entropy-offline.html.sha256">entropy-offline.html.sha256</a>, published beside this page.</p>
-        <p class="verify" id="dl-hash-local" hidden>Compare that against the published <code>entropy-offline.html.sha256</code>, which sits beside this page on selfcustody.ca. That one line is the only thing you need the network for, and you can fetch it from anywhere.</p>
+        <p class="verify" id="dl-hash-local" hidden>Compare that against the published <code>entropy-offline.html.sha256</code>, which sits beside this page on selfcustody.io. That one line is the only thing you need the network for, and you can fetch it from anywhere.</p>
     
     </details>
 </section>
@@ -2995,7 +2997,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   </div>
 </details>
 
-<p class="colophon">Part of <strong>SelfCustody.ca</strong>. The full procedure and the rules that matter more than this tool does are in <a href="guides/dice-entropy.html" data-site-link>Roll the dice</a> and <a href="guides/quickstart.html" data-site-link>Intro to Self Custody</a>. How to read this page itself is in <a href="guides/bring-your-own-entropy.html" data-site-link>Bring Your Own Entropy</a>.</p>
+<p class="colophon">Part of <strong>SelfCustody.io</strong>. The full procedure and the rules that matter more than this tool does are in <a href="guides/dice-entropy.html" data-site-link>Roll the dice</a> and <a href="guides/quickstart.html" data-site-link>Intro to Self Custody</a>. How to read this page itself is in <a href="guides/bring-your-own-entropy.html" data-site-link>Bring Your Own Entropy</a>.</p>
 
 </main>
 </div></main>
@@ -3004,7 +3006,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       <div class="container">
         <div class="row g-4">
           <div class="col-lg-5">
-            <h3 class="sc-footer-brand"><img src="assets/img/self-custody-favicon.svg" alt="" width="34" height="34"><span>SelfCustody.ca</span></h3>
+            <h3 class="sc-footer-brand"><img src="assets/img/self-custody-favicon.svg" alt="" width="34" height="34"><span>SelfCustody.io</span></h3>
             <p>Clear, practical guidance to self custody your bitcoin. Learn the basics, test your backups, and keep control of your keys.</p>
           </div>
           <div class="col-12 col-lg-4 sc-footer-explore">
@@ -3016,7 +3018,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
               <li><a href="software.html">Software</a></li>
               <li><a href="exchanges.html">Exchanges</a></li>
               <li><a href="glossary.html">Glossary</a></li>
-              <li><a href="dashboard.html">Dashboard</a></li>
+              <li><a href="entropy.html">Workshop</a></li>
+              <li><a href="dashboard.html">Metrics</a></li>
               <li><a href="contact.html">Get Help</a></li>
             </ul>
           </div>
@@ -3032,13 +3035,13 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           </div>
         </div>
         <div class="sc-footer-bottom d-flex flex-wrap justify-content-between gap-2">
-          <span>© <span data-year>2026</span> SelfCustody.ca</span>
-          <span><a href="mailto:info@selfcustody.ca">info@selfcustody.ca</a></span>
+          <span>© <span data-year>2026</span> SelfCustody.io</span>
+          <span><a href="mailto:info@selfcustody.ca">Email us</a></span>
         </div>
       </div>
     </footer></div>
-  <noscript><div class="container py-4"><p><strong>JavaScript is off, so the menu button will not open.</strong> Every page:</p><ul><li><a href="index.html">Home</a></li><li><a href="guides.html">Guides</a></li><li><a href="devices.html">Devices</a></li><li><a href="software.html">Software</a></li><li><a href="exchanges.html">Exchanges</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="dashboard.html">Dashboard</a></li><li><a href="contact.html">Get Help</a></li></ul></div></noscript>
-  <script src="assets/js/site-refresh.js?v=bcffd7793727"></script>
+  <noscript><div class="container py-4"><p><strong>JavaScript is off, so the menu button will not open.</strong> Every page:</p><ul><li><a href="index.html">Home</a></li><li><a href="guides.html">Guides</a></li><li><a href="devices.html">Devices</a></li><li><a href="software.html">Software</a></li><li><a href="exchanges.html">Exchanges</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="entropy.html">Workshop</a></li><li><a href="dashboard.html">Metrics</a></li><li><a href="contact.html">Get Help</a></li></ul></div></noscript>
+  <script src="assets/js/site-refresh.js?v=1f6b8692d930"></script>
 <script>
 /* Browser preflight for the Entropy Workshop.
 
@@ -5644,7 +5647,7 @@ const EntropyCore = (() => {
 
     const privateText = joinSections([
       [
-        'SelfCustody.ca Entropy Workshop - PRIVATE RECOVERY RECORD',
+        'SelfCustody.io Entropy Workshop - PRIVATE RECOVERY RECORD',
         'KEEP SECRET. Anyone with the recovery words or private keys can spend this wallet.'
       ],
       [`Recovery words (${mnemonic.length})`, ...numberedWords],
@@ -5675,7 +5678,7 @@ const EntropyCore = (() => {
     const change = [addresses.change, ...addresses.moreChange];
     const watchOnlyText = joinSections([
       [
-        'SelfCustody.ca Entropy Workshop - WATCH-ONLY WALLET RECORD',
+        'SelfCustody.io Entropy Workshop - WATCH-ONLY WALLET RECORD',
         'SHARE WITH CARE. This record cannot spend, but it reveals addresses and wallet activity.'
       ],
       [

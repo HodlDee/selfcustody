@@ -4398,7 +4398,7 @@ const toolMarkup = ({ offline = false } = {}) => `<section class="hero">
   </div>
 </section>
 
-<main class="wrap workspace"${offline ? ' data-site-root="https://selfcustody.ca/"' : ''}>
+<main class="wrap workspace"${offline ? ' data-site-root="https://selfcustody.io/"' : ''}>
 
 <noscript>
   <div class="banner noscript-brief">
@@ -4464,7 +4464,7 @@ const toolMarkup = ({ offline = false } = {}) => `<section class="hero">
           <code>shasum -a 256 entropy-offline.html</code><span>macOS, Linux</span>
       
         <p class="verify" id="dl-hash-served"${offline ? ' hidden' : ''}>Compare that against <a href="entropy-offline.html.sha256">entropy-offline.html.sha256</a>, published beside this page.</p>
-        <p class="verify" id="dl-hash-local"${offline ? '' : ' hidden'}>Compare that against the published <code>entropy-offline.html.sha256</code>, which sits beside this page on selfcustody.ca. That one line is the only thing you need the network for, and you can fetch it from anywhere.</p>
+        <p class="verify" id="dl-hash-local"${offline ? '' : ' hidden'}>Compare that against the published <code>entropy-offline.html.sha256</code>, which sits beside this page on selfcustody.io. That one line is the only thing you need the network for, and you can fetch it from anywhere.</p>
     
     </details>
 </section>
@@ -4984,7 +4984,7 @@ const toolMarkup = ({ offline = false } = {}) => `<section class="hero">
   </div>
 </details>
 
-<p class="colophon">Part of <strong>SelfCustody.ca</strong>. The full procedure and the rules that matter more than this tool does are in <a href="guides/dice-entropy.html" data-site-link>Roll the dice</a> and <a href="guides/quickstart.html" data-site-link>Intro to Self Custody</a>. How to read this page itself is in <a href="guides/bring-your-own-entropy.html" data-site-link>Bring Your Own Entropy</a>.</p>
+<p class="colophon">Part of <strong>SelfCustody.io</strong>. The full procedure and the rules that matter more than this tool does are in <a href="guides/dice-entropy.html" data-site-link>Roll the dice</a> and <a href="guides/quickstart.html" data-site-link>Intro to Self Custody</a>. How to read this page itself is in <a href="guides/bring-your-own-entropy.html" data-site-link>Bring Your Own Entropy</a>.</p>
 
 </main>`;
 
@@ -5094,7 +5094,7 @@ export function renderEntropyOffline() {
        before any link appears. -->
   <meta http-equiv="x-dns-prefetch-control" content="off">
 <meta name="robots" content="noindex">
-<title>Entropy Workshop | SelfCustody.ca</title>
+<title>Entropy Workshop | SelfCustody.io</title>
 <style>${styles()}</style>
 </head>
 <body class="is-offline-copy">
@@ -5104,7 +5104,7 @@ export function renderEntropyOffline() {
     <span class="brand-mark" aria-hidden="true"></span>
     <div>
       <strong>Entropy Workshop</strong>
-      <span>A single file from selfcustody.ca. It fetches nothing, and works with the network off.</span>
+      <span>A single file from selfcustody.io. It fetches nothing, and works with the network off.</span>
     </div>
   </div>
 </header>
@@ -5114,7 +5114,7 @@ ${toolMarkup({ offline: true })}
 <footer class="file-footer">
   <div class="wrap">
     <p class="file-footer-note"><strong>Never type an existing recovery phrase into any page</strong>, including this one &mdash; which is why there is nowhere here to do it. This file is education, not financial advice.</p>
-    <p class="file-footer-note">Published at selfcustody.ca/entropy-offline.html, where the checksum sits beside it &middot; &copy; <span id="year">2026</span> SelfCustody.ca</p>
+    <p class="file-footer-note">Published at selfcustody.io/entropy-offline.html, where the checksum sits beside it &middot; &copy; <span id="year">2026</span> SelfCustody.io</p>
   </div>
 </footer>
 

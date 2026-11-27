@@ -604,3 +604,27 @@ structure; none of them is still blocking.
 - What remains open is recorded rather than pending: the 13 product photographs
   (issue #86), and the copyrightability of AI-generated images, which is not
   this project's question to close. Neither affects what the licences grant.
+
+
+### Mobile cockpit backgrounds — 2026-09-16
+
+`docs/assets/img/space-hub/cabin-mobile-matched-portrait-v1.webp` and
+`cabin-mobile-matched-landscape-v1.webp` were generated with the built-in
+OpenAI imagegen tool, using the approved desktop cockpit as visual reference.
+The landscape panel was enlarged with the same tool for five menu rows.
+The delivery files are WebP conversions; text and destinations remain HTML.
+PNG masters and prompts are retained in `media-masters/cockpit-mobile-v1/`.
+These are recorded as AI-generated artwork and remain outside the prose
+licence under the existing AI-image exclusion; no new rights claim is made.
+
+### Local cockpit rail repair — 2026-11-08
+
+`docs/assets/img/space-hub/cabin-right-trim-repair-v1.png` is a small crop of an OpenAI built-in ImageGen edit of the existing generated portrait cabin artwork. It removes only the black gouge in the right bronze rail. The overlay preserves the original artwork outside that region. The project’s existing AI-image content-licence exclusion applies. The full generated master and prompt are retained with the local media/review artifacts.
+
+`cabin-right-trim-repair-v2.svg` reuses the v1 generated bronze grain and replaces its bent raster joints with straight code-authored vector seams aligned to the original rail endpoints. The same existing AI-artwork exclusion applies to the embedded grain.
+
+### Landscape cockpit rail cleanup — 2026-11-15
+
+`docs/assets/img/space-hub/cabin-mobile-matched-landscape-v2.webp` is a localized retouch of landscape-v1 using the built-in OpenAI image editor, with the existing 1080p cockpit as a finish reference. Only the upper-left rail/roof junction is composited from the generated edit; all pixels outside the small repair remain the decoded original. The original v1 asset is retained. The existing AI-artwork licence exclusion applies. Generated master: `C:/Users/Austin/.codex/generated_images/01a13389-fb88-72b0-bcf4-4dbdff2ec6db/exec-50d11efe-ea16-4a64-bc69-ecab2285553b.png`. Local integration and checks: `D:/Claude/selfcustody/tmp/proportions-step-3/apply-artwork-retouch.py` and `artwork-retouch-check.json`.
+
+Edit brief: preserve the exact crop, panels, lamp, bronze shading and bevel widths; clean only the choppy outer curve into its existing vertical rail and the small fork at its roof junction. Use the desktop trim for coherent seams, without copying its layout. Do not add outlines, dark bands, annotations or new objects.
