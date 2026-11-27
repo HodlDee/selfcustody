@@ -282,6 +282,62 @@ body.site-refresh[data-page="contact"] #site-footer {
   left: 1px;
 }
 
+/* Match the cockpit tile while keeping the Exchanges wordmark in its header. */
+body.site-refresh[data-page="exchanges"] #header .sc-brand-domain {
+  align-self: center;
+  flex-shrink: 0;
+  width: 2.425833em;
+  height: 1.583333em;
+  margin: 2px 0 0 6px;
+  padding: 0;
+  border-radius: 4px;
+  font-size: 12px;
+  box-shadow: 0 2px 2px #0007, inset 0 1px 0 #ffadad66;
+}
+
+body.site-refresh[data-page="exchanges"] #header .sc-brand-domain-text {
+  position: static;
+  font-size: 1.25em;
+  line-height: 1;
+}
+
+@media (min-width: 1280px) and (min-height: 501px) and (min-aspect-ratio: 6/5) {
+  body.site-refresh[data-page="exchanges"] #header .sc-brand-domain {
+    font-size: clamp(12px, calc(.5vw + 4.8px), 14.4px);
+    margin: .166667em 0 0 .5em;
+    border-radius: .333333em;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1279px) and (min-height: 501px) and (max-height: 599px) and (min-aspect-ratio: 6/5) {
+  body.site-refresh[data-page="exchanges"] #header .sc-brand-domain {
+    font-size: clamp(10px, 2svh, 12px);
+  }
+}
+
+@media (max-width: 575px), (max-width: 1100px) and (max-height: 500px) and (orientation: landscape) {
+  body.site-refresh[data-page="exchanges"] #header .sc-brand-domain {
+    width: 23.59px;
+    border-radius: 4px;
+  }
+}
+
+@media (max-width: 575px) and (max-aspect-ratio: 6/5) {
+  body.site-refresh[data-page="exchanges"] #header .sc-brand-domain {
+    height: 14px;
+    margin: 2px 0 0 5px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 1100px) and (max-height: 500px) and (orientation: landscape) {
+  body.site-refresh[data-page="exchanges"] #header .sc-brand-domain {
+    height: 15px;
+    margin: 2px 0 0 6px;
+    font-size: 10px;
+  }
+}
+
 .sc-brand-mark {
   display: block;
   flex: 0 0 auto;
