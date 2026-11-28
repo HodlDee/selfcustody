@@ -25,17 +25,18 @@
  const viewportOwner=launchHost?window.parent:window;
  const viewportMeta=viewportOwner.document.querySelector('meta[name="viewport"]');
  const originalViewport=viewportMeta.content;
+ const theme=viewportOwner.document.querySelector('meta[name="theme-color"]');
+ const originalTheme=theme?.content;
  const phone=viewportOwner.matchMedia('(max-width:600px) and (orientation:portrait)');
  let viewportActive=window===window.top&&!captureFrame;
- let insetProbe=null,insetObserver=null,roofTint=null;
+ let insetProbe=null,insetObserver=null,usingPhoneViewport=false;
  function syncViewport(){
   const active=viewportActive&&phone.matches;
-  if(active===!!roofTint)return;
+  if(active===usingPhoneViewport)return;
+  usingPhoneViewport=active;
   if(active){
    if(!originalViewport.includes('viewport-fit=cover'))viewportMeta.content=originalViewport+', viewport-fit=cover';
-   roofTint=viewportOwner.document.createElement('meta');
-   roofTint.name='theme-color';roofTint.content='#17120f';
-   viewportOwner.document.head.append(roofTint);
+   if(launchHost&&theme)theme.content='#17120f';
    // The hosted cockpit needs the outer window's insets. Frames can report zero.
    if(launchHost){
     insetProbe=viewportOwner.document.createElement('div');
@@ -51,7 +52,8 @@
    }
    document.documentElement.classList.add('phone-cockpit');
   }else{
-   viewportMeta.content=originalViewport;roofTint.remove();roofTint=null;
+   viewportMeta.content=originalViewport;
+   if(launchHost&&theme)theme.content=originalTheme;
    insetObserver?.disconnect();insetProbe?.remove();insetProbe=null;
    document.documentElement.classList.remove('phone-cockpit');
    document.documentElement.style.removeProperty('--cockpit-safe-top');
