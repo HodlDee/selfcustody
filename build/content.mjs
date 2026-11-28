@@ -185,6 +185,9 @@ const currentYear = new Date().getFullYear();
       <span class="sc-source-note-date">Links checked ${lastLinkCheck}.</span>
     </p>`;
 
+  const backArrow = `<svg aria-hidden="true" width="26" height="24" viewBox="0 0 26 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H5m6-6-6 6 6 6"/></svg>`;
+  const fastForwardIcon = `<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3.5 5.5v13l8.5-6.5zm9 0v13l8.5-6.5z"/></svg>`;
+
   const pages = {
     home: {
       title: "SelfCustody.io | Control Your Money",
@@ -199,8 +202,9 @@ const currentYear = new Date().getFullYear();
         <iframe id="arrival-article" title="Quickstart article" src="guides/quickstart.html" aria-hidden="true" inert></iframe>
         <video id="jump-video" poster="assets/video/quickstart-runway-moon-v14-first.jpg" data-perspective="first-person" data-arrival="galaxy" data-source="assets/video/quickstart-runway-moon-v14.mp4" data-source4k="assets/video/quickstart-runway-moon-v14-4k-compressed-v1.mp4" muted playsinline preload="auto" aria-label="First-person flight through the Quickstart gate, past the Moon and into hyperspace"></video>
         <aside class="video-review" hidden inert aria-hidden="true" aria-label="Transition preview controls"><div class="review-status" role="status" aria-live="polite">Preparing the sequence&hellip;</div><div class="review-buttons"><button id="sequence-play" disabled>Play shorter sequence</button><button id="sequence-reset">Reset</button><button id="sequence-skip">Skip to article</button></div><input id="sequence-time" type="range" min="0" max="6" value="0" step=".01" aria-label="Sequence preview time"></aside>
-        <button id="back-to-cockpit" type="button"><span aria-hidden="true">&larr;</span> Back to cockpit</button>
-        <a id="back-to-launch" href="launch.html" aria-label="Back to launch" title="Back to launch"><span aria-hidden="true">&larr;<svg class="back-to-launch-arrow" width="26" height="24" viewBox="0 0 26 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H5m6-6-6 6 6 6"/></svg></span><span class="back-to-launch-label">Back to launch</span></a>
+        <button id="back-to-cockpit" type="button" aria-label="Back to cockpit" title="Back to cockpit">${backArrow}</button>
+        <a id="back-to-launch" href="launch.html" aria-label="Back to launch" title="Back to launch">${backArrow}</a>
+        <button id="quickstart-flight-skip" type="button" aria-label="Skip Quickstart cutscene" title="Skip Quickstart cutscene">${fastForwardIcon}</button>
         <div id="cockpit-arrival-shade" aria-hidden="true"></div>`
     },
 
@@ -1647,29 +1651,23 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
    </div>
    <canvas id="night-sky" aria-hidden="true"></canvas>
    <div class="approved-stage">
-    <img class="approved-scene" src="assets/img/earth-launch/hero-runway-master-v1.png" alt="" width="1536" height="1024" fetchpriority="high">
+    <img class="approved-scene" src="assets/img/earth-launch/launch-runway-composite.webp" alt="" width="1536" height="1024" fetchpriority="high">
     <img class="approved-launch-sky" src="assets/img/earth-launch/launch-opening-sky-v5.png" alt="" width="1920" height="1080" fetchpriority="high">
     <img class="approved-launch-sky approved-rest-sky" src="assets/img/earth-launch/launch-star-detail-v7.svg" alt="" width="1920" height="1080" fetchpriority="high">
-    <div class="approved-exit" aria-hidden="true"><img src="assets/img/earth-launch/hero-runway-master-v1.png" alt="" width="1536" height="1024"></div>
+    <div class="approved-exit" aria-hidden="true"><img src="assets/img/earth-launch/launch-runway-composite.webp" alt="" width="1536" height="1024"></div>
     <div class="interaction-plane">
-     <img class="terrain-patch" src="assets/img/earth-launch/final-detail-patch-v4.png" width="1536" height="1024" alt="">
-     <img class="sign-patch" src="assets/img/earth-launch/cockpit-and-clear-ground-patch-v1.png" width="1536" height="1024" alt="">
-     <img class="cockpit-patch" src="assets/img/earth-launch/cockpit-and-clear-ground-patch-v1.png" width="1536" height="1024" alt="">
-     <svg class="porthole-detail" viewBox="0 0 1536 1024" aria-hidden="true"><defs><filter id="restored-rocket-edge-1"><feGaussianBlur stdDeviation="1.1"/></filter><path id="launch-rocket-edge-1" d="M1052 505 C1036 504 1001 546 992 575 C971 617 968 690 975 734 C942 764 921 802 927 856 Q928 883 937 900 Q920 898 914 912 L914 916 L1174 916 L1174 908 Q1169 902 1164 901 Q1175 857 1164 807 C1159 779 1146 748 1132 734 C1138 674 1131 617 1117 577 C1104 549 1071 510 1052 505 Z"/><mask id="restored-rocket-local-1" maskUnits="userSpaceOnUse" x="912" y="499" width="267" height="419"><use href="#launch-rocket-edge-1" fill="white" filter="url(#restored-rocket-edge-1)"/></mask></defs><image href="assets/img/earth-launch/rocket-reference-restored-no-smoke-v2.png" width="1536" height="1024" mask="url(#restored-rocket-local-1)"/><path class="launch-rocket-outline" d="${launchRocketSilhouette}"/></svg>
+     <svg class="launch-rocket-art" viewBox="0 0 1536 1024" aria-hidden="true"><path class="launch-rocket-outline" d="${launchRocketSilhouette}"/></svg>
  <a class="rocket-launch-link" href="index.html" aria-label="Launch into Bitcoin — enter the cockpit"></a>
     </div>
    </div>
-   <div class="mobile-launch"><img class="mobile-launch-scene" src="assets/img/earth-launch/hero-runway-master-v1.png" alt="" width="1536" height="1024">
+   <div class="mobile-launch"><img class="mobile-launch-scene" src="assets/img/earth-launch/launch-runway-composite.webp" alt="" width="1536" height="1024">
     <div class="interaction-plane">
-     <img class="terrain-patch" src="assets/img/earth-launch/final-detail-patch-v4.png" width="1536" height="1024" alt="">
-     <img class="sign-patch" src="assets/img/earth-launch/cockpit-and-clear-ground-patch-v1.png" width="1536" height="1024" alt="">
-     <img class="cockpit-patch" src="assets/img/earth-launch/cockpit-and-clear-ground-patch-v1.png" width="1536" height="1024" alt="">
-     <svg class="porthole-detail" viewBox="0 0 1536 1024" aria-hidden="true"><defs><filter id="restored-rocket-edge-2"><feGaussianBlur stdDeviation="1.1"/></filter><path id="launch-rocket-edge-2" d="M1052 505 C1036 504 1001 546 992 575 C971 617 968 690 975 734 C942 764 921 802 927 856 Q928 883 937 900 Q920 898 914 912 L914 916 L1174 916 L1174 908 Q1169 902 1164 901 Q1175 857 1164 807 C1159 779 1146 748 1132 734 C1138 674 1131 617 1117 577 C1104 549 1071 510 1052 505 Z"/><mask id="restored-rocket-local-2" maskUnits="userSpaceOnUse" x="912" y="499" width="267" height="419"><use href="#launch-rocket-edge-2" fill="white" filter="url(#restored-rocket-edge-2)"/></mask></defs><image href="assets/img/earth-launch/rocket-reference-restored-no-smoke-v2.png" width="1536" height="1024" mask="url(#restored-rocket-local-2)"/><path class="launch-rocket-outline" d="${launchRocketSilhouette}"/></svg>
+     <svg class="launch-rocket-art" viewBox="0 0 1536 1024" aria-hidden="true"><path class="launch-rocket-outline" d="${launchRocketSilhouette}"/></svg>
  <a class="rocket-launch-link" href="index.html" aria-label="Launch into Bitcoin — enter the cockpit"></a>
     </div>
    </div>
   </section>
-<div class="launch-transition" hidden role="region" aria-label="Rocket launch"><video data-src="assets/video/rocket-launch-v5.mp4" data-src4k="assets/video/rocket-launch-v5-4k-web.mp4" poster="assets/img/earth-launch/launch-video-poster-v4.jpg" preload="none" muted playsinline aria-label="Rocket launching into space"></video><button class="launch-skip" type="button">Skip launch →</button></div>`
+<div class="launch-transition" hidden role="region" aria-label="Rocket launch"><video data-src="assets/video/rocket-launch-v5.mp4" data-src4k="assets/video/rocket-launch-v5-4k-web.mp4" poster="assets/img/earth-launch/launch-video-poster-v4.jpg" preload="none" muted playsinline aria-label="Rocket launching into space"></video><button class="launch-skip" type="button" aria-label="Skip launch" title="Skip launch">${fastForwardIcon}</button></div>`
   };
 
   /* Temporary holding page. Keep the full contact-page definition above in
@@ -1806,7 +1804,8 @@ const renderGlossaryCards = () => glossaryTerms.map(term => `
             <i class="bi bi-list mobile-nav-toggle" aria-label="Open navigation" role="button" tabindex="0"></i>
           </nav>
         </div>
-      </header>`;
+      </header>${pageKey === "home" || pageKey === "launch" ? "" : `
+      <a class="sc-back-home" href="${base}index.html${COCKPIT_HASH}" aria-label="Back to cockpit" title="Back to cockpit">${backArrow}</a>`}`;
   };
 
   const renderFooter = (base = "") => `
