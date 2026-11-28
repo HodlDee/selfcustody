@@ -327,7 +327,10 @@ body.site-refresh:has(#scene-viewport) #cutscenes-toggle{
  --cockpit-safe-top:env(safe-area-inset-top,0px);
  --cockpit-safe-bottom:env(safe-area-inset-bottom,0px);
 }
-.phone-cockpit #scene-viewport{background-color:#17120f}
+@media(max-width:600px) and (orientation:portrait){
+ html:has(#scene-viewport),body:has(#scene-viewport),#scene-viewport{background-color:#17120f}
+}
+.phone-cockpit #scene-viewport{bottom:auto;height:100dvh}
 /* The canvas carries the measured trim profile into the safe area. */
 .cockpit-roof{position:absolute;inset:0 0 auto;width:100%;z-index:1;pointer-events:none;display:none}
 .phone-cockpit .cockpit-roof{display:block}
