@@ -5,7 +5,7 @@
  const firstPerson=video.dataset.perspective==='first-person';
  const galaxyArrival=video.dataset.arrival==='galaxy';
  const captureFrame=new URLSearchParams(location.search).has('capture-frame');
- if(captureFrame){document.title='Quickstart — first frame review';const captureStyle=document.createElement('style');captureStyle.textContent='#site-header,#back-to-launch,#back-to-cockpit,.video-review,#cockpit-arrival-shade{display:none!important}';document.head.append(captureStyle)}
+ if(captureFrame){document.title='Quickstart — first frame review';const captureStyle=document.createElement('style');captureStyle.textContent='#site-header,#back-to-launch,#back-to-cockpit,#quickstart-flight-skip,.video-review,#cockpit-arrival-shade{display:none!important}';document.head.append(captureStyle)}
  if(firstPerson)document.documentElement.classList.add('first-person-flight');
  if(new URLSearchParams(location.search).has('review-controls')){const controls=document.querySelector('.video-review');controls.hidden=false;controls.inert=false;controls.removeAttribute('aria-hidden')}
  let openingLead=firstPerson&&galaxyArrival?(innerWidth<1200?1.3:.4):0;
@@ -275,6 +275,7 @@
   w.addEventListener('resize',update);update();
  }
  article.addEventListener('load',async()=>{try{const d=article.contentDocument;
+  d.querySelector('.sc-back-home')?.remove();
   /* The guide ships the galaxy arrival stylesheet in its own head now, with
      the build's version on it. Injecting a second copy here under a
      hand-written ?v=9 fetched the same rules twice and pinned one of them to
@@ -579,7 +580,7 @@
  video.addEventListener('ended',()=>{if(state==='video'||state==='arriving')showArticle(1)});
  let seekId=0;
  async function seek(t){cancel();const id=++seekId;time=t;scrub.value=t;document.body.classList.remove('at-article');article.classList.remove('active');article.inert=true;article.setAttribute('aria-hidden','true');if(t<videoOffset){state='paused';document.body.classList.toggle('in-flight',t>0);video.classList.toggle('active',!!openingLead&&t>0);if(openingLead){prepareDeparture();idleRings(false);scene.inert=t>0;renderAlignedDeparture(0,t)}else exterior(t);return}if(!videoReady)return;state='paused';scene.inert=true;document.body.classList.toggle('in-flight',t>0);if(firstPerson){prepareDeparture();idleRings(false)}else exterior(introDuration);video.classList.add('active');const target=Math.max(0,Math.min(duration()-.001,t-videoOffset+.0001));if(Math.abs(video.currentTime-target)>.005)await new Promise(r=>{video.addEventListener('seeked',r,{once:true});video.currentTime=target});if(id!==seekId)return;renderVideo();if(t>=ending()-.06)showArticle(1)}
- play.addEventListener('click',start);reset.addEventListener('click',resetAll);skip.addEventListener('click',revealArticle);scrub.addEventListener('input',()=>seek(Number(scrub.value)));addEventListener('keydown',e=>{if(e.key==='Escape'&&state!=='idle'&&state!=='article')revealArticle()});
+ play.addEventListener('click',start);reset.addEventListener('click',resetAll);skip.addEventListener('click',revealArticle);document.getElementById('quickstart-flight-skip').addEventListener('click',revealArticle);scrub.addEventListener('input',()=>seek(Number(scrub.value)));addEventListener('keydown',e=>{if(e.key==='Escape'&&state!=='idle'&&state!=='article')revealArticle()});
  addEventListener('pagehide',()=>{cancel();if(blobUrl)URL.revokeObjectURL(blobUrl)});
  document.getElementById('back-to-cockpit')?.addEventListener('click',()=>window.pageTransition.run(()=>{resetAll();cockpitCamera('enter');scene.contentDocument.querySelector('.choice-quickstart')?.focus({preventScroll:true})}));
  window.quickstartVideo={cockpitCamera,play:start,reset:resetAll,seek,skip:revealArticle,

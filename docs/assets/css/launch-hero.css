@@ -28,11 +28,7 @@ body.site-refresh:has(#launchpad) #navbar.navbar-mobile>ul{
 .approved-exit img{animation:sc-exit-flicker 6.8s infinite}
 .mobile-launch{display:none}
 .interaction-plane{position:absolute;inset:0;pointer-events:none;z-index:3}
-/* Local patches preserve the frozen master outside the edited objects. */
-.sign-patch,.cockpit-patch,.terrain-patch{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.terrain-patch{mask-image:linear-gradient(transparent 85.6%,#000 87.2%)}
-.sign-patch{mask-image:linear-gradient(90deg,transparent 80%,#000 80.7%,#000 92.2%,transparent 92.7%),linear-gradient(180deg,transparent 75.8%,#000 76.5%,#000 91.5%,transparent 92.4%);mask-composite:intersect}
-.cockpit-patch{mask-image:radial-gradient(ellipse 2.85% 4.3% at 68.4% 64%,#000 85%,transparent 100%)}
+.launch-rocket-art{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .launch-letter-tint{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.45;transition:opacity .22s,filter .22s}
 .interaction-plane:has(.explore-sign:hover) .launch-letter-tint,.interaction-plane:has(.explore-sign:focus-visible) .launch-letter-tint{opacity:.9;filter:drop-shadow(0 0 2px #fff0a8b3) drop-shadow(0 0 6px #ffd56b80)}
 body.site-refresh .explore-sign{position:absolute;left:81%;top:77.2%;width:11%;height:6.8%;min-height:44px;display:flex;align-items:center;justify-content:center;pointer-events:auto;cursor:pointer;border-radius:7px;text-decoration:none}
